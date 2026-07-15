@@ -1,6 +1,6 @@
 # Research state
 
-Last updated: 2026-07-15
+Last updated: 2026-07-16
 
 ## Current gate
 
@@ -23,10 +23,10 @@ registered G2 streams remain absent.
 
 ## Session objective
 
-Current session target: commit and host-verify the immutable S0004 contract,
-test-only RNG namespace, and DGP map without accessing resource, validation, or
-research streams. Stop if any hostile review reproduces a seal, entropy,
-provenance, or filter-once bypass.
+Current session target: derive, test, implement, and host-verify the S0004
+smooth sufficient-statistic, observable-PCA, condition-ridge, and pooled-
+homogeneous estimator core using deterministic fixtures and test-only smoke.
+Stop before checkpoint/recovery, resource authority, or any registered G2 RNG.
 
 ## Current evidence
 
@@ -247,8 +247,12 @@ provenance, or filter-once bypass.
 
 ## In flight
 
-1. Add exact sufficient-statistic, PCA-sign, condition-ridge, and pooled-
-   homogeneous estimators test-first with test-only seeds.
+1. A007 and `docs/derivations/GATE_G2_SMOOTH_ESTIMATORS.md` now freeze the
+   covariance normalization, upper packing, one-call date-weight aggregation,
+   PCA `eigh`, pooled SVD, typed threshold projection, and analytic predictions
+   before implementation. Add the corresponding red tests, then implement the
+   exact sufficient-statistic, PCA, condition-ridge, and pooled-homogeneous
+   kernels with test-only seeds.
 2. Add recovery/checkpoint tests, then repeat hostile review,
    local parity, hosted CI, and the distinct resource benchmark before the
    validation seed is available.

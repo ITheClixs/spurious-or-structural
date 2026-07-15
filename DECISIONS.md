@@ -1225,3 +1225,78 @@ the choice, alternatives, and the evidence that would reopen it.
 - **Reopen if:** The hosted run is invalidated, a future runtime fingerprint
   changes, or any production constructor can reach a registered seed without
   consuming the successful A006 preflight fingerprint.
+
+## D0057 — Use covariance-unit Schur moments
+
+- **Date:** 2026-07-16
+- **Diagnosis:** The sealed prose required globally centered weighted
+  cross-products but did not say whether the Schur outputs were retained as raw
+  scatters or divided by weighted row mass. The two routes produce the same
+  exact-arithmetic coefficients because the condition and floor penalties
+  scale with the covariance, but they differ in binary64 diagnostics and can
+  differ at numerical failure boundaries.
+- **Decision:** Aggregate raw date cross-products, partial the single global
+  intercept, then divide every centered block by the weighted row mass before
+  proxy partialling or solving. This is the only route that reproduces the
+  covariance-unit oracle and observable penalties already sealed in
+  `configs/g2_population_targets.json`. Apply the same convention to pooled
+  homogeneous slopes.
+- **Rejected:** Leave raw scatters in the eigensolver merely because the
+  coefficient is scale invariant. That would report a differently scaled
+  penalty and leave the sealed diagnostic unexplained.
+- **Residual risk:** Division adds one rounding step even though the real-number
+  estimator is unchanged. Analytic direct-row and moment-route tests must lock
+  the selected path before test-seed recovery.
+- **Reopen if:** A sealed population penalty cannot be reproduced in covariance
+  units, any implementation centers dates separately, or weighted centering is
+  applied before date aggregation.
+
+## D0058 — Freeze one packed and weighted aggregation path
+
+- **Date:** 2026-07-16
+- **Diagnosis:** The compute plan fixed sufficient-statistic counts but not
+  triangle layout or accumulation order. A Python date loop would be easier to
+  reason about but would sit inside 1,796,400 registered bootstrap aggregation
+  units and threaten the 12-hour validation budget.
+- **Decision:** Pack row-major upper triangles with `numpy.triu_indices`; store
+  all panels C-contiguous, date-major, and in ascending `date_index`; flatten
+  nonsymmetric fields in C order; and aggregate each field panel with exactly
+  one `numpy.matmul(weights, panel)` call. Require float64 nonnegative integer
+  weights with exact total equal to the number of dates. Point estimates use
+  float64 ones, while zero bootstrap counts keep their original positions.
+- **Rejected:** Python-loop accumulation, normalized fractional weights, a
+  caller-selected triangle, or silently sorting a weight vector independently
+  of its panel. These either change the byte path, weaken the bootstrap
+  capability boundary, or waste the declared hardware budget.
+- **Residual risk:** NumPy matrix multiplication is runtime/BLAS dependent. A006
+  already makes the registered numerical runtime machine-bound; hosted Linux
+  remains a tolerance-based software surface rather than an alternative draw.
+- **Reopen if:** The resource kernel cannot meet its projection with this path,
+  a checkpoint does not preserve ascending provenance, or two fields require
+  different aggregation semantics.
+
+## D0059 — Keep pure math underneath a sealed estimator contract
+
+- **Date:** 2026-07-16
+- **Diagnosis:** The existing typed G2 contract projected the DGP but omitted
+  condition caps, ridge floor, PCA eigengap, and pooled rank thresholds already
+  present in the sealed config. Embedding them only as model-module constants
+  would create hidden run state, while hard-coding `N=30` in every linear-
+  algebra helper would make analytic orientation tests needlessly opaque.
+- **Decision:** Extend the exact typed contract and validator with every smooth
+  estimator numerical field. Validate text-encoded rules against their exact
+  sealed strings before projecting their numeric multipliers. Put dimension-
+  generic, deterministic PCA/packing/solve kernels below contract-bound date
+  and panel builders that enforce `N=30`, `T=330`, `L=10`, float64 finiteness,
+  and provenance. Use default-lower-triangle `numpy.linalg.eigh` without an
+  extra PCA symmetrization and `numpy.linalg.svd(..., compute_uv=False)` for the
+  pooled rank check.
+- **Rejected:** Re-read the config independently inside the model module,
+  expose arbitrary estimator thresholds through the production API, or hide
+  them as unrelated literals. Each creates a second authority surface.
+- **Residual risk:** Adding fields to `G2Contract` widens its validation surface;
+  mutation, representation, and altered-string tests must fail before any RNG
+  construction.
+- **Reopen if:** An estimator can be constructed from an unvalidated threshold,
+  a generic helper becomes a production bypass, or PCA/SVD calls differ from
+  the frozen routines.

@@ -399,3 +399,42 @@ outcomes.
 - **Access statement:** Only test seed `1729` was used to diagnose this failure.
   No resource, validation, research, empirical, evaluation, or holdout stream
   was accessed. The amendment precedes all registered G2 authority.
+
+### A007 — Fix the smooth-estimator binary64 path before implementation
+
+- **Date:** 2026-07-16.
+- **Reason:** A pre-implementation contract map found four algebraically
+  equivalent but not byte-equivalent choices left implicit by A005: centered
+  scatter versus covariance units, packed-triangle layout, weighted-date
+  accumulation, and the exact pooled singular-value routine. The sealed target
+  file resolves the first choice because its oracle and observable penalties,
+  `7.549327586206895e-7` and `7.687703503231941e-7`, are covariance-unit trace
+  floors. The remaining choices affect storage or rounding, not the estimand.
+- **Amendment:** Aggregate raw per-date cross-products under date weights,
+  partial the one global intercept, and divide the resulting centered moments
+  by the weighted row mass before proxy partialling or solving. Pack symmetric
+  date moments with row-major `numpy.triu_indices`. Store checkpoint panels
+  date-major in ascending `date_index` order and aggregate each flattened
+  C-contiguous field panel with one `numpy.matmul` call. Point weights are
+  float64 ones; bootstrap weights are the frozen float64 multinomial counts and
+  must be finite nonnegative integers summing exactly to the date count. The
+  pooled rank check uses `numpy.linalg.svd(..., compute_uv=False)`. Observable
+  PCA uses the default-lower-triangle `numpy.linalg.eigh` result on
+  `X_centered.T @ X_centered / 330` without an extra symmetrization.
+- **Inference effect:** None. Covariance and scatter scaling give the same
+  ridge and OLS coefficients in exact arithmetic because every registered
+  penalty is degree-one homogeneous in the flow covariance. This amendment
+  selects one replayable binary64 path and reproduces the already sealed
+  penalty diagnostics; it does not change a target, threshold, seed, draw,
+  confidence method, family rule, or trial count.
+- **Implementation effect:** The typed sealed contract must project all
+  estimator thresholds already present in `configs/g2.toml`; estimator code may
+  not carry an unvalidated alternative set of magic constants. Low-level math
+  helpers may be dimension-generic for analytic tests, while contract-bound
+  builders enforce `N=30`, `T=330`, `L=10` and provenance. Full details and
+  equations are in `docs/derivations/GATE_G2_SMOOTH_ESTIMATORS.md`.
+- **Access statement:** No new stochastic call informed A007. The amendment was
+  written from sealed artifacts, deterministic algebra, and three read-only
+  implementation audits. Resource, validation, research, empirical,
+  evaluation, and holdout data remain unaccessed; only the previously declared
+  test-seed diagnostics exist.

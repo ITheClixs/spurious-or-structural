@@ -9,7 +9,7 @@ empirical model trials, but gate-level pipeline variants are recorded.
 
 - Empirical specifications: **0**
 - Simulation estimator specifications: **1 run and passed; 2 G2 designs rejected pre-run; 1 G2 design registered and pending**
-- Software-only pipeline specifications: **1 completed**
+- Software-only pipeline specifications: **1 completed; 1 registered and pending**
 - Holdout opens: **0**
 
 ## P0001 — G0 deterministic record-and-hash smoke path
@@ -295,3 +295,28 @@ empirical model trials, but gate-level pipeline variants are recorded.
   block are the named methods.
 - **Multiple-testing count:** zero. This diagnoses software portability and
   does not test a scientific parameter or select a stochastic specification.
+
+## C0003 — Smooth sufficient-statistic and estimator software check
+
+- **Registered:** 2026-07-16, before estimator implementation and before any
+  new stochastic call.
+- **Scope:** software-only validation of upper-packed date moments, one-call
+  weighted aggregation, global covariance centering, observable PCA,
+  condition-capped ridge, and pooled homogeneous OLS. Analytic fixtures are
+  deterministic; any stochastic smoke uses only test seeds `1729` or `9191`.
+- **Prediction before implementation:** Moment and explicit-row routes agree;
+  known nonsymmetric ridge orientation is preserved; the positive trace floor
+  shrinks by exactly `1/(1+1e-6)` in the orthogonal fixture; the condition branch
+  lands within its declared cap; PCA centering/sign/L1 rules match analytic
+  scores; pooled algebra recovers its known off-diagonal without division; and
+  every nonfinite, zero-proxy, weak-eigengap, negative-eigenvalue, rank, and
+  condition failure is rejected rather than dropped.
+- **Numerical path:** preregistration amendment A007 and
+  `docs/derivations/GATE_G2_SMOOTH_ESTIMATORS.md` freeze covariance units,
+  packing, aggregation, PCA, and SVD before red tests. No threshold or target is
+  selected from a stochastic result.
+- **Status:** registered and unrun.
+- **Intervals:** not applicable; this is deterministic software validation and
+  makes no effect estimate.
+- **Multiple-testing count:** zero. It implements the already registered S0004
+  estimators and does not add a scientific specification.
