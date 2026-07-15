@@ -353,3 +353,49 @@ outcomes.
   evaluation observation, or holdout observation had been accessed. Only
   deterministic algebra, opened primary papers, local parser/hash checks, and
   read-only hostile audits informed A005.
+
+### A006 — Bind registered Gaussian bytes to the declared target runtime
+
+- **Date:** 2026-07-15.
+- **Reason:** The first hosted test of S0004 implementation commit `682a381`
+  found that NumPy 2.5.1 `Generator.standard_normal` is not byte-identical on
+  the declared M4/arm64 runtime and hosted Linux/x86_64. Test-seed diagnostics
+  established that the exact 150,000-word PCG64DXSM stream matches, 98 of 99
+  Gaussian blocks match, and the only differing value is index 60,328:
+  `0x1.f987e87be94a3p+1` on M4 versus `0x1.f987e87be94a2p+1`
+  on Linux. This one-ULP 3.95-sigma value lies above NumPy's
+  `3.6541528853610088` Ziggurat cutoff; the version-2.5.1 source computes that
+  tail with platform `log1p`. NumPy's documented
+  [stream guarantee](https://numpy.org/doc/stable/reference/random/compatibility.html)
+  is conditional on the same build, environment, and machine, while
+  [PCG64DXSM](https://numpy.org/doc/2.2/reference/random/bit_generators/pcg64dxsm.html)
+  separately guarantees the integer stream for a fixed seed. The
+  [version-2.5.1 source](https://github.com/numpy/numpy/blob/v2.5.1/numpy/random/src/distributions/distributions.c#L137-L177)
+  is the primary implementation evidence for the tail-path diagnosis.
+- **Amendment:** D0048's exact one-call distribution contract, every address,
+  shape, seed, config byte, population target, validation threshold, and
+  inferential rule remain unchanged. Registered resource, validation, and
+  research authority is restricted to CPython 3.13.5, NumPy 2.5.1, little-endian
+  Darwin/arm64 and additionally requires all five test-seed-1729 Gaussian
+  known answers plus the level-noise raw-PCG known answer before any registered
+  seed can be constructed. The fingerprint additionally hashes the Python
+  build/compiler, NumPy build metadata, installed `_generator` binary, and OS
+  release/build. An unknown runtime or failed preflight is a hard stop.
+  Checkpoints and result manifests must record this numerical-runtime
+  fingerprint and reject cross-fingerprint resume.
+- **Hosted-CI effect:** Linux/x86_64 remains a software verification surface,
+  not registered execution authority. It must reproduce the universal raw-PCG
+  known answer, the exact NumPy call trace, and its predeclared test-seed
+  Gaussian known answers; it must also prove that registered-runtime preflight
+  rejects Linux before `SeedSequence`. Platform-specific test hashes may not be
+  used as alternative research realizations or selected after seeing a
+  registered result.
+- **Inference effect:** None. This is a pre-data software-portability correction,
+  not a new statistical specification, seed retry, or multiple test. The one
+  realized G2 sample remains fixed by A005 plus the single authorized target
+  runtime. Cross-platform byte-identical Gaussian replay is not claimed; a
+  future demand for it requires a new design and portable transform before any
+  affected registered access.
+- **Access statement:** Only test seed `1729` was used to diagnose this failure.
+  No resource, validation, research, empirical, evaluation, or holdout stream
+  was accessed. The amendment precedes all registered G2 authority.

@@ -359,3 +359,40 @@ throughput and RSS cost are unmeasured. It enters the already required resource
 benchmark and can block resource admission. The strongest substantive objection
 remains the favorable, unidentified 95% proxy reliability and latent
 decomposition. Neither objection licenses a registered stream yet.
+
+## Seventh verdict: portability repair passes review; production remains locked
+
+Hosted Linux falsified the initial assumption that a locked NumPy
+`standard_normal` call is byte-identical across CPU/OS runtimes. Two staged,
+test-seed-only diagnostics localized the entire 99,000-value discrepancy to one
+ULP at global index 60,328: Linux returned
+`0x1.f987e87be94a2p+1`, while the declared M4 target returned
+`0x1.f987e87be94a3p+1`. The independently regenerated 150,000-word
+PCG64DXSM digest, all preceding values, and all subsequent values matched.
+Because the 3.95-sigma value exceeds NumPy 2.5.1's 3.654 Ziggurat cutoff and
+the source implements that tail with platform `log1p`, the fault is in
+distribution-transform rounding, not addressing, PCG state, or draw count.
+
+Preregistration amendment A006 does not accept two research realizations. It
+retains every A005 key, shape, one-call transform, threshold, and inferential
+rule; freezes both observed runtime-class KAT outcomes for software testing;
+and authorizes registered construction only on one exact Darwin/arm64
+fingerprint after all five M4 Gaussian KATs and the universal raw-PCG KAT pass.
+The fingerprint covers Python and NumPy versions/builds, the installed NumPy
+Generator binary, OS build, architecture, and byte order. Linux must reject
+before `SeedSequence`.
+
+One hostile code audit passed the fail-closed ordering and found no production
+authority in the current slice. A separate research-governance audit accepted
+A006 as a pre-data portability amendment only after three overclaims were
+removed: `Generator` and PCG guarantees are now distinguished, Linux is a
+runtime-class test outcome rather than a locked production runtime, and the
+five KATs are not called proof over unseen tail inputs.
+
+The strongest unresolved objection is now explicit: byte-exact Gaussian replay
+is machine-bound, and sparse KATs can detect known runtime drift but cannot
+prove stability at every unseen libm tail input. Universal cross-machine replay
+would require a new portable-transform specification before registered access.
+No registered G2 seed has been constructed; the resource stream remains locked
+until the repaired slice passes hosted CI and the remaining implementation and
+resource gates.

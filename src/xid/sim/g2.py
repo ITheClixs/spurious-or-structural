@@ -8,8 +8,11 @@ research entry points are added only after their capability chain is tested.
 from __future__ import annotations
 
 import hashlib
+import inspect
 import json
 import math
+import platform
+import sys
 import tomllib
 import weakref
 from dataclasses import dataclass
@@ -75,6 +78,85 @@ class G2Component(IntEnum):
     LEVEL_NOISE = 4
     PROXY_NOISE = 5
     BOOTSTRAP_WEIGHTS = 6
+
+
+@dataclass(frozen=True, slots=True)
+class G2RuntimeFingerprint:
+    """Numerical runtime fields that A006 binds before registered access."""
+
+    python_implementation: str
+    python_version: str
+    numpy_version: str
+    system: str
+    machine: str
+    byteorder: str
+    rng_runtime_sha256: str
+
+
+AUTHORIZED_G2_RUNTIME = G2RuntimeFingerprint(
+    python_implementation="cpython",
+    python_version="3.13.5",
+    numpy_version="2.5.1",
+    system="Darwin",
+    machine="arm64",
+    byteorder="little",
+    rng_runtime_sha256="42e68bc3e6a54914539bbaf2cda979f6863e54a7442c654a098a6755d71052f9",
+)
+
+_RUNTIME_PREFLIGHT_TEST_SEED = 1729
+_AUTHORIZED_STANDARD_NORMAL_HASHES = (
+    (G2Component.FACTOR, "30a773aa28fb77cc545ad16862447c641f018e5293d2a3bac6c4d2407c641747"),
+    (
+        G2Component.FLOW_INNOVATION,
+        "30f87c3b6ccf31deed2c0bb52bd60199fd4cc2427f3f3ab9771064b3091abde9",
+    ),
+    (
+        G2Component.RETURN_INNOVATION,
+        "e709ae59d68183c82c83699a340f2b60646af1492306668e27087538a293520b",
+    ),
+    (
+        G2Component.LEVEL_NOISE,
+        "593fe9b8e8f102bce0e58303a49b26cd713121c38e2219c9005ebaaf1c074091",
+    ),
+    (
+        G2Component.PROXY_NOISE,
+        "28d3f3b5b9e3fe24734d84456e3bbc1304394012fde1dca707c1f6ecbaac8243",
+    ),
+)
+_AUTHORIZED_LEVEL_NOISE_RAW_HASH = (
+    "4b513e5dee9968d985cca87af4640a9e466238afedcf6bece87784ab56ccfdf4"
+)
+
+
+def current_g2_runtime_fingerprint() -> G2RuntimeFingerprint:
+    """Return the numerical-runtime and compiled-Generator identity used by A006."""
+    generator_binary = Path(inspect.getfile(np.random.Generator))
+    runtime_payload = {
+        "mac_ver": platform.mac_ver(),
+        "numpy_build": np.__config__.CONFIG,
+        "numpy_generator_binary_sha256": hashlib.sha256(generator_binary.read_bytes()).hexdigest(),
+        "python_build": platform.python_build(),
+        "python_compiler": platform.python_compiler(),
+        "system_release": platform.release(),
+        "system_version": platform.version(),
+    }
+    runtime_payload_sha256 = hashlib.sha256(
+        json.dumps(
+            runtime_payload,
+            ensure_ascii=True,
+            separators=(",", ":"),
+            sort_keys=True,
+        ).encode("utf-8")
+    ).hexdigest()
+    return G2RuntimeFingerprint(
+        python_implementation=sys.implementation.name,
+        python_version=f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
+        numpy_version=np.__version__,
+        system=platform.system(),
+        machine=platform.machine(),
+        byteorder=sys.byteorder,
+        rng_runtime_sha256=runtime_payload_sha256,
+    )
 
 
 @dataclass(frozen=True, slots=True)
@@ -1241,6 +1323,51 @@ class TestRngNamespace:
         reference = weakref.ref(base, discard)
         _RAW_BASE_REGISTRY[key] = (reference, issuance)
         return base
+
+
+def _array_sha256(values: NDArray[np.generic], *, dtype: str) -> str:
+    packed = values.astype(dtype, copy=False)
+    return _sha256(packed.tobytes(order="C"))
+
+
+def validate_registered_g2_runtime(contract: G2Contract) -> G2RuntimeFingerprint:
+    """Fail closed unless the A006 target runtime reproduces all test KATs.
+
+    This preflight consumes only test seed 1729. Future registered capability
+    constructors must call it before they can construct a registered address.
+    """
+    validate_g2_contract(contract)
+    fingerprint = current_g2_runtime_fingerprint()
+    if fingerprint != AUTHORIZED_G2_RUNTIME:
+        raise RuntimeError(
+            f"runtime {fingerprint!r} is not authorized for registered G2 draws; "
+            f"expected {AUTHORIZED_G2_RUNTIME!r}"
+        )
+    namespace = TestRngNamespace.from_contract(contract, _RUNTIME_PREFLIGHT_TEST_SEED)
+    for component, expected_hash in _AUTHORIZED_STANDARD_NORMAL_HASHES:
+        address = namespace.dgp_address(
+            stream=G2Stream.VALIDATION_SIZE,
+            n_dates=252,
+            panel_index=7,
+            date_index=11,
+            component=component,
+        )
+        values = namespace.draw_standard_normal(address)
+        if _array_sha256(values, dtype="<f8") != expected_hash:
+            raise RuntimeError(
+                f"authorized runtime failed the {component.name} Gaussian known answer"
+            )
+    level_address = namespace.dgp_address(
+        stream=G2Stream.VALIDATION_SIZE,
+        n_dates=252,
+        panel_index=7,
+        date_index=11,
+        component=G2Component.LEVEL_NOISE,
+    )
+    raw = np.random.PCG64DXSM(np.random.SeedSequence(level_address.entropy())).random_raw(150_000)
+    if _array_sha256(raw, dtype="<u8") != _AUTHORIZED_LEVEL_NOISE_RAW_HASH:
+        raise RuntimeError("authorized runtime failed the level-noise PCG64DXSM known answer")
+    return fingerprint
 
 
 @dataclass(frozen=True, slots=True)

@@ -283,6 +283,10 @@ empirical model trials, but gate-level pipeline variants are recorded.
   60 (indices 60,000--60,999); every later block returns to exact equality, so
   generator-state consumption did not diverge. Stage two will compare the
   exact binary64 values inside that block; prediction recorded in D0055.
+- **Final diagnosis:** Hosted run `29454185569` differs at one value only,
+  global index 60,328, by one ULP. The value is in NumPy's `log1p` Ziggurat-tail
+  branch. C0002 therefore supports A006's runtime-conditional byte contract and
+  rejects accepting Linux as an alternative registered realization.
 - **Intervals:** not applicable; exact byte equality and the first divergent
   block are the named methods.
 - **Multiple-testing count:** zero. This diagnoses software portability and

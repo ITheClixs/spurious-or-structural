@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import hashlib
-import platform
-import sys
 from dataclasses import replace
 from pathlib import Path
 from typing import cast
@@ -12,19 +10,54 @@ import pytest
 from numpy.typing import NDArray
 
 from xid.sim.g2 import (
+    AUTHORIZED_G2_RUNTIME,
     G2Component,
+    G2RuntimeFingerprint,
     G2Stream,
     RNGAddress,
     TestRngNamespace,
+    current_g2_runtime_fingerprint,
     load_g2_contract,
+    validate_registered_g2_runtime,
 )
 
 _TEST_SEED = 1729
 _BOOTSTRAP_TEST_SEED = 9191
+_LEVEL_NOISE_RUNTIME_HASHES = {
+    (
+        "cpython",
+        "3.13.5",
+        "2.5.1",
+        "Darwin",
+        "arm64",
+        "little",
+    ): "593fe9b8e8f102bce0e58303a49b26cd713121c38e2219c9005ebaaf1c074091",
+    (
+        "cpython",
+        "3.13.5",
+        "2.5.1",
+        "Linux",
+        "x86_64",
+        "little",
+    ): "6061c2e6e38a7228701bfaa2e77ab7699154948d0bdca9fa6a0d992f6a848b64",
+}
 
 
 def _sha256_bytes(values: NDArray[np.generic], dtype: str) -> str:
     return hashlib.sha256(values.astype(dtype, copy=False).tobytes(order="C")).hexdigest()
+
+
+def _runtime_class(
+    fingerprint: G2RuntimeFingerprint,
+) -> tuple[str, str, str, str, str, str]:
+    return (
+        fingerprint.python_implementation,
+        fingerprint.python_version,
+        fingerprint.numpy_version,
+        fingerprint.system,
+        fingerprint.machine,
+        fingerprint.byteorder,
+    )
 
 
 def _root() -> Path:
@@ -504,6 +537,11 @@ def test_standard_normal_component_known_answers(
     component: G2Component,
     expected_hash: str,
 ) -> None:
+    if component is G2Component.LEVEL_NOISE:
+        expected_hash = _LEVEL_NOISE_RUNTIME_HASHES.get(
+            _runtime_class(current_g2_runtime_fingerprint()),
+            "unsupported-runtime",
+        )
     namespace = TestRngNamespace.from_contract(load_g2_contract(_root()), _TEST_SEED)
     address = namespace.dgp_address(
         stream=G2Stream.VALIDATION_SIZE,
@@ -520,22 +558,11 @@ def test_standard_normal_component_known_answers(
     assert values.flags.c_contiguous
     actual_hash = _sha256_bytes(values, "<f8")
     if actual_hash != expected_hash:
-        flat = values.reshape(-1)
-        chunks = tuple(
-            _sha256_bytes(flat[start : start + 1_000], "<f8")
-            for start in range(0, flat.size, 1_000)
-        )
-        raw = np.random.PCG64DXSM(np.random.SeedSequence(address.entropy())).random_raw(150_000)
         pytest.fail(
             "standard_normal known-answer mismatch; "
-            f"python={sys.version.split()[0]!r}, numpy={np.__version__!r}, "
-            f"platform={platform.platform()!r}, component={component.name!r}, "
-            f"expected={expected_hash!r}, actual={actual_hash!r}, "
-            f"raw150k={_sha256_bytes(raw, '<u8')!r}, "
-            f"first8_hex={tuple(float(value).hex() for value in flat[:8])!r}, "
-            f"chunk1000={chunks!r}, "
-            "indices60000_60999_hex="
-            f"{tuple(float(value).hex() for value in flat[60_000:61_000])!r}"
+            f"runtime={current_g2_runtime_fingerprint()!r}, "
+            f"component={component.name!r}, expected={expected_hash!r}, "
+            f"actual={actual_hash!r}"
         )
     if component is G2Component.FACTOR:
         np.testing.assert_array_equal(
@@ -568,6 +595,29 @@ def test_pcg64dxsm_level_noise_raw_known_answer() -> None:
     assert _sha256_bytes(raw, "<u8") == (
         "4b513e5dee9968d985cca87af4640a9e466238afedcf6bece87784ab56ccfdf4"
     )
+
+
+def test_registered_runtime_preflight_is_fail_closed_and_test_seed_only(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    contract = load_g2_contract(_root())
+    fingerprint = current_g2_runtime_fingerprint()
+    observed_entropy: list[tuple[int, ...]] = []
+    original_seed_sequence = np.random.SeedSequence
+
+    def recording_seed_sequence(entropy: tuple[int, ...]) -> np.random.SeedSequence:
+        observed_entropy.append(tuple(entropy))
+        return original_seed_sequence(entropy)
+
+    monkeypatch.setattr(np.random, "SeedSequence", recording_seed_sequence)
+    if fingerprint == AUTHORIZED_G2_RUNTIME:
+        assert validate_registered_g2_runtime(contract) == AUTHORIZED_G2_RUNTIME
+        assert len(observed_entropy) == 6
+        assert all(entropy[0] == _TEST_SEED for entropy in observed_entropy)
+    else:
+        with pytest.raises(RuntimeError, match="not authorized for registered G2 draws"):
+            validate_registered_g2_runtime(contract)
+        assert observed_entropy == []
 
 
 def test_multinomial_bootstrap_known_answer() -> None:

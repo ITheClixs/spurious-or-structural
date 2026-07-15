@@ -229,17 +229,24 @@ provenance, or filter-once bypass.
   `Cov(r,q)`, both leading PC shares, score alignment, proxy reliability, and
   level-average variance. Hostile reviewers independently reproduced the DGP
   algebra and found maximum discrepancy `0.0`.
-- Current local evidence is 79 targeted G2 tests and 117 repository tests,
+- Current local evidence is 81 targeted G2 tests and 119 repository tests,
   clean Ruff, format, strict mypy, deterministic demo, committed-result drift,
   and `git diff --check`. Every adversarial review used only test seeds `1729`
   and `9191`; no registered G2 seed or realization was accessed.
+- Hosted diagnostics `29453989738` and `29454185569` proved that Linux and M4
+  share the exact level-noise PCG stream and differ at one Gaussian tail value,
+  index 60,328, by one ULP. Preregistration amendment A006 keeps the A005 draw
+  unchanged and makes the exact M4 fingerprint plus five test-seed Gaussian
+  KATs the sole future registered runtime. Linux is test-only and rejects before
+  `SeedSequence`. Independent code and research-governance audits pass the
+  repaired boundary after claim narrowing.
 
 ## In flight
 
-1. Diagnose the sole hosted failure for the G2 contract/RNG/DGP slice: Linux
-   and macOS disagree on the 99,000-value level-noise normal hash. The raw-PCG
-   versus distribution-transform diagnostic is written and must run locally
-   and in hosted CI before any remedy is chosen.
+1. Commit and host-verify the A006 runtime-conditional repair for the G2
+   contract/RNG/DGP slice. Local checks and two hostile audits pass; hosted
+   Linux must now accept its frozen test-only KAT while proving registered
+   preflight rejects before RNG.
 2. Add exact sufficient-statistic, PCA-sign, condition-ridge, and pooled-
    homogeneous estimators test-first with test-only seeds.
 3. Add recovery/checkpoint tests, then repeat hostile review,
@@ -250,10 +257,10 @@ provenance, or filter-once bypass.
 
 - Registered G2 resource, validation, and research streams remain blocked. The
   test-first implementation lane alone is open.
-- Hosted parity is red at commit `682a38152fbbbe971b1c59258a9de98df2151add`,
-  run `29453577345`: 116 tests passed and only the level-noise normal known
-  answer failed. No G2 estimator implementation may begin until the causal
-  layer is identified and the parity contract is repaired.
+- Hosted parity remains red at diagnostic commits `53f4418` and `5882cfa` by
+  design. The exact one-ULP cause is identified and the A006 repair is locally
+  green, but no G2 estimator implementation may begin until the repair's own
+  commit passes hosted CI.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -273,8 +280,10 @@ Read the four ledgers, `docs/redteam/GATE_G2_PRERUN.md`, and the G2 section of
 and S0003 were rejected before RNG; S0004 config
 `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`
 has sealed-surface passes and a hosted-green documentation boundary at commit
-`a5c7f1c` / run `29448917107`; implementation commit `682a381` is locally green
-but hosted run `29453577345` isolates one 99,000-value Gaussian-hash mismatch;
-D0055/C0002 specify the raw-PCG diagnostic; only test-first diagnosis with
-test-only seed `1729` is open." Do not touch empirical
+`a5c7f1c` / run `29448917107`; implementation commit `682a381` exposed one
+hosted Gaussian mismatch; D0055/C0002 and runs `29453989738`/`29454185569`
+localize it to one platform-`log1p` ULP; preregistration amendment A006 and the
+seventh red-team verdict define the locally green, hostile-reviewed repair that
+still needs its own hosted pass. Only test-first work with seeds `1729`/`9191`
+is open." Do not touch empirical
 tape or any G2 resource, validation, or research seed.

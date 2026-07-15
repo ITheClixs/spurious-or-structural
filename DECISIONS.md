@@ -1154,10 +1154,11 @@ the choice, alternatives, and the evidence that would reopen it.
   instead of the M4 value
   `593fe9b8e8f102bce0e58303a49b26cd713121c38e2219c9005ebaaf1c074091`.
   Four smaller, independently addressed component arrays matched. NumPy's
-  compatibility policy guarantees the BitGenerator integer stream only within
-  a fixed environment and gives `Generator` distributions no version-level
-  compatibility guarantee, so changing an expected hash before locating the
-  layer of divergence would erase evidence.
+  `Generator` compatibility policy is conditional on the same build,
+  environment, machine, call sequence, and arguments; `PCG64DXSM` separately
+  guarantees that a fixed seed produces the same integer stream. Changing an
+  expected distribution hash before locating the layer of divergence would
+  therefore erase evidence.
 - **Prediction before diagnostic run:** For the exact level-noise address, Linux
   will reproduce the M4 150,000-word `PCG64DXSM.random_raw` digest
   `4b513e5dee9968d985cca87af4640a9e466238afedcf6bece87784ab56ccfdf4`.
@@ -1176,13 +1177,29 @@ the choice, alternatives, and the evidence that would reopen it.
   run, the prediction is that only one or a few values in indices 60,000--60,999
   differ at the last bits while all neighboring values match, implicating a
   platform math result in a rare slow path.
+- **Diagnostic result, stage two:** Hosted run `29454185569` and the M4 reference
+  differ at exactly one of the isolated 1,000 values: global index 60,328 is
+  `0x1.f987e87be94a2p+1` on Linux and
+  `0x1.f987e87be94a3p+1` on M4, one ULP. Its magnitude exceeds NumPy 2.5.1's
+  `3.6541528853610088` Ziggurat cutoff, and the official source computes that
+  tail through `npy_log1p`; later values remain equal. Root cause is therefore
+  platform libm rounding in the Gaussian tail transform, not PCG state,
+  addressing, array size, or branch consumption.
+- **Remedy:** Preregistration amendment A006 keeps the sealed draw unchanged,
+  makes the raw PCG stream and exact call trace universal CI invariants, records
+  two frozen runtime-class KAT outcomes for test-only verification, and makes
+  the exact declared Darwin/arm64 fingerprint plus its M4 known answers the
+  sole registered execution authority. Unknown fingerprints fail closed before
+  `SeedSequence`.
 - **Rejected:** Accept both full-array hashes, round generated normals, or
   replace NumPy's transform on the strength of one aggregate mismatch. Each
   hides or outruns the causal diagnosis; the last two would also alter the
   A005 execution contract and require a preregistration amendment.
-- **Residual risk:** Even if PCG words match, transform-level differences can
-  propagate through estimators and prevent cross-platform byte-identical
-  artifacts. The eventual remedy must distinguish scientific reproducibility
-  from a machine-local known answer without weakening address provenance.
+- **Residual risk:** Exact Gaussian replay is machine-bound. Five KAT arrays do
+  not prove that every unseen platform-math tail input is stable; they only
+  fail closed on known fingerprint drift. A Linux replication can produce a
+  different sharp-threshold decision and is not interchangeable research
+  evidence. Universal cross-machine replay would require a new portable-
+  transform design before registered access.
 - **Reopen if:** The raw PCG digest differs, the mismatch starts at the first
   normal value, or NumPy/CPU versions differ from the locked environments.
