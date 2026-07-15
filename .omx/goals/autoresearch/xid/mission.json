@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "workflow": "autoresearch-goal",
+  "slug": "xid",
+  "topic": "Determine whether cross-asset price impact is structurally identifiable under latent factor confounding and endogenous order flow, and report the result honestly through gates G0-G8.",
+  "rubric": "Complete the operating brief gates G0-G8 without crossing a failed gate: derive before code, pre-record predictions, recover truth in simulation, diagnose naive-estimator failures, validate identification rank and finite-sample frontiers, preserve a sealed holdout, test theoretical admissibility and execution regret, report every result with named intervals, maintain all session ledgers and red-team memos, stay within the M4 Air compute/data budgets, and finish with green reproducibility checks plus an arXiv-ready paper and demo.",
+  "status": "in_progress",
+  "created_at": "2026-07-15T12:06:11.943Z",
+  "updated_at": "2026-07-15T12:06:16.846Z",
+  "mission_path": ".omx/goals/autoresearch/xid/mission.json",
+  "rubric_path": ".omx/goals/autoresearch/xid/rubric.md",
+  "ledger_path": ".omx/goals/autoresearch/xid/ledger.jsonl",
+  "completion_path": ".omx/goals/autoresearch/xid/completion.json"
+}
