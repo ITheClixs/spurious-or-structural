@@ -267,3 +267,19 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Multiple-testing count:** zero. This is a software validation record inside
   already registered S0004, not a new parameter specification or stochastic
   attempt.
+
+## C0002 — Cross-platform level-noise RNG diagnostic
+
+- **Recorded:** 2026-07-15, after hosted run `29453577345` and before any fix or
+  registered G2 stream access.
+- **Scope:** deterministic test-seed diagnosis of one Linux/macOS known-answer
+  mismatch at the raw-BitGenerator versus Gaussian-transform boundary. Seed
+  `1729` only; no resource, validation, research, or bootstrap realization.
+- **Prediction before hosted run:** the exact 150,000-word PCG64DXSM raw digest
+  matches across platforms, while at least one later 1,000-value Gaussian block
+  differs. A raw mismatch would falsify the transform-only diagnosis.
+- **Outcome:** pending hosted diagnostic evidence.
+- **Intervals:** not applicable; exact byte equality and the first divergent
+  block are the named methods.
+- **Multiple-testing count:** zero. This diagnoses software portability and
+  does not test a scientific parameter or select a stochastic specification.

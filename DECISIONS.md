@@ -1143,3 +1143,38 @@ the choice, alternatives, and the evidence that would reopen it.
 - **Reopen if:** More than one registry write exists, a generic factory or public
   constructor can mint an accepted base, registry entries retain dead arrays,
   or any cross-date/component/phase mixture reaches the deterministic map.
+
+## D0055 — Diagnose the hosted Gaussian mismatch below the distribution boundary
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Commit `682a38152fbbbe971b1c59258a9de98df2151add`
+  passed every local check but hosted Linux run `29453577345` failed one of 117
+  tests: the 99,000-value level-noise `standard_normal` SHA256 was
+  `6061c2e6e38a7228701bfaa2e77ab7699154948d0bdca9fa6a0d992f6a848b64`
+  instead of the M4 value
+  `593fe9b8e8f102bce0e58303a49b26cd713121c38e2219c9005ebaaf1c074091`.
+  Four smaller, independently addressed component arrays matched. NumPy's
+  compatibility policy guarantees the BitGenerator integer stream only within
+  a fixed environment and gives `Generator` distributions no version-level
+  compatibility guarantee, so changing an expected hash before locating the
+  layer of divergence would erase evidence.
+- **Prediction before diagnostic run:** For the exact level-noise address, Linux
+  will reproduce the M4 150,000-word `PCG64DXSM.random_raw` digest
+  `4b513e5dee9968d985cca87af4640a9e466238afedcf6bece87784ab56ccfdf4`.
+  The first mismatch will occur only in a later 1,000-value block of the normal
+  transform, consistent with an architecture-dependent rare slow path rather
+  than address packing or PCG state initialization.
+- **Decision:** Add a test-seed-only raw-stream known answer plus failure-only
+  platform, raw-digest, first-value, and chunk-digest telemetry. Run it on the
+  same locked macOS and hosted-Linux environments before changing production
+  code, the sealed call, or the acceptance rule.
+- **Rejected:** Accept both full-array hashes, round generated normals, or
+  replace NumPy's transform on the strength of one aggregate mismatch. Each
+  hides or outruns the causal diagnosis; the last two would also alter the
+  A005 execution contract and require a preregistration amendment.
+- **Residual risk:** Even if PCG words match, transform-level differences can
+  propagate through estimators and prevent cross-platform byte-identical
+  artifacts. The eventual remedy must distinguish scientific reproducibility
+  from a machine-local known answer without weakening address provenance.
+- **Reopen if:** The raw PCG digest differs, the mismatch starts at the first
+  normal value, or NumPy/CPU versions differ from the locked environments.

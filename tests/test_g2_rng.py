@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import hashlib
+import platform
+import sys
 from dataclasses import replace
 from pathlib import Path
 from typing import cast
@@ -19,6 +21,10 @@ from xid.sim.g2 import (
 
 _TEST_SEED = 1729
 _BOOTSTRAP_TEST_SEED = 9191
+
+
+def _sha256_bytes(values: NDArray[np.generic], dtype: str) -> str:
+    return hashlib.sha256(values.astype(dtype, copy=False).tobytes(order="C")).hexdigest()
 
 
 def _root() -> Path:
@@ -512,9 +518,23 @@ def test_standard_normal_component_known_answers(
     assert values.shape == namespace.contract.draw_shape(component)
     assert values.dtype == np.float64
     assert values.flags.c_contiguous
-    assert hashlib.sha256(values.astype("<f8", copy=False).tobytes(order="C")).hexdigest() == (
-        expected_hash
-    )
+    actual_hash = _sha256_bytes(values, "<f8")
+    if actual_hash != expected_hash:
+        flat = values.reshape(-1)
+        chunks = tuple(
+            _sha256_bytes(flat[start : start + 1_000], "<f8")
+            for start in range(0, flat.size, 1_000)
+        )
+        raw = np.random.PCG64DXSM(np.random.SeedSequence(address.entropy())).random_raw(150_000)
+        pytest.fail(
+            "standard_normal known-answer mismatch; "
+            f"python={sys.version.split()[0]!r}, numpy={np.__version__!r}, "
+            f"platform={platform.platform()!r}, component={component.name!r}, "
+            f"expected={expected_hash!r}, actual={actual_hash!r}, "
+            f"raw150k={_sha256_bytes(raw, '<u8')!r}, "
+            f"first8_hex={tuple(float(value).hex() for value in flat[:8])!r}, "
+            f"chunk1000={chunks!r}"
+        )
     if component is G2Component.FACTOR:
         np.testing.assert_array_equal(
             values[:6],
@@ -530,6 +550,22 @@ def test_standard_normal_component_known_answers(
                 dtype=np.float64,
             ),
         )
+
+
+def test_pcg64dxsm_level_noise_raw_known_answer() -> None:
+    namespace = TestRngNamespace.from_contract(load_g2_contract(_root()), _TEST_SEED)
+    address = namespace.dgp_address(
+        stream=G2Stream.VALIDATION_SIZE,
+        n_dates=252,
+        panel_index=7,
+        date_index=11,
+        component=G2Component.LEVEL_NOISE,
+    )
+    raw = np.random.PCG64DXSM(np.random.SeedSequence(address.entropy())).random_raw(150_000)
+
+    assert _sha256_bytes(raw, "<u8") == (
+        "4b513e5dee9968d985cca87af4640a9e466238afedcf6bece87784ab56ccfdf4"
+    )
 
 
 def test_multinomial_bootstrap_known_answer() -> None:

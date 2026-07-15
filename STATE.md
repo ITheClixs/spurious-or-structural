@@ -236,8 +236,10 @@ provenance, or filter-once bypass.
 
 ## In flight
 
-1. Commit and host-verify the G2 contract/RNG/DGP implementation slice without
-   changing the sealed config or exposing production authority.
+1. Diagnose the sole hosted failure for the G2 contract/RNG/DGP slice: Linux
+   and macOS disagree on the 99,000-value level-noise normal hash. The raw-PCG
+   versus distribution-transform diagnostic is written and must run locally
+   and in hosted CI before any remedy is chosen.
 2. Add exact sufficient-statistic, PCA-sign, condition-ridge, and pooled-
    homogeneous estimators test-first with test-only seeds.
 3. Add recovery/checkpoint tests, then repeat hostile review,
@@ -248,6 +250,10 @@ provenance, or filter-once bypass.
 
 - Registered G2 resource, validation, and research streams remain blocked. The
   test-first implementation lane alone is open.
+- Hosted parity is red at commit `682a38152fbbbe971b1c59258a9de98df2151add`,
+  run `29453577345`: 116 tests passed and only the level-noise normal known
+  answer failed. No G2 estimator implementation may begin until the causal
+  layer is identified and the parity contract is repaired.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -267,7 +273,8 @@ Read the four ledgers, `docs/redteam/GATE_G2_PRERUN.md`, and the G2 section of
 and S0003 were rejected before RNG; S0004 config
 `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`
 has sealed-surface passes and a hosted-green documentation boundary at commit
-`a5c7f1c` / run `29448917107`; the contract/RNG/DGP slice is locally verified
-with 79 targeted tests but still needs its own commit and hosted CI; only
-test-first implementation with test-only seeds is open." Do not touch empirical
+`a5c7f1c` / run `29448917107`; implementation commit `682a381` is locally green
+but hosted run `29453577345` isolates one 99,000-value Gaussian-hash mismatch;
+D0055/C0002 specify the raw-PCG diagnostic; only test-first diagnosis with
+test-only seed `1729` is open." Do not touch empirical
 tape or any G2 resource, validation, or research seed.
