@@ -1,0 +1,15 @@
+{
+  "assets": [
+    "BTC-PERP",
+    "ETH-PERP"
+  ],
+  "bins_per_asset": 32,
+  "data_sha256": "0c2792e71d5807b447bf9b0140eeecccd4f7b06590a9d825ab12eeaa4f03c964",
+  "evidence_scope": "software-smoke-only",
+  "gate": "G0",
+  "interval_status": "not-applicable-no-statistical-claim",
+  "research_claim": "none",
+  "row_count": 64,
+  "schema_version": 1,
+  "seed": 20260715
+}

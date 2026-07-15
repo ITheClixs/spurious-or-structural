@@ -1,0 +1,91 @@
+# Gate register
+
+The principal's operating brief is authoritative. This file is the compact
+session routing surface; it does not weaken any requirement in that brief.
+
+## Cross-gate invariants
+
+- Gates are sequential. A later gate stays locked until the current gate has a
+  written pass review and red-team memo.
+- Derivations and quantitative predictions precede research code and runs.
+- No estimator touches empirical data before recovering known truth at its
+  actual planned `N`, `T`, and regime contrast.
+- Every inferential number has an interval and a named method.
+- Every failed specification is logged.
+- The holdout is opened once, in G7, with no post-open tuning.
+- Three failed attempts at one gate trigger a blocker diagnosis and escalation.
+
+## G0 — Environment and compute plan (open)
+
+Required evidence:
+
+1. The repository is scaffolded to the project layout.
+2. `make demo` runs a genuine deterministic end-to-end skeleton in less than
+   300 seconds without accessing external data or making a research claim.
+3. `docs/COMPUTE_PLAN.md` shows the arithmetic for RAM below 4 GB, steady disk
+   at or below 25 GB, transient disk at or below 30 GB, and lifetime downloads
+   at or below 400 GB. Every phase has an expected and hard wall-clock budget.
+4. Long work is chunked, checkpointed, and resumable.
+5. The dependency lock is reproducible; Ruff, formatting, mypy, pytest, and the
+   demo pass locally from the locked environment.
+6. Hosted CI is green for the reviewed commit.
+7. `docs/redteam/GATE_G0.md` attacks the result, all living ledgers are current,
+   and the committed worktree is resumable.
+
+Pass only when all seven items have fresh evidence. Local parity without a
+hosted green run is explicitly not a full pass.
+
+## G1 — Derivation (locked)
+
+Derive the probability limits of OLS and noisy-proxy-controlled OLS in terms of
+the structural parameters. Verify with about `10^7` streamed samples. Maximum
+elementwise relative discrepancy must be below `10^-3`.
+
+## G2 — Premise test / kill switch (locked)
+
+Faithfully implement the strongest published own-flow-plus-factor-control
+opponent. In a defensibly calibrated parameter region, an off-diagonal sign
+must flip or have more than 50% error, with the error greater than three named
+bootstrap standard errors. Otherwise the premise is dead and the project stops
+for a null write-up.
+
+## G3 — Data reality (locked)
+
+Inspect actual bytes and schemas for exactly the preregistered discovery files;
+document timestamps, gaps, format changes, access restrictions, sizes, and
+look-ahead checks. The resulting sampling plan must remain inside the compute
+budget, and the real-data demo must remain below five minutes.
+
+## G4 — Identification proof (locked)
+
+Write the moment function and compute its true-parameter Jacobian in simulation.
+Report the full singular spectrum. Pass requires
+`sigma_min(J) / sigma_max(J) > 10^-8`, recovery inside a named bootstrap
+interval, a mapped failure frontier, and evidence that the planned empirical
+operating point lies inside it.
+
+## G5 — Scale the open problem (locked)
+
+Numerically demonstrate at least two distinct failure modes of the naive
+estimator before abandoning it. Design the replacement from that diagnosis,
+then make it pass the G4 criteria at target `N`. Publish the strongest objection
+that remains unanswered.
+
+## G6 — Train empirics (locked)
+
+Estimate on train only. Report all diagnostics and intervals. Keep the holdout
+sealed. Use the complete specification-trial count for the preregistered
+multiple-testing correction.
+
+## G7 — Falsification and economics (locked)
+
+Derive theoretical admissibility from opened primary sources. Compare estimator
+distances to the admissible set, bootstrap their differences, and calculate
+round-trip manipulation profit. Open the holdout once. Evaluate liquidation
+regret in known-truth Monte Carlo and genuinely external forced-liquidation
+events without circular simulation.
+
+## G8 — Write-up (locked)
+
+Ship the honest claim supported by the gates: paper, 90-second README,
+reproducible package, small committed results, and a deck of at most ten slides.

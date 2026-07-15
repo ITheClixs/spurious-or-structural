@@ -1,0 +1,18 @@
+# Assumption register
+
+Statuses are `untested`, `tested`, or `violated`. A violation that the design
+depends on triggers the operating brief's escalation rule.
+
+| ID | Assumption | Status | Test | What breaks if false |
+| --- | --- | --- | --- | --- |
+| A001 | Required compressed inputs average at most 150 MB per symbol-day over the eventual universe. | untested | G3 byte inventory across high-volume, median, tail, and delisted contracts. | The 348.6 GB acquisition plan fails; sample must be redesigned before bulk access. |
+| A002 | The minimal 250 ms feature basis compresses to at most 50 bytes per symbol-bin. | untested | G3 representative Parquet benchmark after lossless column pruning. | The 10.4 GB lake and 25 GB steady-state plan fail. |
+| A003 | No single archive needed by the design exceeds 4 GB, or the source supports true streamed/range decompression. | untested | G3 `Content-Length`, archive, and decompressor tests. | The one-symbol-day transient-disk contract fails. |
+| A004 | Free historical trades, multi-level depth, liquidation, and contract metadata exist with usable timestamps. | untested | G3 byte-level inventory. | The intended empirical design or venue is infeasible. |
+| A005 | Candidate regimes generate differential, non-proportional variance shifts. | untested | G4 population Jacobian and G6 pilot contrast spectra. | Heteroskedasticity supplies no identifying variation. |
+| A006 | Structural `Lambda` is stable across the selected regimes. | untested | Regime interaction/stability tests designed before G6. | The constant-parameter identification model is misspecified. |
+| A007 | Published primary sources contain enough numerical information to calibrate G2 without opening local tape. | untested | Bounded literature extraction after G1. | G2 cannot pass before G3 under the current chronology. |
+| A008 | Twelve independent training dates per regime can place the operating point inside the G4 power frontier. | untested | G4 finite-sample frontier with date-cluster dependence. | Intraday sample size cannot rescue weak event-level variation; sample or `N` must change. |
+| A009 | Genuine forced-liquidation events with known size, side, and timestamp can be reserved for G7. | untested | G3 source inventory, without opening event outcomes. | The proposed real-event execution validation is unavailable. |
+| A010 | Using 60% of cold throughput plus a 25% time margin is conservative for sustained M4 Air work. | untested | Pre-phase warm/cold benchmarks and RSS monitoring. | Phase wall budgets understate thermal throttling. |
+| A011 | The G0 deterministic generator is byte-stable across two clean runs with the locked interpreter. | tested | Two clean post-fix runs on 2026-07-15 produced identical JSONL, summary, and `_SUCCESS` bytes; SHA256 values matched. | Cross-platform CI still tests whether the guarantee survives a clean Linux runner. |

@@ -1,0 +1,8 @@
+[demo]
+schema_version = 1
+seed = 20260715
+bins_per_asset = 32
+assets = ["BTC-PERP", "ETH-PERP"]
+
+[output]
+directory = "results/demo"
