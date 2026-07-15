@@ -8,7 +8,7 @@ empirical model trials, but gate-level pipeline variants are recorded.
 ## Trial counts
 
 - Empirical specifications: **0**
-- Simulation estimator specifications: **0**
+- Simulation estimator specifications: **1 registered, 0 run**
 - Software-only pipeline specifications: **1 completed**
 - Holdout opens: **0**
 
@@ -40,3 +40,26 @@ empirical model trials, but gate-level pipeline variants are recorded.
   for exact candidate SHA `3abbad1dc3bfa6114434ce2bb5d2de0140b0dafa`.
 - **Multiple-testing count:** excluded from empirical/model trial counts because
   no effect, model, or hypothesis is evaluated.
+
+## S0001 — G1 simultaneous-system probability-limit recovery
+
+- **Registered:** 2026-07-15, after the derivation and before implementation or
+  any random draw.
+- **Scope:** simulation validation of the two derived population regression
+  coefficients; no empirical data and no structural estimator.
+- **Configuration:** `configs/g1.toml`; `N=30`, `K=3`, `T=10,000,000`; one
+  frozen master seed; 100 independently keyed 100,000-row Gaussian shards;
+  float64 count/mean/centered-scatter checkpoints; uncontrolled OLS and OLS
+  controlling for `fhat=f+epsilon`.
+- **Prediction:** `docs/predictions/GATE_G1.md`; combined analytic target hash
+  `80e6026821d67708587eb3abe606c05a7f58c5e4499430e6db72ae6d36faee1d`;
+  pass iff the maximum elementwise relative discrepancy across both matrices is
+  strictly below `10^-3`.
+- **Interval:** classical homoskedastic Student-t coefficient intervals with a
+  95% Bonferroni family-wise correction across all 1,800 coefficients.
+- **Status:** registered, not run. No simulation implementation exists at this
+  point in Git history.
+- **Multiple-testing count:** included as one simulation specification. Crash
+  recovery with identical validated shards remains the same attempt; changing
+  the seed, sample size, fixture, target, accumulator, or metric creates a new
+  attempt.

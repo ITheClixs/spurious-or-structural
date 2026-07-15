@@ -6,14 +6,17 @@ Last updated: 2026-07-15
 
 **G0 — Environment and compute plan: passed on 2026-07-15.**
 
-**G1 — The derivation: open, not started.** No G1 estimator or simulation code
-exists. The next session begins with algebra and a quantitative pre-run
-prediction, not implementation.
+**G1 — The derivation: in progress.** Both probability limits are derived and
+independently audited. The `N=30`, `K=3`, `T=10^7` numerical specification,
+hard discrepancy metric, target hashes, interval method, and checkpoint
+contract are frozen in `configs/g1.toml` and
+`docs/predictions/GATE_G1.md`. No G1 random draw or simulation implementation
+exists yet.
 
 ## Session objective
 
-Completed: bootstrap the research repository and pass G0 without writing any
-estimator or accessing any external market data.
+Completed this session: derive both G1 probability limits and register a
+quantitative validation prediction before implementation or simulation.
 
 ## Current evidence
 
@@ -35,21 +38,31 @@ estimator or accessing any external market data.
 - `data/manifest.json` records zero external bytes and no datasets.
 - Compute and sampling figures remain conditional on G3 archive-size and
   compression measurements.
+- `docs/derivations/GATE_G1_PROBABILITY_LIMITS.md` derives uncontrolled and
+  noisy-proxy-controlled population coefficients from the simultaneous reduced
+  form. Independent audits agreed on the matrix orientation, confounding term,
+  simultaneity term, and limiting cases.
+- Deterministic formula evaluation at the frozen G1 fixture gives population
+  target ranges `[0.7724315313, 0.9138344678]` and
+  `[0.7719001593, 0.9201821590]`. The combined ten-decimal target hash is
+  `80e6026821d67708587eb3abe606c05a7f58c5e4499430e6db72ae6d36faee1d`.
+- No G1 random number has been drawn. All G1 numerical values currently in the
+  repository are deterministic population calculations or design constants.
 
 ## In flight
 
-1. Read the G1 criteria and create the symbolic derivation artifact before any
-   simulation code.
-2. Derive `plim Lambda_hat_OLS` from the simultaneous reduced form, with matrix
-   orientation and covariance assumptions explicit.
-3. Derive the noisy-proxy-controlled probability limit using partialled-out
-   covariance matrices and state its limiting cases.
-4. Record the analytic predictions and only then write the chunked `10^7`
-   simulation verifier under the eight-hour hard machine budget.
+1. Write the G1 regression tests before implementation: fixture invariants,
+   analytic equivalence, transpose/missing-term mutations, centered-scatter
+   merge, structural equations, checkpoint validation, and limiting cases.
+2. Add only the pinned NumPy/SciPy dependencies required by the frozen verifier.
+3. Implement the streamed sufficient-statistic runner and pass the small test
+   suite without drawing the frozen G1 sample.
+4. Commit the implementation so checkpoint metadata can bind to a clean Git
+   SHA; then run the distinct-seed timing/RSS shard before the frozen run.
 
 ## Blockers
 
-- No current blocker prevents starting the G1 derivation.
+- No current blocker prevents starting the test-first G1 implementation.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -64,7 +77,6 @@ estimator or accessing any external market data.
 
 ## Cold-resume next action
 
-Read the four ledgers and the G1 section of `docs/GATES.md`, then state: "derive
-both probability limits and their limiting-case predictions before writing the
-simulation verifier." Do not implement an estimator or access external market
-data during the derivation step.
+Read the four ledgers and the G1 section of `docs/GATES.md`, then state: "lock
+the G1 derivation in failing tests before implementing the streamed verifier."
+Do not run the frozen sample before the implementation is tested and committed.

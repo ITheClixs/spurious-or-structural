@@ -1,0 +1,75 @@
+[experiment]
+schema_version = 1
+master_seed = 2026071501
+benchmark_seed = 2026071599
+n_assets = 30
+n_factors = 3
+n_samples = 10_000_000
+shard_size = 100_000
+expected_wall_seconds = 10_800
+hard_stop_wall_seconds = 28_800
+phase_rss_abort_bytes = 1_500_000_000
+absolute_rss_abort_bytes = 3_700_000_000
+
+[paths]
+checkpoint_directory = "data/checkpoints/g1"
+output_directory = "results/g1"
+
+[lambda]
+base = 0.75
+row_scale = 0.08
+column_scale = 0.06
+diagonal_shift = 0.02
+index_denominator = 31.0
+
+[feedback]
+base = 0.00012
+row_scale = 0.00004
+column_scale = 0.00003
+diagonal_shift = 0.012
+index_denominator = 31.0
+
+[gamma]
+base = 0.30
+sine_amplitude = 0.06
+factor_scale = 0.02
+sine_denominator = 7.0
+
+[delta_f]
+base = 0.45
+cosine_amplitude = 0.08
+factor_scale = 0.03
+cosine_denominator = 9.0
+factor_index_offset = 1.0
+
+[sigma_f]
+matrix = [
+  [1.00, 0.20, 0.10],
+  [0.20, 0.80, 0.15],
+  [0.10, 0.15, 0.65],
+]
+
+[sigma_epsilon]
+matrix = [
+  [0.35, 0.05, 0.03],
+  [0.05, 0.30, 0.04],
+  [0.03, 0.04, 0.25],
+]
+
+[sigma_u]
+variance = 0.05
+distance_decay = 0.25
+
+[sigma_v]
+variance = 0.30
+distance_decay = 0.15
+
+[validation]
+relative_tolerance = 0.001
+familywise_confidence = 0.95
+coefficient_count = 1800
+analytic_round_digits = 10
+ols_target_sha256 = "e20709d129b00561cdefc69bb361cd35550665125ed56604456344d2ea6cd854"
+proxy_target_sha256 = "c4dfb1bc3aca138cb631ba2ff90e129f249c6aa2b15aba3f57cc7f0f0c466995"
+combined_target_sha256 = "80e6026821d67708587eb3abe606c05a7f58c5e4499430e6db72ae6d36faee1d"
+

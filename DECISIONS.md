@@ -129,3 +129,65 @@ the choice, alternatives, and the evidence that would reopen it.
   remain untested and are explicit G3/phase stop conditions, not silent facts.
 - **Reopen if:** The G0 artifacts or lock are later shown not to reproduce from
   this commit.
+
+## D0010 — State the covariance restriction instead of hiding it
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The requested G1 probability limits cannot be expressed using
+  only `Sigma_f`, `Sigma_u`, and `Sigma_v` if contemporaneous shock
+  cross-covariances are unrestricted. Silent zeroing would make the derivation
+  look more general than it is.
+- **Decision:** Derive G1 under explicit mutual zero-covariance assumptions for
+  `f`, `u`, `v`, and proxy noise. Independence is imposed only in the Gaussian
+  validation fixture. State that empirical use requires testing or extending
+  this restriction.
+- **Rejected:** Add unnamed cross-covariances to the formulas. They are not among
+  the brief's primitive parameters and would change the stated problem.
+- **Reopen if:** A later structural specification explicitly parameterizes the
+  cross-covariances.
+
+## D0011 — Validate at the declared matrix dimension
+
+- **Date:** 2026-07-15
+- **Diagnosis:** A scalar or four-asset check can catch algebraic mistakes but
+  does not expose transpose errors, matrix proxy reliability, or the flow
+  conditioning expected near the planned `N=30`, `K=3` operating point.
+- **Decision:** Freeze one `N=30`, `K=3`, `T=10^7` Gaussian fixture with 100
+  independently keyed shards. Every analytic target stays above 0.7719 in
+  absolute value, while omitted confounding, omitted simultaneity, transpose,
+  and scalar-reliability mutations all breach the `10^-3` gate tolerance.
+- **Rejected:** Use a hand-computable bivariate fixture as the only G1 run. It
+  would make the gate easier without validating the matrix operations that
+  downstream work depends on.
+- **Reopen if:** The pre-run timing shard violates the 1.5 GB phase RSS or
+  eight-hour wall-clock contract; any redesign is a new logged specification.
+
+## D0012 — Use sufficient statistics, not retained simulated rows
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Ten million rows are needed only to estimate second moments;
+  retaining them adds disk and memory pressure without adding information to
+  the G1 regression.
+- **Decision:** Checkpoint immutable shard count/mean/centered-scatter records
+  and merge them in fixed order with the Chan--Golub--LeVeque identity. Bind
+  each shard to config hash, code SHA, NumPy version, RNG key, and payload hash.
+- **Rejected:** Store generated observations or sum separately demeaned shard
+  scatters. The former wastes resources; the latter drops between-shard
+  variation and changes the estimator.
+- **Reopen if:** A later gate requires path-dependent simulated outputs rather
+  than second moments.
+
+## D0013 — Name the interval justified by the frozen DGP
+
+- **Date:** 2026-07-15
+- **Diagnosis:** G1 needs intervals, but importing later empirical HAC or
+  bootstrap machinery would obscure that this fixture is IID and jointly
+  Gaussian.
+- **Decision:** Report classical homoskedastic Student-t intervals with a 95%
+  Bonferroni family-wise correction across both 30-by-30 matrices. Use the full
+  `[q, fhat]` design covariance for proxy standard errors. Pin NumPy and SciPy
+  only when the test-first implementation begins.
+- **Rejected:** Reuse unadjusted marginal intervals or claim G1's Gaussian
+  intervals apply to dependent market data.
+- **Reopen if:** The simulation DGP is amended away from IID joint Gaussianity
+  before any draw; that amendment is a new specification.
