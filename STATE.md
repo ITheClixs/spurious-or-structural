@@ -73,11 +73,17 @@ that exact provenance before hosted verification.
   `8a25de8d3cd268284157df20ef3190d5519b714574e90a17c79729462e086a2b`,
   and the raw frozen-config digest is
   `2a71f58d1eec7eb39e68e7333ce5cb385a3fcdc85466ee234d334299c8886efd`.
+- Hosted CI run `29422105528` failed before any stochastic command because one
+  Linux LAPACK entry differed between the two analytic paths by
+  `2.24931185e-13`, exceeding the Mac-derived test tolerance `2e-13` while
+  remaining below the production preflight bound `5e-13`. The cross-platform
+  regression is being aligned to the already implemented `5e-13` bound; this
+  changes no formula, target hash, seed, simulation, or gate tolerance.
 
 ## In flight
 
-1. Push the implementation boundary plus this ledger record and require hosted
-   CI success before stochastic research execution.
+1. Commit and push the cross-platform analytic-test tolerance repair, then
+   require hosted CI success before stochastic research execution.
 2. Run one 100,000-row timing/RSS shard using only benchmark seed `2026071599`.
 3. If the benchmark satisfies A013, run the single frozen `10^7` stream; do not
    alter the fixture, target, seed, metric, or tolerance in response to output.

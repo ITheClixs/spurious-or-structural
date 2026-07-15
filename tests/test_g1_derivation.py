@@ -59,8 +59,8 @@ def test_primitive_bias_and_reduced_form_covariance_paths_agree() -> None:
     primitive = analytic_targets(fixture)
     reduced_form = analytic_targets_via_reduced_form(fixture)
 
-    np.testing.assert_allclose(primitive.ols, reduced_form.ols, rtol=0.0, atol=2e-13)
-    np.testing.assert_allclose(primitive.controlled, reduced_form.controlled, rtol=0.0, atol=2e-13)
+    np.testing.assert_allclose(primitive.ols, reduced_form.ols, rtol=0.0, atol=5e-13)
+    np.testing.assert_allclose(primitive.controlled, reduced_form.controlled, rtol=0.0, atol=5e-13)
 
 
 def test_preregistered_fixture_detects_missing_terms_and_transpose() -> None:

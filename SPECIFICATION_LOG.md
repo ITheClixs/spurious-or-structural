@@ -73,6 +73,10 @@ empirical model trials, but gate-level pipeline variants are recorded.
   `8a25de8d3cd268284157df20ef3190d5519b714574e90a17c79729462e086a2b`,
   config SHA256
   `2a71f58d1eec7eb39e68e7333ce5cb385a3fcdc85466ee234d334299c8886efd`.
+- **Hosted software check:** run `29422105528` stopped before stochastic work on
+  a `2.24931185e-13` Linux-versus-Mac algebra-path rounding difference. The
+  cross-platform software assertion was aligned from `2e-13` to the existing
+  production preflight bound `5e-13`. S0001 remains registered and unrun.
 - **Multiple-testing count:** included as one simulation specification. Crash
   recovery with identical validated shards remains the same attempt; changing
   the seed, sample size, fixture, target, accumulator, or metric creates a new

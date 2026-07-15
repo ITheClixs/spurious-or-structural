@@ -281,3 +281,19 @@ the choice, alternatives, and the evidence that would reopen it.
   That would leave no independently reproducible implementation boundary.
 - **Reopen if:** Hosted CI fails this boundary; repair code only under a new
   logged implementation commit before any registered draw.
+
+## D0019 — Bound algebraic equivalence above observed LAPACK rounding
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Hosted run `29422105528` found a single uncontrolled-target
+  entry differing by `2.24931185e-13` between the primitive-bias and full
+  reduced-form paths. The local Accelerate build differed by at most
+  `1.72e-13`; both are rounding-level deviations from differently ordered dense
+  solves, not target or formula disagreements.
+- **Decision:** Use the production preflight's existing absolute equivalence
+  bound `5e-13` in the cross-platform regression test. Keep the ten-decimal
+  target hashes and `10^-3` simulation gate unchanged.
+- **Rejected:** Change matrix formulas to force operation ordering, or weaken
+  the scientific gate. The former would destroy an independent-path check; the
+  latter is unrelated by roughly nine orders of magnitude.
+- **Reopen if:** Any platform exceeds `5e-13` or changes a sealed target hash.
