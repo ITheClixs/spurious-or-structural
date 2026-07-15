@@ -56,11 +56,46 @@ completed successfully.
 
 ## G2 — Premise test / kill switch (open)
 
-Faithfully implement the strongest published own-flow-plus-factor-control
-opponent. In a defensibly calibrated parameter region, an off-diagonal sign
+Operationalize the strongest published evidence without inventing a paper that
+does not exist: CCZ publishes integrated multi-level and cross-sectional-factor
+specifications separately, not one combined estimator. S0004 therefore uses a
+deliberately strengthened integrated-OFI-plus-proxy hybrid as the primary
+observable opponent, reconstructs all six published equations under frozen
+omitted numerical choices, and makes published `CI_I` a separate binding veto.
+In a defensibly calibrated parameter region, an off-diagonal sign
 must flip or have more than 50% error, with the error greater than three named
-bootstrap standard errors. Otherwise the premise is dead and the project stops
-for a null write-up.
+bootstrap standard errors. A premise-killing null additionally requires a
+sharp, adequately powered bound over the source-compatible class; a single
+conditional positive fixture is not a necessary test of that whole class.
+
+Pre-implementation status on 2026-07-15: S0002 and S0003 were rejected before
+any RNG access. S0004 is derived and registered but not yet executable. Its
+narrow claim uses the Capponi--Cont one-minute observable commonality, `B = 0`,
+diagonal sensitivity `0.29`, and homogeneous off-diagonal sensitivity
+`0.0029`--`0.0046`. A measured integrated-top-ten-OFI proxy-control ridge, an
+oracle-flow condition ridge, and a globally centered pooled homogeneous OLS
+must all satisfy
+`abs(error) - 0.5*abs(truth) > 3*bootstrap_se` across all 17 frozen grid points.
+The published `CI_I` reconstruction supplies a separate binding veto at the
+upper endpoint. Smooth validation uses a 459-event null-grid union and a
+51-event actual-alternative power intersection. The raw population-target
+SHA256 is
+`f13adcff4259773485ca5952d23ae923d3c501c84d4edb102c1886460ada4a59`;
+the independent 12-decimal semantic SHA256 is
+`f437f3308d92e5035abfed796112502a90daf281a585e8cf1a5013bd4fed511a`.
+The post-hostile-review raw schema-3 config SHA256 is
+`f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`;
+all earlier G2 execution clauses are historical and non-executable under A005.
+Three independent sealed-surface reviews reproduced every A005 digest and
+found no blocker. The contract is admitted only to the clean commit/push and
+hosted-CI boundary; G2 implementation and every registered stream remain
+locked until their later prerequisites.
+
+S0004 is a sufficient one-sided test for a conditional positive result, not a
+necessary test of every source-compatible decomposition. Its failure leaves G2
+unpassed and all later gates locked; it does not activate the premise-dead
+branch. That branch requires the separately preregistered sharp
+source-compatible upper bound described above.
 
 ## G3 — Data reality (locked)
 

@@ -1,0 +1,523 @@
+schema_version = 3
+design_id = "S0004"
+gate = "G2"
+description = "Label-invariant confounding premise test against observable integrated-OFI, oracle no-strawman, and published CI_I opponents."
+population_targets_file = "configs/g2_population_targets.json"
+population_targets_sha256 = "f13adcff4259773485ca5952d23ae923d3c501c84d4edb102c1886460ada4a59"
+population_targets_semantic_round_digits = 12
+population_targets_semantic_rounding = "python_round_half_even_decimal_places"
+population_targets_semantic_serialization = "sorted_keys_compact_utf8_allow_nan_false_one_lf"
+population_targets_semantic_sha256 = "f437f3308d92e5035abfed796112502a90daf281a585e8cf1a5013bd4fed511a"
+
+[dimensions]
+n_assets = 30
+n_factors = 1
+n_levels = 10
+n_dates = 252
+bins_per_date = 330
+
+[numerics]
+finite_required = true
+invalid_validation_policy = "any_nonfinite_input_statistic_coefficient_bootstrap_estimate_interval_or_loss_any_required_full_rank_or_convergence_failure_any_unlicensed_eigendecomposition_or_any_declared_fail_cell_or_fail_response_cell_outcome_immediately_fails_the_entire_validation_license_no_panel_cell_response_or_replicate_is_dropped_or_relabelled_as_a_nonpass"
+invalid_research_policy = "any_invalid_fit_or_summary_fails_g2_and_forbids_success_publication"
+ridge_schur_symmetrization = "one_half_s_plus_s_transpose"
+ridge_negative_eigenvalue_roundoff_tolerance = "after_eigvalsh_fail_if_largest_eigenvalue_nonfinite_or_at_or_below_zero_tolerance_100_times_machine_epsilon_times_max_1_abs_largest_eigenvalue_values_in_closed_minus_tolerance_to_zero_are_accepted_as_roundoff_but_raw_values_are_retained_in_condition_penalty_formula_and_regularized_solve_more_negative_values_fail_once_symmetrized_schur_matrix_is_never_projected"
+ridge_post_regularization_condition_check = "fail_cell_if_smin_plus_penalty_nonfinite_or_at_or_below_zero_or_if_smax_plus_penalty_over_smin_plus_penalty_exceeds_condition_cap_times_one_plus_1000_times_machine_epsilon"
+pooled_slope_symmetrization = "one_half_s_plus_s_transpose"
+pooled_rank_tolerance = "machine_epsilon_times_three_times_largest_singular_value"
+pooled_condition_number_max = 1000000000000.0
+pooled_failure_rule = "fail_if_nonfinite_nonpositive_global_weight_mass_smallest_singular_value_at_or_below_rank_tolerance_condition_number_above_cap_or_numpy_solve_fails"
+
+[dependence]
+innovation_distribution = "gaussian"
+confirmatory_ar1 = 0.60
+iid_diagnostic_ar1 = 0.0
+recursion = "shared_component_ar1"
+stationary_initialization = true
+reset_each_date = true
+
+[streams]
+resource_benchmark_seed = 2026071529
+validation_seed = 2026071521
+research_seed = 2026071522
+research_draws = 1
+rng = "PCG64DXSM"
+seed_sequence_constructor = "numpy.random.SeedSequence"
+generator_constructor = "numpy.random.Generator(numpy.random.PCG64DXSM(seed_sequence))"
+standard_normal_draw_call = "generator_standard_normal_size_tuple_configured_shape_dtype_numpy_float64_exactly_once_per_component_key_require_c_contiguous_return_no_out_no_reshape"
+rng_key_schema_version = 2
+seed_entropy = ["master_seed", "config_schema_version", "rng_key_schema_version", "phase_id", "scenario_id", "parent_phase_id", "parent_scenario_id", "n_dates", "panel_index", "cell_key", "date_index", "component_id", "replicate_index"]
+index_origin = 0
+unused_index_sentinel = 0
+draw_order = "c_order_exact_shape_once_per_component_key"
+common_random_numbers_across_cells = true
+validation_seed_retries = 0
+research_seed_retries = 0
+
+[streams.phase_ids]
+resource = 10
+validation_size = 20
+validation_power = 21
+validation_frontier = 22
+validation_recovery = 23
+validation_iid = 24
+validation_paper_recovery = 25
+research = 30
+bootstrap = 40
+
+[streams.scenario_ids]
+base = 0
+resource_paper_date = 1
+date_frontier = 2
+reliability_frontier = 3
+paper_recovery = 4
+
+[streams.phase_scenario_assignments]
+resource_smooth = [10, 0]
+resource_paper = [10, 1]
+validation_size = [20, 0]
+validation_power = [21, 0]
+validation_date_frontier = [22, 2]
+validation_reliability_frontier_metadata_only = [22, 3]
+validation_recovery = [23, 0]
+validation_iid = [24, 0]
+validation_paper_recovery = [25, 4]
+research = [30, 0]
+assignment_rule = "the_listed_phase_scenario_pair_is_the_only_licensed_pair_for_that_named_stream_metadata_only_instantiates_no_generator"
+
+[streams.key_contract]
+dgp = "cell_key_0_replicate_0_structural_cells_and_reliabilities_are_deterministic_transforms"
+bootstrap = "phase_40_scenario_0_parent_phase_exact_parent_scenario_exact_n_dates_panel_index_cell_0_date_0_component_6_replicate_b"
+bootstrap_sharing = "one_multinomial_date_weight_vector_shared_across_all_cells_and_candidates_in_a_superpanel"
+bootstrap_draw = "pvals_numpy_full_n_dates_numpy_float64_1p0_divided_by_float_n_dates_then_generator_multinomial_n_n_dates_pvals_pvals_size_none_exactly_once_cast_returned_counts_to_float64_weights"
+bootstrap_identity = "parent_phase_parent_scenario_and_n_dates_are_dedicated_entropy_slots"
+reliability_frontier_reuse = "no_rng_is_instantiated_for_phase_22_scenario_3_reuse_phase_21_scenario_0_power_base_moments_and_bootstrap_weights_and_apply_only_deterministic_reliability_transforms_scenario_3_is_artifact_metadata_only"
+namespace_rule = "resource_validation_size_validation_power_frontier_recovery_iid_paper_recovery_research_are_disjoint"
+
+[streams.component_ids]
+factor = 1
+flow_innovation = 2
+return_innovation = 3
+level_noise = 4
+proxy_noise = 5
+bootstrap_weights = 6
+
+[streams.draw_shapes]
+factor = [330]
+flow_innovation = [330, 30]
+return_innovation = [330, 30]
+proxy_noise = [330]
+level_noise = [330, 30, 10]
+ar1_rule = "first_standard_normal_is_stationary_state_remaining_normals_are_scaled_innovations"
+
+[dgp_transform]
+dtypes = "all_registered_draws_and_transforms_float64"
+observation_orientation = "time_by_asset_rows_structural_equations_use_row_q_times_lambda_transpose"
+market_vector = "ones_n_divided_by_sqrt_n_constructed_in_float64"
+filter_order = "draw_each_full_c_order_standard_normal_component_array_then_apply_ar1_along_axis_zero_independently_to_every_trailing_index_before_any_modal_map_or_scale"
+ar1_update = "filtered_0_raw_0_filtered_t_phi_times_filtered_t_minus_1_plus_sqrt_one_minus_phi_squared_times_raw_t_for_t_ge_1"
+flow_map = "v_sqrt_q0_times_filtered_flow_normal_q_hq_times_filtered_factor_times_market_vector_plus_v"
+lambda_map = "lambda_d_minus_o_times_identity_plus_n_times_o_times_market_vector_outer_market_vector"
+return_noise_map = "symmetric_modal_square_root_only_u_sqrt_sigma_u0_sq_times_g_u_plus_sqrt_sigma_u1_sq_minus_sqrt_sigma_u0_sq_times_g_u_dot_market_vector_times_market_vector"
+return_map = "r_q_times_lambda_transpose_plus_gamma_times_filtered_factor_times_market_vector_plus_u"
+proxy_map = "z_filtered_factor_plus_sqrt_one_over_reliability_minus_one_times_filtered_proxy_normal"
+level_map = "x_q_broadcast_level_plus_sqrt_547_over_3953_times_filtered_level_normal"
+paper_recovery_map = "same_upper_endpoint_q_level_measurement_and_symmetric_modal_u_maps_homogeneous_lambda_diag_0p29_offdiag_0p0046_gamma_zero_only_price_factor_loading_removed"
+common_random_number_rule = "within_one_fixed_active_phase_id_and_scenario_id_every_structural_cell_reliability_candidate_and_six_paper_estimator_view_uses_the_same_key_addressable_filtered_base_normals_only_declared_deterministic_maps_and_scales_change_dgp_parent_slots_remain_zero_sentinels_recovery_phase25_scenario4_and_research_phase30_scenario0_never_share_base_normals"
+forbidden_alternatives = "no_cholesky_random_rotation_eigenvector_dependent_square_root_post_map_ar_filter_or_sequential_generator_reuse"
+
+[calibration.observable]
+geometry = "one_factor_equicorrelation"
+flow_pc1_share = 0.2827
+return_pc1_share = 0.32
+factor_alignment = 0.8726
+residual_eigenvalues = "isotropic_trace_preserving"
+pairwise_flow_correlation_target_precision = 0.26
+
+[calibration.historical_comparator]
+label = "nonconfirmatory_15_minute_signed_flow_comparator"
+flow_pc1_share = 0.13533333333333333
+return_pc1_share = 0.21066666666666667
+factor_alignment = 0.82
+
+[calibration.impact_sensitivity]
+lambda_diagonal = 0.29
+lambda_offdiagonal_interval = [0.0029, 0.0046]
+confirmatory_offdiagonal_grid_size = 17
+confirmatory_offdiagonal_grid_rule = "closed_linear_grid_with_exact_endpoints"
+confirmatory_feedback = 0.0
+claim = "confounding_only"
+
+[calibration.proxy]
+construction = "independent_oracle_loading_measurement"
+confirmatory_reliability = 0.95
+oracle_reliability = 1.0
+estimator_knows_loading_direction = true
+estimator_knows_error_variance = false
+reliability_correction = false
+fixture_implied_pc_reliability_rule = "one_minus_residual_eigenvalue_over_pc1_eigenvalue"
+reliability_frontier = [0.95, 0.96, 0.97, 0.98, 0.99, 1.0]
+
+[calibration.proxy.oracle_negative_control]
+reliability = 1.0
+homogeneous_target = "exact_lambda_offdiagonal"
+ridge_target_rule = "lambda_offdiagonal_divided_by_one_plus_ridge_floor_trace_ratio"
+ridge_relative_shrinkage = 0.000000999999000001
+
+[calibration.measurement]
+level_pc1_share = 0.8906
+level_errors = "independent_gaussian"
+
+[opponent.confirmatory]
+name = "ORACLE_Q_PROXY95_CONDITION_RIDGE"
+flow_input = "oracle_q"
+factor_proxy = "independent_oracle_loading_proxy"
+factor_proxy_penalized = false
+intercept_penalized = false
+intercept = "one_global_weighted_intercept"
+centering = "global_weighted_centering_over_all_date_bin_rows_after_date_weights"
+fixed_effects = "none_no_date_or_asset_fixed_effects"
+sufficient_statistics = "per_date_cross_products_for_intercept_proxy_flow_and_all_thirty_responses_reaggregated_before_global_centering_and_schur_complement"
+proxy_schur_variance_rule = "fail_cell_if_centered_weighted_proxy_variance_nonfinite_or_at_or_below_zero"
+flow_penalty = "isotropic_ridge"
+condition_number_cap = 10000.0
+ridge_floor_trace_ratio = 0.000001
+ridge_eigen_solver = "numpy_linalg_eigvalsh_on_once_symmetrized_float64_schur_covariance"
+ridge_linear_solver = "numpy_linalg_solve_on_transposed_regularized_schur_covariance_and_cross_covariance_then_transpose_back_no_explicit_inverse"
+estimand = "direct_q_coefficient"
+target = "lambda"
+
+[opponent.homogeneous_confirmatory]
+name = "ORACLE_Q_PROXY95_HOMOGENEOUS_OLS"
+flow_input = "own_q_and_sum_of_other_q"
+factor_proxy = "independent_oracle_loading_proxy"
+symmetry_information = "true_homogeneous_structure"
+pooling = "all_asset_rows_with_whole_date_clusters"
+row_predictors = ["own_q", "sum_other_q", "factor_proxy"]
+intercept = "one_global_weighted_intercept"
+centering = "global_weighted_centering_over_all_date_bin_asset_rows_after_date_weights"
+fixed_effects = "none_no_asset_or_date_fixed_effects"
+sufficient_statistics = "per_date_cross_products_for_columns_intercept_own_q_sum_other_q_factor_proxy_and_response"
+weighted_operator = "aggregate_date_cross_products_then_schur_partial_global_intercept_then_numpy_solve_three_by_three_require_full_rank"
+estimand = "cross_sum_coefficient_equals_each_off_diagonal"
+target = "lambda_off_diagonal"
+
+[opponent.observable_confirmatory]
+name = "INTEGRATED_OFI_PROXY95_CONDITION_RIDGE"
+flow_input = "estimated_within_asset_top10_pc1"
+pca_scope = "within_date_330_bins_per_asset"
+pca_centering = "within_date_column_means"
+pca_covariance_divisor = "n_bins_330"
+pca_solver = "numpy_symmetric_eigh_on_float64_centered_cross_product_largest_eigenpair"
+pca_sign = "largest_absolute_loading_positive_ties_smallest_level_index"
+pca_top_eigengap_min_trace_ratio = 1e-10
+pca_weak_gap_rule = "fail_cell_if_trace_nonfinite_or_nonpositive_or_top_two_eigenvalues_nonfinite_or_top_eigengap_at_or_below_1e_minus_10_times_trace"
+integrated_score = "centered_pc1_score_divided_by_loading_l1_norm"
+bootstrap_refit = "date_pca_cached_then_whole_date_weights_reaggregate_estimator"
+factor_proxy = "independent_oracle_loading_proxy"
+ridge_rule = "same_as_confirmatory"
+estimand = "direct_q_coefficient"
+target = "lambda"
+scope = "all_17_confirmatory_offdiagonal_grid_points"
+gate_binding = true
+population_score = "equal_weight_mean_of_ten_levels_equals_q_plus_average_level_error"
+population_average_level_error_variance = 0.013837591702504428
+recovery_target = "measurement_attenuated_observable_ridge_target_from_sealed_population_file"
+
+[opponent.paper_reconstruction]
+names = ["PI_1", "PI_I", "CI_1", "CI_I", "PI_CC", "CI_CC"]
+label = "paper_protocol_reconstruction"
+response_fit = "thirty_separate_single_response_fits"
+fit_window_bins = 30
+test_window_bins = 30
+schedule = "eleven_nonoverlapping_blocks_fit_block_j_test_block_j_plus_1"
+eligible_fit_blocks_per_date = 10
+coefficient_aggregation = "equal_mean_within_date_then_equal_mean_across_dates"
+prediction_aggregation = "pooled_next_block_sse_and_sst"
+cv = "five_contiguous_training_block_folds_with_complement_training"
+cv_validation_index_ranges_zero_based_half_open = ["0:6", "6:12", "12:18", "18:24", "24:30"]
+preprocessing = "refit_inside_each_cv_training_fold_and_refit_on_full_training_block"
+best_level_zero_based_index = 0
+lambda_grid_size = 40
+lambda_min_ratio = 0.0001
+lambda_max_rule = "fwl_max_abs_score_over_n"
+lambda_ratio_grid = "parse_the_forty_config_literals_below_directly_as_float64_in_declared_order_no_runtime_regeneration_from_a_formula_or_logspace"
+lambda_ratio_grid_values = [1.0, 0.7896522868499727, 0.6235507341273915, 0.4923882631706739, 0.3888155180308088, 0.30702906297578497, 0.24244620170823283, 0.1914481976169958, 0.15117750706156624, 0.11937766417144367, 0.09426684551178854, 0.07443803013251689, 0.05878016072274912, 0.046415888336127795, 0.03665241237079628, 0.028942661247167517, 0.022854638641349907, 0.018047217668271703, 0.014251026703029985, 0.01125335582600765, 0.008886238162743407, 0.00701703828670383, 0.005541020330009492, 0.004375479375074184, 0.003455107294592218, 0.0027283333764867696, 0.0021544346900318843, 0.0017012542798525892, 0.0013433993325989001, 0.0010608183551394483, 0.0008376776400682924, 0.0006614740641230153, 0.0005223345074266843, 0.0004124626382901352, 0.0003257020655659783, 0.0002571913809059347, 0.00020309176209047368, 0.0001603718743751331, 0.00012663801734674035, 0.0001]
+lambda_ratio_grid_binary64_encoding = "little_endian_float64_c_order"
+lambda_ratio_grid_binary64_sha256 = "1da884c55b3f6e7bf79012973bddf092a92efb1ea098cd2717a804645a62c9a0"
+fold_lambda_rule = "each_fold_ratio_times_that_folds_lambda_max_after_fold_local_preprocessing"
+cv_score_aggregation = "for_each_ratio_index_accumulate_float64_validation_sse_in_fold_index_order_zero_through_four_then_divide_once_by_float64_30_to_define_pooled_mse"
+selected_ratio_rule = "compute_minimum_over_40_finite_pooled_mse_values_then_select_lowest_index_largest_ratio_satisfying_mse_k_less_than_or_equal_to_minimum_plus_float64_1e_minus_12_inclusive"
+outer_lambda_rule = "selected_ratio_times_outer_training_lambda_max_after_outer_preprocessing"
+cv_first_path_initialization = "zero_coefficients_at_largest_ratio_then_previous_solution_warm_start"
+outer_refit_initialization = "zeros_direct_single_selected_lambda_solution_no_outer_path"
+zero_lambda_max_rule = "that_fold_or_outer_fit_uses_zero_penalized_coefficients_for_every_ratio_mixed_folds_still_score_by_common_ratio_index"
+loss_normalization = "sse_over_2n_plus_lambda_l1"
+preprocessing_order = "construct_training_features_center_y_factor_and_penalized_x_scale_penalized_x_by_prefwl_centered_rms_then_fwl_residualize_y_and_scaled_x_on_centered_factor_then_drop_postfwl_zero_norm_columns"
+feature_scaling = "training_rms_sqrt_sum_centered_x_squared_over_n_before_fwl_map_final_coefficients_back_to_original_ofi_units"
+zero_scale_rule = "if_finite_prefwl_rms_exactly_zero_drop_penalized_column_and_fix_coefficient_zero_if_nonfinite_fail_cell"
+post_fwl_zero_norm_rule = "if_finite_scaled_residual_column_sum_squares_over_n_at_or_below_100_times_machine_epsilon_drop_and_fix_zero_if_nonfinite_fail_cell"
+unpenalized_rule = "intercept_and_named_factor_columns_partialled_by_fwl_never_penalized"
+fwl_algorithm = "use_unscaled_centered_factor_fc_fail_nonfinite_or_fc_dot_fc_at_or_below_zero_yres_yc_minus_fc_times_fc_dot_yc_over_fc_dot_fc_xres_xscaled_minus_fc_outer_fc_dot_xscaled_over_fc_dot_fc"
+unpenalized_reconstruction = "beta_original_beta_scaled_divided_by_prefwl_rms_alpha_fc_dot_yc_minus_xc_beta_original_over_fc_dot_fc_intercept_ybar_minus_xbar_beta_original_minus_alpha_fbar_without_factor_omit_alpha_term"
+validation_prediction = "apply_original_unit_coefficients_intercept_and_factor_coefficient_to_validation_features_constructed_only_with_that_folds_training_pca_means_and_loadings"
+coordinate_update = "rho_j_xj_dot_yres_minus_xres_beta_plus_xj_beta_j_over_n_den_j_xj_dot_xj_over_n_beta_j_soft_threshold_rho_j_lambda_over_den_j"
+soft_threshold = "sign_rho_times_max_abs_rho_minus_lambda_zero_with_sign_zero_equal_zero"
+coordinate_order = "ascending_asset_index"
+warm_start = "descending_lambda_path_previous_solution"
+coordinate_descent_tolerance = 1e-10
+kkt_tolerance = 1e-9
+kkt_violation = "gradient_xres_transpose_xres_beta_minus_yres_over_n_nonzero_abs_gradient_plus_lambda_sign_beta_zero_max_abs_gradient_minus_lambda_zero"
+coordinate_descent_convergence = "max_abs_update_le_tolerance_times_one_plus_max_abs_beta_and_max_kkt_violation_le_kkt_tolerance"
+iteration_unit = "one_full_ascending_coordinate_sweep"
+maximum_iterations = 10000
+nonconvergence = "fail_cell"
+ols_solver = "numpy_lstsq_rcond_machine_epsilon_times_max_shape_require_full_column_rank"
+outer_refit = "selected_lambda_refit_on_all_30_training_bins_with_all_preprocessing_refit"
+oos_sst_baseline = "outer_training_response_mean_applied_to_next_block"
+zero_oos_sst_rule = "fail_response_cell"
+pca_centering = "training_column_means"
+pca_covariance_divisor = "n_training"
+pca_solver = "numpy_symmetric_eigh_on_float64_centered_cross_product_largest_eigenpair"
+pca_sign = "largest_absolute_loading_positive_ties_smallest_feature_index"
+pca_top_eigengap_min_trace_ratio = 1e-10
+pca_weak_gap_rule = "fail_cell_if_trace_nonfinite_or_nonpositive_or_top_two_eigenvalues_nonfinite_or_top_eigengap_at_or_below_1e_minus_10_times_trace"
+integrated_level_score = "training_centered_pc1_score_divided_by_loading_l1_norm"
+cc_factor_score = "training_centered_best_level_cross_section_times_unit_pc1_loading"
+cc_residual = "training_centered_best_level_cross_section_minus_factor_score_outer_loading"
+test_mapping = "outer_training_means_loadings_scales_and_coefficients_only"
+bootstrap_target = "equal_block_then_date_mean_algorithmic_operator_projected_target_and_pooled_next_block_loss_functional"
+bootstrap_replicates = 499
+bootstrap_refit = false
+bootstrap_aggregation = "cached_date_level_operator_sse_sst_summaries_with_shared_date_weights"
+scope = "primary_observable_upper_offdiagonal_only"
+binding_specification = "CI_I"
+binding_coefficient = "date_then_block_equal_mean_focal_row_0_column_1_in_original_integrated_ofi_units"
+binding_target = "lambda_offdiagonal_upper_endpoint_0p0046"
+binding_rule = "same_absolute_error_minus_50pct_truth_strictly_greater_than_three_date_bootstrap_se"
+binding_effect = "veto_positive_g2_if_not_passed"
+binding_recovery = "one_full_252_date_validation_panel_at_n30_with_same_upper_endpoint_q_level_measurement_u_and_ar_laws_homogeneous_lambda_diag_0p29_offdiag_0p0046_gamma_zero_and_focal_nonzero_cross_target"
+date_cache_matrices = ["PI_1_direct", "PI_I_direct", "CI_1_direct", "CI_I_direct", "PI_CC_purged", "CI_CC_purged", "PI_CC_full_response", "CI_CC_full_response", "cc_mean_projection_p_perp"]
+date_cache_losses = "six_specs_times_thirty_responses_times_sse_and_sst"
+reported_coefficient_maps = "first_eight_date_cache_matrices_all_7200_entries_with_model_restriction_zeros_explicit_and_each_with_named_normal_and_basic_date_bootstrap_intervals"
+reported_oos_values = "six_specs_times_thirty_response_level_r_squared_180_each_with_named_normal_and_basic_date_bootstrap_intervals"
+cache_only_fields = "cc_mean_projection_p_perp_and_360_sse_sst_components_are_internal_inputs_not_separately_claimed_numbers"
+
+[[opponent.paper_reconstruction.specifications]]
+id = "PI_1"
+feature_map = "own_best_level_ofi"
+estimator = "ols"
+unpenalized = ["intercept", "own_best_level_ofi"]
+penalized = []
+
+[[opponent.paper_reconstruction.specifications]]
+id = "PI_I"
+feature_map = "own_integrated_top10_ofi"
+estimator = "ols"
+unpenalized = ["intercept", "own_integrated_top10_ofi"]
+penalized = []
+
+[[opponent.paper_reconstruction.specifications]]
+id = "CI_1"
+feature_map = "all_assets_best_level_ofi"
+estimator = "lasso_per_response"
+unpenalized = ["intercept"]
+penalized = ["all_30_best_level_flows"]
+
+[[opponent.paper_reconstruction.specifications]]
+id = "CI_I"
+feature_map = "all_assets_integrated_top10_ofi"
+estimator = "lasso_per_response"
+unpenalized = ["intercept"]
+penalized = ["all_30_integrated_flows"]
+
+[[opponent.paper_reconstruction.specifications]]
+id = "PI_CC"
+feature_map = "best_level_cross_section_pc1_plus_own_orthogonal_residual"
+estimator = "ols"
+unpenalized = ["intercept", "cross_section_pc1", "own_residual_flow"]
+penalized = []
+
+[[opponent.paper_reconstruction.specifications]]
+id = "CI_CC"
+feature_map = "best_level_cross_section_pc1_plus_all_orthogonal_residuals"
+estimator = "lasso_per_response"
+unpenalized = ["intercept", "cross_section_pc1"]
+penalized = ["all_30_residual_flows"]
+
+[opponent.estimands]
+direct_flow_models = "compare_original_q_coefficient_with_lambda"
+factor_residual_models = "compare_purged_response_map_with_lambda_times_p_perp"
+response_equivalent_factor_models = "report_against_lambda_as_descriptive_nonconfirmatory_mapping"
+
+[gate_rule]
+focal_row = 0
+focal_column = 1
+focal_invariance = "all_off_diagonals_equal_in_population"
+relative_error_threshold = 0.50
+bootstrap_se_multiplier = 3.0
+decision = "absolute_error_minus_threshold_times_absolute_truth_exceeds_multiplier_times_bootstrap_se"
+bootstrap_replicates = 499
+bootstrap_cluster = "date_multinomial_weights_in_original_order"
+bootstrap_se_ddof = 1
+confidence_level = 0.95
+intervals = ["bootstrap_se_normal_95", "basic_cluster_bootstrap_95"]
+normal_two_sided_critical_value = 1.959963984540054
+basic_interval_quantiles = [0.025, 0.975]
+bootstrap_quantile_method = "hyndman_fan_type_7_numpy_linear"
+basic_interval_rule = "two_point_estimate_minus_q975_two_point_estimate_minus_q025"
+require_all_confirmatory_offdiagonal_grid_points = true
+require_population_bound_over_continuous_offdiagonal_interval = true
+require_all_three_smooth_confirmatory_candidates = true
+require_oracle_q_failure = true
+require_observable_integrated_ofi_failure = true
+require_published_ci_i_veto = true
+require_confounding_only_failure = true
+
+[validation]
+panels = 100
+unit = "superpanel"
+size_limit = 0.05
+power_floor = 0.80
+size_acceptance = "one_sided_clopper_pearson_upper_95_on_superpanel_union_of_any_of_459_smooth_candidate_cell_null_grid_passages_at_or_below_limit"
+power_acceptance = "one_sided_wilson_lower_95_on_superpanel_intersection_of_all_51_smooth_candidate_cell_passages_at_or_above_floor"
+family_rule = "single_family_indicator_per_superpanel_marginal_intervals_descriptive_only"
+validation_scope = "three_smooth_candidates_exact_procedure_published_ci_i_has_separate_full_n_t_recovery_and_binding_date_bootstrap_veto"
+size_claim = "frozen_nine_point_noise_amplitude_null_grid_calibration_not_continuum_uniform_size_proof"
+size_max_family_union_successes_at_100_superpanels = 1
+power_min_family_intersection_successes_at_100_superpanels = 87
+size_proxy_reliability = "candidate_specific_population_50pct_boundary"
+null_grid_proxy_noise_amplitude_fractions = [0.0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0]
+null_grid_rule = "tau_crit_sqrt_one_over_rcrit_minus_one_tau_k_fraction_times_tau_crit_reliability_one_over_one_plus_tau_k_squared"
+null_grid_max_proxy_noise_amplitude_gap = 0.015038828627620739
+null_grid_max_reliability_gap = 0.003307437435413063
+null_grid_proxy_noise_amplitude_gap_rule = "maximum_over_cells_of_taucrit_times_maximum_adjacent_configured_fraction_difference_evaluate_multiplication_directly_not_by_subtracting_rounded_tau_nodes"
+null_grid_reliability_gap_rule = "maximum_over_cells_and_adjacent_configured_fractions_of_absolute_difference_between_r_nodes_tau_fraction_times_taucrit_then_r_one_over_one_plus_tau_squared"
+null_grid_gap_reporting = "report_both_frozen_global_maxima_and_cellwise_gaps_in_validation_and_research_metadata"
+homogeneous_boundary_rule = "analytic_equation_g2_9"
+ridge_boundary_solver = "binary64_bisection_closed_bracket_0p95_1_until_width_le_1e_minus_14_then_midpoint"
+power_proxy_reliability = 0.95
+power_scope = "all_51_smooth_candidate_grid_components_at_reliability_0p95"
+least_favorable_endpoint = "upper_offdiagonal_endpoint_0p0046_for_reduced_frontiers"
+date_frontier = [48, 96, 252]
+frontier_scope = "least_favorable_grid_point_only_below_252_dates"
+mde_reliability_grid = [0.95, 0.96, 0.97, 0.98, 0.99]
+mde_reuse_power_at_0p95 = true
+frontiers_mandatory = true
+date_frontier_interval = "one_sided_wilson_lower_95_for_each_of_6_candidate_by_48_or_96_date_passage_rates_unadjusted_descriptive_non_gating"
+reliability_frontier_interval = "one_sided_wilson_lower_95_for_each_of_12_candidate_by_reliability_0p96_through_0p99_passage_rates_unadjusted_descriptive_non_gating_0p95_already_in_power_marginals"
+frontier_rate_denominator = 100
+recovery_panels = 100
+recovery_scope = "all_51_smooth_candidate_grid_components_at_reliability_1"
+recovery_interval = "two_sided_95_bonferroni_student_t_on_superpanel_mean"
+recovery_target = "homogeneous_exact_truth_oracle_ridge_floor_target_observable_measurement_attenuated_ridge_target"
+recovery_critical_value_df99_51_components = 3.3975886554479495
+recovery_acceptance = "all_51_analytic_targets_inside_intervals"
+iid_diagnostic_panels = 100
+iid_diagnostic_scope = "least_favorable_grid_point_reliability_0p95_three_smooth_candidates"
+iid_diagnostic_interval = "two_sided_95_bonferroni_student_t_on_superpanel_mean"
+iid_diagnostic_critical_value_df99_3_components = 2.4353393004016732
+iid_diagnostic_acceptance = "descriptive_no_gate"
+paper_recovery_panels = 1
+paper_recovery_scope = "ci_i_actual_n30_252_dates_same_upper_endpoint_measurement_and_noise_counterfactual_with_only_gamma_set_zero"
+paper_recovery_lambda_diagonal = 0.29
+paper_recovery_lambda_offdiagonal = 0.0046
+paper_recovery_gamma = 0.0
+paper_recovery_flow_law = "same_confirmatory_one_factor_equicorrelation_q_law_from_equation_g2_1_and_section_3_construction_with_unit_factor_variance"
+paper_recovery_flow_innovation_independence = "same_confirmatory_independent_factor_and_isotropic_flow_innovation_construction"
+paper_recovery_market_return_noise_variance = 2.082896495599317
+paper_recovery_orthogonal_return_noise_variance = 0.6430072224124138
+paper_recovery_level_error_variance = 0.13837591702504426
+paper_recovery_counterfactual_rule = "all_upper_endpoint_dgp_distribution_parameters_and_deterministic_maps_unchanged_except_gamma_from_1p5395102172741495_to_zero_recovery_uses_its_own_disjoint_phase25_scenario4_addressed_base_normals_and_never_accesses_research_phase30"
+paper_recovery_ar1 = 0.60
+paper_recovery_components = 31
+paper_recovery_interval = "two_sided_95_bonferroni_date_bootstrap_normal"
+paper_recovery_critical_value_31_components = 3.1535631591215094
+paper_recovery_point_accuracy = "strict_absolute_error_below_50pct_of_truth_for_all_thirty_diagonals_and_focal_0_1_cross_coefficient"
+paper_recovery_bias_declaration = "focal_equation_g2_16_material_bias_event_must_be_false"
+paper_recovery_acceptance = "all_thirty_diagonal_targets_and_predeclared_focal_0_1_cross_target_0p0046_inside_intervals_and_all_31_point_accuracy_events_and_focal_nonbias_event_pass"
+size_interval = "one_sided_clopper_pearson_upper_95_for_family_union_and_each_of_459_null_marginals"
+power_interval = "one_sided_wilson_lower_95_for_family_intersection_and_each_of_51_power_marginals"
+marginal_interval_role = "unadjusted_descriptive_non_gating_each_uses_same_100_superpanel_indicator_count_and_named_one_sided_formula_as_its_family_interval"
+one_sided_confidence_alpha = 0.05
+clopper_pearson_upper_rule = "beta_ppf_0p95_k_plus_1_n_minus_k_with_k_eq_n_return_1"
+wilson_lower_rule = "one_sided_z_eq_norm_ppf_0p95_score_lower"
+negative_outcome = "unadjudicated_unless_sharp_source_compatible_upper_bound_is_below_threshold"
+
+[compute]
+benchmark_expected_wall_seconds = 3600
+benchmark_hard_wall_seconds = 7200
+validation_expected_wall_seconds = 43200
+validation_hard_wall_seconds = 86400
+research_expected_wall_seconds = 10800
+research_hard_wall_seconds = 21600
+total_hard_wall_seconds = 115200
+projection_stop_fraction = 0.80
+max_task_seconds = 480
+max_bootstrap_batch_seconds = 480
+max_rss_bytes = 3500000000
+max_checkpoint_bytes = 2000000000
+bootstrap_batch_size = 25
+single_thread = true
+benchmark_cold_bundles = 1
+benchmark_min_total_bundles = 4
+benchmark_min_warm_seconds = 600
+benchmark_warm_seconds_definition = "sum_elapsed_seconds_of_complete_bundles_after_the_first_cold_bundle_only"
+benchmark_warm_region = "aggregate_throughput_last_three_complete_hash_checked_bundles"
+benchmark_conservative_rate = "min_warm_rate_0p60_times_cold_rate_per_kernel"
+benchmark_projection_margin = 1.25
+benchmark_required_kernels = ["base_date", "cell_date", "bootstrap_moment_aggregation", "oracle_ridge_fit", "homogeneous_fit", "observable_ridge_fit", "interval_finalize", "null_batch_io_hash", "base_panel_io_hash", "cell_io_hash", "paper_full_date", "paper_ci_i_recovery_date", "paper_bootstrap_io", "success_last_publish"]
+benchmark_bundle = "one_unit_each_in_required_kernel_order_except_paper_bootstrap_io_runs_one_25_replicate_960_field_variant_and_one_25_replicate_8460_field_variant_distinct_resource_panel_index_per_bundle"
+benchmark_variant_rate = "paper_bootstrap_io_uses_minimum_normalized_term_rate_across_both_variants_before_cold_warm_derating_all_other_kernels_one_rate_each"
+benchmark_startup_rule = "four_fresh_subprocess_zero_work_resource_preflights_per_validation_and_research_phase_t_startup_is_max_wall_time_no_registered_validation_or_research_rng"
+benchmark_resource_acceptance = "actual_complete_benchmark_elapsed_at_or_below_3600_expected_and_7200_hard_seconds"
+benchmark_projection_acceptance = "validation_projection_at_or_below_43200_research_projection_at_or_below_10800_and_actual_resource_elapsed_plus_both_projections_at_or_below_57600_expected_seconds_hard_budgets_are_runtime_stops_not_preflight_slack"
+
+[compute.work_unit_contract]
+base_date = "one_330_bin_float64_base_date_generation_filtering_observable_pca_and_shared_moments"
+cell_date = "one_330_bin_structural_cell_return_and_cross_moment_date"
+bootstrap_moment_aggregation = "one_structural_cell_date_weight_vector_aggregation_shared_by_all_three_smooth_candidates_shorter_date_vectors_charged_at_exact_date_count"
+oracle_ridge_fit = "one_oracle_point_or_bootstrap_condition_ridge_solution"
+homogeneous_fit = "one_pooled_point_or_bootstrap_three_slope_solution"
+observable_ridge_fit = "one_observable_point_or_bootstrap_condition_ridge_solution"
+interval_finalize = "one_scalar_estimand_complete_finalization_package_including_every_configured_interval_endpoint_standard_error_and_gate_or_descriptive_status_from_at_most_499_values_benchmark_uses_499_and_shorter_100_value_or_single_interval_packages_are_charged_as_full_units"
+null_batch_io_hash = "one_up_to_25_replicate_smooth_batch_serialize_reload_hash_benchmark_uses_largest_27_fit_null_batch_final_24_and_smaller_batches_are_charged_as_full_units"
+base_panel_io_hash = "one_base_panel_artifact_serialize_reload_hash_benchmark_uses_252_dates_shorter_48_96_variants_are_charged_as_full_units"
+cell_io_hash = "one_cell_artifact_serialize_reload_hash_benchmark_uses_252_dates_shorter_variants_are_charged_as_full_units"
+paper_full_date = "one_complete_330_bin_six_spec_research_date_including_1800_outer_response_contexts_all_cv_paths_final_fits_pca_oos_maps_and_date_summary_serialize_reload_hash"
+paper_ci_i_recovery_date = "one_complete_330_bin_ci_i_recovery_date_including_300_outer_response_contexts_all_cv_paths_final_fits_pca_oos_maps_and_date_summary_serialize_reload_hash"
+paper_bootstrap_io = "one_cached_field_times_date_times_bootstrap_replicate_weighted_accumulation_term_with_batch_io_rate_is_minimum_normalized_rate_across_960_field_recovery_and_8460_field_research_variants"
+success_last_publish = "one_atomic_phase_result_bundle_validate_stage_hash_replace_and_write_success_last_benchmark_uses_larger_validation_payload"
+startup_invocations_per_phase = 1
+
+[compute.validation_work]
+base_date = 115200
+cell_date = 1324800
+bootstrap_moment_aggregation = 1796400
+oracle_ridge_fit = 8801800
+homogeneous_fit = 8801800
+observable_ridge_fit = 8801800
+interval_finalize = 53415
+null_batch_io_hash = 72000
+base_panel_io_hash = 600
+cell_io_hash = 5400
+paper_full_date = 0
+paper_ci_i_recovery_date = 252
+paper_bootstrap_io = 120718080
+success_last_publish = 1
+
+[compute.research_work]
+base_date = 252
+cell_date = 4284
+bootstrap_moment_aggregation = 8483
+oracle_ridge_fit = 8500
+homogeneous_fit = 8500
+observable_ridge_fit = 8500
+interval_finalize = 7431
+null_batch_io_hash = 340
+base_panel_io_hash = 1
+cell_io_hash = 17
+paper_full_date = 252
+paper_ci_i_recovery_date = 0
+paper_bootstrap_io = 1063828080
+success_last_publish = 1

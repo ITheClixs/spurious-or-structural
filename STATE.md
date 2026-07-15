@@ -11,17 +11,20 @@ derived and independently audited. The sole frozen `N=30`, `K=3`, `T=10^7`
 run passed the strict preregistered discrepancy test without a seed retry. The
 complete evidence commit passed hosted CI.
 
-**G2 — Premise test / kill switch: open.** No G2 implementation or research
-draw has run. The immediate task is to diagnose the strongest published
-own-flow-plus-factor-control opponent and extract a defensible calibration from
-opened primary sources without touching local market tape.
+**G2 — Premise test / kill switch: open, pre-implementation audit.** No G2
+implementation, resource benchmark, validation panel, or research draw has
+run. S0002 and S0003 were rejected before RNG access. S0004 makes the
+observable integrated-OFI proxy-control opponent and published `CI_I` protocol
+binding, is derived and hash-sealed, and has independent math, inference, and
+whole-contract content and sealed-surface passes. It remains unimplemented and
+non-executable pending a hosted-green documentation boundary.
 
 ## Session objective
 
-Completed this session: close G1 on immutable evidence and hosted parity. The
-current branch now targets a written G2 opponent/calibration diagnosis and
-pre-run prediction; no simulation implementation begins before those artifacts
-exist.
+Current session target: commit and push the immutable S0004 documentation
+boundary, then require hosted CI green before any test-first implementation.
+Stop before code if any committed artifact or hosted check changes the sealed
+estimands, hashes, RNG namespaces, paper protocol, or compute arithmetic.
 
 ## Current evidence
 
@@ -125,18 +128,95 @@ exist.
   shock dependence; G1 makes no such claim.
 - G1 evidence commit `44965d0370810f756ad1c5cc7938a289cb943906`
   passed hosted CI run `29426776688`. This closes G1 and unlocks G2.
+- Primary-source inspection found that CCZ does not publish one model combining
+  integrated top-ten OFI and a cross-sectional factor control; its equations
+  and 30-minute/next-30-minute schedule are reconstructed separately from the
+  stronger G2 proxy-control opponent. The numerical choices omitted by the
+  paper are frozen before implementation and labeled reconstruction choices.
+- Capponi--Cont supplies the confirmatory one-minute observable triple: flow
+  PC1 share `0.2827`, return PC1 share `0.32`, and leading score alignment
+  `0.8726`. Hasbrouck--Seppi is a 15-minute historical comparator. Benzaquen's
+  reduced-form cross/own ratio informs a conservative 1% structural-sensitivity
+  floor; Benzaquen's `0.29/0.0046` homogeneous propagator supplies the upper
+  structural sensitivity. Neither is an identified one-minute OFI coefficient.
+  Takahashi's feedback is excluded
+  from the confirmatory tuple; `B = 0` isolates confounding.
+- Three independent hostile audits rejected S0002 before implementation. They
+  reproduced its eight population targets and positive variances but identified
+  an impossible boundary-power test, an uncontrolled-OLS estimand substitution,
+  incompatible frequency/variable calibration, arbitrary PC2/PC3 orientation,
+  and an unexecutable LASSO/bootstrap/checkpoint contract.
+- S0003 introduced the label-invariant one-spike covariance and two strong
+  oracle-flow candidates. Its repaired algebra and target seals passed a fresh
+  math audit, but inference/professor audits rejected it because the observable
+  measured opponent and every actual published fit were nonbinding. The same
+  audit found a boundary-only size overclaim, colliding bootstrap keys,
+  ambiguous pooled centering and fold-local penalties, an insufficient CC
+  cache, and an unreproducible benchmark projection. No RNG was consumed.
+- S0004 retains the conditional `N=30`, `B=0`, diagonal `0.29`, and homogeneous
+  off-diagonal `0.0029`--`0.0046` fixture. The observable integrated-top-ten-OFI
+  proxy-control ridge is now binding across all 17 cells. Oracle condition
+  ridge and globally centered pooled homogeneous OLS are binding no-strawman
+  checks. `CI_I` is a separate binding published-protocol veto at the upper
+  endpoint; the other five CCZ fits remain mandatory diagnostics.
+- Independent population derivation gives level-average error variance
+  `547/39530`, or binary64 `0.013837591702504428`. Observable ridge predicts
+  `0.009779867515744457` at truth `0.0029` and
+  `0.010849163255110856` at truth `0.0046`, relative errors 237.24% and
+  135.85%. Its reliability-one target is `0.9816922278202821 o` because OFI
+  measurement error remains. The new target raw SHA256 is
+  `f13adcff4259773485ca5952d23ae923d3c501c84d4edb102c1886460ada4a59`;
+  semantic SHA256 is
+  `f437f3308d92e5035abfed796112502a90daf281a585e8cf1a5013bd4fed511a`.
+- Smooth validation uses a 459-event nine-node proxy-noise-amplitude null-grid
+  union and a 51-event reliability-0.95 power intersection. This is explicitly
+  not continuum-uniform size; its frozen maximum amplitude/reliability gaps are
+  `0.015038828627620739` and `0.003307437435413063`. Invalid numerical outcomes
+  fail the license rather than count as null nonpasses. `CI_I` separately must
+  recover diagonal `0.29` and focal cross-impact `0.0046` without confounding at
+  actual `N=30`, 252 dates, with all 31 point errors strictly below 50% and no
+  focal material-bias declaration, before the one binding research
+  reconstruction. This remains a recovery check rather than a size/power claim.
+- RNG key schema 2 includes parent phase, parent scenario, and date count. Its
+  exact float64 AR-filter-first symmetric modal map fixes the joint CRN
+  coupling; Cholesky, rotated roots, and post-map filtering are forbidden.
+  Published recovery matches the upper-endpoint law except for `Gamma=0` but
+  uses disjoint phase-25/scenario-4 normals, so validation never opens the
+  phase-30 research realization.
+  Pooled OLS has one global weighted intercept; LASSO CV selects a fold-relative
+  penalty ratio; block-formed CC maps plus mean `P_perp` make every promised
+  output replayable.
+- `docs/G2_COMPUTE_PLAN.md` enumerates 26,405,400 smooth validation fits,
+  15,195,600 `CI_I` recovery LASSO solutions, and 45,586,800 research LASSO
+  solutions. Its frozen phase-by-kernel work matrix normalizes unequal paper
+  caches and requires resource, validation, research, and total projections to
+  fit the one-/12-/three-/16-hour expected caps; the 32-hour hard envelope is a
+  runtime stop, not preflight slack.
+- Independent post-repair math, inference, and whole-contract lanes gave
+  content passes without code or registered RNG. The frozen schema-3 config raw
+  SHA256 is
+  `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`;
+  A005 makes all pre-D0031 execution clauses historical and non-executable.
+- Three independent seal-only re-reads reproduced the config, target raw,
+  target semantic, and LASSO-ratio digests exactly and found no authority
+  conflict. The final local gate passes Ruff, format, strict mypy, 38 tests,
+  deterministic demo, committed-result drift, and `git diff --check`; no G2 RNG
+  was used.
 
 ## In flight
 
-1. Commit and host-verify this final G1 acceptance ledger.
-2. For G2, open and verify the primary papers defining the strongest
-   own-flow-plus-factor-control benchmark and plausible factor/flow parameters.
-3. Write the diagnosis, calibration envelope, exact kill-switch simulation
-   prediction, interval method, and resource budget before G2 code or draws.
+1. Seal a Lore-format documentation commit without changing
+   `configs/g2.toml`.
+2. Push and pass the clean documentation boundary in hosted CI before writing
+   G2 code.
+3. Implement S0004 test-first with test-only seeds, then repeat hostile review,
+   local parity, hosted CI, and the distinct resource benchmark before the
+   validation seed is available.
 
 ## Blockers
 
-- No blocker currently prevents G2 literature/calibration work.
+- S0004 implementation is intentionally blocked on a hosted-green clean
+  documentation boundary.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -151,9 +231,10 @@ exist.
 
 ## Cold-resume next action
 
-Read the four ledgers and the G2 section of `docs/GATES.md`, then state: "G1 is
-closed on evidence commit `44965d0`; G2 must build the strongest opponent and
-can still kill the project." Verify primary sources before they enter the
-bibliography, diagnose the calibration problem before method search, and do not
-touch empirical tape or implement the G2 simulation before its prediction is
-written.
+Read the four ledgers, `docs/redteam/GATE_G2_PRERUN.md`, and the G2 section of
+`docs/GATES.md`, then state: "G1 is closed on evidence commit `44965d0`; S0002
+and S0003 were rejected before RNG; S0004 config
+`f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`
+has sealed-surface passes but remains locked until the hosted-green
+documentation boundary." Do not touch empirical tape or any G2 resource,
+validation, or research seed.

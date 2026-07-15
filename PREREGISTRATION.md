@@ -149,4 +149,207 @@ outcomes.
 
 ## AMENDMENTS
 
-None.
+### A001 — G2 source-constrained calibration and no-strawman opponent
+
+- **Date:** 2026-07-15.
+- **Reason:** The original freeze preregistered the G2 threshold and the rule
+  that calibration must come from opened primary sources, but intentionally did
+  not invent the unavailable structural tuple or conflate two different
+  published opponent specifications. Primary-source inspection established
+  what can and cannot be calibrated.
+- **Amendment:** Freeze `configs/g2.toml`,
+  `docs/G2_SOURCE_AUDIT.md`,
+  `docs/derivations/GATE_G2_PREMISE.md`, and
+  `docs/predictions/GATE_G2.md` as the detailed G2 contract. The confirmatory
+  source box is the Cartesian product of two flow-factor strengths, two leading
+  factor alignments, and two standardized own-feedback values. The focal pair
+  is `(0, 1)`. Whole dates are the bootstrap unit. Paper-exact variants are
+  reported separately from a strengthened integrated-OFI factor-control hybrid;
+  oracle-`q` failure is required so measurement error alone cannot pass the
+  gate.
+- **Inference effect:** This narrows researcher degrees of freedom before code
+  and makes the positive claim harder: all eight cells, an oracle-`q` opponent,
+  adequate size/power, and the original 50%/three-SE event are required. The
+  amendment does not change any G1 result or any empirical/holdout rule.
+- **Access statement:** No external market tape, schema sample, evaluation
+  observation, or holdout observation had been accessed. No G2 implementation,
+  benchmark, validation panel, power panel, or research random draw had run.
+  Only the primary papers listed in the source audit were opened.
+
+### A002 — Replace the rejected G2 source box before any random draw
+
+- **Date:** 2026-07-15.
+- **Reason:** Three independent pre-run reviews reproduced A001's population
+  arithmetic but rejected its scientific and operational contract. The power
+  alternative was centered on a strict decision boundary; the confirmatory
+  factor-response mapping was exactly uncontrolled OLS; the structural tuple
+  mixed incompatible variables/frequencies; PC2/PC3 geometry made the focal
+  pair depend on unsourced asset ordering; and the paper-block/CV/bootstrap
+  workload was not executable from the promised checkpoints.
+- **Amendment:** A001 is retained as a failed design record and superseded for
+  execution by schema-version-2 `configs/g2.toml`, canonical
+  `configs/g2_population_targets.json`,
+  `docs/derivations/GATE_G2_PREMISE.md`, and
+  `docs/predictions/GATE_G2.md`. The confirmatory observable point is the
+  permutation-invariant one-factor covariance matching Capponi--Cont's
+  one-minute leading flow/return shares and score alignment. `B = 0`; the
+  structural off-diagonal varies continuously from `0.0029` to `0.0046`; the
+  opponent receives oracle `q`, the correct factor direction, and an
+  independent 95%-reliable proxy whose error variance is not disclosed to the
+  estimator. Passage requires both a full condition-ridge projection and a
+  pooled homogeneous three-slope projection to clear a strengthened
+  50%/three-SE rule at all seventeen frozen structural grid points, after a
+  candidate-specific boundary family-size union test and an
+  actual-alternative joint-power intersection test.
+- **Estimand effect:** Direct proxy-control flow coefficients are compared with
+  `Lambda`. CCZ factor-residual reconstructions are secondary and compared with
+  `Lambda P_perp`; their response-equivalent maps cannot replace that fair
+  projected target. Hasbrouck--Seppi, Benzaquen, and Takahashi quantities not
+  sharing the confirmatory variable/frequency are explicitly labeled
+  comparators or structural sensitivities.
+- **Null effect:** Passing supports a conditional-existence claim only. Failure
+  at 95% reliability is unadjudicated, not a market null, unless a separately
+  preregistered sharp upper bound over all source-compatible latent
+  decompositions and reliabilities also lies below 50% with adequate power.
+- **Execution authority:** A001/S0002 never became a committed executable
+  boundary and grants no authority to access any G2 random stream. Only design
+  `S0003`, config schema version 2, target schema version 2, raw target digest
+  `c2122bbdbcf50181e028a689c502b5734673ed4a9e89765869f26108975f6122`,
+  and 12-decimal semantic digest
+  `b645468cd53357c968c272adff489a43e43e402b522fbfdbf2175e5f71dee00c`
+  are executable. Implementations must hard-fail on a schema-version-1 G2
+  config, rejected digest
+  `a8475753e1cd70781c028680d7d782cbee73cb19b7265b93e8335eaa7f506fbf`,
+  Fourier PC2/PC3 geometry, positive confirmatory `B`, or a
+  response-equivalent confirmatory estimand.
+- **Access statement:** No G2 implementation, resource benchmark, validation
+  panel, research draw, external market tape, schema sample, evaluation
+  observation, or holdout observation had been accessed. Only deterministic
+  algebra and the already opened primary papers informed this correction.
+
+### A003 — Make the observable and published opponents gate binding
+
+- **Date:** 2026-07-15.
+- **Reason:** A fresh three-lane hostile audit rejected S0003 before code or
+  RNG. Its oracle-flow projections could fail even if measurement attenuation,
+  regularization, or factor purging moved the observable published algorithm
+  toward truth. The audit also found an ambiguous pooled intercept, colliding
+  bootstrap keys, a non-reproducible cold/warm benchmark, an under-specified
+  fold-local LASSO path, and a cache that discarded block-varying factor
+  loadings. More oracle information is not an error-dominance theorem.
+- **Amendment:** A002 remains a failed pre-run design record and is superseded
+  for execution by design `S0004`, config schema version 3, and target schema
+  version 3. The observable integrated-top-ten-OFI plus 95%-reliable
+  proxy-control condition ridge is now gate binding at all 17 structural grid
+  points. The oracle condition ridge and globally centered pooled homogeneous
+  OLS are binding no-strawman checks. The registered CCZ `CI_I` protocol
+  reconstruction is a separate binding published-model veto at the primary
+  observable point and `o = 0.0046`; the other five reconstructions remain
+  mandatory estimand-specific diagnostics.
+- **Inference effect:** Positive G2 is the intersection of all 51 smooth
+  candidate/grid events and the one frozen `CI_I` event. One hundred smooth
+  validation superpanels use a nine-node proxy-noise-amplitude null grid from
+  exact-factor recovery to each candidate/cell's sealed 50%-materiality root,
+  and a 51-event joint power indicator at reliability 0.95. This licenses a
+  finite null grid, not continuum-uniform size. `CI_I` must first recover a
+  homogeneous diagonal `0.29` and focal cross coefficient `0.0046` in one
+  full-`N`, full-`T` no-confounding panel and then clears the same named
+  499-date-bootstrap rule in the sole research draw. Recovery additionally
+  requires every one of the 31 point errors to be strictly below 50% and the
+  focal material-bias declaration to be false; it is not called a size/power
+  license.
+- **Execution effect:** Bootstrap entropy now includes parent phase, parent
+  scenario, and date count. The LASSO selects a common fold-relative penalty
+  ratio and maps it to the outer-training `lambda_max`. The paper cache retains
+  block-formed direct, purged, full-response, and projection operators. A
+  fixed cold/warm benchmark must project every enumerated workload inside the
+  one-/12-/three-/16-hour expected caps before validation. The
+  two-/24-/six-/32-hour hard limits remain runtime stops, not admission slack.
+- **Execution authority:** Only `S0004`, config schema version 3, target schema
+  version 3, raw target SHA256
+  `f13adcff4259773485ca5952d23ae923d3c501c84d4edb102c1886460ada4a59`,
+  and 12-decimal semantic SHA256
+  `f437f3308d92e5035abfed796112502a90daf281a585e8cf1a5013bd4fed511a`
+  may authorize G2 execution. Implementations must additionally hard-fail on
+  S0003/schema-2 and its raw digest
+  `c2122bbdbcf50181e028a689c502b5734673ed4a9e89765869f26108975f6122`,
+  as well as every A002 rejection condition.
+- **Null effect:** A single S0004 miss is failure of the sole preregistered
+  finite-sample demonstration, not logical falsification of its known
+  population law and not a premise-killing market null. The latter still
+  requires a separately preregistered, adequately powered sharp upper bound
+  over the source-compatible class.
+- **Access statement:** No G2 implementation, benchmark, validation panel,
+  research draw, external market tape, schema sample, evaluation observation,
+  or holdout observation had been accessed. Only deterministic algebra,
+  opened primary papers, and read-only hostile audits informed A003.
+
+### A004 — Separate the strengthened hybrid from published reconstructions
+
+- **Date:** 2026-07-15.
+- **Reason:** The original H1 shorthand says “strongest published
+  own-flow-plus-observed-factor baseline,” but source inspection established
+  that CCZ publishes integrated top-ten OFI and cross-sectional-factor models
+  separately. Calling their combination published would be a novelty and
+  fidelity error.
+- **Amendment:** For S0004, H1 is operationalized by two non-substitutable
+  surfaces. The primary, fully licensed observable opponent is a deliberately
+  strengthened integrated-top-ten-OFI plus correctly loaded noisy-proxy ridge;
+  it is **not** attributed to CCZ. All six CCZ equations are separately labeled
+  protocol reconstructions because the paper omits numerical choices, and
+  `CI_I` is the binding published-equation veto because it alone combines
+  integrated OFI with explicit cross coefficients. No result may call the
+  hybrid paper-exact or claim that CCZ estimated it.
+- **Inference effect:** Positive G2 still requires every one of the 51 smooth
+  events and the `CI_I` veto. The separation prevents either an invented hybrid
+  attribution or a nonbinding published diagnostic from carrying the claim.
+- **Access statement:** No implementation, benchmark, validation panel,
+  research draw, market tape, evaluation observation, or holdout observation
+  had been accessed. The correction follows only from the already opened
+  primary paper and hostile source audit.
+
+### A005 — Seal one S0004 execution authority after hostile review
+
+- **Date:** 2026-07-15.
+- **Reason:** Three fresh read-only audit lanes accepted the final S0004
+  population mathematics, inference map, opponent fidelity, RNG namespace,
+  workload arithmetic, and compute admission only after twenty pre-run defects
+  were diagnosed and repaired. The last repairs froze observable PCA and ridge
+  numerics, every phase/scenario pair and distribution call, the literal
+  binary64 LASSO ratio path and inclusive CV tie map, all mandatory frontier
+  intervals, and the post-cold benchmark clock. No implementation or registered
+  G2 random stream existed during those reviews.
+- **Amendment:** A001--A004 remain immutable historical records. A001/S0002,
+  A002/S0003, and every pre-D0031 candidate, estimator, veto, validation,
+  workload, budget, key, or execution clause grant no current authority. The
+  only S0004 contract is design/schema 3 in the exact sealed config and target
+  artifacts below, interpreted by A003--A005 and D0031--D0049. Any conflict,
+  stale digest, unlisted stream pair, or rejected-schema input is a hard failure,
+  not an alternative implementation.
+- **Seals:** Raw `configs/g2.toml` SHA256
+  `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`;
+  raw `configs/g2_population_targets.json` SHA256
+  `f13adcff4259773485ca5952d23ae923d3c501c84d4edb102c1886460ada4a59`;
+  its 12-decimal semantic SHA256
+  `f437f3308d92e5035abfed796112502a90daf281a585e8cf1a5013bd4fed511a`;
+  and the little-endian float64 C-order LASSO-ratio-vector SHA256
+  `1da884c55b3f6e7bf79012973bddf092a92efb1ea098cd2717a804645a62c9a0`.
+  Changing any executable config byte requires a new logged specification,
+  amendment, hostile audit, and clean hosted boundary before use.
+- **Execution effect:** This amendment does not expose the resource,
+  validation, or research streams. After an independent sealed-surface pass, a
+  clean documentation commit, push, and hosted-green CI boundary, S0004 may be
+  implemented test-first using test-only seeds. The resource seed becomes
+  eligible only after implementation parity and hostile code review. Validation
+  remains sealed until the distinct benchmark passes every expected admission;
+  research remains sealed until every registered validation license passes.
+- **Null effect:** The fixture's 95% proxy reliability and latent decomposition
+  remain source-compatible modeling choices, not identified market facts. A
+  positive result is conditional existence evidence. A miss is an unadjudicated
+  S0004 failure and cannot activate the premise-dead branch without the separate
+  sharp source-compatible bound already required by A003.
+- **Access statement:** At this seal, no G2 implementation, resource benchmark,
+  validation panel, research draw, external market tape, schema sample,
+  evaluation observation, or holdout observation had been accessed. Only
+  deterministic algebra, opened primary papers, local parser/hash checks, and
+  read-only hostile audits informed A005.

@@ -8,7 +8,7 @@ empirical model trials, but gate-level pipeline variants are recorded.
 ## Trial counts
 
 - Empirical specifications: **0**
-- Simulation estimator specifications: **1 run, 1 passed**
+- Simulation estimator specifications: **1 run and passed; 2 G2 designs rejected pre-run; 1 G2 design registered and pending**
 - Software-only pipeline specifications: **1 completed**
 - Holdout opens: **0**
 
@@ -116,3 +116,122 @@ empirical model trials, but gate-level pipeline variants are recorded.
   recovery with identical validated shards remains the same attempt; changing
   the seed, sample size, fixture, target, accumulator, or metric creates a new
   attempt.
+
+## S0002 — Rejected three-factor G2 source-box design
+
+- **Registered:** 2026-07-15, after primary-source extraction and before G2
+  implementation or RNG access.
+- **Scope:** deterministic population design only; eight Fourier-modal cells,
+  positive own feedback, a response-equivalent integrated-OFI/factor hybrid,
+  and a proposed date bootstrap/LASSO validation.
+- **Prediction:** the direct population calculation predicted 105.82%--613.48%
+  focal relative error across eight cells. The canonical digest was proposed as
+  `a8475753e1cd70781c028680d7d782cbee73cb19b7265b93e8335eaa7f506fbf` but
+  no exact payload had yet been committed.
+- **Outcome:** rejected before implementation, benchmarking, validation, or a
+  research draw. Three hostile audits independently reproduced all eight
+  values and verified positive structural variances, then found the power
+  alternative mathematically impossible, the confirmatory response map equal
+  to uncontrolled OLS, the calibration cross-frequency/incompatible, the
+  focal pair dependent on arbitrary eigenvectors, and the compute/CV/bootstrap
+  contract underdefined. The failure and repairs are recorded in
+  `docs/redteam/GATE_G2_PRERUN.md` and amendment A002.
+- **Multiple-testing count:** counted as a rejected simulation design because
+  its population outcomes were inspected, even though no random stream was
+  consumed. It cannot be revived without a new logged specification.
+
+## S0003 — Label-invariant noisy-control G2 premise test
+
+- **Registered:** 2026-07-15, after S0002's diagnosis and before implementation
+  or any registered G2 stream.
+- **Scope:** conditional confounding-only simulation at `N=30`, `B=0`, the
+  one-minute Capponi--Cont leading observable moments, diagonal sensitivity
+  `0.29`, homogeneous off-diagonal sensitivity `0.0029`--`0.0046`, oracle
+  flow, a correctly loaded independent 95%-reliable proxy, and a stationary
+  within-date AR(1) stress of 0.60.
+- **Confirmatory candidates:** full-flow condition-capped ridge and a
+  pooled homogeneous three-slope OLS given the true symmetry. Both must pass
+  all 17 frozen off-diagonal grid points. All six CCZ protocol reconstructions
+  are mandatory fidelity diagnostics; they and measured top-ten OFI are
+  secondary and use fair projected estimands.
+- **Prediction:** `docs/predictions/GATE_G2.md`; the least favorable population
+  condition-ridge relative error is `1.3744450002738078`. The exact canonical
+  raw target file SHA256 is
+  `c2122bbdbcf50181e028a689c502b5734673ed4a9e89765869f26108975f6122`;
+  its independently reproducible 12-decimal semantic SHA256 is
+  `b645468cd53357c968c272adff489a43e43e402b522fbfdbf2175e5f71dee00c`.
+- **Interval and decision:** 499 whole-date multinomial-weight bootstrap draws;
+  bootstrap-SE normal and basic 95% intervals; pass only if
+  `abs(error) - 0.5 * abs(truth) > 3 * bootstrap_se` for both candidates at
+  every point.
+- **Licensing:** before the one research draw, 100 exact-procedure size
+  superpanels must put the one-sided 95% Clopper--Pearson upper bound for the
+  family union of any candidate/grid boundary passage at or below 5%.
+  One hundred power superpanels must put the one-sided 95% Wilson lower bound
+  for the intersection of all candidate/grid passages at or above 80% under
+  reliability 0.95. Reliability one is a recovery diagnostic. A distinct
+  benchmark must license the measured compute projection. Neither registered
+  seed may be retried.
+- **Status:** rejected before implementation or RNG. After second-audit repairs,
+  the fresh math audit passed but inference and professor audits found that the
+  observable and published opponents were nonbinding, the boundary-only size
+  claim was unjustified, and several RNG/CV/cache/benchmark contracts remained
+  ambiguous. A003/S0004 supersedes it.
+- **Multiple-testing count:** enters the simulation-design count now that its
+  analytic predictions are inspected. It becomes a run only when a registered
+  stochastic stream is consumed.
+
+## S0004 — Observable and published-opponent G2 premise test
+
+- **Registered:** 2026-07-15, after the fresh S0003 hostile audit and before
+  implementation, benchmarking, validation, or any registered G2 stream.
+- **Why S0003 died:** its oracle-flow projections were binding while the
+  measured top-ten opponent and every published CCZ fit were nonbinding. More
+  information does not imply coefficient-error dominance. The same audit found
+  a boundary-only size overclaim, bootstrap-key collisions, an omitted pooled
+  intercept contract, ambiguous fold-local LASSO penalties, an insufficient CC
+  cache, and a non-reproducible benchmark formula.
+- **Scope:** the same conditional `N=30`, `B=0`, one-factor observable law and
+  structural interval, now with three binding smooth candidates: observable
+  integrated-top-ten-OFI proxy-control ridge, oracle-flow condition ridge, and
+  globally centered pooled homogeneous OLS. `CI_I` is a binding published
+  protocol veto at the primary observable point and `o=0.0046`.
+- **Population prediction:** observable ridge ranges from
+  `0.009779867515744457` to `0.010849163255110856`; relative error falls from
+  `2.3723681088773994` to `1.3585137511110557`. At reliability one its sealed
+  target is `0.9816922278202821 o` because multi-level measurement error
+  remains.
+- **Seals:** raw target SHA256
+  `f13adcff4259773485ca5952d23ae923d3c501c84d4edb102c1886460ada4a59`;
+  12-decimal semantic SHA256
+  `f437f3308d92e5035abfed796112502a90daf281a585e8cf1a5013bd4fed511a`;
+  raw config SHA256
+  `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`;
+  literal LASSO-ratio binary64 SHA256
+  `1da884c55b3f6e7bf79012973bddf092a92efb1ea098cd2717a804645a62c9a0`.
+- **Smooth validation:** 100 superpanels, 459-event nine-node
+  proxy-noise-amplitude null-grid union with one-sided 95% Clopper--Pearson
+  upper bound at most 5%, and 51-event reliability-0.95 power intersection with
+  one-sided 95% Wilson lower bound at least 80%. Integer thresholds remain one
+  or fewer null-union successes and 87 or more power-intersection successes.
+  This is not a continuum-uniform size claim.
+- **Published validation:** one full-`N`, full-`T` no-confounding `CI_I`
+  recovery panel must recover diagonal `0.29` and focal cross coefficient
+  `0.0046` inside Bonferroni intervals, with all 31 point errors strictly below
+  50% and no focal material-bias declaration, before the single binding
+  research reconstruction. This is not a Monte Carlo size/power claim.
+- **Interval and decision:** unchanged strict
+  `abs(error)-0.5*abs(truth)>3*bootstrap_se`, 499 whole-date weights, named
+  normal/basic intervals. Positive G2 is the intersection of all 51 smooth
+  events and the `CI_I` veto.
+- **Workload:** 26,405,400 smooth validation fits, 15,195,600 `CI_I` recovery
+  LASSO solutions, and 45,586,800 six-spec research LASSO solutions. Fourteen
+  separately timed kernels must project inside the one-/12-/three-/16-hour
+  expected caps. The two-/24-/six-/32-hour hard limits are runtime stops, not
+  preflight slack.
+- **Status:** registered, content-audited, hash-sealed, independently admitted
+  at the pre-implementation contract boundary, unimplemented, and unrun. It is
+  blocked pending hosted-green CI on the clean documentation commit. S0002 and
+  S0003 remain non-executable.
+- **Multiple-testing count:** one new specification. No stochastic run exists
+  until a registered stream is consumed.

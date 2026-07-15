@@ -11,6 +11,7 @@ htmlcov/
 build/
 dist/
 *.egg-info/
+tmp/
 
 data/*
 !data/.gitignore

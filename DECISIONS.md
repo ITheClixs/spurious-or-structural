@@ -390,3 +390,653 @@ the choice, alternatives, and the evidence that would reopen it.
   economic premise. G2 remains a genuine kill switch.
 - **Reopen if:** The hosted run is invalidated or a hash/provenance audit finds
   that the committed evidence differs from the reviewed frozen result.
+
+## D0024 — Use one primary one-minute calibration, not a cross-study tuple
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The first G2 design combined one-minute equity OFI spectra, a
+  five-minute trade-sign propagator, one-second E-mini feedback, and an
+  unsourced temporal process. Standardizing each number did not make the tuple
+  jointly observed or frequency invariant.
+- **Decision:** Match only Capponi--Cont's dimensionless one-minute leading
+  flow/return shares and factor-score alignment in the confirmatory observable
+  law. Set `B = 0` so the gate isolates confounding. Treat Benzaquen's
+  absolute `0.29` diagonal and the cross/own interval as structural
+  sensitivities rather than one-minute coefficients,
+  Hasbrouck--Seppi as a 15-minute historical comparator, Takahashi as a
+  nonconfirmatory feedback reference, and AR(1) `0.60` as a dependence stress.
+- **Rejected:** Derive an aggregation bridge from incompatible summaries by
+  assuming their standardized coefficients are invariant. The necessary
+  shared-filter and variable-equivalence assumptions are not in the sources.
+- **Residual risk:** The positive result remains conditional on a source-matched
+  observable law and source-informed structural sensitivity; it is not an
+  empirical structural calibration.
+- **Reopen if:** G3 or a newly opened primary source supplies same-variable,
+  same-frequency structural quantities under a defensible sampling design.
+
+## D0025 — Remove asset ordering and make confounding the pass requirement
+
+- **Date:** 2026-07-15
+- **Diagnosis:** A001's Fourier PC2/PC3 geometry made the chosen off-diagonal
+  depend on an unsourced ordering. Its confirmatory response mapping re-added
+  the factor direction and was algebraically uncontrolled OLS, while every cell
+  also contained positive feedback.
+- **Decision:** Use the permutation-invariant one-spike covariance with
+  isotropic residual eigenvalues, homogeneous `Lambda`, and `B = 0`. Every
+  population off-diagonal is identical. Give the opponent oracle `q`, the
+  correct scalar factor direction, and an independent proxy with 95%
+  reliability. Compare the direct coefficient on `q` with `Lambda`.
+- **Rejected:** Keep the old response-equivalent factor map and call it the
+  strongest factor-controlled estimate. That changes the opponent's estimand
+  and cannot isolate confounding.
+- **Residual risk:** Isotropic residuals are a transparent maximum-entropy
+  convention, not a claim about real residual covariance. Proxy reliability is
+  deliberately favorable but not empirically identified.
+- **Reopen if:** A source identifies the lower spectrum/loading orientation or
+  an empirical proxy-reliability bound without opening the holdout.
+
+## D0026 — Give the opponent the true symmetry and keep CCZ targets fair
+
+- **Date:** 2026-07-15
+- **Diagnosis:** A 30-dimensional penalized fit could fail from covariance
+  estimation rather than the noisy-control moment. Conversely, factor-residual
+  coefficients cannot fairly be compared with directions their feature map
+  projects out.
+- **Decision:** Require two smooth confirmatory candidates: a full-flow positive
+  condition-ridge projection and a pooled three-slope OLS projection told the
+  true homogeneous structure. Both receive oracle flow and the same proxy and
+  both must pass every structural grid point. CCZ protocol reconstructions are
+  secondary; purged operators target `Lambda P_perp`, while full response maps
+  are separately labeled descriptive results.
+- **Rejected:** Use a truth-assisted selector over LASSO paths or accuse an
+  own/residual-only model of failing to recover unavailable directions. Both
+  would make the positive result easier through an unfair comparison.
+- **Residual risk:** The confirmatory candidates are projection diagnostics,
+  not identified structural estimators; that limitation is the point of G2.
+- **Reopen if:** A smoother and strictly stronger observable-factor baseline is
+  derived before any registered draw and passes the same estimand audit.
+
+## D0027 — Test the margin beyond materiality and license the exact procedure
+
+- **Date:** 2026-07-15
+- **Diagnosis:** A001's exactly-50% planted alternative could not attain 80%
+  power under a strict `> 50%` rule. Separately requiring 50% error and three
+  SE from zero does not show that the materiality margin is statistically
+  resolved.
+- **Decision:** Require
+  `abs(error) - 0.5 * abs(truth) > 3 * bootstrap_se`. Use 499 whole-date
+  multinomial-weight bootstrap replicates. Before research, 100 panels must put
+  the one-sided 95% Clopper--Pearson upper bound at or below 5% for a
+  superpanel indicator that any candidate/grid component passes at its own
+  50%-materiality boundary. A power superpanel at the actual 95%-reliability
+  alternative must put the one-sided 95% Wilson lower bound at or above 80% for
+  the indicator that every component passes. Reliability one remains a
+  recovery diagnostic, not a size design; marginal component intervals are
+  descriptive only. No validation-seed retry is allowed.
+- **Rejected:** Preserve the literal weaker conjunction or validate a different
+  analytic/low-dimensional procedure. The license must cover the final gate
+  algorithm.
+- **Residual risk:** A negative 95%-reliability result cannot kill the market
+  premise because weaker proxies are source compatible. Only a sharp
+  source-compatible bias upper bound can support that null.
+- **Reopen if:** The finite-sample license fails before research; any redesign is
+  a new logged specification, not a seed retry.
+
+## D0028 — Bound G2 by small sufficient statistics and measured fit counts
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The first checkpoint promise could not reconstruct paper-block
+  preprocessing and understated millions of CV-selected LASSO refits. A naive
+  date-by-cell 360-dimensional scatter design could also exceed the checkpoint
+  allocation.
+- **Decision:** Confirmatory work stores 2,016 float64 sufficient-statistic
+  entries per date (`16,128` bytes), processes grid points/panels sequentially,
+  and vectorizes bootstrap aggregation. Paper reconstructions stream one raw
+  date at a time and retain date summaries. A distinct benchmark must measure
+  a full panel, a 25-bootstrap batch, and one complete reconstruction date,
+  then extrapolate the exact `2,844,300` validation bootstrap aggregation /
+  `3,992,000` validation candidate-fit counts plus the fully enumerated
+  secondary workload before the validation seed is
+  available. Phase hard stops total 21 hours, below the G0 32-hour G2 envelope.
+- **Rejected:** Build block-level high-dimensional scatter lakes or accept a
+  wall-time assertion without an executable fit count.
+- **Reopen if:** The sealed benchmark projects beyond any subphase hard budget,
+  a task/batch exceeds eight minutes, RSS exceeds 3.5 GB, or checkpoint storage
+  exceeds 2 GB.
+
+## D0029 — Treat the second hostile audit as a failed boundary, then repair it
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Independent reviewers reproduced S0003's population economics
+  but rejected execution. The raw float JSON was immutable but not
+  independently byte-derivable; the size experiment used the distant `R = 1`
+  recovery control instead of the 50%-materiality boundary; A001 was not
+  mechanically denied execution; and source/gate prose still leaked S0002 or
+  premise-killing language. A wider-box feasibility line also retained stale
+  values from the rejected interval.
+- **Decision:** Keep the full-precision raw SHA only as a byte-integrity seal and
+  add an independent 12-decimal semantic seal. Add design/config/target schema
+  identity and hard rejection conditions. Hash-seal candidate-specific
+  materiality-boundary reliabilities, validate family size with a superpanel
+  union indicator there, validate joint power with a superpanel intersection
+  indicator at `R = 0.95`, retain `R = 1` only as a recovery diagnostic, and
+  require the pooled homogeneous veto. Correct the feasibility evidence and
+  narrow every positive/null statement to the actual conditional claim.
+- **Rejected:** Call the recovery control a size test, or paper over ULP-level
+  regeneration differences with a raw-file hash. Neither would validate the
+  actual gate procedure.
+- **Residual risk:** The Python semantic generator and hard-fail tests do not
+  yet exist; the clean documentation boundary must pass hosted CI before that
+  implementation starts, and no RNG is authorized until those tests pass.
+- **Reopen if:** A fresh audit cannot reproduce the semantic digest, the
+  candidate-specific critical reliabilities, or the intersection-union
+  acceptance logic.
+
+## D0030 — Make every stochastic and published-opponent branch executable
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The inference reviewer found that named seeds were not an RNG
+  schedule, “six reconstructions” was not an estimator table, and the claimed
+  exact workload omitted 45.6 million small LASSO solutions. Bootstrap interval
+  names also omitted `ddof`, critical values, and quantile algorithms. Those
+  gaps permit implementations with materially different power and runtime.
+- **Decision:** Freeze the full `SeedSequence` entropy vector, zero-based
+  namespace tables, shapes, AR recursion, CRN transforms, and shared bootstrap
+  weights. Define all six CCZ fits row by row, including penalization,
+  fold-local PCA/scaling, lambda path, coordinate/warm-start rules, OOS SST,
+  and cached-date bootstrap target. Freeze the interval formulas and one-sided
+  family thresholds. Make both frontiers, recovery, IID, measured-OFI, and
+  paper branches mandatory and expose their exact fit/path counts to the
+  resource benchmark.
+- **Rejected:** Treat paper reconstruction as optional because it is secondary,
+  or benchmark only confirmatory ridge. The gate explicitly requires a
+  faithful strongest published opponent and the laptop budget applies to the
+  full promised workload.
+- **Residual risk:** The 45,586,800 LASSO solutions may breach the four-hour
+  research hard stop despite their tiny dimensions and warm starts. One full
+  date is therefore a mandatory pre-validation benchmark; a breach fails the
+  design rather than authorizing fewer dates or lambdas.
+- **Reopen if:** The fresh audit finds any unkeyed random draw, implementation
+  choice absent from the six-row table, optional workload branch, or count that
+  the benchmark cannot reconstruct.
+
+## D0031 — Reject oracle dominance and bind the observable opponent
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The fresh math audit reproduced S0003, but the professor audit
+  identified a logical gap: oracle-flow coefficient failure does not imply
+  measured or published-algorithm failure because measurement attenuation,
+  regularization, and factor purging can cancel confounding. S0003 could pass
+  without testing H1's observable opponent.
+- **Decision:** Supersede S0003 before code or RNG with S0004. Make the
+  integrated-top-ten-OFI plus 95%-reliable proxy condition ridge binding at all
+  17 cells. Retain oracle condition ridge and pooled homogeneous OLS as binding
+  no-strawman checks. Make the CCZ `CI_I` reconstruction a separate published
+  direct-flow veto at the primary point and upper endpoint; require an
+  actual-`N`, actual-`T` no-confounding recovery panel first.
+- **Rejected:** Infer observable failure from a Blackwell-style “more
+  information” intuition. The estimators and estimands differ, so no
+  coefficient-error ordering follows.
+- **Residual risk:** The `CI_I` reconstruction fills numerical choices omitted
+  by the paper and cannot receive a 100-panel exact power study within the
+  laptop budget. Its sole predeclared result therefore has a named date
+  bootstrap and recovery check but is not included in the smooth-family Monte
+  Carlo power claim.
+- **Reopen if:** A primary-source author implementation or a stronger exact
+  observable factor-control baseline becomes available before the research
+  seed is consumed.
+
+## D0032 — License a finite null grid and exact execution rates, not a theorem
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Population monotonicity in proxy reliability does not prove
+  that finite-sample passage probability is maximal at `Rcrit` once estimated
+  PCs, sample ridge branches, and bootstrap SEs vary. Separately, bootstrap
+  entropy collided across parent scenarios/date counts; pooled centering,
+  fold-local LASSO paths, block-varying CC loadings, and cold/warm throughput
+  remained underdefined.
+- **Decision:** Evaluate a nine-node proxy-noise-amplitude grid between `R=1`
+  and every candidate/cell materiality boundary and call it exactly what it is:
+  a 459-event null-grid calibration, not continuum-uniform size control. Give
+  RNG key schema 2 dedicated parent phase/scenario/date-count slots. Freeze one
+  global weighted pooled intercept, common penalty-ratio-index CV, block-formed
+  CC maps plus mean `P_perp`, and fourteen separately timed cold/warm kernels.
+  The full workload is 26,405,400 smooth validation fits, 15,195,600 `CI_I`
+  recovery LASSO solutions, and 45,586,800 research LASSO solutions. Use the
+  complete one-/12-/three-/16-hour expected-cap schedule; the benchmark vetoes
+  execution if measured rates do not fit. The two-/24-/six-/32-hour hard limits
+  remain runtime stops rather than preflight slack.
+- **Rejected:** Call a boundary experiment “size,” silently reuse one entropy
+  key for differently shaped vectors, or extrapolate a full phase from one
+  convenient kernel. Each would manufacture confidence or compute feasibility.
+- **Residual risk:** Nine points do not certify the continuum between them.
+  The frozen maxima are `0.015038828627620739` in proxy-noise amplitude and
+  `0.003307437435413063` in adjacent reliability. Those and every cellwise gap
+  must ship with results, and a continuous size claim remains prohibited
+  without a certified samplewise supremum. Invalid numerical outcomes fail the
+  license; they may not masquerade as null nonpasses.
+- **Reopen if:** The deterministic benchmark fails, in which case S0004 fails
+  pre-validation; five nodes or fewer paper fits require a new logged design,
+  not an in-place budget edit.
+
+## D0033 — Require the published LASSO to recover nonzero cross-impact
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The first `CI_I` recovery fixture set every structural
+  off-diagonal to zero. A LASSO that always erased small cross coefficients
+  could therefore pass recovery and later appear more than 50% wrong against a
+  nonzero truth for a reason unrelated to confounding.
+- **Decision:** Keep the actual `N=30`, 252-date, collinear flow law, noisy
+  ten-level measurement, upper-endpoint modal return-noise distribution and
+  deterministic maps, remove only price confounding with `Gamma = 0`, and set the
+  homogeneous truth to diagonal `0.29` and off-diagonal `0.0046`. All 30
+  diagonal targets and focal `(0,1)` cross target must lie inside their frozen
+  Bonferroni date-bootstrap-normal intervals; all 31 point errors must be
+  strictly below 50%, and the focal material-bias declaration must be false.
+- **Rejected:** Validate only a zero cross coefficient, exact measured flow,
+  isotropic return noise, or infer recoverability from the much larger diagonal.
+  None tests whether the published procedure can preserve the same small object
+  under the same non-confounding inputs later used for the accusation.
+- **Residual risk:** One full-size recovery panel is not a Monte Carlo size or
+  power license for `CI_I`; a 100-panel exact study would require roughly 1.52
+  billion small LASSO solutions and violates the laptop budget. The fully
+  licensed observable hybrid remains the primary opponent, while `CI_I` is a
+  binding published-protocol veto with this explicitly narrower safeguard.
+- **Reopen if:** The recovery point or intervals fail, or an equivalent exact
+  size/power validation becomes feasible without weakening `N`, `T`, folds,
+  lambda paths, or the published reconstruction.
+
+## D0034 — Let the exact level-share rational control the raw target seal
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The derivation implied exact
+  `omega=(547/3953)/10=547/39530`, but the first target payload stored
+  `0.013837591702504448`, 12 ULP above the nearest binary64 representation of
+  that rational. The discrepancy came from evaluating decimal `0.8906` through
+  a different binary operation order.
+- **Decision:** Make the exact source-decimal rational authoritative and store
+  binary64 `0.013837591702504428`. The raw target SHA is now
+  `f13adcff4259773485ca5952d23ae923d3c501c84d4edb102c1886460ada4a59`;
+  the 12-decimal semantic SHA remains
+  `f437f3308d92e5035abfed796112502a90daf281a585e8cf1a5013bd4fed511a`.
+  Independent recomputation confirmed every coefficient, root, penalty, and
+  recovery attenuation is otherwise bit-identical.
+- **Rejected:** Preserve the earlier raw byte merely because it was already
+  hashed. A seal protects an understood contract; it does not make contradictory
+  arithmetic correct.
+- **Residual risk:** Implementations must derive the rational directly or match
+  both seals; reconstructing it through an unfrozen float-expression order is
+  forbidden.
+- **Reopen if:** Any regenerated downstream target differs or the semantic
+  canonicalizer no longer reproduces the unchanged digest.
+
+## D0035 — Freeze the joint simulation and executable workload, not just marginals
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Fresh inference review found that covariance/AR marginals and
+  13-field keys did not determine the common-random-number joint law: Cholesky,
+  symmetric, or rotated square roots change the 459-union/51-intersection
+  outcome. It also found that a list of fourteen kernels plus `sum W/v` was not
+  executable without a phase-by-kernel work matrix. The paper LASSO still left
+  preprocessing order and KKT evaluation implicit.
+- **Decision:** Freeze an AR-filter-first float64 symmetric modal transform for
+  `q`, `u`, proxy, levels, and returns; freeze pre-FWL scaling, FWL equations,
+  coordinate updates, KKT formula, coefficient reconstruction, and best-level
+  index; and publish the exact validation/research work matrix and unit
+  dominance rules. Unequal 960-/8,460-field paper caches use normalized
+  accumulation terms and the slower benchmarked rate. Expected projections,
+  not hard-stop slack, license execution.
+- **Rejected:** Treat any covariance square root as equivalent, let a library
+  choose LASSO preprocessing, or infer whole-phase cost from a convenient
+  kernel. Those alternatives change joint validation probabilities, reported
+  coefficients, or compute feasibility.
+- **Residual risk:** The work table is a pre-run model until measured. A fresh
+  arithmetic check corrected the research paper-bootstrap total from an
+  erroneous `1,063,072,080` to exact `1,063,828,080`; the distinct resource
+  benchmark remains the veto on all rate assumptions.
+- **Reopen if:** Any work unit is unmapped, a shorter variant is faster-charged
+  without the declared dominance rule, or independent implementation cannot
+  reproduce the CRN or LASSO map exactly.
+
+## D0036 — Keep the recovery realization disjoint from sealed research
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Recovery prose said the validation counterfactual reused the
+  research endpoint's addressed normals, but RNG schema 2 deliberately assigns
+  paper recovery to phase 25/scenario 4 and research to phase 30/scenario 0.
+  Literal reuse would contradict the namespace contract and expose the sealed
+  research realization before validation passed.
+- **Decision:** Interpret the no-confounding recovery as a distribution-matched
+  counterfactual. It preserves the upper-endpoint `q`, measured-level,
+  symmetric-modal-`u`, `Lambda`, AR, and date-reset laws and changes only
+  `Gamma`, while drawing its own phase-25/scenario-4 addressed normals. The
+  research phase-30 stream remains untouched until every preflight and
+  validation condition passes.
+- **Rejected:** Reuse phase-30 normals in validation, or weaken the counterfactual
+  to exact flows, independent flows, isotropic noise, or a zero cross truth.
+  The former leaks the research realization; the latter changes the procedure's
+  recovery problem.
+- **Residual risk:** Distribution matching does not provide a paired-realization
+  treatment contrast. The recovery is only a no-strawman capability check, not
+  a causal decomposition or a Monte Carlo size/power license.
+- **Reopen if:** Any implementation instantiates phase 30 before recovery and
+  smooth validation have passed, or changes any recovery distributional input
+  other than `Gamma`.
+
+## D0037 — Never turn nonfinite preprocessing into sparsity
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The global numerical contract failed validation on every
+  nonfinite input or statistic, but two LASSO clauses said a nonfinite pre-FWL
+  RMS or post-FWL norm could be dropped and fixed to zero. That contradiction
+  could convert numerical corruption into an apparently valid sparse fit.
+- **Decision:** Only a finite, exactly zero pre-FWL RMS or a finite post-FWL
+  squared norm at or below `100 eps` may fix a penalized column to zero. Any
+  nonfinite scale or norm fails the cell; the existing global policy then fails
+  the entire validation license or G2 research publication. The same escalation
+  applies to every named `fail_cell` or `fail_response_cell` outcome, including
+  a finite weak eigengap or zero OOS SST.
+- **Rejected:** Treat nonfinite values like structural zeros. A structural zero
+  is an estimand property; nonfiniteness is an invalid computation.
+- **Residual risk:** Near-zero finite columns remain algorithmically removed by
+  the frozen post-FWL threshold. Their frequency and identities must be
+  reported; an unexpectedly common removal pattern is a substantive diagnostic.
+- **Reopen if:** Any solver, PCA, scale, norm, loss, coefficient, interval, or
+  sufficient statistic can be omitted, imputed, or zeroed after becoming
+  nonfinite.
+
+## D0038 — Count every promised Monte Carlo interval
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The validation work table counted 52,800 within-superpanel
+  smooth event finalizations plus recovery/IID/published intervals, but omitted
+  the 459 null-grid and 51 power marginal Monte Carlo intervals promised as
+  descriptive outputs and the two family-level CP/Wilson intervals used for
+  admission. The aggregation unit also said “candidate cell” although its count
+  relies on sharing one cell/weight aggregation across all three candidates.
+- **Decision:** Add all 512 omitted finalization units, raising validation
+  `interval_finalize` from 52,885 to 53,397. Define one bootstrap-moment
+  aggregation as one structural-cell/date-weight aggregation shared by the
+  three smooth candidates; candidate-specific solves remain separately counted.
+  Each null marginal gets the same one-sided 95% Clopper--Pearson upper endpoint
+  as the family union, and each power marginal gets the same one-sided 95%
+  Wilson lower endpoint as the family intersection. All 510 are unadjusted,
+  descriptive, non-gating intervals.
+- **Rejected:** Drop the promised marginal intervals after using them to describe
+  validation behavior, or silently charge one aggregation per candidate. The
+  former weakens reporting; the latter contradicts the exact work arithmetic.
+- **Residual risk:** Finalization is expected to be cheap, but it remains a
+  separately benchmarked kernel and may not borrow throughput from a fit or I/O
+  kernel.
+- **Reopen if:** Any declared validation or research scalar lacks a mapped
+  finalization unit, or implementation cannot share the cell/date-weight moment
+  aggregation without changing candidate-specific estimates.
+
+## D0039 — Freeze the gate-binding observable PCA algorithm
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The observable integrated-OFI opponent fixed within-date scope,
+  centering, sign, eigengap, and L1 score normalization, but did not name a
+  covariance divisor or eigensolver. Covariance `eigh`, raw-scatter `eigh`, and
+  SVD are algebraically related yet can differ at finite-sample rounding and
+  eigengap boundaries, changing the exact 459/51 validation procedure.
+- **Decision:** For each 330-by-10 date/asset level matrix, form float64
+  `X_c'X_c/330`, use symmetric `numpy.linalg.eigh`, select the largest eigenpair,
+  then apply the existing deterministic sign and L1 score normalization. No
+  bootstrap recomputes a date PCA.
+- **Rejected:** Let the implementation inherit an unstated library default or
+  infer the observable rule from the separately nested paper-reconstruction
+  PCA keys. Gate-binding algorithms must be explicit at their own surface.
+- **Residual risk:** Near-degenerate leading eigenvalues can still make the
+  loading unstable; the frozen trace-relative eigengap failure rule is therefore
+  gate binding and escalates globally.
+- **Reopen if:** An implementation uses SVD, an unscaled scatter matrix, a
+  different divisor, a nonsymmetric solver, or recomputes PCA under bootstrap
+  weights.
+
+## D0040 — Make smooth-ridge centering and solves global and explicit
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Population means are zero, but finite-sample date bootstrap
+  coefficients depend on whether the intercept is global, date-local, or
+  omitted and on whether the Schur system is inverted or solved. The pooled
+  candidate froze these choices; the two full-flow ridge candidates had not.
+- **Decision:** Both ridge candidates use one global weighted intercept, global
+  centering after date weights, no fixed effects, and reaggregated per-date
+  cross-products. Nonfinite or nonpositive centered proxy variance fails the
+  cell. Symmetrize `S` once, use float64 `numpy.linalg.eigvalsh`, and evaluate
+  Eq. (G2.14) with transposed `numpy.linalg.solve`, never an explicit inverse.
+- **Rejected:** Per-date demeaning, omitted intercepts, explicit inversion, or
+  silent pseudoinverses. Each changes either the finite-sample estimand or the
+  registered numerical path.
+- **Residual risk:** BLAS/LAPACK can still create tiny cross-platform rounding
+  differences. Semantic target tolerances and fail-closed numerical checks must
+  be tested on hosted Linux before any registered seed is available.
+- **Reopen if:** Bootstrap centering occurs before date-weight aggregation,
+  proxy variance is regularized rather than failed, or a solver path differs
+  from the frozen NumPy calls.
+
+## D0041 — Retain roundoff eigenvalues and verify the ridge condition cap
+
+- **Date:** 2026-07-15
+- **Diagnosis:** “Clip a tiny negative eigenvalue to zero” left two legitimate
+  implementations: reconstruct a PSD matrix from eigenvectors, or change only a
+  scalar used by the penalty formula. Either can make the solved matrix's actual
+  condition number differ from the advertised cap.
+- **Decision:** After `eigvalsh`, fail a nonfinite or nonpositive `smax`; accept
+  eigenvalues in the closed roundoff band
+  `[-100 eps max(1,|smax|),0]` but retain their raw values in the condition
+  penalty and once-symmetrized solve. More negative eigenvalues fail. After
+  adding the ridge, require a positive finite minimum eigenvalue and actual
+  eigenvalue ratio at most `K(1+1000 eps)`.
+- **Rejected:** Eigenvector reconstruction or silent PSD projection. Neither is
+  needed for the declared roundoff guard and both introduce another numerical
+  path.
+- **Residual risk:** The `1000 eps` allowance is numerical rather than
+  statistical; every realized ratio is still reported, and any material excess
+  fails.
+- **Reopen if:** Cross-platform tests need a larger allowance, a tolerated
+  negative is comparable with the ridge floor, or any implementation projects
+  `S` before solving.
+
+## D0042 — Seal the LASSO ratio vector as binary64 data
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The mathematical grid `10^(-4k/39)` did not select a unique
+  binary64 vector. In the locked environment, scalar exponentiation and
+  `numpy.logspace` disagree at 7 of 40 indices by as much as eight ULPs. That
+  difference can cross the absolute `10^-12` CV tie tolerance and select a
+  different outer penalty.
+- **Decision:** Store all 40 descending ratio values as config literals, parse
+  them directly as float64, and require little-endian float64 C-order SHA256
+  `1da884c55b3f6e7bf79012973bddf092a92efb1ea098cd2717a804645a62c9a0`.
+  Runtime regeneration from a formula or `logspace` is unlicensed.
+- **Rejected:** Treat algebraically equivalent constructors as numerically
+  interchangeable. The selected-ratio index is part of the estimator.
+- **Residual risk:** Decimal-to-binary parsing is delegated to the pinned Python
+  TOML runtime; implementation tests must verify all 40 bit patterns and the
+  digest on macOS and hosted Linux before any registered seed is accessible.
+- **Reopen if:** The parsed vector fails its digest, is not strictly descending
+  with exact endpoints one and `0.0001`, or a supported runtime parses a literal
+  differently.
+
+## D0043 — Retire every pre-S0004 execution clause
+
+- **Date:** 2026-07-15
+- **Diagnosis:** D0026--D0028 correctly document S0003's evolution but use
+  generic future-tense language, including two candidates, secondary-only CCZ
+  fits, old fit counts, and a 21-hour stop. A parser or hurried reader could
+  mistake that history for live S0004 authority despite D0031 onward.
+- **Decision:** D0026, D0027, D0028, and every pre-D0031 G2 candidate, workload,
+  validation, veto, or budget clause are historical S0003 records only and
+  grant no S0004 execution authority. The live S0004 contract is D0031 onward,
+  the latest preregistration amendment, and the sealed schema-3 config; any
+  conflict is a hard failure rather than a choice among versions. DGP keys share
+  common normals within the active phase/scenario; their parent slots remain
+  zero sentinels except for bootstrap provenance.
+- **Rejected:** Rely on chronological implication alone. Mechanical retirement
+  is required because stale counts and candidate scopes are executable-looking.
+- **Residual risk:** Historical prose remains searchable by design. The final
+  admission amendment must repeat this authority rule and bind one raw config
+  digest so automated checks have a single executable surface.
+- **Reopen if:** Any implementation, benchmark, or review cites a pre-D0031
+  count, candidate set, veto status, budget, key-sharing rule, or estimator map
+  as current authority.
+
+## D0044 — Assign every DGP stream one phase/scenario pair
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Named phase and scenario IDs plus a disjointness rule did not
+  uniquely pair the two fields for ordinary size, power, recovery, IID, or
+  resource draws. An implementation could choose an unlisted non-base scenario
+  and still claim a collision-free 13-field key.
+- **Decision:** Freeze the only licensed assignments as resource smooth `10/0`,
+  resource paper `10/1`, size `20/0`, power `21/0`, date frontier `22/2`, smooth
+  recovery `23/0`, IID `24/0`, paper recovery `25/4`, and research `30/0`.
+  Reliability frontier `22/3` remains metadata-only reuse of `21/0` and creates
+  no generator. DGP parent slots are zero sentinels; only phase-40 bootstrap
+  keys carry the exact parent phase/scenario.
+- **Rejected:** Infer scenario zero by convention wherever no special scenario
+  was named. The address, not an informal default, defines the random variable.
+- **Residual risk:** Bootstrap implementation must still prove that every
+  phase-40 key carries the correct named parent and date count; hard-fail key
+  tests precede all registered access.
+- **Reopen if:** Any stochastic DGP draw uses an unlisted pair, metadata-only
+  `22/3` instantiates a generator, or a DGP key has nonzero parent slots.
+
+## D0045 — Give every mandatory frontier rate an interval
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The work ledger counted every within-superpanel frontier fit
+  but omitted inferential finalization for six date-frontier and twelve extra
+  reliability-frontier passage rates. Calling these outputs mandatory
+  frontiers while reporting naked rates would violate the project's
+  number/interval contract.
+- **Decision:** For each of the three candidates at 48 and 96 dates and at each
+  extra reliability 0.96--0.99, report an unadjusted, one-sided 95% Wilson lower
+  interval over 100 superpanel indicators. These 18 intervals are descriptive
+  and non-gating. Reliability 0.95 reuses the already counted power marginals;
+  252 dates is the main operating point; reliability one retains its separate
+  recovery interval. Increase validation `interval_finalize` from 53,397 to
+  53,415.
+- **Rejected:** Publish frontier point rates without intervals or quietly call
+  the retained bootstrap panels non-inferential. Both contradict the declared
+  purpose of a failure frontier.
+- **Residual risk:** Reduced frontiers vary one dimension at one endpoint and
+  are not the full G4 failure surface. Their narrow descriptive scope must stay
+  explicit.
+- **Reopen if:** Any frontier rate lacks its Wilson endpoint, is treated as a
+  gate, or the phase work table omits one of the 18 finalization units.
+
+## D0046 — Define the CV tie statistic and boundary exactly
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The paper reconstruction pooled five validation SSEs but
+  selected ratios within an absolute MSE tolerance without defining the
+  denominator, accumulation order, or equality boundary. SSE, SSE/30, and
+  fold-mean MSE share a minimizer but not the same `10^-12` tie set.
+- **Decision:** For each literal ratio, accumulate float64 validation SSE in
+  fold order 0 through 4, divide once by float64 30, fail any nonfinite value,
+  then select the lowest ratio index satisfying
+  `MSE_k <= min_j(MSE_j) + float64(1e-12)`. This inclusive set maps to the one
+  zero-initialized outer solve already frozen.
+- **Rejected:** Apply the tolerance to pooled SSE or leave equality to an
+  implementation-specific comparison. Either can select a different penalty.
+- **Residual risk:** BLAS rounding inside each fold loss can still differ by
+  platform; cross-platform fixtures must exercise an intentionally near-tied
+  path before registered access.
+- **Reopen if:** A solver averages fold MSEs, divides before SSE accumulation,
+  compares strictly, regenerates the ratio vector, or selects any later index
+  within the tolerance set.
+
+## D0047 — Exclude the cold bundle from the warm-time clock
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Config and prediction required 600 post-cold seconds, but the
+  compute plan said only 600 seconds and could count the cold bundle toward the
+  warm minimum while still claiming four total bundles.
+- **Decision:** The first complete bundle supplies the cold measurement and
+  counts toward the minimum four total bundles. Only elapsed time of subsequent
+  complete bundles counts toward the 600-second warm clock; throughput remains
+  the last three complete hash-checked bundles.
+- **Rejected:** Count cold time as warm exposure. That would weaken the thermal
+  stress without changing the displayed threshold.
+- **Residual risk:** Four total bundles and 600 post-cold seconds will usually
+  imply more than three warm bundles; the implementation must retain the last
+  three rather than the first three.
+- **Reopen if:** Any benchmark report cannot separately reproduce cold elapsed,
+  post-cold elapsed, total completed bundles, and the identities of the three
+  bundles entering warm throughput.
+
+## D0048 — Freeze the RNG distribution calls, not only their keys
+
+- **Date:** 2026-07-15
+- **Diagnosis:** PCG64DXSM, SeedSequence entropy, component shapes, and C-order
+  consumption did not uniquely map generator bits to Gaussian arrays.
+  `standard_normal`, `normal`, or a custom transform can share every declared
+  key while producing different draws. The multinomial prose likewise named
+  equal probabilities without one constructor.
+- **Decision:** Every DGP component key makes exactly one
+  `Generator.standard_normal(size=tuple(shape), dtype=np.float64)` call and
+  requires its C-contiguous return without reshape. Every bootstrap key builds
+  `np.full(n_dates, 1.0/float(n_dates), dtype=np.float64)`, makes exactly one
+  `Generator.multinomial(n=n_dates, pvals=pvals, size=None)` call, and converts
+  counts to float64 weights.
+- **Rejected:** Define only a target distribution. Registered replay requires
+  the deterministic NumPy transform from addressed generator state to bytes.
+- **Residual risk:** A future NumPy release may change distribution internals;
+  the pinned lockfile and cross-platform known-answer fixtures must therefore
+  gate stream access.
+- **Reopen if:** Any draw uses `normal`, an inverse-CDF/custom transform,
+  multiple calls per component key, a non-C-contiguous reshape, or differently
+  constructed bootstrap probabilities.
+
+## D0049 — Freeze one post-audit S0004 config digest
+
+- **Date:** 2026-07-15
+- **Diagnosis:** S0004 could not become a mechanical preregistration while its
+  config changed after each valid hostile finding. A digest taken before the
+  final content pass would merely seal an ambiguity.
+- **Decision:** After independent math, inference, and whole-contract content
+  passes, freeze the raw schema-3 `configs/g2.toml` SHA256 as
+  `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`.
+  Bind it with target raw/semantic hashes
+  `f13adcff4259773485ca5952d23ae923d3c501c84d4edb102c1886460ada4a59` /
+  `f437f3308d92e5035abfed796112502a90daf281a585e8cf1a5013bd4fed511a`
+  and LASSO-ratio hash
+  `1da884c55b3f6e7bf79012973bddf092a92efb1ea098cd2717a804645a62c9a0`.
+  A005 is the single authority clause; all pre-D0031 execution details are
+  historical and non-executable.
+- **Rejected:** Seal a moving config or rely only on semantic prose. Neither
+  prevents stale S0002/S0003 machinery from being selected mechanically.
+- **Residual risk:** The sealed contract proves a reproducible conditional
+  experiment, not that 95% proxy reliability or the latent decomposition is
+  empirically identified. That remains the strongest unanswered objection.
+- **Reopen if:** Any digest fails, the sealed-surface reviewer finds a conflict,
+  or an executable config byte must change. Reopening creates a new
+  specification and amendment before any stream access.
+
+## D0050 — Admit the sealed contract only to the hosted boundary
+
+- **Date:** 2026-07-15
+- **Diagnosis:** A hash seal is not enough if independent readers cannot
+  reproduce it or if an older authority clause remains live. Conversely, a
+  sealed documentation pass is not evidence that unimplemented estimators or
+  resource projections work.
+- **Decision:** Three independent final re-reads reproduced all four A005 seals,
+  parsed the exact estimator/RNG/workload contract, and confirmed that S0002,
+  S0003, and every pre-D0031 execution clause are mechanically retired. S0004
+  therefore passes pre-implementation contract admission. This authorizes only
+  the clean documentation commit/push, hosted CI, and—after hosted green—test-
+  first implementation with test-only seeds. It does not expose any registered
+  G2 stream.
+- **Rejected:** Treat content review as implementation validation or skip the
+  hosted boundary because local checks are green. Neither tests the final
+  committed cross-platform surface.
+- **Residual risk:** The strongest objection remains the favorable unsourced
+  95% reliability/latent decomposition. Passage can support conditional
+  existence only; failure cannot kill the market premise without the separate
+  sharp source-compatible bound.
+- **Reopen if:** Hosted CI changes or rejects any sealed artifact, the raw config
+  digest moves, a stale design becomes executable, or implementation reveals an
+  unlicensed choice. Any such event returns S0004 to pre-run review.
