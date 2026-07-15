@@ -11,17 +11,18 @@ independently audited. The `N=30`, `K=3`, `T=10^7` numerical specification,
 hard discrepancy metric, target hashes, interval method, and checkpoint
 contract are frozen in `configs/g1.toml` and
 `docs/predictions/GATE_G1.md`. The streamed verifier and provenance-locked
-runner are implemented and locally verified, but not yet committed. Neither
-the preregistered master stream nor the distinct benchmark stream has been
-drawn.
+runner are implemented and committed at
+`fe9e69123469496135cdffe516778a1f58206b3f`. Neither the preregistered master
+stream nor the distinct benchmark stream has been drawn.
 
 ## Session objective
 
 Completed this session: implement the frozen G1 verifier test-first, including
 streamed sufficient statistics, immutable resumable checkpoints, independent
 intercept-OLS inference checks, target preflight, clean-source identity, and
-deterministic result publication. Stop condition: commit this implementation
-before either preregistered RNG stream can be used.
+deterministic result publication. The pre-draw implementation boundary is now
+committed; stop condition for this session is a clean ledger commit recording
+that exact provenance before hosted verification.
 
 ## Current evidence
 
@@ -67,18 +68,24 @@ before either preregistered RNG stream can be used.
 - The locked local quality gate passes Ruff, format, strict mypy, 38 tests, the
   deterministic demo, and generated-result drift checks. The G1-specific suite
   contains 25 tests; the exact `10^7` simulation is intentionally not in CI.
+- The clean implementation commit is
+  `fe9e69123469496135cdffe516778a1f58206b3f`; its execution-input digest is
+  `8a25de8d3cd268284157df20ef3190d5519b714574e90a17c79729462e086a2b`,
+  and the raw frozen-config digest is
+  `2a71f58d1eec7eb39e68e7333ce5cb385a3fcdc85466ee234d334299c8886efd`.
 
 ## In flight
 
-1. Commit the complete G1 implementation and tests with a Lore decision record.
-2. Push that exact implementation commit and require hosted CI success.
-3. Run one 100,000-row timing/RSS shard using only benchmark seed `2026071599`.
-4. If the benchmark satisfies A013, run the single frozen `10^7` stream; do not
+1. Push the implementation boundary plus this ledger record and require hosted
+   CI success before stochastic research execution.
+2. Run one 100,000-row timing/RSS shard using only benchmark seed `2026071599`.
+3. If the benchmark satisfies A013, run the single frozen `10^7` stream; do not
    alter the fixture, target, seed, metric, or tolerance in response to output.
 
 ## Blockers
 
-- No current blocker prevents committing the verified G1 implementation.
+- No current blocker prevents hosted verification of the committed G1
+  implementation.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -94,7 +101,7 @@ before either preregistered RNG stream can be used.
 ## Cold-resume next action
 
 Read the four ledgers and the G1 section of `docs/GATES.md`, then state: "lock
-the verified G1 runner in a clean implementation commit before drawing either
-registered RNG stream." Do not benchmark until that commit passes the full
-locked suite; do not draw the frozen sample until the distinct-seed benchmark
+hosted verification to implementation commit `fe9e691` before drawing either
+registered RNG stream." Do not benchmark until hosted CI passes the pushed
+boundary; do not draw the frozen sample until the distinct-seed benchmark
 passes A013.

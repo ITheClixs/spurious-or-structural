@@ -264,3 +264,20 @@ the choice, alternatives, and the evidence that would reopen it.
   checkpointing into a way to bypass the precommitted compute design.
 - **Reopen if:** Phase timing moves to a stronger append-only run ledger that
   also accounts for prior-process startup overhead.
+
+## D0018 — Seal one clean implementation boundary before benchmark evidence
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Checkpoint provenance is meaningful only if the candidate code
+  is already immutable when the first registered stream is accessed.
+- **Decision:** Seal commit
+  `fe9e69123469496135cdffe516778a1f58206b3f` after the hostile pre-draw review
+  passed with 38 tests. Its execution-input SHA256 is
+  `8a25de8d3cd268284157df20ef3190d5519b714574e90a17c79729462e086a2b`;
+  the raw config SHA256 is
+  `2a71f58d1eec7eb39e68e7333ce5cb385a3fcdc85466ee234d334299c8886efd`.
+  Require hosted CI before the distinct benchmark draw.
+- **Rejected:** Benchmark from an uncommitted or merely locally reviewed tree.
+  That would leave no independently reproducible implementation boundary.
+- **Reopen if:** Hosted CI fails this boundary; repair code only under a new
+  logged implementation commit before any registered draw.

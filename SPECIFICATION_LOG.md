@@ -68,6 +68,11 @@ empirical model trials, but gate-level pipeline variants are recorded.
   requires an exact single-thread numerical-runtime fingerprint and reloads
   resource telemetry so shard/phase stops survive resumption; completed results
   report all coefficient intervals and are published success-last.
+- **Pre-draw implementation boundary:** commit
+  `fe9e69123469496135cdffe516778a1f58206b3f`, execution-input SHA256
+  `8a25de8d3cd268284157df20ef3190d5519b714574e90a17c79729462e086a2b`,
+  config SHA256
+  `2a71f58d1eec7eb39e68e7333ce5cb385a3fcdc85466ee234d334299c8886efd`.
 - **Multiple-testing count:** included as one simulation specification. Crash
   recovery with identical validated shards remains the same attempt; changing
   the seed, sample size, fixture, target, accumulator, or metric creates a new
