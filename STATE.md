@@ -13,16 +13,15 @@ contract are frozen in `configs/g1.toml` and
 `docs/predictions/GATE_G1.md`. The streamed verifier and provenance-locked
 runner are implemented and committed at
 `fe9e69123469496135cdffe516778a1f58206b3f`. Neither the preregistered master
-stream nor the distinct benchmark stream has been drawn.
+stream has been drawn. The distinct benchmark stream was consumed once, after
+its committed and hosted-green boundary, and passed A013.
 
 ## Session objective
 
-Completed this session: implement the frozen G1 verifier test-first, including
-streamed sufficient statistics, immutable resumable checkpoints, independent
-intercept-OLS inference checks, target preflight, clean-source identity, and
-deterministic result publication. The pre-draw implementation boundary is now
-committed; stop condition for this session is a clean ledger commit recording
-that exact provenance before hosted verification.
+Completed this session: seal the hosted-green G1 implementation boundary and
+run the one permitted distinct-seed resource benchmark. Stop condition for the
+current branch is a committed, hosted-green benchmark evidence boundary before
+the frozen master stream is accessed.
 
 ## Current evidence
 
@@ -53,8 +52,9 @@ that exact provenance before hosted verification.
   `[0.7719001593, 0.9201821590]`. The combined ten-decimal target hash is
   `80e6026821d67708587eb3abe606c05a7f58c5e4499430e6db72ae6d36faee1d`.
 - G1 software tests use only explicit test-only seeds (`1729`, `9191`, and
-  `314159`). No test or command has drawn the frozen master seed `2026071501`
-  or benchmark seed `2026071599`.
+  `314159`). No test or command has drawn the frozen master seed `2026071501`.
+  The distinct benchmark seed `2026071599` was drawn once by the preregistered
+  resource command after all preconditions passed.
 - The G1 runner validates the sealed analytic hashes before RNG access, verifies
   both structural equations per shard, checkpoints only count/mean/centered
   scatter, and refuses mismatched config/source/numerical-runtime/RNG
@@ -84,19 +84,34 @@ that exact provenance before hosted verification.
   demo, and result drift checks succeeded on Linux. The only annotation is a
   nonblocking GitHub Actions Node 20 deprecation warning; no research command
   ran in CI.
+- Acceptance-ledger commit
+  `3c56fa96f3dbc730503cb2f8bbcc586dbd9c57ad` passed hosted CI run
+  `29422623200` before the benchmark draw.
+- The single 100,000-row benchmark generated its shard in 0.086404708 seconds,
+  completed the in-process run in 0.087642709 seconds, and peaked at
+  381,517,824 bytes RSS. Straight-line extrapolation to 100 shards is 8.7643
+  seconds; the preregistered 60%-throughput plus 25%-time-margin calculation is
+  18.2589 seconds, against a three-hour expected and eight-hour hard budget.
+  The shard checkpoint occupies 44 KiB, uses execution-input digest
+  `8a25de8d3cd268284157df20ef3190d5519b714574e90a17c79729462e086a2b`,
+  and has payload digest
+  `df847a45cb74f65a450607070536c4b0338e881390cd7ee3898f8b241b93ee1c`.
+  No `results/g1` output was published.
 
 ## In flight
 
-1. Commit this hosted-acceptance ledger, push it, and confirm parity remains
-   green for the ledger-only head.
-2. Run one 100,000-row timing/RSS shard using only benchmark seed `2026071599`.
-3. If the benchmark satisfies A013, run the single frozen `10^7` stream; do not
-   alter the fixture, target, seed, metric, or tolerance in response to output.
+1. Commit and push this benchmark evidence; require hosted parity for its exact
+   head.
+2. Once green, run the single frozen `10^7` master stream under `caffeinate -i`;
+   do not alter the fixture, target, seed, metric, or tolerance in response to
+   output.
+3. Compare the sole result with the preregistered strict threshold, then record
+   either a G1 pass or attempt-1 failure without a seed retry.
 
 ## Blockers
 
-- No current blocker prevents the one preregistered benchmark-seed resource
-  shard after the acceptance ledger itself passes hosted parity.
+- No current blocker prevents the frozen G1 master run after this benchmark
+  evidence head passes hosted parity.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -111,8 +126,8 @@ that exact provenance before hosted verification.
 
 ## Cold-resume next action
 
-Read the four ledgers and the G1 section of `docs/GATES.md`, then state: "lock
-hosted verification to repair commit `1adc739` before drawing either registered
-RNG stream." After the acceptance-ledger head is green, run only
-`make g1-benchmark`; do not draw the frozen sample until that distinct-seed
-benchmark passes A013.
+Read the four ledgers and the G1 section of `docs/GATES.md`, then state: "A013
+passed on the distinct benchmark stream; keep master seed `2026071501` sealed
+until the benchmark-evidence head is hosted-green." Once that exact head is
+green, run only `caffeinate -i make mc` and judge the immutable result against
+the frozen strict threshold without retuning or retrying the seed.

@@ -57,10 +57,12 @@ empirical model trials, but gate-level pipeline variants are recorded.
   strictly below `10^-3`.
 - **Interval:** classical homoskedastic Student-t coefficient intervals with a
   95% Bonferroni family-wise correction across all 1,800 coefficients.
-- **Status:** registered, not run. The test-first implementation passes 25 G1
-  software tests and the full 38-test locked suite after the resume-guard
-  repair. Stochastic software tests use only nonregistered test seeds and do
-  not evaluate the gate threshold; neither registered seed has been drawn.
+- **Status:** registered; the frozen master experiment has not run. The
+  test-first implementation passes 25 G1 software tests and the full 38-test
+  locked suite after the resume-guard repair. Stochastic software tests use
+  only nonregistered test seeds and do not evaluate the gate threshold. The
+  distinct resource-benchmark seed has been consumed once; master seed
+  `2026071501` remains sealed.
 - **Implementation contract:** sealed target hashes are checked before RNG;
   PCG64DXSM component streams are keyed by seed/shard/component; immutable
   checkpoints contain mergeable centered moments; production runs require
@@ -81,6 +83,13 @@ empirical model trials, but gate-level pipeline variants are recorded.
   `1adc73921da9f112f4eed56789b7a92a74b67f47` passed CI run `29422306505`
   with 38 tests and full local-parity checks. Neither registered seed was used;
   S0001 remains registered and unrun.
+- **Benchmark boundary:** acceptance-ledger commit
+  `3c56fa96f3dbc730503cb2f8bbcc586dbd9c57ad` passed hosted run
+  `29422623200`. The preregistered seed `2026071599` then produced exactly one
+  100,000-row resource shard: 0.086404708 seconds generation, 0.087642709
+  seconds in-process total, and 381,517,824 bytes peak RSS. The derated 100-shard
+  projection is 18.2589 seconds; A013 passes. Benchmark mode published no
+  coefficient estimates, so S0001 remains unrun.
 - **Multiple-testing count:** included as one simulation specification. Crash
   recovery with identical validated shards remains the same attempt; changing
   the seed, sample size, fixture, target, accumulator, or metric creates a new

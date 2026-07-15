@@ -315,3 +315,30 @@ the choice, alternatives, and the evidence that would reopen it.
   debt rather than a G1 validity failure.
 - **Reopen if:** Hosted results are invalidated or the accepted execution-input
   digest changes before the benchmark.
+
+## D0021 — Accept the G1 compute design from the sealed resource shard
+
+- **Date:** 2026-07-15
+- **Diagnosis:** G1 could not consume its frozen master stream until the actual
+  M4 Air resource profile was shown to fit the preregistered memory, shard, and
+  phase budgets.
+- **Decision:** Accept A013 after acceptance-ledger commit
+  `3c56fa96f3dbc730503cb2f8bbcc586dbd9c57ad` passed hosted run
+  `29422623200` and benchmark seed `2026071599` generated its sole 100,000-row
+  shard. Generation took 0.086404708 seconds, the in-process run took
+  0.087642709 seconds, and peak RSS was 381,517,824 bytes. Multiplying total
+  elapsed by 100 gives 8.7643 seconds; dividing throughput by 60% and adding the
+  declared 25% time margin gives 18.2589 seconds, inside the three-hour expected
+  and eight-hour hard budgets. The checkpoint payload SHA256 is
+  `df847a45cb74f65a450607070536c4b0338e881390cd7ee3898f8b241b93ee1c`;
+  no coefficient result was published. Permit the master draw only after this
+  evidence is committed and hosted-green.
+- **Rejected:** Run the master stream before sealing the resource result, or
+  weaken the memory/runtime design because the benchmark was unexpectedly
+  cheap. Both would discard a preregistered gate boundary without evidence.
+- **Residual risk:** A single short shard does not measure sustained thermal
+  throttling. The 18.2589-second derated projection leaves over two orders of
+  magnitude of slack to the expected budget; the frozen run remains the direct
+  check, while A010 stays untested for genuinely long later phases.
+- **Reopen if:** The frozen run breaches 1.5 GB, a shard exceeds eight minutes,
+  cumulative time exceeds eight hours, or the execution-input digest changes.
