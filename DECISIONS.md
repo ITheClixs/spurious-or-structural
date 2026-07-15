@@ -114,3 +114,18 @@ the choice, alternatives, and the evidence that would reopen it.
   That erases the operating margin and invites allocator-driven failure.
 - **Reopen if:** Measured G4/G5 code demonstrates a smaller structured
   representation or proves the current copy cap infeasible.
+
+## D0009 — Pass G0 only on exact-SHA hosted reproduction
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Local checks, timing, hashes, and hostile review all passed, but
+  the gate contract separately required clean hosted reproduction.
+- **Decision:** Pass G0 after CI run `29416847411` completed successfully for
+  candidate SHA `3abbad1dc3bfa6114434ce2bb5d2de0140b0dafa`. Open G1 for
+  derivation only.
+- **Rejected:** Begin the G1 simulation while CI was pending. That would make
+  gate order depend on confidence rather than evidence.
+- **Residual risk:** Archive size, compression, and long-run thermal assumptions
+  remain untested and are explicit G3/phase stop conditions, not silent facts.
+- **Reopen if:** The G0 artifacts or lock are later shown not to reproduce from
+  this commit.

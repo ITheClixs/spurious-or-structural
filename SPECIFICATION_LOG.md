@@ -36,5 +36,7 @@ empirical model trials, but gate-level pipeline variants are recorded.
   `0c2792e71d5807b447bf9b0140eeecccd4f7b06590a9d825ab12eeaa4f03c964`,
   summary `05efff3914a98781783877cfdf5c8ce6b938bbd2851bd503a4e80fa99465c090`,
   marker `e3157945cdcaa04738f5e0d5f572d246aa4b2dd156e88966b328f3844f9ffc7a`.
+- **Hosted evidence:** CI run `29416847411` completed with conclusion `success`
+  for exact candidate SHA `3abbad1dc3bfa6114434ce2bb5d2de0140b0dafa`.
 - **Multiple-testing count:** excluded from empirical/model trial counts because
   no effect, model, or hypothesis is evaluated.

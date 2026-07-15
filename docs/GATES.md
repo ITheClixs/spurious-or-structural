@@ -15,7 +15,7 @@ session routing surface; it does not weaken any requirement in that brief.
 - The holdout is opened once, in G7, with no post-open tuning.
 - Three failed attempts at one gate trigger a blocker diagnosis and escalation.
 
-## G0 — Environment and compute plan (open)
+## G0 — Environment and compute plan (passed 2026-07-15)
 
 Required evidence:
 
@@ -32,10 +32,11 @@ Required evidence:
 7. `docs/redteam/GATE_G0.md` attacks the result, all living ledgers are current,
    and the committed worktree is resumable.
 
-Pass only when all seven items have fresh evidence. Local parity without a
-hosted green run is explicitly not a full pass.
+All seven items passed for commit
+`3abbad1dc3bfa6114434ce2bb5d2de0140b0dafa`; hosted CI run `29416847411`
+completed successfully.
 
-## G1 — Derivation (locked)
+## G1 — Derivation (open)
 
 Derive the probability limits of OLS and noisy-proxy-controlled OLS in terms of
 the structural parameters. Verify with about `10^7` streamed samples. Maximum

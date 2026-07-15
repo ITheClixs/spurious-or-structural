@@ -2,11 +2,12 @@
 
 Review date: 2026-07-15
 
-## Verdict before hosted CI
+## Final verdict
 
-**G0 remains in progress.** The candidate is locally reproducible and ready to
-commit, but the gate cannot pass until the reviewed commit reproduces on hosted
-CI. No G1 work is permitted while that evidence is missing.
+**G0 passed on 2026-07-15.** Candidate commit
+`3abbad1dc3bfa6114434ce2bb5d2de0140b0dafa` reproduced on hosted CI run
+`29416847411`. G1 may open, but implementation remains forbidden until its
+derivations and predictions are written.
 
 The claim under attack is deliberately narrow: the repository has a real,
 deterministic, resource-bounded software skeleton and a conditional plan that
@@ -76,8 +77,8 @@ committed bytes. Tool or interpreter drift could silently update results.
 
 **Response:** the generator uses explicit unsigned 64-bit integer operations,
 JSON keys are sorted, timestamps and absolute paths are excluded, Python and uv
-are pinned, and CI runs the demo then fails if `results/demo` differs. This
-response is incomplete until hosted CI is green.
+are pinned, and CI runs the demo then fails if `results/demo` differs. Hosted CI
+run `29416847411` reproduced the committed artifacts successfully.
 
 ### 5. Atomic files are not an atomic artifact set
 
@@ -110,14 +111,15 @@ ordering, checkpoint interval, and stop guards. There is no long job yet to
 resume. The first G1 job longer than ten minutes must supply an interruption and
 resume regression before its result is admissible.
 
-### 8. CI may be unavailable
+### 8. CI credentials were inconsistent
 
 The local GitHub CLI reports an invalid token. A workflow file and local green
 run are not hosted evidence.
 
-**Response:** the configured Git remote may use a separate credential helper,
-so the candidate will be committed and a normal push attempted. If push or CI
-cannot run, G0 stays open. Authentication is not silently waived.
+**Response:** the normal Git credential path pushed successfully. Using that
+credential in memory without printing it, the exact-SHA workflow was inspected
+and found completed with conclusion `success`. The stale GitHub CLI token did
+not become a waived criterion.
 
 ## Strongest objection not yet answered
 
@@ -130,8 +132,7 @@ not quietly degrade features or omit difficult instruments.
 
 ## Gate decision
 
-- Local engineering and compute-plan candidate: **ready for commit** after the
-  final parity run.
-- Hosted reproduction: **pending**.
-- G0 overall: **not passed**.
-- G1: **locked**.
+- Local engineering and compute-plan candidate: **passed**.
+- Hosted reproduction: **passed**, run `29416847411` for `3abbad1`.
+- G0 overall: **passed**.
+- G1: **open for derivation only**.

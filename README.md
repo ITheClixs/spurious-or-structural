@@ -6,10 +6,10 @@
 latent common factors and same-bin feedback make ordinary return-on-flow
 regressions look structural when they are not.
 
-**Current claim: none.** The project is at G0, the engineering and compute-plan
-gate. No external market data has been accessed, no estimator has been
-validated, and the holdout does not yet exist. The eventual money figure is
-therefore deliberately locked.
+**Current claim: none.** G0, the engineering and compute-plan gate, has passed;
+G1, the symbolic derivation gate, is open but not started. No external market
+data has been accessed, no estimator has been validated, and the holdout does
+not yet exist. The eventual money figure is therefore deliberately locked.
 
 ## Reproduce the G0 smoke path
 
@@ -35,8 +35,8 @@ make check
 
 | Gate | Status | Evidence |
 | --- | --- | --- |
-| G0 environment and compute plan | In progress | `docs/COMPUTE_PLAN.md`, deterministic demo, CI |
-| G1 derivation | Locked | No estimator implementation is permitted yet |
+| G0 environment and compute plan | Passed | `docs/COMPUTE_PLAN.md`, deterministic demo, CI run `29416847411` |
+| G1 derivation | Open | Algebra and pre-run predictions precede simulation code |
 | G2 premise kill switch | Locked | Requires G1 pass |
 | G3-G8 | Locked | Sequential gate discipline |
 
