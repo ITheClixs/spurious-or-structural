@@ -230,8 +230,10 @@ empirical model trials, but gate-level pipeline variants are recorded.
   expected caps. The two-/24-/six-/32-hour hard limits are runtime stops, not
   preflight slack.
 - **Status:** registered, content-audited, hash-sealed, independently admitted
-  at the pre-implementation contract boundary, unimplemented, and unrun. It is
-  blocked pending hosted-green CI on the clean documentation commit. S0002 and
-  S0003 remain non-executable.
+  at the pre-implementation contract boundary, unimplemented, and unrun.
+  Documentation commit `a5c7f1c02e941a0d6fdef3d645dfea63884cdfd7`
+  passed hosted CI run `29448917107`; test-first implementation with test-only
+  seeds is open. Registered resource, validation, and research streams remain
+  blocked. S0002 and S0003 remain non-executable.
 - **Multiple-testing count:** one new specification. No stochastic run exists
   until a registered stream is consumed.

@@ -1040,3 +1040,25 @@ the choice, alternatives, and the evidence that would reopen it.
 - **Reopen if:** Hosted CI changes or rejects any sealed artifact, the raw config
   digest moves, a stale design becomes executable, or implementation reveals an
   unlicensed choice. Any such event returns S0004 to pre-run review.
+
+## D0051 — Open only the test-first implementation lane
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Local and independent review cannot substitute for verifying
+  the committed sealed bytes on the hosted Linux parity path. Passing that path
+  still does not license resource, validation, or research draws.
+- **Decision:** Commit `a5c7f1c02e941a0d6fdef3d645dfea63884cdfd7` passed hosted CI
+  run `29448917107`, including the locked parity suite. The schema-3 config
+  remained at SHA256
+  `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`.
+  This closes the documentation admission and opens only test-first S0004
+  implementation with explicit test-only seeds.
+- **Rejected:** Run the registered resource benchmark immediately after the
+  documentation pass. The resource stream requires completed implementation,
+  estimator-recovery tests, local/hosted parity, and hostile code review first.
+- **Residual risk:** Hosted CI currently exercises the existing G0/G1 package,
+  not unimplemented G2 algorithms. Its green status validates the sealed
+  boundary, not the future estimator.
+- **Reopen if:** The acceptance-ledger commit fails hosted CI, the implementation
+  cannot hard-fail altered digests/schemas, or a registered seed appears in any
+  test or development command.

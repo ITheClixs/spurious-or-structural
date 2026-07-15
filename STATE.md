@@ -16,15 +16,16 @@ implementation, resource benchmark, validation panel, or research draw has
 run. S0002 and S0003 were rejected before RNG access. S0004 makes the
 observable integrated-OFI proxy-control opponent and published `CI_I` protocol
 binding, is derived and hash-sealed, and has independent math, inference, and
-whole-contract content and sealed-surface passes. It remains unimplemented and
-non-executable pending a hosted-green documentation boundary.
+whole-contract content and sealed-surface passes. Commit `a5c7f1c` passed hosted
+CI run `29448917107`; the documentation boundary is closed and only test-first
+implementation with test-only seeds is now open.
 
 ## Session objective
 
-Current session target: commit and push the immutable S0004 documentation
-boundary, then require hosted CI green before any test-first implementation.
-Stop before code if any committed artifact or hosted check changes the sealed
-estimands, hashes, RNG namespaces, paper protocol, or compute arithmetic.
+Current session target: record the hosted acceptance boundary, then implement
+the immutable S0004 contract test-first without accessing resource, validation,
+or research streams. Stop if code cannot reproduce the four seals or introduces
+an estimator/RNG/workload choice absent from the config and derivation.
 
 ## Current evidence
 
@@ -202,21 +203,25 @@ estimands, hashes, RNG namespaces, paper protocol, or compute arithmetic.
   conflict. The final local gate passes Ruff, format, strict mypy, 38 tests,
   deterministic demo, committed-result drift, and `git diff --check`; no G2 RNG
   was used.
+- Sealed documentation commit
+  `a5c7f1c02e941a0d6fdef3d645dfea63884cdfd7` passed hosted CI run
+  `29448917107`; the only annotation is the existing nonblocking Node 20 action
+  deprecation warning. No G2 stochastic command ran in CI.
 
 ## In flight
 
-1. Seal a Lore-format documentation commit without changing
-   `configs/g2.toml`.
-2. Push and pass the clean documentation boundary in hosted CI before writing
-   G2 code.
-3. Implement S0004 test-first with test-only seeds, then repeat hostile review,
+1. Commit and host-verify this G2 acceptance ledger without changing the sealed
+   config.
+2. Implement S0004 test-first with test-only seeds, beginning with schema/hash,
+   RNG-address, and population-target known-answer tests.
+3. Add exact smooth estimators and recovery tests, then repeat hostile review,
    local parity, hosted CI, and the distinct resource benchmark before the
    validation seed is available.
 
 ## Blockers
 
-- S0004 implementation is intentionally blocked on a hosted-green clean
-  documentation boundary.
+- Registered G2 resource, validation, and research streams remain blocked. The
+  test-first implementation lane alone is open.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -235,6 +240,7 @@ Read the four ledgers, `docs/redteam/GATE_G2_PRERUN.md`, and the G2 section of
 `docs/GATES.md`, then state: "G1 is closed on evidence commit `44965d0`; S0002
 and S0003 were rejected before RNG; S0004 config
 `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`
-has sealed-surface passes but remains locked until the hosted-green
-documentation boundary." Do not touch empirical tape or any G2 resource,
-validation, or research seed.
+has sealed-surface passes and a hosted-green documentation boundary at commit
+`a5c7f1c` / run `29448917107`; only test-first implementation with test-only
+seeds is open." Do not touch empirical tape or any G2 resource, validation, or
+research seed.

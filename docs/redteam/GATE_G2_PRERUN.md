@@ -307,6 +307,12 @@ passes pre-implementation contract admission. Local verification, a clean
 commit/push, and hosted-green CI are still mandatory before test-first G2 code.
 No resource, validation, or research seed is exposed by this verdict.
 
+The exact sealed files were committed as
+`a5c7f1c02e941a0d6fdef3d645dfea63884cdfd7` and passed hosted CI run
+`29448917107`. That evidence opens only test-first implementation with
+test-only seeds. It does not validate unimplemented G2 estimators or relax any
+later resource/validation/research admission.
+
 The strongest objection is substantive rather than mechanical: 95% proxy
 reliability and the latent decomposition are favorable source-compatible
 choices, not identified market facts. A positive result would establish a

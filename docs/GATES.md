@@ -90,6 +90,9 @@ Three independent sealed-surface reviews reproduced every A005 digest and
 found no blocker. The contract is admitted only to the clean commit/push and
 hosted-CI boundary; G2 implementation and every registered stream remain
 locked until their later prerequisites.
+Sealed commit `a5c7f1c02e941a0d6fdef3d645dfea63884cdfd7` passed hosted CI
+run `29448917107`. This opens test-first implementation with test-only seeds;
+the resource, validation, and research streams remain locked.
 
 S0004 is a sufficient one-sided test for a conditional positive result, not a
 necessary test of every source-compatible decomposition. Its failure leaves G2
