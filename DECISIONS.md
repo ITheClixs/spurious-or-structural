@@ -297,3 +297,21 @@ the choice, alternatives, and the evidence that would reopen it.
   the scientific gate. The former would destroy an independent-path check; the
   latter is unrelated by roughly nine orders of magnitude.
 - **Reopen if:** Any platform exceeds `5e-13` or changes a sealed target hash.
+
+## D0020 — Accept the repaired boundary only after hosted parity
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The first hosted boundary failed a rounding-level assertion;
+  local green evidence was therefore insufficient for stochastic execution.
+- **Decision:** Accept repair commit
+  `1adc73921da9f112f4eed56789b7a92a74b67f47` after hosted run `29422306505`
+  completed successfully with all 38 tests and parity checks. Permit only the
+  distinct benchmark seed after the ledger-only acceptance head also passes.
+- **Rejected:** Run the benchmark immediately after local repair verification.
+  That would repeat the exact evidence-ordering mistake caught by the first
+  hosted run.
+- **Residual risk:** GitHub reports a Node 20 action-runtime deprecation warning;
+  the runner forced Node 24 and the workflow passed, so this is maintenance
+  debt rather than a G1 validity failure.
+- **Reopen if:** Hosted results are invalidated or the accepted execution-input
+  digest changes before the benchmark.

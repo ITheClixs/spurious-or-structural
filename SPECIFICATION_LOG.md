@@ -77,6 +77,10 @@ empirical model trials, but gate-level pipeline variants are recorded.
   a `2.24931185e-13` Linux-versus-Mac algebra-path rounding difference. The
   cross-platform software assertion was aligned from `2e-13` to the existing
   production preflight bound `5e-13`. S0001 remains registered and unrun.
+- **Hosted acceptance:** repair commit
+  `1adc73921da9f112f4eed56789b7a92a74b67f47` passed CI run `29422306505`
+  with 38 tests and full local-parity checks. Neither registered seed was used;
+  S0001 remains registered and unrun.
 - **Multiple-testing count:** included as one simulation specification. Crash
   recovery with identical validated shards remains the same attempt; changing
   the seed, sample size, fixture, target, accumulator, or metric creates a new

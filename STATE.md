@@ -79,19 +79,24 @@ that exact provenance before hosted verification.
   remaining below the production preflight bound `5e-13`. The cross-platform
   regression is being aligned to the already implemented `5e-13` bound; this
   changes no formula, target hash, seed, simulation, or gate tolerance.
+- Repair commit `1adc73921da9f112f4eed56789b7a92a74b67f47` passed hosted CI
+  run `29422306505`: all 38 tests, Ruff, format, strict mypy, deterministic
+  demo, and result drift checks succeeded on Linux. The only annotation is a
+  nonblocking GitHub Actions Node 20 deprecation warning; no research command
+  ran in CI.
 
 ## In flight
 
-1. Commit and push the cross-platform analytic-test tolerance repair, then
-   require hosted CI success before stochastic research execution.
+1. Commit this hosted-acceptance ledger, push it, and confirm parity remains
+   green for the ledger-only head.
 2. Run one 100,000-row timing/RSS shard using only benchmark seed `2026071599`.
 3. If the benchmark satisfies A013, run the single frozen `10^7` stream; do not
    alter the fixture, target, seed, metric, or tolerance in response to output.
 
 ## Blockers
 
-- No current blocker prevents hosted verification of the committed G1
-  implementation.
+- No current blocker prevents the one preregistered benchmark-seed resource
+  shard after the acceptance ledger itself passes hosted parity.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -107,7 +112,7 @@ that exact provenance before hosted verification.
 ## Cold-resume next action
 
 Read the four ledgers and the G1 section of `docs/GATES.md`, then state: "lock
-hosted verification to implementation commit `fe9e691` before drawing either
-registered RNG stream." Do not benchmark until hosted CI passes the pushed
-boundary; do not draw the frozen sample until the distinct-seed benchmark
-passes A013.
+hosted verification to repair commit `1adc739` before drawing either registered
+RNG stream." After the acceptance-ledger head is green, run only
+`make g1-benchmark`; do not draw the frozen sample until that distinct-seed
+benchmark passes A013.
