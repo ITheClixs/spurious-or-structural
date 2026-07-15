@@ -10,7 +10,10 @@ readme = "README.md"
 requires-python = ">=3.12,<3.14"
 license = { text = "MIT" }
 authors = [{ name = "xid contributors" }]
-dependencies = []
+dependencies = [
+  "numpy==2.5.1",
+  "scipy==1.18.0",
+]
 
 [project.optional-dependencies]
 dev = [

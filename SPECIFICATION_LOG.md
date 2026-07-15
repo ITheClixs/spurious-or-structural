@@ -57,8 +57,17 @@ empirical model trials, but gate-level pipeline variants are recorded.
   strictly below `10^-3`.
 - **Interval:** classical homoskedastic Student-t coefficient intervals with a
   95% Bonferroni family-wise correction across all 1,800 coefficients.
-- **Status:** registered, not run. No simulation implementation exists at this
-  point in Git history.
+- **Status:** registered, not run. The test-first implementation passes 25 G1
+  software tests and the full 38-test locked suite after the resume-guard
+  repair. Stochastic software tests use only nonregistered test seeds and do
+  not evaluate the gate threshold; neither registered seed has been drawn.
+- **Implementation contract:** sealed target hashes are checked before RNG;
+  PCG64DXSM component streams are keyed by seed/shard/component; immutable
+  checkpoints contain mergeable centered moments; production runs require
+  clean tracked execution inputs at the Git top level; shard reuse additionally
+  requires an exact single-thread numerical-runtime fingerprint and reloads
+  resource telemetry so shard/phase stops survive resumption; completed results
+  report all coefficient intervals and are published success-last.
 - **Multiple-testing count:** included as one simulation specification. Crash
   recovery with identical validated shards remains the same attempt; changing
   the seed, sample size, fixture, target, accumulator, or metric creates a new

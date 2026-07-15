@@ -191,3 +191,76 @@ the choice, alternatives, and the evidence that would reopen it.
   intervals apply to dependent market data.
 - **Reopen if:** The simulation DGP is amended away from IID joint Gaussianity
   before any draw; that amendment is a new specification.
+
+## D0014 — Keep software tests outside both registered random streams
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Prefixes of the master seed used in unit tests would constitute
+  an unreported look at the frozen experiment even if no gate statistic were
+  printed. CI repetition would also repeatedly consume the registered stream.
+- **Decision:** Use only explicit test-only seeds (`1729`, `9191`, `314159`) in
+  software tests. Reserve `2026071599` for the one-shard resource benchmark and
+  `2026071501` for S0001. Validate all sealed target hashes before any runner can
+  reach RNG generation. Pin NumPy 2.5.1 and SciPy 1.18.0 in the lockfile because
+  their RNG and inference behavior is part of the frozen implementation.
+- **Rejected:** Treat small frozen-seed prefixes as harmless smoke tests. They
+  leak stochastic evidence before the registered run and make attempt counting
+  ambiguous.
+- **Reopen if:** Never; a new seed is a newly logged simulation specification,
+  not an amendment to S0001.
+
+## D0015 — Bind resumability to source content, with commit provenance separate
+
+- **Date:** 2026-07-15
+- **Diagnosis:** A caller-supplied SHA or `HEAD` from a nested path can launder
+  dirty execution inputs. Conversely, binding only to the whole commit makes a
+  documentation-only commit invalidate otherwise identical checkpoints.
+- **Decision:** Require the exact Git top level and a clean path set covering
+  `src/xid`, `configs/g1.toml`, `pyproject.toml`, `uv.lock`, and
+  `.python-version`. Record the clean
+  commit for provenance, but bind checkpoints to a SHA256 of the tracked modes,
+  blob IDs, and paths for those execution inputs.
+  Also bind each shard to a numerical-runtime fingerprint covering Python,
+  NumPy build metadata, machine, OS release, and the active BLAS/thread-control
+  environment so checkpoints from different numerical runtimes cannot be
+  silently merged. Production commands require all supported thread controls
+  to equal one before numerical work. The CLI computes raw config and source
+  hashes internally and exposes no override flags.
+- **Rejected:** Trust a user-provided `code_sha`, or bind checkpoints only to
+  `HEAD`. The former is forgeable; the latter confuses unrelated prose changes
+  with changes to the generated sample.
+- **Reopen if:** The execution surface expands beyond the hashed path set.
+
+## D0016 — Commit statistical evidence, not machine-timing accidents
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Elapsed time, peak RSS, and new-versus-reused shard counts vary
+  across valid resumptions. Including them in result JSON would violate the
+  byte-reproducibility contract even when every statistical number agrees.
+- **Decision:** Keep resource measurements in the public ledgers, while the
+  committed G1 artifact contains only deterministic provenance, targets,
+  coefficients, standard errors, simultaneous intervals, diagnostics, and the
+  strict gate decision. Recompute estimates from checkpoint moments before
+  publishing, refuse replacement of valid differing evidence, and write a
+  hash-bearing `_SUCCESS` marker last.
+- **Rejected:** Serialize the runner object wholesale. It mixes scientific
+  evidence with nondeterministic execution telemetry.
+- **Reopen if:** A deterministic benchmark artifact is defined separately from
+  the statistical result.
+
+## D0017 — Make phase-budget failures survive a restart
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The first runner retained elapsed/RSS telemetry in checkpoint
+  JSON but returned only moments on reuse. Restarting therefore reset the
+  eight-hour clock and could reuse a shard that had already breached the
+  eight-minute design stop.
+- **Decision:** Validate and reload shard telemetry, reject over-limit RSS and
+  eight-minute shard records on reuse, check new-shard duration before atomic
+  publication, and accumulate all generated-shard durations for the hard stop
+  and 6.4-hour completion forecast. Preserve current-invocation wall time as a
+  second, stricter stop.
+- **Rejected:** Treat each resumed process as a fresh phase budget. That turns
+  checkpointing into a way to bypass the precommitted compute design.
+- **Reopen if:** Phase timing moves to a stronger append-only run ledger that
+  also accounts for prior-process startup overhead.

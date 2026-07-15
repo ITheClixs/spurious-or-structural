@@ -21,3 +21,7 @@ results/*
 !results/demo/_SUCCESS
 !results/demo/summary.json
 !results/demo/synthetic_bins.jsonl
+!results/g1/
+!results/g1/_SUCCESS
+!results/g1/estimates.json
+!results/g1/summary.json

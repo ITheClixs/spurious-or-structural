@@ -10,13 +10,18 @@ Last updated: 2026-07-15
 independently audited. The `N=30`, `K=3`, `T=10^7` numerical specification,
 hard discrepancy metric, target hashes, interval method, and checkpoint
 contract are frozen in `configs/g1.toml` and
-`docs/predictions/GATE_G1.md`. No G1 random draw or simulation implementation
-exists yet.
+`docs/predictions/GATE_G1.md`. The streamed verifier and provenance-locked
+runner are implemented and locally verified, but not yet committed. Neither
+the preregistered master stream nor the distinct benchmark stream has been
+drawn.
 
 ## Session objective
 
-Completed this session: derive both G1 probability limits and register a
-quantitative validation prediction before implementation or simulation.
+Completed this session: implement the frozen G1 verifier test-first, including
+streamed sufficient statistics, immutable resumable checkpoints, independent
+intercept-OLS inference checks, target preflight, clean-source identity, and
+deterministic result publication. Stop condition: commit this implementation
+before either preregistered RNG stream can be used.
 
 ## Current evidence
 
@@ -46,23 +51,34 @@ quantitative validation prediction before implementation or simulation.
   target ranges `[0.7724315313, 0.9138344678]` and
   `[0.7719001593, 0.9201821590]`. The combined ten-decimal target hash is
   `80e6026821d67708587eb3abe606c05a7f58c5e4499430e6db72ae6d36faee1d`.
-- No G1 random number has been drawn. All G1 numerical values currently in the
-  repository are deterministic population calculations or design constants.
+- G1 software tests use only explicit test-only seeds (`1729`, `9191`, and
+  `314159`). No test or command has drawn the frozen master seed `2026071501`
+  or benchmark seed `2026071599`.
+- The G1 runner validates the sealed analytic hashes before RNG access, verifies
+  both structural equations per shard, checkpoints only count/mean/centered
+  scatter, and refuses mismatched config/source/numerical-runtime/RNG
+  identities. Reloaded telemetry makes the eight-minute shard stop, RSS stops,
+  eight-hour cumulative stop, and 6.4-hour forecast survive resumption.
+- The result publisher recomputes inference from checkpoint moments, includes
+  every coefficient's target, standard error, and 95% Bonferroni simultaneous
+  interval, excludes nondeterministic timing metadata, and writes `_SUCCESS`
+  last. Fault injection proves an interrupted publication is invalid and
+  recoverable.
+- The locked local quality gate passes Ruff, format, strict mypy, 38 tests, the
+  deterministic demo, and generated-result drift checks. The G1-specific suite
+  contains 25 tests; the exact `10^7` simulation is intentionally not in CI.
 
 ## In flight
 
-1. Write the G1 regression tests before implementation: fixture invariants,
-   analytic equivalence, transpose/missing-term mutations, centered-scatter
-   merge, structural equations, checkpoint validation, and limiting cases.
-2. Add only the pinned NumPy/SciPy dependencies required by the frozen verifier.
-3. Implement the streamed sufficient-statistic runner and pass the small test
-   suite without drawing the frozen G1 sample.
-4. Commit the implementation so checkpoint metadata can bind to a clean Git
-   SHA; then run the distinct-seed timing/RSS shard before the frozen run.
+1. Commit the complete G1 implementation and tests with a Lore decision record.
+2. Push that exact implementation commit and require hosted CI success.
+3. Run one 100,000-row timing/RSS shard using only benchmark seed `2026071599`.
+4. If the benchmark satisfies A013, run the single frozen `10^7` stream; do not
+   alter the fixture, target, seed, metric, or tolerance in response to output.
 
 ## Blockers
 
-- No current blocker prevents starting the test-first G1 implementation.
+- No current blocker prevents committing the verified G1 implementation.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -78,5 +94,7 @@ quantitative validation prediction before implementation or simulation.
 ## Cold-resume next action
 
 Read the four ledgers and the G1 section of `docs/GATES.md`, then state: "lock
-the G1 derivation in failing tests before implementing the streamed verifier."
-Do not run the frozen sample before the implementation is tested and committed.
+the verified G1 runner in a clean implementation commit before drawing either
+registered RNG stream." Do not benchmark until that commit passes the full
+locked suite; do not draw the frozen sample until the distinct-seed benchmark
+passes A013.

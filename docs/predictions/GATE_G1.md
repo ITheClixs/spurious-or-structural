@@ -175,3 +175,22 @@ it does not replace the hard \(10^{-3}\) discrepancy criterion.
   `DECISIONS.md`; it is not converted into a smaller silent run.
 - Gaussian G1 intervals validate this controlled simulation only. They are not
   licensed for the dependent empirical tape in later gates.
+
+## Pre-draw implementation note: stronger resume provenance
+
+This note was appended after implementation review and before either registered
+seed was drawn. It does not change the fixture, estimator, target hashes,
+sample size, interval, discrepancy metric, threshold, or attempt count.
+
+The original contract above names an implementation Git SHA as the checkpoint
+code identity. Review exposed two narrower failure modes: documentation-only
+commits would invalidate identical numerical code, while a restarted process
+could discard prior checkpoint timing. The implementation therefore records
+the clean Git commit separately for provenance and binds reuse to a SHA256 of
+the tracked execution-input blobs and paths. It additionally requires a
+single-thread BLAS environment, fingerprints the numerical runtime, reloads
+and validates elapsed/RSS telemetry, applies the eight-minute shard stop to
+both new and reused shards, and accumulates generated-shard time across
+resumptions for the eight-hour stop and 6.4-hour completion forecast. These are
+anti-laundering controls on the already registered run, not new statistical
+choices.
