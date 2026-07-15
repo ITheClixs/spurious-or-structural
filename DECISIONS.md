@@ -1203,3 +1203,25 @@ the choice, alternatives, and the evidence that would reopen it.
   transform design before registered access.
 - **Reopen if:** The raw PCG digest differs, the mismatch starts at the first
   normal value, or NumPy/CPU versions differ from the locked environments.
+
+## D0056 — Close portability only on the fail-closed hosted boundary
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Local M4 KATs and hostile review could establish the authorized
+  path, but only hosted Linux could prove that the frozen verification-class
+  hash passes while registered preflight rejects before `SeedSequence`.
+- **Decision:** Commit `ff3a343e9c4cfbf672d7cae5614081733c4b695e`
+  passed hosted run `29455143418`, including all 119 tests and the full quality
+  and demo path. This closes C0002 and the contract/RNG/DGP first slice. It
+  opens only test-first sufficient-statistic and estimator implementation with
+  seeds `1729` and `9191`; registered resource, validation, and research
+  authority remain blocked.
+- **Rejected:** Treat the local M4 pass alone as portability closure or use the
+  hosted pass to expose the resource seed before estimators and checkpointing
+  recover truth under the same contract.
+- **Residual risk:** Linux does not reproduce the authorized research
+  realization, and finite KATs do not cover every unseen libm tail. A006's
+  machine-bound limitation remains a reported reproducibility constraint.
+- **Reopen if:** The hosted run is invalidated, a future runtime fingerprint
+  changes, or any production constructor can reach a registered seed without
+  consuming the successful A006 preflight fingerprint.

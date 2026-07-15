@@ -394,5 +394,9 @@ is machine-bound, and sparse KATs can detect known runtime drift but cannot
 prove stability at every unseen libm tail input. Universal cross-machine replay
 would require a new portable-transform specification before registered access.
 No registered G2 seed has been constructed; the resource stream remains locked
-until the repaired slice passes hosted CI and the remaining implementation and
-resource gates.
+until the remaining estimator, checkpoint, recovery, and resource gates pass.
+
+Repair commit `ff3a343e9c4cfbf672d7cae5614081733c4b695e` passed hosted CI
+run `29455143418`. This closes the portability objection for the first software
+slice only; it does not weaken the machine-bound limitation or license any
+registered stream.

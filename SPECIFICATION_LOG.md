@@ -287,6 +287,10 @@ empirical model trials, but gate-level pipeline variants are recorded.
   global index 60,328, by one ULP. The value is in NumPy's `log1p` Ziggurat-tail
   branch. C0002 therefore supports A006's runtime-conditional byte contract and
   rejects accepting Linux as an alternative registered realization.
+- **Acceptance:** Repair commit `ff3a343e9c4cfbf672d7cae5614081733c4b695e`
+  passed hosted CI run `29455143418`; Linux matched its frozen runtime-class
+  test KAT and rejected registered preflight before `SeedSequence`. C0002 is
+  closed without a registered draw.
 - **Intervals:** not applicable; exact byte equality and the first divergent
   block are the named methods.
 - **Multiple-testing count:** zero. This diagnoses software portability and

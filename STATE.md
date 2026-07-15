@@ -240,16 +240,16 @@ provenance, or filter-once bypass.
   KATs the sole future registered runtime. Linux is test-only and rejects before
   `SeedSequence`. Independent code and research-governance audits pass the
   repaired boundary after claim narrowing.
+- Repair commit `ff3a343e9c4cfbf672d7cae5614081733c4b695e` passed hosted CI
+  run `29455143418`: 119 tests, Ruff, format, strict mypy, deterministic demo,
+  and committed-result drift are green on Linux. The contract/RNG/DGP first
+  slice is now closed without exposing a registered seed.
 
 ## In flight
 
-1. Commit and host-verify the A006 runtime-conditional repair for the G2
-   contract/RNG/DGP slice. Local checks and two hostile audits pass; hosted
-   Linux must now accept its frozen test-only KAT while proving registered
-   preflight rejects before RNG.
-2. Add exact sufficient-statistic, PCA-sign, condition-ridge, and pooled-
+1. Add exact sufficient-statistic, PCA-sign, condition-ridge, and pooled-
    homogeneous estimators test-first with test-only seeds.
-3. Add recovery/checkpoint tests, then repeat hostile review,
+2. Add recovery/checkpoint tests, then repeat hostile review,
    local parity, hosted CI, and the distinct resource benchmark before the
    validation seed is available.
 
@@ -257,10 +257,9 @@ provenance, or filter-once bypass.
 
 - Registered G2 resource, validation, and research streams remain blocked. The
   test-first implementation lane alone is open.
-- Hosted parity remains red at diagnostic commits `53f4418` and `5882cfa` by
-  design. The exact one-ULP cause is identified and the A006 repair is locally
-  green, but no G2 estimator implementation may begin until the repair's own
-  commit passes hosted CI.
+- The runtime-portability repair is hosted green, but no production RNG
+  authority, sufficient-statistic estimator, checkpoint runner, or resource
+  benchmark exists yet. Only the next test-first implementation slice is open.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -283,7 +282,8 @@ has sealed-surface passes and a hosted-green documentation boundary at commit
 `a5c7f1c` / run `29448917107`; implementation commit `682a381` exposed one
 hosted Gaussian mismatch; D0055/C0002 and runs `29453989738`/`29454185569`
 localize it to one platform-`log1p` ULP; preregistration amendment A006 and the
-seventh red-team verdict define the locally green, hostile-reviewed repair that
-still needs its own hosted pass. Only test-first work with seeds `1729`/`9191`
+seventh red-team verdict define repair commit `ff3a343`, hosted green at run
+`29455143418`; the contract/RNG/DGP slice is closed and only test-first
+sufficient-statistic/PCA/ridge/pooled-estimator work with seeds `1729`/`9191`
 is open." Do not touch empirical
 tape or any G2 resource, validation, or research seed.
