@@ -1062,3 +1062,84 @@ the choice, alternatives, and the evidence that would reopen it.
 - **Reopen if:** The acceptance-ledger commit fails hosted CI, the implementation
   cannot hard-fail altered digests/schemas, or a registered seed appears in any
   test or development command.
+
+## D0052 — Make executable identity stricter than Python equality
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The first typed contract validator compared tuples and values
+  with ordinary Python equality. That admitted operationally different objects:
+  float dimensions equal to integers, `-0.0` equal to `0.0`, plain strings equal
+  to `StrEnum` members, integers equal to `IntEnum` members, mutable lists in
+  place of tuples, and target-row changes below a regeneration tolerance. Some
+  passed validation and failed only in a downstream NumPy or identity lookup.
+- **Decision:** Validate the exact runtime dataclass, container, element, enum,
+  integer, and Python-float representations before semantic checks. Compare all
+  calibration floats by exact hexadecimal binary64 identity. Add a derivative
+  little-endian binary64 SHA256 over the 17-by-4 target matrix,
+  `2ff803d9cf5e14f916266293d0c52e2712da2db7d5d0b6f5a410c4eaefff39c7`,
+  and reject a one-ULP target mutation. This derivative guard does not alter the
+  A005 files or their four authority seals.
+- **Rejected:** Treat equality plus `allclose(..., atol=5e-13)` as adequate typed
+  authority. Mathematical regeneration tolerances are appropriate diagnostics,
+  not permission for a different executable payload.
+- **Residual risk:** Python callers can deliberately monkeypatch private module
+  state; the boundary guarantees supported package behavior, not hostile-code
+  isolation inside one interpreter.
+- **Reopen if:** Any equality-compatible representation passes validation, the
+  derivative target digest changes, or a validated contract later fails because
+  a field has an unexpected runtime type.
+
+## D0053 — Consume one validated entropy snapshot per stochastic call
+
+- **Date:** 2026-07-15
+- **Diagnosis:** A subclass could override `RNGAddress.entropy()` after benign
+  fields were validated, a namespace subclass could override its seed guard,
+  and bootstrap construction reread a frozen address after `np.full`. Hostile
+  tests routed a registered seed value to an intercepted `SeedSequence` without
+  instantiating that stream. The initial bootstrap surface also admitted
+  recovery and IID parents that have no date-bootstrap procedure.
+- **Decision:** Reject address and namespace subclasses at runtime, invoke
+  validators class-qualified, and have validation return one nonvirtual
+  13-field uint32 entropy tuple consumed unchanged by `SeedSequence` and all
+  downstream shape/date logic. Whitelist only resource smooth/paper, validation
+  size/power/date-frontier/paper-recovery, and research bootstrap parents. Spy
+  tests require the exact four-event Gaussian and five-event bootstrap call
+  traces, including exactly one distribution call.
+- **Rejected:** Rely on frozen dataclasses or call `entropy()` again after
+  validation. `object.__setattr__` and virtual dispatch make both claims false
+  under the same adversarial model used by the project tests.
+- **Residual risk:** NumPy distribution internals remain version-dependent; the
+  lockfile, known-answer hashes, and future hosted parity boundary remain
+  mandatory.
+- **Reopen if:** Any RNG path rereads an address after validation, accepts a
+  subclass, instantiates metadata-only `22/3`, admits an unused bootstrap parent,
+  or makes more than one configured distribution call per address.
+
+## D0054 — Keep raw-origin authority outside the raw wrapper
+
+- **Date:** 2026-07-15
+- **Diagnosis:** Provenance labels, byte hashes, and a receipt stored inside
+  `RawBaseNormals` were self-attestation. Reviewers rewrapped filtered arrays,
+  mixed dates and components, relabeled phase 21 as phase 25, inserted phase-30
+  research arrays into recovery, and reconstructed or coordinately mutated the
+  exposed receipt. A callable generic registrar had the same flaw.
+- **Decision:** Only exact `TestRngNamespace.draw_base_normals` may insert into a
+  module-owned weak issuance registry, inline after its five method-owned draws.
+  The registry stores the original provenance snapshot, exact five component
+  identities, and original byte token against the exact wrapper identity.
+  `transform_date` rejects every unregistered constructor/factory result and any
+  later label, object, or content mutation. Weak references remove dead bases;
+  a GC regression locks cleanup and the validator checks `weakref() is base` to
+  defeat stale identity reuse. The generic private packaging helper cannot mint
+  registry authority.
+- **Rejected:** Replay each component RNG during validation. It is definitive but
+  would make a second `standard_normal` call for one address, violating D0048
+  and contaminating resource timing. Also rejected: wrapper-owned keyed or
+  unkeyed receipts, because any receipt exposed on the object can be copied or
+  mutated with it.
+- **Residual risk:** Per-transform hashing cost is not yet benchmarked and must
+  enter the fourteen-kernel resource admission. Arbitrary direct mutation of the
+  underscore registry remains outside the supported API threat model.
+- **Reopen if:** More than one registry write exists, a generic factory or public
+  constructor can mint an accepted base, registry entries retain dead arrays,
+  or any cross-date/component/phase mixture reaches the deterministic map.

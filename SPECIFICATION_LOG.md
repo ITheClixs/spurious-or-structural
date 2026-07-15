@@ -230,10 +230,40 @@ empirical model trials, but gate-level pipeline variants are recorded.
   expected caps. The two-/24-/six-/32-hour hard limits are runtime stops, not
   preflight slack.
 - **Status:** registered, content-audited, hash-sealed, independently admitted
-  at the pre-implementation contract boundary, unimplemented, and unrun.
+  at the pre-implementation contract boundary, and unrun. The contract,
+  test-only RNG namespace, and pure DGP first slice are locally implemented and
+  hostile-reviewed; estimators, checkpointing, resource authority, validation,
+  and research authority remain absent.
   Documentation commit `a5c7f1c02e941a0d6fdef3d645dfea63884cdfd7`
   passed hosted CI run `29448917107`; test-first implementation with test-only
   seeds is open. Registered resource, validation, and research streams remain
   blocked. S0002 and S0003 remain non-executable.
 - **Multiple-testing count:** one new specification. No stochastic run exists
   until a registered stream is consumed.
+
+## C0001 — S0004 contract, test-RNG, and DGP software check
+
+- **Recorded:** 2026-07-15, after test-first implementation and before any G2
+  resource, validation, or research stream access.
+- **Scope:** software-only checks of the four A005 seals, exact typed contract,
+  13-field test entropy namespace, exact NumPy call contract, stream schedules,
+  AR-filter-first DGP, all 17 population cells, gamma-zero recovery separation,
+  and raw-component issuance. Test seeds are `1729` and `9191` only.
+- **Prediction before implementation:** altered seals/schemas/addresses must fail
+  before `SeedSequence`; each component makes one configured standard-normal
+  call; all 17 cells match the frozen covariance and observable moments; raw
+  components filter once and phase-25 recovery cannot reuse phase-21 or phase-30
+  arrays.
+- **Outcome:** initial red tests failed because the module was absent. Successive
+  hostile reviews then reproduced sub-tolerance target forgery, equality/type
+  substitutions, entropy subclass and TOCTOU routes, unused bootstrap keys,
+  double filtering, cross-date/component mixing, and forgeable provenance
+  receipts. Each was repaired without changing the S0004 config or consuming a
+  registered stream. The stabilized suite passes 79 targeted tests; independent
+  DGP recomputation reports maximum all-cell algebra discrepancy `0.0`.
+- **Intervals:** not applicable; this entry makes no statistical estimate or
+  research claim. Its named evidence is deterministic equality, known-answer
+  hashes, failure-before-RNG probes, and test pass/fail status.
+- **Multiple-testing count:** zero. This is a software validation record inside
+  already registered S0004, not a new parameter specification or stochastic
+  attempt.

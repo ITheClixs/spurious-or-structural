@@ -318,3 +318,44 @@ reliability and the latent decomposition are favorable source-compatible
 choices, not identified market facts. A positive result would establish a
 conditional counterexample; a miss would not establish that confounding is
 immaterial in the market.
+
+## Sixth verdict: first software slice passes; production RNG still forbidden
+
+The first implementation did not pass its first hostile review. Reviewers
+reproduced all of the following with test-only seeds before the current
+boundary was admitted:
+
+1. a one-ULP or sub-tolerance population-target change passed regeneration;
+2. equality-compatible float, signed-zero, string/enum, integer/enum, and
+   mutable-container substitutions passed typed validation;
+3. address and namespace subclasses routed registered seed values to an
+   intercepted `SeedSequence`, and bootstrap reread an address after validation;
+4. recovery and IID parents could mint unused bootstrap addresses;
+5. filtered arrays could be rewrapped as raw and filtered twice;
+6. dates, components, and phase-30 research arrays could be relabeled or mixed
+   into phase-25 recovery; and
+7. provenance hashes and wrapper-owned receipts were self-attestation, while a
+   callable registrar could mint the same false origin.
+
+No registered generator was instantiated in these attacks. The repaired code
+now requires exact executable representations and a derivative target-row
+digest, consumes one nonvirtual validated entropy snapshot, narrows bootstrap
+parents, and keeps raw issuance state outside the wrapper. The sole registry
+write is inline after the five method-owned draws in exact
+`TestRngNamespace.draw_base_normals`; the generic packaging helper cannot mint
+authority. A weak-reference cleanup regression prevents issued test bases from
+accumulating indefinitely.
+
+Three focused hostile re-reviews now pass. They independently rejected
+reconstruction, coordinated mutation and retokening, private-factory
+repackaging, cross-date/component swaps, phase-21-to-25 relabeling, and
+phase-30-to-25 mixing. They also reproduced every one of the 17 population
+cells with maximum algebra discrepancy `0.0`. The stabilized local boundary has
+79 targeted tests and no production entry point.
+
+The strongest new mechanical objection is performance: every transform hashes
+the five raw component arrays. Correctness requires that check, but its warm
+throughput and RSS cost are unmeasured. It enters the already required resource
+benchmark and can block resource admission. The strongest substantive objection
+remains the favorable, unidentified 95% proxy reliability and latent
+decomposition. Neither objection licenses a registered stream yet.

@@ -11,21 +11,22 @@ derived and independently audited. The sole frozen `N=30`, `K=3`, `T=10^7`
 run passed the strict preregistered discrepancy test without a seed retry. The
 complete evidence commit passed hosted CI.
 
-**G2 — Premise test / kill switch: open, pre-implementation audit.** No G2
-implementation, resource benchmark, validation panel, or research draw has
-run. S0002 and S0003 were rejected before RNG access. S0004 makes the
+**G2 — Premise test / kill switch: open, first implementation slice locally
+verified.** No resource benchmark, validation panel, or research draw has run.
+S0002 and S0003 were rejected before RNG access. S0004 makes the
 observable integrated-OFI proxy-control opponent and published `CI_I` protocol
 binding, is derived and hash-sealed, and has independent math, inference, and
 whole-contract content and sealed-surface passes. Commit `a5c7f1c` passed hosted
-CI run `29448917107`; the documentation boundary is closed and only test-first
-implementation with test-only seeds is now open.
+CI run `29448917107`. The sealed contract, test-only RNG namespace, and pure DGP
+maps are implemented and locally hostile-reviewed; production authority and all
+registered G2 streams remain absent.
 
 ## Session objective
 
-Current session target: record the hosted acceptance boundary, then implement
-the immutable S0004 contract test-first without accessing resource, validation,
-or research streams. Stop if code cannot reproduce the four seals or introduces
-an estimator/RNG/workload choice absent from the config and derivation.
+Current session target: commit and host-verify the immutable S0004 contract,
+test-only RNG namespace, and DGP map without accessing resource, validation, or
+research streams. Stop if any hostile review reproduces a seal, entropy,
+provenance, or filter-once bypass.
 
 ## Current evidence
 
@@ -207,14 +208,39 @@ an estimator/RNG/workload choice absent from the config and derivation.
   `a5c7f1c02e941a0d6fdef3d645dfea63884cdfd7` passed hosted CI run
   `29448917107`; the only annotation is the existing nonblocking Node 20 action
   deprecation warning. No G2 stochastic command ran in CI.
+- The first S0004 implementation slice reproduces all four A005 seals, adds an
+  exact binary64 derivative seal over all 17 population-target rows, and rejects
+  equality-compatible but non-executable representations including float
+  dimensions, signed-zero changes, plain-string stream labels, integer enum
+  substitutes, mutable containers, and one-ULP target mutations.
+- Test RNG addresses are exact 13-word uint32 tuples. Exact runtime classes,
+  class-qualified validation, and a single immutable entropy snapshot close
+  subclass and post-validation mutation routes. The only Gaussian call is one
+  `PCG64DXSM` `standard_normal` call per component address; the only bootstrap
+  call is one multinomial call. Recovery/IID streams cannot mint unused
+  whole-date bootstrap keys.
+- Raw arrays are issued only inside `TestRngNamespace.draw_base_normals`. A
+  module-owned weak registry binds the exact wrapper identity, original
+  provenance, five component identities, and content token; reconstructed,
+  relabeled, re-tokened, cross-date, double-filtered, and phase-30-to-phase-25
+  mixtures all fail. Weak-reference cleanup is regression-tested so test bases
+  do not accumulate against the 4 GB memory ceiling.
+- Independent all-17-cell moment oracles reproduce `Sigma_q`, `Sigma_r`,
+  `Cov(r,q)`, both leading PC shares, score alignment, proxy reliability, and
+  level-average variance. Hostile reviewers independently reproduced the DGP
+  algebra and found maximum discrepancy `0.0`.
+- Current local evidence is 79 targeted G2 tests and 117 repository tests,
+  clean Ruff, format, strict mypy, deterministic demo, committed-result drift,
+  and `git diff --check`. Every adversarial review used only test seeds `1729`
+  and `9191`; no registered G2 seed or realization was accessed.
 
 ## In flight
 
-1. Commit and host-verify this G2 acceptance ledger without changing the sealed
-   config.
-2. Implement S0004 test-first with test-only seeds, beginning with schema/hash,
-   RNG-address, and population-target known-answer tests.
-3. Add exact smooth estimators and recovery tests, then repeat hostile review,
+1. Commit and host-verify the G2 contract/RNG/DGP implementation slice without
+   changing the sealed config or exposing production authority.
+2. Add exact sufficient-statistic, PCA-sign, condition-ridge, and pooled-
+   homogeneous estimators test-first with test-only seeds.
+3. Add recovery/checkpoint tests, then repeat hostile review,
    local parity, hosted CI, and the distinct resource benchmark before the
    validation seed is available.
 
@@ -241,6 +267,7 @@ Read the four ledgers, `docs/redteam/GATE_G2_PRERUN.md`, and the G2 section of
 and S0003 were rejected before RNG; S0004 config
 `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`
 has sealed-surface passes and a hosted-green documentation boundary at commit
-`a5c7f1c` / run `29448917107`; only test-first implementation with test-only
-seeds is open." Do not touch empirical tape or any G2 resource, validation, or
-research seed.
+`a5c7f1c` / run `29448917107`; the contract/RNG/DGP slice is locally verified
+with 79 targeted tests but still needs its own commit and hosted CI; only
+test-first implementation with test-only seeds is open." Do not touch empirical
+tape or any G2 resource, validation, or research seed.
