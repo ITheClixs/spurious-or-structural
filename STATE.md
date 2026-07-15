@@ -6,18 +6,22 @@ Last updated: 2026-07-15
 
 **G0 — Environment and compute plan: passed on 2026-07-15.**
 
-**G1 — The derivation: substantive criteria passed; closeout in progress.** Both
-probability limits are derived and independently audited. The sole frozen
-`N=30`, `K=3`, `T=10^7` run passed the strict preregistered discrepancy test
-without a seed retry. G2 remains locked until the small result artifacts,
-red-team memo, pass review, and current ledgers are committed and hosted-green.
+**G1 — The derivation: passed on 2026-07-15.** Both probability limits are
+derived and independently audited. The sole frozen `N=30`, `K=3`, `T=10^7`
+run passed the strict preregistered discrepancy test without a seed retry. The
+complete evidence commit passed hosted CI.
+
+**G2 — Premise test / kill switch: open.** No G2 implementation or research
+draw has run. The immediate task is to diagnose the strongest published
+own-flow-plus-factor-control opponent and extract a defensible calibration from
+opened primary sources without touching local market tape.
 
 ## Session objective
 
-Completed this session: run and independently audit the sole frozen G1 stream,
-compare it with the written prediction, and exercise deterministic checkpoint
-resume without changing result bytes. Stop condition for the current branch is
-a committed, hosted-green G1 closeout before G2 opens.
+Completed this session: close G1 on immutable evidence and hosted parity. The
+current branch now targets a written G2 opponent/calibration diagnosis and
+pre-run prediction; no simulation implementation begins before those artifacts
+exist.
 
 ## Current evidence
 
@@ -119,20 +123,20 @@ a committed, hosted-green G1 closeout before G2 opens.
   The strongest unresolved objection is that the dense positive Gaussian
   fixture does not test near-zero, sign-sensitive off-diagonals or empirical
   shock dependence; G1 makes no such claim.
+- G1 evidence commit `44965d0370810f756ad1c5cc7938a289cb943906`
+  passed hosted CI run `29426776688`. This closes G1 and unlocks G2.
 
 ## In flight
 
-1. Commit the immutable G1 results, hostile review, pass review, and all four
-   living ledgers; push and require hosted parity for the exact head.
-2. After hosted acceptance, mark G1 finally closed and open G2 without touching
-   empirical data.
-3. Begin G2 with diagnosis and verified primary-source calibration of the
-   strongest own-flow-plus-factor-control opponent before implementation.
+1. Commit and host-verify this final G1 acceptance ledger.
+2. For G2, open and verify the primary papers defining the strongest
+   own-flow-plus-factor-control benchmark and plausible factor/flow parameters.
+3. Write the diagnosis, calibration envelope, exact kill-switch simulation
+   prediction, interval method, and resource budget before G2 code or draws.
 
 ## Blockers
 
-- No scientific blocker remains in G1. The only closeout dependency is durable
-  commit plus hosted parity for the generated evidence and hostile review.
+- No blocker currently prevents G2 literature/calibration work.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -147,8 +151,9 @@ a committed, hosted-green G1 closeout before G2 opens.
 
 ## Cold-resume next action
 
-Read the four ledgers and the G1 section of `docs/GATES.md`, then state: "G1's
-sole frozen draw passed substantively; do not rerun or open G2 until the closeout
-evidence head is hosted-green." If that exact head passes, record hosted
-acceptance and open G2; if it fails, repair only the demonstrated software or
-documentation defect without changing the frozen G1 evidence.
+Read the four ledgers and the G2 section of `docs/GATES.md`, then state: "G1 is
+closed on evidence commit `44965d0`; G2 must build the strongest opponent and
+can still kill the project." Verify primary sources before they enter the
+bibliography, diagnose the calibration problem before method search, and do not
+touch empirical tape or implement the G2 simulation before its prediction is
+written.

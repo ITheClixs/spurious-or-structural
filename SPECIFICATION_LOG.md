@@ -109,6 +109,9 @@ empirical model trials, but gate-level pipeline variants are recorded.
   and marker `6d2d75323f0a30705b852be85354ec2143fa9876dab92ead60a495bf81bd52cf`.
   An immediate resume reused the validated checkpoints and left all three bytes
   and hashes unchanged; this is the same registered attempt.
+- **Hosted closeout:** evidence commit
+  `44965d0370810f756ad1c5cc7938a289cb943906` passed CI run `29426776688`.
+  G1 is closed; no additional S0001 draw is permitted.
 - **Multiple-testing count:** included as one simulation specification. Crash
   recovery with identical validated shards remains the same attempt; changing
   the seed, sample size, fixture, target, accumulator, or metric creates a new

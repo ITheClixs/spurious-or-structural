@@ -373,3 +373,20 @@ the choice, alternatives, and the evidence that would reopen it.
 - **Reopen if:** An independent recomputation disagrees, the artifact hashes
   fail, hosted parity fails for the closeout, or the recorded run provenance
   shows any alternate seed or specification.
+
+## D0023 — Close G1 only after the evidence commit reproduces in CI
+
+- **Date:** 2026-07-15
+- **Diagnosis:** A local substantive pass was not yet a durable gate transition;
+  the generated artifacts, hostile review, and ledgers had to survive the same
+  public software checks as the implementation that produced them.
+- **Decision:** Close G1 after evidence commit
+  `44965d0370810f756ad1c5cc7938a289cb943906` passed hosted CI run
+  `29426776688`. Open G2 for literature, calibration, derivation, and prediction
+  work only; no empirical tape is permitted under D0003.
+- **Rejected:** Start G2 while the closeout evidence was merely local. That
+  would cross a gate whose durable artifacts had not yet passed public checks.
+- **Residual risk:** CI validates software and committed-byte stability, not the
+  economic premise. G2 remains a genuine kill switch.
+- **Reopen if:** The hosted run is invalidated or a hash/provenance audit finds
+  that the committed evidence differs from the reviewed frozen result.

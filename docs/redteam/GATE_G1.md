@@ -4,9 +4,9 @@ Review date: 2026-07-15
 
 ## Verdict
 
-**G1 passes its substantive criterion.** Formal closeout remains conditional on
-committing this memo and the immutable result artifacts, then reproducing the
-software boundary on hosted CI. G2 remains locked until that happens.
+**G1 passed.** This memo and the immutable result artifacts were committed at
+`44965d0370810f756ad1c5cc7938a289cb943906`; hosted CI run `29426776688`
+completed successfully. G2 is open, without weakening any criticism below.
 
 The claim under attack is narrow: under the explicitly stated simultaneous
 linear Gaussian system, the streamed regressions converge to the two derived
@@ -138,5 +138,5 @@ None occurred.
 - Frozen 10-million-row recovery: **passed**.
 - Named simultaneous intervals and complete coefficient reporting: **passed**.
 - Independent hostile review: **passed**.
-- Durable closeout and hosted parity: **pending**.
-- G1 overall: **candidate pass; G2 remains locked pending closeout**.
+- Durable closeout and hosted parity: **passed**, run `29426776688`.
+- G1 overall: **passed; G2 open**.

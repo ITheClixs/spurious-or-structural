@@ -36,7 +36,7 @@ All seven items passed for commit
 `3abbad1dc3bfa6114434ce2bb5d2de0140b0dafa`; hosted CI run `29416847411`
 completed successfully.
 
-## G1 — Derivation (substantive pass; hosted closeout pending)
+## G1 — Derivation (passed 2026-07-15)
 
 Derive the probability limits of OLS and noisy-proxy-controlled OLS in terms of
 the structural parameters. Verify with about `10^7` streamed samples. Maximum
@@ -49,11 +49,12 @@ targets lie inside the preregistered 95% family-wise classical homoskedastic
 Student-t Bonferroni intervals. Independent algebra, raw-checkpoint, artifact,
 and provenance audits found no blocker or high-severity defect.
 
-The substantive criterion passed. G2 stays locked until `results/g1`, the
-written pass review, `docs/redteam/GATE_G1.md`, and current ledgers are committed
-and that exact evidence head passes hosted CI.
+The substantive criterion passed. `results/g1`, the written pass review,
+`docs/redteam/GATE_G1.md`, and all current ledgers were committed at
+`44965d0370810f756ad1c5cc7938a289cb943906`; hosted CI run `29426776688`
+completed successfully.
 
-## G2 — Premise test / kill switch (locked)
+## G2 — Premise test / kill switch (open)
 
 Faithfully implement the strongest published own-flow-plus-factor-control
 opponent. In a defensibly calibrated parameter region, an off-diagonal sign
