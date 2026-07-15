@@ -6,22 +6,18 @@ Last updated: 2026-07-15
 
 **G0 — Environment and compute plan: passed on 2026-07-15.**
 
-**G1 — The derivation: in progress.** Both probability limits are derived and
-independently audited. The `N=30`, `K=3`, `T=10^7` numerical specification,
-hard discrepancy metric, target hashes, interval method, and checkpoint
-contract are frozen in `configs/g1.toml` and
-`docs/predictions/GATE_G1.md`. The streamed verifier and provenance-locked
-runner are implemented and committed at
-`fe9e69123469496135cdffe516778a1f58206b3f`. Neither the preregistered master
-stream has been drawn. The distinct benchmark stream was consumed once, after
-its committed and hosted-green boundary, and passed A013.
+**G1 — The derivation: substantive criteria passed; closeout in progress.** Both
+probability limits are derived and independently audited. The sole frozen
+`N=30`, `K=3`, `T=10^7` run passed the strict preregistered discrepancy test
+without a seed retry. G2 remains locked until the small result artifacts,
+red-team memo, pass review, and current ledgers are committed and hosted-green.
 
 ## Session objective
 
-Completed this session: seal the hosted-green G1 implementation boundary and
-run the one permitted distinct-seed resource benchmark. Stop condition for the
-current branch is a committed, hosted-green benchmark evidence boundary before
-the frozen master stream is accessed.
+Completed this session: run and independently audit the sole frozen G1 stream,
+compare it with the written prediction, and exercise deterministic checkpoint
+resume without changing result bytes. Stop condition for the current branch is
+a committed, hosted-green G1 closeout before G2 opens.
 
 ## Current evidence
 
@@ -52,9 +48,9 @@ the frozen master stream is accessed.
   `[0.7719001593, 0.9201821590]`. The combined ten-decimal target hash is
   `80e6026821d67708587eb3abe606c05a7f58c5e4499430e6db72ae6d36faee1d`.
 - G1 software tests use only explicit test-only seeds (`1729`, `9191`, and
-  `314159`). No test or command has drawn the frozen master seed `2026071501`.
-  The distinct benchmark seed `2026071599` was drawn once by the preregistered
-  resource command after all preconditions passed.
+  `314159`); no software test drew either registered stream. The preregistered
+  resource command consumed benchmark seed `2026071599` once, and the frozen
+  experiment consumed master seed `2026071501` once after its preconditions.
 - The G1 runner validates the sealed analytic hashes before RNG access, verifies
   both structural equations per shard, checkpoints only count/mean/centered
   scatter, and refuses mismatched config/source/numerical-runtime/RNG
@@ -77,8 +73,8 @@ the frozen master stream is accessed.
   Linux LAPACK entry differed between the two analytic paths by
   `2.24931185e-13`, exceeding the Mac-derived test tolerance `2e-13` while
   remaining below the production preflight bound `5e-13`. The cross-platform
-  regression is being aligned to the already implemented `5e-13` bound; this
-  changes no formula, target hash, seed, simulation, or gate tolerance.
+  regression was aligned to the already implemented `5e-13` bound; this
+  changed no formula, target hash, seed, simulation, or gate tolerance.
 - Repair commit `1adc73921da9f112f4eed56789b7a92a74b67f47` passed hosted CI
   run `29422306505`: all 38 tests, Ruff, format, strict mypy, deterministic
   demo, and result drift checks succeeded on Linux. The only annotation is a
@@ -97,21 +93,46 @@ the frozen master stream is accessed.
   and has payload digest
   `df847a45cb74f65a450607070536c4b0338e881390cd7ee3898f8b241b93ee1c`.
   No `results/g1` output was published.
+- The master stream was drawn once at seed `2026071501` from exact pre-draw
+  head `cc3b01faa469150e15668644d023618cb28c0ab8`, after hosted CI run
+  `29423237074` passed. The 100 immutable checkpoints contain exactly
+  10,000,000 rows, indices 0 through 99, and 100 unique payload hashes.
+- G1 passed: uncontrolled OLS maximum relative discrepancy is
+  `5.639467093140219e-4`; noisy-proxy-controlled OLS is
+  `5.123714186295689e-4`; their maximum is strictly below `10^-3`. All 1,800
+  targets lie inside the named 95% family-wise classical homoskedastic
+  Student-t Bonferroni intervals. Maximum absolute standardized errors are
+  3.428433462 and 3.122083665 against critical values near 4.191.
+- The worst coefficient is uncontrolled row 29, column 1: target
+  `0.8475856471`, estimate `0.8471076539`, standard error `0.0001394203`, and
+  simultaneous interval `[0.8465233490, 0.8476919589]`.
+- Cumulative shard generation took 8.239197838 seconds; the slowest shard took
+  0.099412500 seconds; maximum checkpoint RSS was 437,829,632 bytes. The
+  checkpoint tree uses about 4.3 MiB and result-set disk allocation is about
+  436 KiB.
+- Deterministic resume reused the 100 validated checkpoints and reproduced the
+  three result hashes byte-for-byte: summary
+  `b590b8ba079c70917e3e768ff1079051f2b8a6c8007336367aa2d299ec3c5d54`,
+  estimates `f5129b0fc7695e7db13074dad64ac6123263992ccca920f579d85205bba8f06f`,
+  and marker `6d2d75323f0a30705b852be85354ec2143fa9876dab92ead60a495bf81bd52cf`.
+- Three independent hostile reviews found no blocker or high-severity defect.
+  The strongest unresolved objection is that the dense positive Gaussian
+  fixture does not test near-zero, sign-sensitive off-diagonals or empirical
+  shock dependence; G1 makes no such claim.
 
 ## In flight
 
-1. Commit and push this benchmark evidence; require hosted parity for its exact
-   head.
-2. Once green, run the single frozen `10^7` master stream under `caffeinate -i`;
-   do not alter the fixture, target, seed, metric, or tolerance in response to
-   output.
-3. Compare the sole result with the preregistered strict threshold, then record
-   either a G1 pass or attempt-1 failure without a seed retry.
+1. Commit the immutable G1 results, hostile review, pass review, and all four
+   living ledgers; push and require hosted parity for the exact head.
+2. After hosted acceptance, mark G1 finally closed and open G2 without touching
+   empirical data.
+3. Begin G2 with diagnosis and verified primary-source calibration of the
+   strongest own-flow-plus-factor-control opponent before implementation.
 
 ## Blockers
 
-- No current blocker prevents the frozen G1 master run after this benchmark
-  evidence head passes hosted parity.
+- No scientific blocker remains in G1. The only closeout dependency is durable
+  commit plus hosted parity for the generated evidence and hostile review.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -126,8 +147,8 @@ the frozen master stream is accessed.
 
 ## Cold-resume next action
 
-Read the four ledgers and the G1 section of `docs/GATES.md`, then state: "A013
-passed on the distinct benchmark stream; keep master seed `2026071501` sealed
-until the benchmark-evidence head is hosted-green." Once that exact head is
-green, run only `caffeinate -i make mc` and judge the immutable result against
-the frozen strict threshold without retuning or retrying the seed.
+Read the four ledgers and the G1 section of `docs/GATES.md`, then state: "G1's
+sole frozen draw passed substantively; do not rerun or open G2 until the closeout
+evidence head is hosted-green." If that exact head passes, record hosted
+acceptance and open G2; if it fails, repair only the demonstrated software or
+documentation defect without changing the frozen G1 evidence.

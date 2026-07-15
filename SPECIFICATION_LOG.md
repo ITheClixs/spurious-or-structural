@@ -8,7 +8,7 @@ empirical model trials, but gate-level pipeline variants are recorded.
 ## Trial counts
 
 - Empirical specifications: **0**
-- Simulation estimator specifications: **1 registered, 0 run**
+- Simulation estimator specifications: **1 run, 1 passed**
 - Software-only pipeline specifications: **1 completed**
 - Holdout opens: **0**
 
@@ -57,12 +57,12 @@ empirical model trials, but gate-level pipeline variants are recorded.
   strictly below `10^-3`.
 - **Interval:** classical homoskedastic Student-t coefficient intervals with a
   95% Bonferroni family-wise correction across all 1,800 coefficients.
-- **Status:** registered; the frozen master experiment has not run. The
-  test-first implementation passes 25 G1 software tests and the full 38-test
-  locked suite after the resume-guard repair. Stochastic software tests use
-  only nonregistered test seeds and do not evaluate the gate threshold. The
-  distinct resource-benchmark seed has been consumed once; master seed
-  `2026071501` remains sealed.
+- **Status:** passed on the sole frozen master draw. The test-first
+  implementation passes 25 G1 software tests and the full 38-test locked suite.
+  Stochastic software tests use only nonregistered test seeds and do not
+  evaluate the gate threshold. Resource seed `2026071599` was consumed once;
+  master seed `2026071501` was consumed once, without retry or specification
+  change.
 - **Implementation contract:** sealed target hashes are checked before RNG;
   PCG64DXSM component streams are keyed by seed/shard/component; immutable
   checkpoints contain mergeable centered moments; production runs require
@@ -90,6 +90,25 @@ empirical model trials, but gate-level pipeline variants are recorded.
   seconds in-process total, and 381,517,824 bytes peak RSS. The derated 100-shard
   projection is 18.2589 seconds; A013 passes. Benchmark mode published no
   coefficient estimates, so S0001 remains unrun.
+- **Frozen outcome:** exact pre-draw head
+  `cc3b01faa469150e15668644d023618cb28c0ab8` passed hosted CI run
+  `29423237074` before the first master checkpoint. The 100 shards contain
+  10,000,000 rows under seed `2026071501`. Uncontrolled maximum relative
+  discrepancy is `5.639467093140219e-4`; controlled maximum relative
+  discrepancy is `5.123714186295689e-4`; the strict gate statistic is therefore
+  `5.639467093140219e-4 < 10^-3`. All 1,800 targets are inside 95% family-wise
+  classical homoskedastic Student-t Bonferroni intervals, with critical values
+  `4.190961010324029` and `4.190961010324613`. S0001 passed.
+- **Runtime outcome:** cumulative shard generation was 8.239197838 seconds;
+  maximum shard duration was 0.099412500 seconds; maximum checkpoint RSS was
+  437,829,632 bytes. All 100 checkpoint payload hashes are unique and bind the
+  frozen config, execution source, runtime, seed, row count, and shard index.
+- **Publication and replay:** result SHA256 values are summary
+  `b590b8ba079c70917e3e768ff1079051f2b8a6c8007336367aa2d299ec3c5d54`,
+  estimates `f5129b0fc7695e7db13074dad64ac6123263992ccca920f579d85205bba8f06f`,
+  and marker `6d2d75323f0a30705b852be85354ec2143fa9876dab92ead60a495bf81bd52cf`.
+  An immediate resume reused the validated checkpoints and left all three bytes
+  and hashes unchanged; this is the same registered attempt.
 - **Multiple-testing count:** included as one simulation specification. Crash
   recovery with identical validated shards remains the same attempt; changing
   the seed, sample size, fixture, target, accumulator, or metric creates a new

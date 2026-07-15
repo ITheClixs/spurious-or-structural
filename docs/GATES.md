@@ -36,11 +36,22 @@ All seven items passed for commit
 `3abbad1dc3bfa6114434ce2bb5d2de0140b0dafa`; hosted CI run `29416847411`
 completed successfully.
 
-## G1 — Derivation (open)
+## G1 — Derivation (substantive pass; hosted closeout pending)
 
 Derive the probability limits of OLS and noisy-proxy-controlled OLS in terms of
 the structural parameters. Verify with about `10^7` streamed samples. Maximum
 elementwise relative discrepancy must be below `10^-3`.
+
+The sole frozen `N=30`, `K=3`, `T=10^7` run produced maximum no-floor relative
+discrepancies `5.639467093140219e-4` for uncontrolled OLS and
+`5.123714186295689e-4` for noisy-proxy-controlled OLS. All 1,800 population
+targets lie inside the preregistered 95% family-wise classical homoskedastic
+Student-t Bonferroni intervals. Independent algebra, raw-checkpoint, artifact,
+and provenance audits found no blocker or high-severity defect.
+
+The substantive criterion passed. G2 stays locked until `results/g1`, the
+written pass review, `docs/redteam/GATE_G1.md`, and current ledgers are committed
+and that exact evidence head passes hosted CI.
 
 ## G2 — Premise test / kill switch (locked)
 

@@ -342,3 +342,34 @@ the choice, alternatives, and the evidence that would reopen it.
   check, while A010 stays untested for genuinely long later phases.
 - **Reopen if:** The frozen run breaches 1.5 GB, a shard exceeds eight minutes,
   cumulative time exceeds eight hours, or the execution-input digest changes.
+
+## D0022 — Treat the sole frozen result as a substantive G1 pass
+
+- **Date:** 2026-07-15
+- **Diagnosis:** The only admissible decision is the preregistered strict
+  comparison of both 30-by-30 finite-sample regression matrices with their
+  derived population targets; interval coverage is secondary evidence and
+  cannot substitute for that test.
+- **Decision:** Record a substantive G1 pass. At `T=10,000,000`, uncontrolled
+  OLS had maximum elementwise no-floor relative discrepancy
+  `5.639467093140219e-4`, and noisy-proxy-controlled OLS had
+  `5.123714186295689e-4`; the gate statistic is their maximum and is strictly
+  below `10^-3`. All 1,800 targets lie inside 95% family-wise classical
+  homoskedastic Student-t Bonferroni intervals. The sole master seed was not
+  changed or retried. Preserve `results/g1` as the immutable evidence and keep
+  G2 locked until the closeout commit passes hosted CI.
+- **Rejected:** Recast G1 as evidence that cross-impact is identified or that
+  the noisy control solves confounding. G1 validates only the derived
+  pseudo-true regression coefficients under the frozen conditional DGP.
+- **Evidence hashes:** summary
+  `b590b8ba079c70917e3e768ff1079051f2b8a6c8007336367aa2d299ec3c5d54`;
+  estimates `f5129b0fc7695e7db13074dad64ac6123263992ccca920f579d85205bba8f06f`;
+  success marker
+  `6d2d75323f0a30705b852be85354ec2143fa9876dab92ead60a495bf81bd52cf`.
+- **Residual risk:** Every target is large and positive, and the simulation is
+  IID Gaussian with mutually uncorrelated shocks. It does not test the
+  near-zero, sign-sensitive off-diagonals or empirical dependence central to
+  the economic dispute; G2 must confront those rather than inherit this pass.
+- **Reopen if:** An independent recomputation disagrees, the artifact hashes
+  fail, hosted parity fails for the closeout, or the recorded run provenance
+  shows any alternate seed or specification.

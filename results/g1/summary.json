@@ -1,0 +1,43 @@
+{
+  "coefficient_count": 1800,
+  "config_sha256": "2a71f58d1eec7eb39e68e7333ce5cb385a3fcdc85466ee234d334299c8886efd",
+  "controlled": {
+    "critical_value": 4.190961010324613,
+    "degrees_freedom": 9999966,
+    "max_relative_discrepancy": 0.0005123714186295689,
+    "target_in_all_intervals": true
+  },
+  "evidence_scope": "simulation-known-ground-truth",
+  "familywise_confidence": 0.95,
+  "gate": "G1",
+  "gate_criterion": {
+    "comparison": "strictly-less-than",
+    "metric": "max-elementwise-relative-discrepancy-no-denominator-floor",
+    "threshold": 0.001
+  },
+  "gate_discrepancy": 0.0005639467093140219,
+  "implementation_source_sha256": "8a25de8d3cd268284157df20ef3190d5519b714574e90a17c79729462e086a2b",
+  "interval_method": "classical-homoskedastic-student-t-bonferroni",
+  "n_assets": 30,
+  "n_factors": 3,
+  "n_samples": 10000000,
+  "numpy_version": "2.5.1",
+  "ols": {
+    "critical_value": 4.190961010324029,
+    "degrees_freedom": 9999969,
+    "max_relative_discrepancy": 0.0005639467093140219,
+    "target_in_all_intervals": true
+  },
+  "passed": true,
+  "python_version": "3.13.5",
+  "runtime_sha256": "20e3b050b9de5e28c03196880df8e7dbd4d09dfcc3a25073e87cf532f636da9b",
+  "schema_version": 1,
+  "scipy_version": "1.18.0",
+  "seed": 2026071501,
+  "shard_size": 100000,
+  "target_hashes": {
+    "combined": "80e6026821d67708587eb3abe606c05a7f58c5e4499430e6db72ae6d36faee1d",
+    "controlled": "c4dfb1bc3aca138cb631ba2ff90e129f249c6aa2b15aba3f57cc7f0f0c466995",
+    "ols": "e20709d129b00561cdefc69bb361cd35550665125ed56604456344d2ea6cd854"
+  }
+}
