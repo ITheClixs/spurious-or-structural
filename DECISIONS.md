@@ -1168,6 +1168,14 @@ the choice, alternatives, and the evidence that would reopen it.
   platform, raw-digest, first-value, and chunk-digest telemetry. Run it on the
   same locked macOS and hosted-Linux environments before changing production
   code, the sealed call, or the acceptance rule.
+- **Diagnostic result, stage one:** Hosted run `29453989738` reproduced the raw
+  digest and all first eight normal values exactly. Programmatic comparison of
+  99 nonoverlapping 1,000-value hashes found exactly one differing block,
+  zero-based block 60; blocks 0--59 and 61--98 matched. This falsifies seed,
+  address, PCG, bulk-call-shape, and state-consumption drift. Before the stage-two
+  run, the prediction is that only one or a few values in indices 60,000--60,999
+  differ at the last bits while all neighboring values match, implicating a
+  platform math result in a rare slow path.
 - **Rejected:** Accept both full-array hashes, round generated normals, or
   replace NumPy's transform on the strength of one aggregate mismatch. Each
   hides or outruns the causal diagnosis; the last two would also alter the

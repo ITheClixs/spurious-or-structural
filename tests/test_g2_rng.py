@@ -533,7 +533,9 @@ def test_standard_normal_component_known_answers(
             f"expected={expected_hash!r}, actual={actual_hash!r}, "
             f"raw150k={_sha256_bytes(raw, '<u8')!r}, "
             f"first8_hex={tuple(float(value).hex() for value in flat[:8])!r}, "
-            f"chunk1000={chunks!r}"
+            f"chunk1000={chunks!r}, "
+            "indices60000_60999_hex="
+            f"{tuple(float(value).hex() for value in flat[60_000:61_000])!r}"
         )
     if component is G2Component.FACTOR:
         np.testing.assert_array_equal(

@@ -278,7 +278,11 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Prediction before hosted run:** the exact 150,000-word PCG64DXSM raw digest
   matches across platforms, while at least one later 1,000-value Gaussian block
   differs. A raw mismatch would falsify the transform-only diagnosis.
-- **Outcome:** pending hosted diagnostic evidence.
+- **Outcome:** Stage-one hosted run `29453989738` matched the frozen raw PCG
+  digest and 98 of 99 Gaussian 1,000-value blocks. The sole mismatch is block
+  60 (indices 60,000--60,999); every later block returns to exact equality, so
+  generator-state consumption did not diverge. Stage two will compare the
+  exact binary64 values inside that block; prediction recorded in D0055.
 - **Intervals:** not applicable; exact byte equality and the first divergent
   block are the named methods.
 - **Multiple-testing count:** zero. This diagnoses software portability and
