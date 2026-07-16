@@ -11,15 +11,17 @@ derived and independently audited. The sole frozen `N=30`, `K=3`, `T=10^7`
 run passed the strict preregistered discrepancy test without a seed retry. The
 complete evidence commit passed hosted CI.
 
-**G2 — Premise test / kill switch: open, first implementation slice locally
-verified.** No resource benchmark, validation panel, or research draw has run.
+**G2 — Premise test / kill switch: open, smooth estimator core locally
+verified; hosted verification pending.** No registered resource benchmark,
+registered validation panel, or registered research draw has run.
 S0002 and S0003 were rejected before RNG access. S0004 makes the
 observable integrated-OFI proxy-control opponent and published `CI_I` protocol
 binding, is derived and hash-sealed, and has independent math, inference, and
 whole-contract content and sealed-surface passes. Commit `a5c7f1c` passed hosted
 CI run `29448917107`. The sealed contract, test-only RNG namespace, and pure DGP
-maps are implemented and locally hostile-reviewed; production authority and all
-registered G2 streams remain absent.
+maps and the in-memory smooth estimator core are implemented and locally
+hostile-reviewed; checkpoint/resource authority and all registered G2 streams
+remain absent.
 
 ## Session objective
 
@@ -244,26 +246,57 @@ Stop before checkpoint/recovery, resource authority, or any registered G2 RNG.
   run `29455143418`: 119 tests, Ruff, format, strict mypy, deterministic demo,
   and committed-result drift are green on Linux. The contract/RNG/DGP first
   slice is now closed without exposing a registered seed.
+- The smooth estimator implementation now provides upper-packed date moments,
+  one-call weighted aggregation, integrated top-ten OFI PCA, oracle and
+  observable condition-capped ridge, and globally centered pooled homogeneous
+  OLS. Generic extraction/solvers remain numeric-only; high-level G2 fits
+  require a live issued complete aggregate and an exact response-map label.
+- The first numerically green estimator state failed hostile review. Reproduced
+  defects included forged dates, crossed base/response panels, incomplete
+  panels, analytic-origin fit authority, unissued design substitution, copied
+  receipt minting, response relabeling, ndarray/receipt/scalar representation
+  attacks, and a state-changing caller sequence that validated issued moments
+  then stacked 90,720 zeroed unissued cross-moment entries into an issued
+  aggregate, followed by a response-dependent digest for byte-identical shared
+  designs. C0004--C0014 record each diagnosis, red mismatch, and repair.
+- Every contract stacker now validates and constructs from one exact local
+  tuple snapshot. Exact weak issuance covers designs, base/cell date moments,
+  base/cell panels, and aggregates; dynamic mutation and weak cleanup are
+  exercised through the complete path. Structural target, `paper_recovery`,
+  `phi`, stream/panel, and N/T/L mismatches fail before a coefficient, as does
+  disagreement between the supplied fit reliability and its expected label;
+  alternative registered reliabilities intentionally reuse canonical 0.95
+  stored moments.
+- The complete 48-date test-seed-1729 issued path passed under a 60-second
+  alarm in 0.65 seconds with maximum RSS 63,766,528 bytes. It returns finite
+  `(30,30)`, `(30,30)`, and `(3,)` outputs but compares no coefficient with
+  truth and makes no recovery, bias, size, or power claim.
+- Current local evidence is 49 focused smooth-estimator tests and 157 repository
+  tests, clean Ruff, format, strict mypy over 18 files, deterministic demo,
+  committed-result drift, and independent final math, contract, code, ledger,
+  and verification passes. Final code review reopened the earlier acceptance
+  through C0014, then passed the response-independent design-digest repair.
+  Only test seeds `1729`/`9191` were available; no registered G2 realization
+  was accessed.
 
 ## In flight
 
-1. A007 and `docs/derivations/GATE_G2_SMOOTH_ESTIMATORS.md` now freeze the
-   covariance normalization, upper packing, one-call date-weight aggregation,
-   PCA `eigh`, pooled SVD, typed threshold projection, and analytic predictions
-   before implementation. Add the corresponding red tests, then implement the
-   exact sufficient-statistic, PCA, condition-ridge, and pooled-homogeneous
-   kernels with test-only seeds.
-2. Add recovery/checkpoint tests, then repeat hostile review,
-   local parity, hosted CI, and the distinct resource benchmark before the
-   validation seed is available.
+1. Commit and host-verify the locally closed smooth estimator core without
+   exposing any registered stream.
+2. In the next separately derived slice, specify checkpoint manifests and
+   recovery authority, write failure-first resume tests, and only then design
+   the hashing-inclusive resource benchmark required by A022.
 
 ## Blockers
 
 - Registered G2 resource, validation, and research streams remain blocked. The
-  test-first implementation lane alone is open.
-- The runtime-portability repair is hosted green, but no production RNG
-  authority, sufficient-statistic estimator, checkpoint runner, or resource
-  benchmark exists yet. Only the next test-first implementation slice is open.
+  estimator core has no authority to run them.
+- No checkpoint loader can yet validate serialized manifests and mint fresh
+  in-process panel/aggregate authority. Registered recovery is therefore
+  unavailable.
+- A022 remains untested: the 0.65-second software smoke is not the frozen
+  hashing-inclusive cold/warm resource benchmark and cannot admit resource
+  throughput or memory.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -281,13 +314,12 @@ Stop before checkpoint/recovery, resource authority, or any registered G2 RNG.
 Read the four ledgers, `docs/redteam/GATE_G2_PRERUN.md`, and the G2 section of
 `docs/GATES.md`, then state: "G1 is closed on evidence commit `44965d0`; S0002
 and S0003 were rejected before RNG; S0004 config
-`f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`
-has sealed-surface passes and a hosted-green documentation boundary at commit
-`a5c7f1c` / run `29448917107`; implementation commit `682a381` exposed one
-hosted Gaussian mismatch; D0055/C0002 and runs `29453989738`/`29454185569`
-localize it to one platform-`log1p` ULP; preregistration amendment A006 and the
-seventh red-team verdict define repair commit `ff3a343`, hosted green at run
-`29455143418`; the contract/RNG/DGP slice is closed and only test-first
-sufficient-statistic/PCA/ridge/pooled-estimator work with seeds `1729`/`9191`
-is open." Do not touch empirical
-tape or any G2 resource, validation, or research seed.
+`f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc` is
+sealed; the contract/RNG/DGP repair is hosted green at `ff3a343` / run
+`29455143418`; C0003's first estimator attempt failed hostile authority review;
+C0004--C0014 close the in-memory smooth estimator core locally with 49 focused
+tests, 157 repository tests, a 0.65-second/63,766,528-byte-RSS complete issued
+smoke, and final math/contract/code/ledger/verification passes; no registered G2
+stream ran. The next allowed work is checkpoint/recovery derivation and red
+tests, followed by the A022 hashing-inclusive resource design." Do not touch
+empirical tape or any G2 resource, validation, or research seed.

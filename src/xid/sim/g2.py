@@ -192,6 +192,13 @@ class G2Contract:
     iid_ar1: float
     confirmatory_reliability: float
     level_average_error_variance: float
+    ridge_condition_cap: float
+    ridge_floor_trace_ratio: float
+    ridge_negative_eigen_roundoff_multiplier: float
+    ridge_post_condition_slack_multiplier: float
+    pca_top_eigengap_min_trace_ratio: float
+    pooled_rank_multiplier: float
+    pooled_condition_number_max: float
     registered_seeds: tuple[int, int, int]
     phase_scenarios: tuple[tuple[G2Stream, int, int], ...]
     component_ids: tuple[tuple[G2Component, int], ...]
@@ -459,8 +466,9 @@ def load_g2_contract(root: Path) -> G2Contract:
     if target_semantic_sha != FROZEN_G2_SEALS.target_semantic_sha256:
         raise ValueError("G2 target_semantic_sha256 does not match the A005 seal")
 
+    opponents = _table(config, "opponent", table_name="config")
     paper = _table(
-        _table(config, "opponent", table_name="config"),
+        opponents,
         "paper_reconstruction",
         table_name="config.opponent",
     )
@@ -508,6 +516,13 @@ def load_g2_contract(root: Path) -> G2Contract:
     target = _mapping(target_value, name="target")
     dimensions = _table(config, "dimensions", table_name="config")
     dependence = _table(config, "dependence", table_name="config")
+    numerics = _table(config, "numerics", table_name="config")
+    confirmatory = _table(opponents, "confirmatory", table_name="config.opponent")
+    observable_confirmatory = _table(
+        opponents,
+        "observable_confirmatory",
+        table_name="config.opponent",
+    )
     streams = _table(config, "streams", table_name="config")
     assignments = _table(streams, "phase_scenario_assignments", table_name="config.streams")
     component_ids_table = _table(streams, "component_ids", table_name="config.streams")
@@ -517,6 +532,34 @@ def load_g2_contract(root: Path) -> G2Contract:
     impact = _table(calibration, "impact_sensitivity", table_name="config.calibration")
     proxy = _table(calibration, "proxy", table_name="config.calibration")
     measurement = _table(calibration, "measurement", table_name="config.calibration")
+
+    encoded_numeric_rules = (
+        (
+            "ridge_negative_eigenvalue_roundoff_tolerance",
+            "after_eigvalsh_fail_if_largest_eigenvalue_nonfinite_or_at_or_below_zero_"
+            "tolerance_100_times_machine_epsilon_times_max_1_abs_largest_eigenvalue_"
+            "values_in_closed_minus_tolerance_to_zero_are_accepted_as_roundoff_but_raw_"
+            "values_are_retained_in_condition_penalty_formula_and_regularized_solve_more_"
+            "negative_values_fail_once_symmetrized_schur_matrix_is_never_projected",
+        ),
+        (
+            "ridge_post_regularization_condition_check",
+            "fail_cell_if_smin_plus_penalty_nonfinite_or_at_or_below_zero_or_if_smax_plus_"
+            "penalty_over_smin_plus_penalty_exceeds_condition_cap_times_one_plus_1000_times_"
+            "machine_epsilon",
+        ),
+        (
+            "pooled_rank_tolerance",
+            "machine_epsilon_times_three_times_largest_singular_value",
+        ),
+    )
+    for field, expected in encoded_numeric_rules:
+        observed = _text(
+            _field(numerics, field, table_name="config.numerics"),
+            name=f"config.numerics.{field}",
+        )
+        if observed != expected:
+            raise ValueError(f"config.numerics.{field} changed its sealed numerical rule")
 
     target_identity = (
         _integer(_field(target, "n_assets", table_name="target"), name="target.n_assets"),
@@ -685,6 +728,41 @@ def load_g2_contract(root: Path) -> G2Contract:
             _field(target, "level_average_error_variance", table_name="target"),
             name="target.level_average_error_variance",
         ),
+        ridge_condition_cap=_number(
+            _field(
+                confirmatory,
+                "condition_number_cap",
+                table_name="config.opponent.confirmatory",
+            ),
+            name="config.opponent.confirmatory.condition_number_cap",
+        ),
+        ridge_floor_trace_ratio=_number(
+            _field(
+                confirmatory,
+                "ridge_floor_trace_ratio",
+                table_name="config.opponent.confirmatory",
+            ),
+            name="config.opponent.confirmatory.ridge_floor_trace_ratio",
+        ),
+        ridge_negative_eigen_roundoff_multiplier=100.0,
+        ridge_post_condition_slack_multiplier=1000.0,
+        pca_top_eigengap_min_trace_ratio=_number(
+            _field(
+                observable_confirmatory,
+                "pca_top_eigengap_min_trace_ratio",
+                table_name="config.opponent.observable_confirmatory",
+            ),
+            name="config.opponent.observable_confirmatory.pca_top_eigengap_min_trace_ratio",
+        ),
+        pooled_rank_multiplier=3.0,
+        pooled_condition_number_max=_number(
+            _field(
+                numerics,
+                "pooled_condition_number_max",
+                table_name="config.numerics",
+            ),
+            name="config.numerics.pooled_condition_number_max",
+        ),
         registered_seeds=(
             _integer(
                 _field(streams, "resource_benchmark_seed", table_name="config.streams"),
@@ -768,6 +846,13 @@ def _validate_g2_contract_runtime_types(contract: G2Contract) -> None:
         contract.iid_ar1,
         contract.confirmatory_reliability,
         contract.level_average_error_variance,
+        contract.ridge_condition_cap,
+        contract.ridge_floor_trace_ratio,
+        contract.ridge_negative_eigen_roundoff_multiplier,
+        contract.ridge_post_condition_slack_multiplier,
+        contract.pca_top_eigengap_min_trace_ratio,
+        contract.pooled_rank_multiplier,
+        contract.pooled_condition_number_max,
     )
     if any(type(value) is not float for value in scalar_fields):
         raise ValueError("sealed G2 contract scalar fields changed representation")
@@ -848,6 +933,13 @@ def validate_g2_contract(contract: G2Contract) -> None:
         contract.iid_ar1,
         contract.confirmatory_reliability,
         contract.level_average_error_variance,
+        contract.ridge_condition_cap,
+        contract.ridge_floor_trace_ratio,
+        contract.ridge_negative_eigen_roundoff_multiplier,
+        contract.ridge_post_condition_slack_multiplier,
+        contract.pca_top_eigengap_min_trace_ratio,
+        contract.pooled_rank_multiplier,
+        contract.pooled_condition_number_max,
     )
     expected_scalar_identity = (
         0.2827,
@@ -858,11 +950,18 @@ def validate_g2_contract(contract: G2Contract) -> None:
         0.0,
         0.95,
         547.0 / 39530.0,
+        10_000.0,
+        1e-6,
+        100.0,
+        1_000.0,
+        1e-10,
+        3.0,
+        1e12,
     )
     if tuple(value.hex() for value in scalar_identity) != tuple(
         value.hex() for value in expected_scalar_identity
     ):
-        raise ValueError("sealed G2 contract calibration scalars changed")
+        raise ValueError("sealed G2 contract estimator numerics or calibration scalars changed")
     if contract.phase_scenarios != _EXPECTED_PHASE_SCENARIOS:
         raise ValueError("sealed G2 contract phase/scenario table changed")
     if contract.component_ids != _EXPECTED_COMPONENT_IDS:
@@ -1559,10 +1658,11 @@ class G2Cell:
     lambda_matrix: NDArray[np.float64]
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, weakref_slot=True)
 class G2Date:
     """One transformed date under a sealed cell and deterministic view."""
 
+    response_map: G2ResponseMapIdentity
     filtered: FilteredBaseNormals
     v: NDArray[np.float64]
     q: NDArray[np.float64]
@@ -1570,6 +1670,43 @@ class G2Date:
     r: NDArray[np.float64]
     z: NDArray[np.float64]
     x: NDArray[np.float64]
+
+
+@dataclass(frozen=True, slots=True)
+class G2ResponseMapIdentity:
+    """Deterministic response-map coordinates distinct from base provenance."""
+
+    target_index: int
+    paper_recovery: bool
+    phi: float
+    reliability: float
+
+
+@dataclass(frozen=True, slots=True)
+class G2DateReceipt:
+    """Validated transformed-date receipt carried into contract-bound models."""
+
+    provenance: BaseProvenance
+    base_identity: str
+    response_map: G2ResponseMapIdentity
+    date_content_sha256: str
+
+
+@dataclass(frozen=True, slots=True)
+class _G2DateIssuance:
+    """Module-owned binding between one transformed wrapper and its contents."""
+
+    provenance_snapshot: tuple[int, G2Stream, int, int, int, int, int]
+    component_identities: tuple[int, int, int, int, int, int, int]
+    base_identity: str
+    response_map: G2ResponseMapIdentity
+    date_content_sha256: str
+
+
+_G2_DATE_REGISTRY: dict[
+    int,
+    tuple[weakref.ReferenceType[G2Date], _G2DateIssuance],
+] = {}
 
 
 def homogeneous_lambda(
@@ -1804,6 +1941,192 @@ def _validate_raw_base(
         raise ValueError("raw base issuance does not bind the supplied component bytes")
 
 
+def _g2_date_content_token(date: G2Date) -> str:
+    provenance = date.filtered.provenance
+    header = json.dumps(
+        [
+            "xid-g2-date-v1",
+            provenance.master_seed,
+            provenance.stream.value,
+            provenance.phase_id,
+            provenance.scenario_id,
+            provenance.n_dates,
+            provenance.panel_index,
+            provenance.date_index,
+            date.filtered.provenance_token,
+            date.response_map.target_index,
+            date.response_map.paper_recovery,
+            date.response_map.phi.hex(),
+            date.response_map.reliability.hex(),
+        ],
+        separators=(",", ":"),
+        ensure_ascii=True,
+        allow_nan=False,
+    ).encode("ascii")
+    digest = hashlib.sha256(header)
+    for name, values in (
+        ("v", date.v),
+        ("q", date.q),
+        ("u", date.u),
+        ("r", date.r),
+        ("z", date.z),
+        ("x", date.x),
+    ):
+        digest.update(name.encode("ascii"))
+        digest.update(json.dumps(values.shape, separators=(",", ":")).encode("ascii"))
+        digest.update(values.dtype.str.encode("ascii"))
+        digest.update(values.tobytes(order="C"))
+    return digest.hexdigest()
+
+
+def validate_g2_date(date: G2Date, contract: G2Contract) -> G2DateReceipt:
+    """Validate that one transformed date was minted by ``transform_date``."""
+    validate_g2_contract(contract)
+    if type(date) is not G2Date:
+        raise TypeError("transformed date must use the exact G2Date type")
+    registry_entry = _G2_DATE_REGISTRY.get(id(date))
+    if registry_entry is None or registry_entry[0]() is not date:
+        raise ValueError("transformed date receipt was not issued by transform_date")
+    issuance = registry_entry[1]
+    if type(date.filtered) is not FilteredBaseNormals:
+        raise TypeError("transformed date must contain exact FilteredBaseNormals")
+    if type(date.response_map) is not G2ResponseMapIdentity:
+        raise TypeError("transformed date must contain exact response-map identity")
+    provenance = date.filtered.provenance
+    if type(provenance) is not BaseProvenance:
+        raise TypeError("transformed date provenance must use exact BaseProvenance")
+    snapshot = (
+        provenance.master_seed,
+        provenance.stream,
+        provenance.phase_id,
+        provenance.scenario_id,
+        provenance.n_dates,
+        provenance.panel_index,
+        provenance.date_index,
+    )
+    identities = (
+        id(date.filtered),
+        id(date.v),
+        id(date.q),
+        id(date.u),
+        id(date.r),
+        id(date.z),
+        id(date.x),
+    )
+    if (
+        snapshot != issuance.provenance_snapshot
+        or identities != issuance.component_identities
+        or date.response_map != issuance.response_map
+    ):
+        raise ValueError("transformed date receipt no longer binds its provenance or components")
+    expected_pair = contract.phase_scenario(provenance.stream)
+    _validate_stream_coordinates(
+        provenance.stream,
+        n_dates=provenance.n_dates,
+        panel_index=provenance.panel_index,
+        date_index=provenance.date_index,
+    )
+    if (
+        (provenance.phase_id, provenance.scenario_id) != expected_pair
+        or type(provenance.master_seed) is not int
+        or not 0 <= provenance.master_seed < 2**32
+        or type(date.filtered.provenance_token) is not str
+    ):
+        raise ValueError("transformed date provenance is not licensed by the G2 contract")
+    response_map = date.response_map
+    expected_phi = (
+        contract.iid_ar1
+        if provenance.stream is G2Stream.VALIDATION_IID
+        else contract.confirmatory_ar1
+    )
+    recovery_streams = frozenset((G2Stream.RESOURCE_PAPER, G2Stream.VALIDATION_PAPER_RECOVERY))
+    if (
+        type(response_map.target_index) is not int
+        or not 0 <= response_map.target_index < len(contract.population_targets)
+        or type(response_map.paper_recovery) is not bool
+        or type(response_map.phi) is not float
+        or response_map.phi != expected_phi
+        or type(response_map.reliability) is not float
+        or not 0.95 <= response_map.reliability <= 1.0
+        or (
+            response_map.paper_recovery
+            and (
+                response_map.target_index != len(contract.population_targets) - 1
+                or provenance.stream not in recovery_streams
+            )
+        )
+        or (
+            provenance.stream is G2Stream.VALIDATION_PAPER_RECOVERY
+            and not response_map.paper_recovery
+        )
+    ):
+        raise ValueError("transformed date response-map identity is not licensed")
+    filtered_expected = (
+        ("factor", date.filtered.factor, (contract.bins_per_date,)),
+        (
+            "flow_innovation",
+            date.filtered.flow_innovation,
+            (contract.bins_per_date, contract.n_assets),
+        ),
+        (
+            "return_innovation",
+            date.filtered.return_innovation,
+            (contract.bins_per_date, contract.n_assets),
+        ),
+        (
+            "level_noise",
+            date.filtered.level_noise,
+            (contract.bins_per_date, contract.n_assets, contract.n_levels),
+        ),
+        ("proxy_noise", date.filtered.proxy_noise, (contract.bins_per_date,)),
+    )
+    output_expected = (
+        ("v", date.v, (contract.bins_per_date, contract.n_assets)),
+        ("q", date.q, (contract.bins_per_date, contract.n_assets)),
+        ("u", date.u, (contract.bins_per_date, contract.n_assets)),
+        ("r", date.r, (contract.bins_per_date, contract.n_assets)),
+        ("z", date.z, (contract.bins_per_date,)),
+        (
+            "x",
+            date.x,
+            (contract.bins_per_date, contract.n_assets, contract.n_levels),
+        ),
+    )
+    for name, values, shape in (*filtered_expected, *output_expected):
+        if (
+            type(values) is not np.ndarray
+            or values.dtype != np.dtype(np.float64)
+            or values.shape != shape
+            or not values.flags.c_contiguous
+            or values.flags.writeable
+            or not np.all(np.isfinite(values))
+        ):
+            raise ValueError(f"transformed date {name} violates its sealed array contract")
+    expected_base_identity = _base_provenance_token(
+        provenance,
+        stage="filtered",
+        factor=date.filtered.factor,
+        flow_innovation=date.filtered.flow_innovation,
+        return_innovation=date.filtered.return_innovation,
+        level_noise=date.filtered.level_noise,
+        proxy_noise=date.filtered.proxy_noise,
+    )
+    if (
+        date.filtered.provenance_token != expected_base_identity
+        or issuance.base_identity != expected_base_identity
+    ):
+        raise ValueError("transformed date filtered-base identity is invalid")
+    content_token = _g2_date_content_token(date)
+    if content_token != issuance.date_content_sha256:
+        raise ValueError("transformed date content no longer matches its issued receipt")
+    return G2DateReceipt(
+        provenance=provenance,
+        base_identity=expected_base_identity,
+        response_map=date.response_map,
+        date_content_sha256=content_token,
+    )
+
+
 def transform_date(
     base: RawBaseNormals,
     cell: G2Cell,
@@ -1855,10 +2178,17 @@ def transform_date(
     r = q @ sealed_cell.lambda_matrix.T + gamma * filtered.factor[:, None] * market[None, :] + u
     z = filtered.factor + math.sqrt(1.0 / reliability - 1.0) * filtered.proxy_noise
     x = q[:, :, None] + math.sqrt(547.0 / 3953.0) * filtered.level_noise
-    outputs = tuple(np.ascontiguousarray(value, dtype=np.float64) for value in (v, q, u, r, z, x))
+    outputs = tuple(_readonly(value) for value in (v, q, u, r, z, x))
     if any(not np.all(np.isfinite(value)) for value in outputs):
         raise ValueError("a transformed G2 date contains a nonfinite value")
-    return G2Date(
+    response_map = G2ResponseMapIdentity(
+        target_index=sealed_cell.target_index,
+        paper_recovery=paper_recovery,
+        phi=float(phi),
+        reliability=float(reliability),
+    )
+    date = G2Date(
+        response_map=response_map,
         filtered=filtered,
         v=outputs[0],
         q=outputs[1],
@@ -1867,3 +2197,37 @@ def transform_date(
         z=outputs[4],
         x=outputs[5],
     )
+    key = id(date)
+    content_token = _g2_date_content_token(date)
+    issuance = _G2DateIssuance(
+        provenance_snapshot=(
+            base.provenance.master_seed,
+            base.provenance.stream,
+            base.provenance.phase_id,
+            base.provenance.scenario_id,
+            base.provenance.n_dates,
+            base.provenance.panel_index,
+            base.provenance.date_index,
+        ),
+        component_identities=(
+            id(date.filtered),
+            id(date.v),
+            id(date.q),
+            id(date.u),
+            id(date.r),
+            id(date.z),
+            id(date.x),
+        ),
+        base_identity=filtered.provenance_token,
+        response_map=response_map,
+        date_content_sha256=content_token,
+    )
+
+    def discard(reference: weakref.ReferenceType[G2Date]) -> None:
+        current = _G2_DATE_REGISTRY.get(key)
+        if current is not None and current[0] is reference:
+            _G2_DATE_REGISTRY.pop(key, None)
+
+    reference = weakref.ref(date, discard)
+    _G2_DATE_REGISTRY[key] = (reference, issuance)
+    return date

@@ -438,3 +438,269 @@ outcomes.
   implementation audits. Resource, validation, research, empirical,
   evaluation, and holdout data remain unaccessed; only the previously declared
   test-seed diagnostics exist.
+
+### A008 — Bind transformed dates and smooth moments to their provenance
+
+- **Date:** 2026-07-16.
+- **Reason:** The first hostile C0003 review found that exact dataclass type,
+  shape, and `date_index` checks did not prove origin. A manually constructed
+  `G2Date` could reach the contract builder, and a base Gram from one design
+  could be combined with cell cross-moments from another design sharing the
+  same dimensions. Both paths could silently change an estimate without
+  violating a numerical threshold.
+- **Amendment:** `transform_date` mints a module-owned weak receipt binding the
+  exact read-only transformed object, its full provenance snapshot, component
+  identities, validated filtered-base identity, and a versioned content hash.
+  Contract-bound estimator builders validate that receipt before constructing
+  moments. Every smooth design, base moment, cell moment, and date-major panel
+  carries a versioned SHA256 design digest plus its source-base identity;
+  aggregation requires exact aligned equality before weighted multiplication.
+  A contract-bound cell builder accepts a different structural response cell
+  only when it has the same validated base identity and date index as the
+  design. Full token construction and failure rules are derived in
+  `docs/derivations/GATE_G2_SMOOTH_PROVENANCE.md`.
+- **Inference effect:** None. This amendment rejects invalid compositions of
+  already frozen moments. It changes no DGP, estimator, target, threshold,
+  seed, draw, interval, family, or trial count.
+- **Test prediction:** Red tests must first accept a forged transformed date
+  and mixed base/cell panels under the old boundary. After repair, those cases,
+  a different-base response, and any mutated receipt must fail before a solve;
+  a deterministic `W=2Q` fixture must separately recover the pre-written oracle
+  and observable ridge scalings.
+- **Access statement:** No registered or empirical stream informed A008. The
+  only prior stochastic smoke used authorized test seed `1729` and asserted
+  shape/finiteness only; the failure was diagnosed from deterministic hostile
+  constructions and code inspection.
+
+### A009 — Separate complete contract panels from analytic algebra
+
+- **Date:** 2026-07-16.
+- **Reason:** A second hostile C0003 lane showed that any ascending subsequence
+  could be treated as the whole panel and that dimension-generic `N=2/3`
+  aggregates could call the same high-level fit functions as the sealed N=30
+  design. The first path can drop a failed date; the second makes the generic
+  test helper a production authority bypass.
+- **Amendment:** Contract date records retain full minted stream, phase,
+  scenario, declared date count, panel index, date index, source-base identity,
+  and design digest. Contract stacking requires exactly the complete
+  `0..n_dates-1` tuple under one prefix; a declared 48/96 frontier is distinct
+  from a truncated 252-date panel. High-level ridge and pooled fits require a
+  complete contract-origin aggregate with exact sealed `N=30`, `T=330`, and
+  `L=10`. Dimension-generic analytic aggregation remains available only through
+  pure moment-extraction and solver kernels that do not license a G2 estimate.
+  Exact rules are derived in
+  `docs/derivations/GATE_G2_SMOOTH_AUTHORITY.md`.
+- **Inference effect:** None. The amendment rejects incomplete or unauthorized
+  inputs before evaluating the already frozen estimator.
+- **Test prediction:** Missing middle/tail dates, a truncated 252-date panel,
+  mismatched panel prefixes, analytic high-level fits, and wrong sealed
+  dimensions fail; pure analytic extraction plus solving retains the existing
+  deterministic results.
+- **Access statement:** No RNG informed A009. The failure was found by
+  read-only code/protocol review after C0003 attempt 1.
+
+### A010 — Bind response maps and require an issued aggregate
+
+- **Date:** 2026-07-16.
+- **Reason:** A pre-implementation critique of A008/A009 found that the shared
+  base identity intentionally cannot distinguish structural cells, gamma-zero
+  recovery, or transform metadata. It also found that copied provenance and
+  design-digest fields remain self-attestation once the originating `X0` is no
+  longer present in an aggregate.
+- **Amendment:** Each transformed-date receipt and every cell moment/panel
+  retains the exact `(target_index, paper_recovery, phi, reliability)` response
+  map identity in addition to base identity and content hashes. Contract
+  authority is minted through module-owned weak receipts at each in-memory
+  stage: transformed date, contract date moment, complete contract panel, and
+  contract aggregate. High-level G2 fits accept only the exact live aggregate
+  object issued by that chain. Generic analytic objects never mint receipts.
+  A future checkpoint loader must independently verify its complete manifest
+  and content before minting a replacement receipt; no such loader is
+  authorized in this slice. Full rules are in
+  `docs/derivations/GATE_G2_SMOOTH_ISSUANCE.md`.
+- **Inference effect:** None. The change preserves the same-base common-random-
+  number design while preventing a response map or aggregate from being
+  relabeled.
+- **Access statement:** No RNG informed A010. It was written from a hostile
+  architecture critique before the provenance repair was run.
+
+### A011 — Issue the design wrapper and bind the expected response label
+
+- **Date:** 2026-07-16.
+- **Reason:** After C0004--C0006 was locally green, a fresh hostile construction
+  found that an issued base Gram could be wrapped in a replaced
+  `SmoothDateDesign` carrying an altered `X0`. The contract cell builder would
+  then compute `X_bad'Y` while retaining the legitimate `X'X`, source receipt,
+  and copied design digest. Separately, retaining response-map metadata in an
+  aggregate did not require a high-level fit caller to assert that exact label.
+- **Amendment:** Contract construction mints a weak module-owned receipt for
+  the exact `SmoothDateDesign` wrapper as well as its base moment. The receipt
+  binds the source receipt, design digest, `X0`, PCA diagnostics, and issued
+  base-moment payload. Contract cell moments validate that design receipt
+  before reading `X0`. Issued smooth tokens bind float64 dtype, shape,
+  C-contiguity, read-only state, and bytes. High-level ridge and pooled fits
+  require an exact expected `(target_index, paper_recovery, phi, reliability)`
+  identity equal to the issued aggregate's common response identity, and the
+  fit reliability must equal that identity's reliability. Details are in
+  `docs/derivations/GATE_G2_SMOOTH_DESIGN_AUTHORITY.md`.
+- **Inference effect:** None. The amendment closes wrapper and labeling
+  authority without changing a DGP, moment, coefficient, target, threshold,
+  seed, interval, family, or trial count.
+- **Test prediction:** The old boundary accepts a replaced design with altered
+  `X0` and a legitimate issued base moment. The repaired boundary rejects it
+  before forming `X0'Y`; writable-state mutation and any expected response-map
+  mismatch also fail before a solve.
+- **Access statement:** No registered or empirical stream informed A011. The
+  diagnosis used code inspection and the already authorized test-seed software
+  surface only.
+
+### A012 — Preserve reliability-neutral reuse and forbid callable minting
+
+- **Date:** 2026-07-16.
+- **Reason:** Hostile review of A011 found two conflicts before implementation.
+  Exact equality between fit reliability and the transformed-date anchor would
+  duplicate moments even though `X0` stores `f` and `e` separately and the
+  sealed config requires deterministic reliability transforms to reuse the
+  same moments. It also found that a callable generic registrar, or a private
+  kernel that registers authority from a caller-supplied public receipt, would
+  repeat the D0054 self-attestation failure.
+- **Amendment:** Smooth contract moments are minted only from the canonical
+  `contract.confirmatory_reliability = 0.95` date anchor. Their full date
+  response map remains recorded. High-level fits require an expected response
+  identity whose `(target_index, paper_recovery, phi)` equals the aggregate's
+  common structural response law, while the fit reliability must equal the
+  expected identity's reliability and may differ from the 0.95 anchor. Every
+  issuance write is inline in the exact public contract wrapper immediately
+  after live upstream validation. Generic/private numeric kernels never mint,
+  and no callable generic registrar exists.
+- **Inference effect:** None. The same polynomial moments and reliability
+  transform were already frozen. This amendment preserves their intended reuse
+  and closes a software capability route without changing a target, threshold,
+  seed, draw, interval, family, or trial count.
+- **Test prediction:** A copied receipt passed to a private numeric kernel
+  cannot enter a contract stack. A non-anchor transformed date cannot mint a
+  smooth design. The response-law validator accepts an exact structural label
+  at a different registered fit reliability, and rejects any changed target,
+  recovery flag, `phi`, or mismatch between expected and supplied reliability.
+- **Access statement:** No new stochastic result informed A012. It follows from
+  the sealed config's reliability-reuse clause, deterministic moment algebra,
+  D0054, and read-only hostile review.
+
+### A013 — Reject array subclasses at every smooth issuance boundary
+
+- **Date:** 2026-07-16.
+- **Reason:** Post-repair review found that issued tokens bound dtype, shape,
+  layout, writable state, and bytes but not exact ndarray runtime type. A frozen
+  issued wrapper can still be changed with `object.__setattr__`; an ndarray
+  subclass with identical bytes can override transpose or matrix operations
+  while reproducing the old token.
+- **Amendment:** Every array hashed under a smooth issuance token must be an
+  exact `numpy.ndarray`, exact float64, C-contiguous, read-only, finite value.
+  Equality-compatible subclasses fail before hashing or downstream numeric
+  dispatch. Analytic-only helpers retain their existing exact input checks.
+- **Inference effect:** None. This rejects polymorphic software inputs and
+  changes no stored valid array, estimator, target, threshold, seed, interval,
+  family, or trial count.
+- **Test prediction:** Under the pre-repair token, a read-only float64 C-order
+  subclass view with identical bytes and an overridden transpose reaches cell
+  moment construction. After repair it fails at design-receipt validation.
+- **Access statement:** The diagnosis is deterministic code review. No new RNG,
+  registered stream, empirical data, evaluation data, or holdout was accessed.
+
+### A014 — Require exact retained receipt and provenance types
+
+- **Date:** 2026-07-16.
+- **Reason:** The same hostile review found that aggregate tokens and fit-label
+  validation duck-typed retained receipts. A stateful equality-compatible
+  object could reproduce the original payload during issued-token validation
+  and expose a different response map during the following label check.
+- **Amendment:** Any non-null retained receipt must be an exact `G2DateReceipt`
+  containing exact `BaseProvenance`, `G2ResponseMapIdentity`, and `G2Stream`
+  values plus exact Python scalar representations for every field. Receipt
+  validation occurs in the common payload projection used by all issued smooth
+  stages and again supplies the actual map used by fit-label validation.
+- **Inference effect:** None. Valid receipts are unchanged; duck-typed software
+  substitutes are rejected before numeric extraction or solving.
+- **Test prediction:** Replacing an issued aggregate's response-receipt tuple on
+  the same wrapper with duck-typed objects carrying equality-compatible fields
+  currently passes the token and label checks. The repair rejects it before a
+  high-level fit.
+- **Access statement:** Deterministic code review only; no new RNG or data.
+
+### A015 — Validate the full issued-wrapper schema before hashing
+
+- **Date:** 2026-07-16.
+- **Reason:** Issued tokens still projected wrapper scalars and containers
+  through JSON without exact runtime-type checks. JSON collapses tuples and
+  lists, while a value-equal `float` subclass can preserve `.hex()` but override
+  reflected division used by covariance extraction.
+- **Amendment:** Each issued smooth token first validates the exact wrapper and
+  nested dataclass type, exact Python scalar types, exact tuple containers and
+  member types, exact receipt types, and exact arrays. Only that validated
+  schema is projected into the content token.
+- **Inference effect:** None. All builder-produced objects already use these
+  representations; only equality-compatible substitutions are rejected.
+- **Test prediction:** Replacing an issued aggregate's `row_mass` on the same
+  wrapper with a value-equal float subclass currently preserves its token. The
+  repaired aggregate-token validation rejects it before fit arithmetic.
+- **Access statement:** Deterministic code review only; no RNG or data.
+
+### A016 — Snapshot caller sequences before smooth-panel validation
+
+- **Date:** 2026-07-16.
+- **Reason:** Final read-only contract review found that the contract cell
+  stacker traversed a caller-supplied `Sequence` more than once. A stateful
+  sequence could return legitimate issued moments during type, issuance, and
+  provenance checks, then return changed unissued moments while arrays were
+  stacked, allowing an issued panel and aggregate to contain numeric content
+  that had never passed validation. The base stacker had the same multi-read
+  shape even though its initial extraction list happened to close the observed
+  route.
+- **Amendment:** Contract and analytic smooth stackers materialize the supplied
+  sequence exactly once into a local exact tuple, then perform every emptiness,
+  type, issuance, provenance, dimension, metadata, and numeric read exclusively
+  from that snapshot. No caller container is reread after materialization.
+- **Inference effect:** None. Builder-produced lists and tuples preserve the
+  same order and values. This closes a time-of-read software authority route
+  without changing an estimator, target, threshold, seed, draw, interval,
+  family, or trial count.
+- **Test prediction:** Before repair, a state-changing complete 48-date
+  sequence can pass cell-moment issuance validation and then substitute
+  zeroed, unissued cross-moments into an issued aggregate. After repair, either
+  the first snapshot is legitimate and those exact moments are stacked, or the
+  snapshot contains a substitute and fails issuance before a panel is minted.
+  The same one-read rule is regression-tested for both base and cell stackers.
+- **Access statement:** The diagnosis and failing construction use only
+  authorized test seed `1729`; no resource, validation, research, empirical, or
+  holdout stream was accessed.
+
+### A017 — Keep the design digest response-independent
+
+- **Date:** 2026-07-16.
+- **Reason:** Final code review compared two contract designs built from the
+  same addressed base realization and identical `X0` bytes but different
+  structural response cells. The implementation hashed the full transformed-
+  date receipt into `design_sha256`, including target, recovery, reliability,
+  and response-content fields, so the two otherwise identical designs received
+  different digests. This contradicted A008 and the pre-code derivation, which
+  define the design digest from the filtered-base identity plus `X0`.
+- **Amendment:** `design_sha256` binds only the versioned design namespace,
+  exact dimensions/date index, response-independent source identity, and exact
+  `X0` array contract/bytes. The contract source identity is the validated
+  filtered-base token. The analytic source identity is the literal
+  `xid-g2-smooth-analytic-v1` namespace. Full transformed-date receipts remain
+  in issuance tokens, where response identity belongs, but do not enter the
+  reusable design digest.
+- **Inference effect:** None. The valid `X0`, Gram, PCA, cell moments,
+  estimators, targets, thresholds, seeds, draws, intervals, families, and trial
+  counts are unchanged. This corrects checkpoint/cache identity and permits
+  identical shared designs across structural cells to hash identically.
+- **Test prediction:** Before repair, target 0 and target 16 transformed dates
+  on the same issued base have identical base identity and byte-identical `X0`
+  but different design SHA256 values. After repair, the design digests are
+  equal while the design issuance tokens and response receipts remain distinct;
+  cross-cell construction on the common base still succeeds only through the
+  contract response builder.
+- **Access statement:** The diagnosis uses only authorized test seed `1729` and
+  deterministic digest comparison. No registered, empirical, evaluation, or
+  holdout stream was accessed.

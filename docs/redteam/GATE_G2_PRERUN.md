@@ -400,3 +400,92 @@ Repair commit `ff3a343e9c4cfbf672d7cae5614081733c4b695e` passed hosted CI
 run `29455143418`. This closes the portability objection for the first software
 slice only; it does not weaken the machine-bound limitation or license any
 registered stream.
+
+## Eighth verdict: smooth estimator core passes; execution authority remains closed
+
+The estimator core did not earn admission from its first green numerical
+suite. Hostile review subsequently reproduced all of these defects before the
+current verdict:
+
+1. forged transformed dates and crossed `X_A'X_A`/`X_B'Y_B` panels passed;
+2. incomplete date ranges and analytic-origin aggregates could approach the
+   high-level contract fits;
+3. copied digests and response-blind base identities were mistaken for
+   authority over structural responses;
+4. an unissued design wrapper could retain an issued Gram while changing
+   `X0'Y`;
+5. reliability reuse conflicted with response labels and generic/private
+   helpers could mint from copied receipts;
+6. byte-identical ndarray subclasses, duck-typed receipts, JSON-equivalent
+   containers, and value-equal scalar subclasses reproduced tokens while
+   changing runtime behavior; and
+7. after all of those repairs, a state-changing caller `Sequence` returned
+   issued moments during validation and unissued zeroed cross-moments during
+   construction. The old cell stacker minted the resulting panel and aggregate;
+   all 90,720 stacked cross-moment entries were zero although every validated
+   issued input entry was nonzero.
+
+The repaired boundary issues every numeric wrapper that crosses authority,
+binds exact immutable float64 arrays and exact typed receipts, distinguishes
+base identity from response-map identity, requires complete one-stream panels,
+separates analytic extraction/solvers from sealed high-level fits, and performs
+all stack validation and construction from one local tuple snapshot. Dynamic
+mutation and weak-cleanup checks now cover the date, panel, and aggregate
+stages. Target, `paper_recovery`, `phi`, reliability, and N/T/L relabels or
+mutations fail before a coefficient.
+
+The final complete 48-date issued-path smoke uses only test seed `1729`, makes
+no comparison with truth, and returns finite oracle ridge, observable ridge,
+and pooled homogeneous outputs at the frozen shapes. Under a 60-second alarm it
+completed in 0.64 seconds with maximum RSS 63,045,632 bytes. The focused suite
+has 49 passing tests; the full local gate passes Ruff, formatting, strict mypy,
+157 tests, deterministic demo, and committed-result drift. The final math audit
+passed. The contract audit first found the sequence substitution and then
+passed the one-snapshot repair. No registered resource, validation, recovery,
+IID, paper-recovery, or research stream ran.
+
+The strongest unresolved mechanical objection is deliberately not softened:
+A022 is untested. Content hashing and weak issuance may still violate the
+hashing-inclusive warm-throughput or memory projection, and there is no
+checkpoint loader capable of independently validating serialized manifests and
+minting fresh in-process authority. This verdict therefore closes only the
+in-memory estimator core. It does not admit checkpoint/recovery, the resource
+stream, validation, or research. The strongest substantive objection also
+survives: the 95% proxy reliability and latent decomposition define a favorable
+source-compatible conditional counterexample, not an identified market fact.
+
+## Ninth verdict: the eighth verdict was reopened; C0014 now passes
+
+The eighth verdict was premature. Final code review compared two contract
+designs built from one issued base at targets 0 and 16. Their `X0` arrays,
+packed Grams, and filtered-base identity were byte-identical, yet the old
+`design_sha256` values differed because the digest included the full structural
+response receipt. That violated the response-independent shared-design identity
+derived before implementation and would have made a future design checkpoint
+or cache depend on the response cell.
+
+C0014 recorded the mismatch before repair. The design digest now binds only a
+versioned namespace, exact dimensions/date, response-independent source
+identity, and exact `X0` contract/bytes. Contract designs use the validated
+filtered-base identity; analytic designs use a separate literal namespace.
+Full response receipts remain in the wrapper issuance tokens, so target 0 and
+target 16 share a design digest but retain distinct response authority. The
+common-base cross-cell builder still passes, and an analytic design with the
+same `X0` cannot collide with the contract design.
+
+The final post-C0014 evidence is 49 focused G2 tests, a green 157-test
+repository gate, clean Ruff/format/strict mypy, deterministic demo and committed
+result drift, plus fresh mathematical, contract, code, ledger, and verification
+audits. The renewed complete 48-date issued-path smoke used only test seed
+`1729`, finished under a 60-second alarm in 0.65 seconds, and reached maximum
+RSS 63,766,528 bytes. It asserts only finite output shapes and authority
+transitions; it makes no recovery, bias, size, power, or target claim. No
+registered G2 stream ran.
+
+The strongest unresolved mechanical objection remains A022: neither this smoke
+nor the unit suite measures the frozen hashing-inclusive cold/warm workload, and
+no checkpoint loader can yet validate a serialized manifest and mint new
+in-process authority. The strongest substantive objection also remains the
+favorable, unidentified 95% proxy reliability and latent decomposition. The
+next slice must derive checkpoint/recovery authority and then test resource
+admission; this verdict licenses neither.

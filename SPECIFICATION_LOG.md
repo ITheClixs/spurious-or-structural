@@ -9,7 +9,7 @@ empirical model trials, but gate-level pipeline variants are recorded.
 
 - Empirical specifications: **0**
 - Simulation estimator specifications: **1 run and passed; 2 G2 designs rejected pre-run; 1 G2 design registered and pending**
-- Software-only pipeline specifications: **1 completed; 1 registered and pending**
+- Software-only pipeline specifications: **2 locally completed; estimator-core hosted verification pending**
 - Holdout opens: **0**
 
 ## P0001 — G0 deterministic record-and-hash smoke path
@@ -231,15 +231,17 @@ empirical model trials, but gate-level pipeline variants are recorded.
   preflight slack.
 - **Status:** registered, content-audited, hash-sealed, independently admitted
   at the pre-implementation contract boundary, and unrun. The contract,
-  test-only RNG namespace, and pure DGP first slice are locally implemented and
-  hostile-reviewed; estimators, checkpointing, resource authority, validation,
-  and research authority remain absent.
+  test-only RNG namespace, pure DGP, and in-memory smooth estimator core are
+  locally implemented and hostile-reviewed; checkpointing, resource authority,
+  validation, and research authority remain absent. Hosted verification of the
+  estimator-core commit is pending.
   Documentation commit `a5c7f1c02e941a0d6fdef3d645dfea63884cdfd7`
   passed hosted CI run `29448917107`; test-first implementation with test-only
   seeds is open. Registered resource, validation, and research streams remain
   blocked. S0002 and S0003 remain non-executable.
-- **Multiple-testing count:** one new specification. No stochastic run exists
-  until a registered stream is consumed.
+- **Multiple-testing count:** one new specification. No registered scientific
+  stochastic run or attempt exists until a registered stream is consumed;
+  test-seed software smokes do not count as scientific attempts.
 
 ## C0001 — S0004 contract, test-RNG, and DGP software check
 
@@ -315,8 +317,279 @@ empirical model trials, but gate-level pipeline variants are recorded.
   `docs/derivations/GATE_G2_SMOOTH_ESTIMATORS.md` freeze covariance units,
   packing, aggregation, PCA, and SVD before red tests. No threshold or target is
   selected from a stochastic result.
-- **Status:** registered and unrun.
+- **Status:** attempt 1 failed hostile review; superseded by C0004--C0014.
 - **Intervals:** not applicable; this is deterministic software validation and
   makes no effect estimate.
 - **Multiple-testing count:** zero. It implements the already registered S0004
   estimators and does not add a scientific specification.
+
+### C0003 attempt 1 outcome — failed hostile review
+
+- **Date:** 2026-07-16.
+- **Local evidence before review:** 20 focused deterministic/test-seed tests,
+  the 138-test repository suite, Ruff, formatting, strict mypy, demo, and
+  committed-result drift were green.
+- **Mismatch:** The test set did not exercise origin binding. A hostile
+  deterministic construction showed that a forged `G2Date` and mismatched
+  base/cell moment panels were accepted. The primary observable ridge also had
+  no analytic integration fixture capable of detecting selection of the oracle
+  flow block.
+- **Interpretation:** C0003 failed. Green numerical tests did not establish the
+  advertised contract boundary. No effect estimate or registered result was
+  produced, so the scientific specification count remains unchanged.
+
+## C0004 — Provenance-bound smooth estimator repair check
+
+- **Registered:** 2026-07-16, after diagnosing C0003 and before implementing
+  the repair.
+- **Scope:** deterministic rejection of forged transformed dates, mismatched
+  base/cell designs, different-base contract responses, mutated transformed
+  content, and stale weak receipts; exact propagation of aligned design
+  digests; and an analytic `W=2Q` oracle-versus-observable integration fixture.
+- **Prediction before implementation:** The old boundary accepts forged and
+  mixed provenance. The repaired boundary rejects them before aggregation or a
+  solve, preserves legitimate same-base/different-cell construction, releases
+  dead receipts, and returns oracle `B/(1+1e-6)` versus observable
+  `B/[2(1+1e-6)]` with trace floors `1e-6` and `4e-6`.
+- **Status:** passed after the C0003 failure. Forged dates, mixed base/cell
+  provenance, changed transformed content, stale receipts, and crossed designs
+  are rejected. The deterministic `W=2Q` integration fixture returns the
+  preregistered oracle and observable ridge values and trace floors.
+- **Intervals:** not applicable; this is deterministic software validation and
+  makes no effect estimate.
+- **Multiple-testing count:** zero. This repairs the implementation of the
+  already frozen S0004 specification.
+
+## C0005 — Complete-panel and fit-authority repair check
+
+- **Registered:** 2026-07-16, after the second C0003 hostile diagnosis and
+  before implementation.
+- **Scope:** deterministic complete-range validation for contract panels,
+  distinction between declared frontiers and truncated panels, exact
+  base/cell panel-prefix equality, and separation of analytic moment algebra
+  from high-level sealed G2 fits.
+- **Prediction before implementation:** Any missing middle/tail date, shortened
+  date-252 prefix, mismatched stream/panel/design tuple, analytic-origin
+  high-level fit, or wrong N/T/L contract aggregate fails before a coefficient.
+  Existing analytic extraction-plus-solver results remain unchanged.
+- **Status:** passed. Missing tail and middle dates, mixed panel and stream
+  prefixes, mixed design digests, analytic-origin high-level fits, and mutated
+  N/T/L issued aggregates all fail before a coefficient. Generic extraction
+  and solver fixtures remain available without gaining contract-fit authority.
+- **Intervals:** not applicable; this is deterministic software validation.
+- **Multiple-testing count:** zero. It repairs an authority boundary without
+  adding a scientific specification.
+
+## C0006 — Response-map and issued-aggregate repair check
+
+- **Registered:** 2026-07-16, after the A008/A009 pre-code critique and before
+  executing the repair.
+- **Scope:** exact response-map metadata, weak issuance validation for contract
+  moments/panels/aggregates, copied-digest forgery rejection, and preservation
+  of distinct same-base structural cells.
+- **Prediction before implementation:** A hand-built object carrying copied
+  contract flags/digests cannot reach a high-level fit; stale or mutated issued
+  objects fail; same-base response cells retain different map identities; and
+  analytic objects remain usable only through extraction plus generic solvers.
+- **Status:** passed for the C0006 boundary. Exact weak issuance covers
+  base/cell date moments, base/cell panels, and aggregates. Dynamic mutation is
+  rejected at those stages, weak-registry cleanup is exercised for the date and
+  panel stages, copied-digest aggregates cannot fit, and same-base structural
+  cells retain distinct response-map identities. Design-wrapper issuance is
+  the separately diagnosed C0007 repair.
+- **Intervals:** not applicable; deterministic capability validation only.
+- **Multiple-testing count:** zero. No scientific specification changes.
+
+## C0007 — Design-wrapper and fit-label authority repair check
+
+- **Registered:** 2026-07-16, after the post-C0006 wrapper diagnosis and before
+  implementing its repair.
+- **Scope:** deterministic rejection of a replaced contract design carrying an
+  altered `X0` plus a legitimate issued base moment; binding of issued array
+  dtype/layout/read-only state; and exact expected response-map validation at
+  both high-level fit boundaries.
+- **Prediction before implementation:** The current boundary accepts the
+  replaced design and forms a changed `X0'Y`. The repaired boundary rejects it
+  before multiplication. Any target, recovery flag, `phi`, reliability, or
+  writable-state mismatch also fails before extraction or solving, while an
+  exact response identity passes the pure validator.
+- **Status:** passed. Replaced designs, writable/dtype/layout state changes,
+  and target, recovery-flag, `phi`, or reliability relabels fail. The
+  target/recovery/`phi` checks are exercised through both high-level fit
+  wrappers; exact labels pass. Equality-compatible ndarray subclass semantics
+  are the later C0010 diagnosis and repair.
+- **Intervals:** not applicable; deterministic capability validation only.
+- **Multiple-testing count:** zero. This changes no scientific specification.
+
+## C0008 — Reliability-reuse and inline-issuance repair check
+
+- **Registered:** 2026-07-16, after the A011 hostile consistency review and
+  before implementing the repair.
+- **Scope:** canonical 0.95 smooth-moment anchoring; reuse at other registered
+  reliability transforms; rejection of non-anchor contract designs; and
+  removal of every callable or private receipt-to-authority minting path.
+- **Prediction before implementation:** A private design kernel supplied a
+  copied `G2DateReceipt` currently mints an accepted contract base moment. The
+  repair makes that object unissued. The pure response-law check accepts the
+  same target/recovery/`phi` at another reliability only when the expected
+  identity and supplied fit reliability agree; all structural relabels fail.
+- **Status:** passed. Stored moments are issued only at the canonical 0.95
+  anchor and are reused for alternative fit reliabilities. Non-anchor builders
+  fail, private numeric kernels cannot mint from copied receipts, and no
+  callable generic issuance registrar remains.
+- **Intervals:** not applicable; deterministic capability validation only.
+- **Multiple-testing count:** zero. No scientific specification changes.
+
+## C0009 — Complete issued-path software smoke
+
+- **Registered:** 2026-07-16, after hostile review found that only rejection
+  paths reached the high-level fits and before running this smoke.
+- **Scope:** one complete 48-date `VALIDATION_DATE_FRONTIER` panel at target 16,
+  panel 0, canonical reliability anchor 0.95, and test seed `1729`; issued base
+  and cell stacking, point-weight aggregation, oracle ridge, observable ridge,
+  and pooled homogeneous OLS. No coefficient is compared with a target and no
+  pass/fail claim about bias, recovery, size, or power is permitted.
+- **Prediction before run:** All 48 addressed dates mint one complete ordered
+  panel; both issued stacks and the aggregate validate; the three high-level
+  fits return finite outputs with shapes `(30,30)`, `(30,30)`, and `(3,)`; an
+  expected target/recovery/`phi` relabel fails. Expected wall-clock is under 10
+  seconds, hard stop 60 seconds, and peak RSS under 1 GB.
+- **Status:** passed under the 60-second hard stop. The exact command was
+  `/usr/bin/time -l /usr/bin/perl -e 'alarm 60; exec @ARGV' uv run pytest
+  tests/test_g2_smooth.py::test_complete_issued_frontier_path_fits_all_smooth_estimators
+  -q`. The final repaired path completed in 0.65 seconds wall-clock with
+  maximum RSS 63,766,528 bytes and returned the three finite outputs at the
+  preregistered shapes. The
+  smoke also rejects structural relabels and exercises stage mutation/cleanup.
+  It compares no coefficient with truth and makes no recovery, bias, size, or
+  power claim.
+- **Intervals:** not applicable; deterministic/software-smoke assertions only.
+- **Multiple-testing count:** zero. This consumes only an authorized test seed
+  and evaluates no scientific target.
+
+## C0010 — Exact-ndarray issuance repair check
+
+- **Registered:** 2026-07-16, after the post-C0009 dispatch diagnosis and before
+  implementing its repair.
+- **Scope:** deterministic rejection of equality-compatible read-only float64
+  ndarray subclasses at design, moment, panel, and aggregate token validation.
+- **Prediction before implementation:** A same-object issued design whose `X0`
+  is replaced through `object.__setattr__` by a byte-identical subclass with an
+  overridden transpose currently reaches `X0'Y`. The repaired common token
+  validator rejects the subclass before downstream numeric dispatch.
+- **Status:** passed after the diagnosed byte-identical ndarray-subclass attack
+  failed red. Every issued token requires exact read-only C-contiguous float64
+  `np.ndarray` objects before hashing or numerical dispatch.
+- **Intervals:** not applicable; deterministic capability validation only.
+- **Multiple-testing count:** zero. No scientific specification changes.
+
+## C0011 — Exact retained-receipt repair check
+
+- **Registered:** 2026-07-16, after the post-C0010 receipt-projection diagnosis
+  and before implementing its repair.
+- **Scope:** deterministic rejection of duck-typed or stateful substitutes for
+  `G2DateReceipt`, `BaseProvenance`, `G2ResponseMapIdentity`, `G2Stream`, and
+  their scalar fields at every issued smooth stage.
+- **Prediction before implementation:** A same-wrapper issued aggregate with
+  equality-compatible duck-typed response receipts currently passes aggregate
+  token validation and the fit-label check. Exact typed projection rejects it.
+- **Status:** passed after the diagnosed duck-receipt attack failed red. Exact
+  receipt, provenance, response-map, stream, scalar, and nested types are
+  validated before token projection and fit-label comparison.
+- **Intervals:** not applicable; deterministic capability validation only.
+- **Multiple-testing count:** zero. No scientific specification changes.
+
+## C0012 — Full issued-wrapper schema repair check
+
+- **Registered:** 2026-07-16, after the post-C0011 scalar/container diagnosis
+  and before implementing its repair.
+- **Scope:** exact dataclass, scalar, tuple, tuple-member, nested receipt, and
+  array types for every issued smooth design, moment, panel, and aggregate.
+- **Prediction before implementation:** A same-wrapper aggregate with a
+  value-equal `float` subclass as `row_mass` currently reproduces the issued
+  token. The repaired stage token rejects it before any covariance division.
+- **Status:** passed after the diagnosed value-equal `float`-subclass attack
+  failed red. Every stage-specific token checks the complete wrapper schema
+  before canonical projection. Private-registry mutation remains outside the
+  supported single-threaded public-API contract.
+- **Intervals:** not applicable; deterministic representation validation.
+- **Multiple-testing count:** zero. No scientific specification changes.
+
+## C0013 — Single-snapshot sequence repair check
+
+- **Registered:** 2026-07-16, after the final contract review reproduced a
+  multi-traversal substitution and before repairing the stackers.
+- **Scope:** deterministic/test-seed rejection of caller sequences that change
+  their returned base or cell moments across traversals; exact preservation of
+  one legitimate snapshot; and absence of later caller-container reads before
+  panel issuance.
+- **Prediction before implementation:** The pre-repair cell stacker accepts
+  issued moments for its validation passes, then stacks substituted zeroed
+  cross-moments and mints an issued aggregate. After repair, each stacker reads
+  the caller sequence once into an exact tuple and uses only that tuple, so the
+  substituted content either enters the snapshot and fails issuance or is
+  never observed. Ordinary list/tuple outputs remain byte-identical.
+- **Status:** passed after the preregistered red mismatch. Before repair, the
+  complete 48-date state-changing sequence produced an issued cell panel whose
+  90,720 cross-moment entries were all zero even though every issued input
+  cross-moment was nonzero. After repair, contract and analytic snapshot
+  regressions pass, the caller sequence is traversed exactly once, and the
+  stacked arrays equal the validated first snapshot exactly.
+- **Intervals:** not applicable; deterministic capability validation only.
+- **Multiple-testing count:** zero. This changes no scientific specification.
+
+### C0004--C0013 interim closeout evidence, reopened by C0014
+
+- **Focused suite:** 49 deterministic/test-seed tests passed in 0.95 seconds.
+- **Repository gate:** Ruff, format check, strict mypy over 18 files, 157 tests
+  in 1.99 seconds, deterministic demo, and committed `results/demo`/`results/g1`
+  drift checks all passed.
+- **Independent review:** the final mathematical audit passed; the contract
+  audit first reproduced C0013's state-changing-sequence substitution, then
+  passed the one-snapshot repair with exact source and regression evidence.
+- **Scientific access:** no registered resource, validation, recovery, IID,
+  paper-recovery, or research stream ran. These are software-capability checks
+  and do not change the empirical or scientific trial count.
+
+## C0014 — Response-independent design-digest repair check
+
+- **Registered:** 2026-07-16, after final code review reproduced a mismatch
+  between the derived design identity and `_design_sha256`, before repair.
+- **Scope:** one test-seed common-base pair at targets 0 and 16; equality of
+  filtered-base identity, `X0`, packed Gram, and design digest; distinct full
+  response receipts/issuance tokens; and unchanged common-base cross-cell
+  response construction.
+- **Prediction before implementation:** The pre-repair designs have identical
+  `X0` and source-base identity but different design SHA256 values because the
+  digest includes the full response receipt. The repaired digest uses only the
+  response-independent source identity and exact design bytes, so the digests
+  match while response authority remains distinct in issued tokens.
+- **Status:** passed after the preregistered red mismatch. Same-base target 0
+  and target 16 designs had byte-identical `X0` and packed Grams but different
+  design digests before repair. They now share one design SHA256; their response
+  maps and full issuance tokens remain distinct, common-base cross-cell
+  construction still passes, and an analytic design with the same `X0` retains
+  a different namespace-bound digest.
+- **Intervals:** not applicable; deterministic/test-seed identity validation.
+- **Multiple-testing count:** zero. No estimator or scientific specification
+  changes.
+
+### C0004--C0014 final local closeout evidence
+
+- **Focused suite:** 49 G2 DGP/smooth/contract tests passed after C0014; the
+  independent final code reviewer reproduced the post-repair result in 0.91
+  seconds with targeted Ruff and strict mypy clean.
+- **Repository gate:** the complete local gate passes Ruff, formatting, strict
+  mypy over 18 files, 157 tests, deterministic demo, and committed
+  `results/demo`/`results/g1` drift checks.
+- **Issued-path smoke:** the complete 48-date test-seed-1729 path passed under a
+  60-second alarm in 0.65 seconds with maximum RSS 63,766,528 bytes. It checks
+  finite shapes and authority transitions only, not recovery or bias.
+- **Independent review:** final mathematical and contract audits pass. Final
+  code review first reopened the earlier closeout through C0014, then passed
+  the response-independent design repair; its two remaining documentation
+  accuracy findings were corrected before commit. Ledger and verification
+  audits pass.
+- **Scientific access:** no registered resource, validation, recovery, IID,
+  paper-recovery, or research stream ran. These are software-capability checks
+  and do not change the empirical or scientific trial count.

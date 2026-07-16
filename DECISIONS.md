@@ -1300,3 +1300,285 @@ the choice, alternatives, and the evidence that would reopen it.
 - **Reopen if:** An estimator can be constructed from an unvalidated threshold,
   a generic helper becomes a production bypass, or PCA/SVD calls differ from
   the frozen routines.
+
+## D0060 — Treat provenance as data, not a shape convention
+
+- **Date:** 2026-07-16
+- **Diagnosis:** C0003's first hostile review constructed two invalid but
+  accepted inputs: a forged `G2Date` with arbitrary phase/scenario metadata,
+  and an aggregate pairing `X_A'X_A` with `X_B'Y_B` at the same date index.
+  Exact class, dimensions, and ordering are necessary but do not bind origin.
+- **Decision:** Mint transformed dates inside `transform_date` with a weak
+  module-owned receipt, make every transformed array read-only, and validate
+  object identity, provenance, content, and cleanup before contract-bound
+  estimator use. Carry a versioned SHA256 of the exact `X0` design and the
+  validated filtered-base identity through base/cell moments and panels; reject
+  any mismatch before weighted aggregation. Add a contract-bound response
+  moment builder so different structural cells are allowed only on the same
+  base realization/date.
+- **Rejected:** Trust a caller-supplied token, compare only `date_index`, or
+  hash only response-independent shapes. The first is self-attestation, the
+  second reproduces the diagnosed bug, and the third cannot detect a changed
+  design matrix.
+- **Residual risk:** Content validation adds hashing to each transformed date.
+  The resource benchmark must measure the cost and can still reject this
+  implementation. SHA256 collision risk is negligible for accidental or
+  adversarial mixing but is not a mathematical proof of array equality.
+- **Reopen if:** Legitimate common-base structural cells cannot share a design,
+  a forged/rewrapped date reaches a contract builder, a checkpoint drops the
+  aligned digest tuple, or measured receipt hashing breaks the resource cap.
+
+## D0061 — Make completeness and fit authority explicit types
+
+- **Date:** 2026-07-16
+- **Diagnosis:** Strictly ascending indices prove order, not completeness. The
+  old stack could omit a failed date and redefine `D`; the old fit functions
+  also validated a sealed contract without requiring the aggregate to have the
+  contract's N=30/T=330/L=10 dimensions or minted origin.
+- **Decision:** Carry exact source coordinates through each contract moment and
+  require the complete declared date range under one panel prefix. Separate
+  analytic-origin aggregates from contract-origin aggregates. Keep generic
+  covariance extraction and solvers available for small deterministic tests,
+  but let high-level G2 fit functions return coefficients only for a complete
+  contract-origin aggregate matching all sealed dimensions.
+- **Rejected:** Infer completeness from supplied length, accept a prefix as a
+  smaller panel, or rely on callers to choose the production wrapper. Each
+  permits the diagnosed no-drop or authority bypass.
+- **Residual risk:** The contract-origin high-level fit will not receive a full
+  stochastic integration test until the separately registered checkpoint and
+  recovery slice. Deterministic provenance/completeness tests must cover its
+  admission predicate now; later recovery remains mandatory before any
+  registered estimator run.
+- **Reopen if:** A required date can disappear without an exception, a 252-date
+  prefix passes as a frontier, or an analytic aggregate reaches a high-level G2
+  fit.
+
+## D0062 — Use digests for equality and receipts for authority
+
+- **Date:** 2026-07-16
+- **Diagnosis:** The base identity is intentionally shared across structural
+  cells and therefore cannot label `r`. Separately, a digest copied into a new
+  dataclass is evidence about claimed bytes, not evidence that the object was
+  minted by the contract builder.
+- **Decision:** Retain a response-map identity `(target_index, paper_recovery,
+  phi, reliability)` through transformed dates and cell moments. Mint weak,
+  module-owned receipts for every contract date-moment, complete-panel, and
+  aggregate object, binding payload content and provenance. Only an issued
+  aggregate may reach high-level G2 fits; analytic objects stop at extraction
+  and generic solvers.
+- **Rejected:** Treat the filtered-base token as a cell label, or add a boolean
+  `contract_origin` field without issuance. The former erases the structural
+  cell distinction; the latter repeats the forged-dataclass failure.
+- **Residual risk:** Receipt validation and hashing add CPU work and remain an
+  in-memory capability only. The future checkpoint loader needs an independent
+  manifest-validation design and the resource benchmark can reject the cost.
+- **Reopen if:** A copied digest can mint authority, response-map metadata is
+  lost, or two legitimate cells on the same base cannot remain distinct.
+
+## D0063 — Issue every numeric wrapper that crosses an authority boundary
+
+- **Date:** 2026-07-16
+- **Diagnosis:** The C0004--C0006 repair issued the base date moment but the
+  contract cell builder consumed `SmoothDateDesign.x0`. Replacing the unissued
+  design wrapper while retaining its issued base moment allowed a different
+  cross-moment to be computed under copied provenance. The high-level fits also
+  accepted a free reliability argument without asserting the aggregate's full
+  response-map label.
+- **Decision:** Mint and validate an exact weak receipt for each contract-built
+  design before it can form cell moments. Bind array contract state as well as
+  bytes in every smooth issuance token. Require high-level callers to supply
+  the expected response-map identity and match the fit reliability to it.
+- **Rejected:** Recompute only the Gram, because row transformations can
+  preserve `X'X` while changing `X'Y`; trust the copied design hash, because
+  that repeats self-attestation; or leave response labels solely to result
+  manifests, because a mislabeled estimate would already have escaped the
+  licensed fit boundary.
+- **Residual risk:** Exact-object receipts are process-local and hashing cost
+  remains subject to A022's resource benchmark. The future checkpoint loader
+  must mint fresh authority only after independent manifest validation.
+- **Reopen if:** A replaced design can reach `X0'Y`, writable issued payloads
+  validate, or a fit can use a response identity different from its aggregate.
+
+## D0064 — Anchor stored moments once and inline every issuance write
+
+- **Date:** 2026-07-16
+- **Diagnosis:** A011's first wording would require response-receipt reliability
+  to equal every fit reliability, contradicting the sealed rule that reliability
+  changes reuse the same `f/e/Q/W/r` moments. Separately, `_register_issued` and
+  private kernels accepting public receipts would be callable minting surfaces,
+  which D0054 already rejects for raw draws.
+- **Decision:** Mint smooth moment artifacts only from the canonical 0.95 date
+  anchor. Match high-level fits to the aggregate on target, recovery flag, and
+  `phi`; bind the requested reliability to the caller's expected identity while
+  allowing it to differ from the stored anchor. Put each weak-registry write
+  inline in its exact validated contract builder/stack/aggregate function and
+  remove the generic registrar.
+- **Rejected:** Rebuild or reissue identical date moments for all reliability
+  nodes, because that violates the compute contract; ignore response labels,
+  because that permits misreporting; or retain a convenience registrar, because
+  it can mint a forged object with one private call.
+- **Residual risk:** The canonical-anchor rule must remain explicit in the
+  future checkpoint schema and resource counts. Fit extraction still hashes
+  issued aggregate content and remains subject to A022.
+- **Reopen if:** Reliability changes duplicate stored moments, a non-anchor date
+  mints a smooth artifact, or any callable generic helper can insert authority.
+
+## D0065 — Bind exact array semantics, not only storage bytes
+
+- **Date:** 2026-07-16
+- **Diagnosis:** A numpy subclass can share identical float64 C-order read-only
+  bytes while overriding transpose, indexing, ufunc, or matrix-multiplication
+  behavior. The first issued-token repair hashed only storage metadata and
+  bytes, so same-wrapper mutation through `object.__setattr__` could preserve
+  the token but alter downstream dispatch.
+- **Decision:** Issued smooth payload validation requires exact `np.ndarray`,
+  exact float64, C-contiguous, read-only, and finite arrays before hashing.
+- **Rejected:** Rely on `np.asarray` coercion at every later use, because it
+  spreads the capability boundary across numerical code and can be omitted in
+  one path; or accept subclasses whose bytes match, because storage equality
+  does not imply operator equality.
+- **Residual risk:** Deliberate mutation of private registries remains outside
+  the supported API threat model. Exact ndarray validation must remain in the
+  common issued-token path for every stage.
+- **Reopen if:** Any issued token accepts an array subclass or a downstream
+  contract calculation dispatches through an unvalidated array object.
+
+## D0066 — Treat provenance projection as an exact typed boundary
+
+- **Date:** 2026-07-16
+- **Diagnosis:** `_receipt_payload` read attributes from arbitrary objects. On a
+  same-object aggregate mutation, a stateful substitute could project the
+  original receipt into the token and a different response map into the fit
+  label check.
+- **Decision:** Validate exact receipt, provenance, response-map, stream-enum,
+  and scalar runtime types in the common receipt projection before hashing or
+  comparison.
+- **Rejected:** Rely on dataclass field equality or one earlier validator;
+  retained values cross new authority stages and frozen wrappers can be changed
+  with `object.__setattr__` under the project's adversarial model.
+- **Residual risk:** Concurrent mutation between sequential validations remains
+  outside the single-threaded execution contract. Same-thread duck typing and
+  representation substitution are closed.
+- **Reopen if:** Any retained receipt is consumed through attribute duck typing
+  or a response-map comparison uses an object not validated by the token path.
+
+## D0067 — Validate issued wrappers before canonical projection
+
+- **Date:** 2026-07-16
+- **Diagnosis:** Canonical JSON and `.hex()` preserve values, not operator
+  semantics. Lists can project like tuples, integer subclasses like integers,
+  and a float subclass can preserve `row_mass.hex()` while changing reflected
+  division after the token passes.
+- **Decision:** Put exact schema validation inside every stage-specific issued
+  token function before canonical projection: wrapper, nested dataclasses,
+  scalar fields, tuple containers/members, receipts, and arrays.
+- **Rejected:** Coerce values before each later calculation, because that would
+  distribute the authority boundary through the estimator and leave metadata
+  relabeling paths; hash class names only, because exact checks are simpler and
+  already match builder output.
+- **Residual risk:** Unsupported direct mutation of private issuance registries
+  remains out of scope. All public contract paths remain exact-type surfaces.
+- **Reopen if:** A value-equal subclass or JSON-equivalent container preserves
+  an issued token or reaches numerical arithmetic.
+
+## D0068 — Validate one immutable snapshot of every caller sequence
+
+- **Date:** 2026-07-16
+- **Diagnosis:** `stack_contract_cell_moments` validated a caller-supplied
+  `Sequence` and then traversed it again to build arrays and metadata. A
+  state-changing sequence returned issued moments for validation and altered,
+  unissued moments for stacking; the resulting panel and aggregate were still
+  minted. Exact item validation is ineffective if the container can change
+  between reads.
+- **Decision:** Convert every smooth stacker input to one exact local tuple at
+  entry and use only that tuple thereafter. Contract stackers validate and mint
+  from the same snapshot; analytic stackers adopt the same one-read boundary so
+  later refactors cannot reintroduce the ambiguity.
+- **Rejected:** Require callers to pass a tuple, because a runtime annotation is
+  not an authority check and needlessly narrows the public numeric API; or hash
+  the container between traversals, because a stateful container controls both
+  projections and the extra read recreates the race.
+- **Residual risk:** Concurrent mutation of the already-snapshotted moment
+  objects remains governed by the existing single-threaded execution contract
+  and per-object token validation. Private registry mutation remains out of
+  scope.
+- **Reopen if:** Any stacker rereads the caller container after snapshotting or
+  a panel can be minted from numeric items different from those whose issuance
+  was checked.
+
+## D0069 — Close the smooth estimator core, not the execution pipeline
+
+- **Date:** 2026-07-16
+- **Diagnosis:** The first numerically green implementation was not defensible:
+  successive hostile passes found forged provenance, crossed base/response
+  moments, incomplete panels, analytic-to-contract authority bypasses,
+  unissued designs, relabelable response maps, callable minting helpers,
+  equality-compatible runtime substitutes, and finally a multi-traversal
+  sequence substitution. Each defect could preserve plausible numerical output
+  while violating the claimed estimator origin.
+- **Decision:** Accept only the in-memory smooth estimator core after C0004--
+  C0013, 49 focused tests, the 157-test repository gate, the complete timed
+  48-date issued path, and independent mathematical and contract re-audits.
+  Keep checkpoint loading, registered recovery, resource admission, validation,
+  and research authority closed as separate future slices.
+- **Rejected:** Treat the earlier 138- or 156-test green states as sufficient,
+  because each preceded a reproduced authority failure; or fold checkpoint and
+  resource work into this commit, because their manifests, resume invariants,
+  and hashing-inclusive throughput have not been derived or tested.
+- **Residual risk:** A022 remains untested. Exact hashing and weak-registry
+  validation may still make the frozen workload too slow or memory-intensive,
+  and no serialized checkpoint can yet regain in-memory authority. The
+  favorable 95% proxy-reliability calibration remains a substantive conditional
+  assumption rather than a market fact.
+- **Reopen if:** A public path can fit unissued/mislabeled content, any focused
+  hostile regression fails, or the later checkpoint/resource design requires
+  weakening the admitted provenance boundary.
+
+## D0070 — Separate reusable design identity from response authority
+
+- **Date:** 2026-07-16
+- **Diagnosis:** `_design_sha256` consumed `_receipt_payload`, which includes
+  the structural target, recovery flag, reliability, and response-content
+  digest. Two designs with the same filtered base and byte-identical `X0`
+  therefore hashed differently across response cells. This contradicted the
+  derived response-independent design identity and would make a shared base
+  checkpoint/cache depend on an incidental response anchor.
+- **Decision:** Hash only the filtered-base identity for contract designs and a
+  literal versioned analytic namespace for analytic designs. Continue to bind
+  the full transformed-date receipt inside weak issuance tokens and cell
+  response receipts. Design equality and response authority remain separate
+  objects with separate jobs.
+- **Rejected:** Declare response-dependent design hashes intentional, because
+  A008 and the derivation explicitly promised common-base cross-cell reuse; or
+  remove response receipts from issuance, because that would reopen relabeling
+  attacks fixed by C0006--C0011.
+- **Residual risk:** Future checkpoint manifests must carry both the reusable
+  source/design identity and the structural response identity explicitly. A
+  single overloaded digest would recreate this defect.
+- **Reopen if:** Identical `X0` on one filtered base hashes differently across
+  cells, or different filtered bases can collide under the design identity.
+
+## D0071 — Reaccept the estimator core only after C0014 and final re-audit
+
+- **Date:** 2026-07-16
+- **Diagnosis:** D0069 accepted the in-memory core after C0013, but final code
+  review then found that `design_sha256` depended on the response receipt. The
+  implementation therefore contradicted its own derived shared-design identity
+  even though every estimator output and authority test was green.
+- **Decision:** Treat D0069 and the eighth red-team verdict as reopened, not as
+  final evidence. Accept the in-memory estimator core only after C0014's exact
+  red mismatch, the response-independent design-digest repair, 49 focused
+  tests, the 157-test repository gate, the complete 48-date issued-path smoke,
+  and fresh mathematical, contract, code, ledger, and verification audits.
+  Checkpoint loading, registered recovery, resource admission, validation, and
+  research authority remain closed.
+- **Rejected:** Call the digest mismatch documentation-only, because the digest
+  is the future checkpoint/cache identity promised by A008; or broaden this
+  acceptance to execution, because no serialized manifest or hashing-inclusive
+  resource benchmark exists.
+- **Residual risk:** A022 remains untested, no checkpoint loader can restore
+  in-process authority, and the favorable 95% proxy reliability remains a
+  conditional calibration rather than an identified market fact.
+- **Reopen if:** A final repository check or hosted CI fails, a shared base can
+  produce response-dependent design hashes again, or the checkpoint/resource
+  design requires weakening the admitted provenance boundary.

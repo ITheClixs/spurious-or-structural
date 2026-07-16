@@ -269,6 +269,7 @@ def test_transform_date_satisfies_every_registered_structural_map() -> None:
     for values in (generated.q, generated.r, generated.z, generated.x):
         assert values.dtype == np.float64
         assert values.flags.c_contiguous
+        assert not values.flags.writeable
         assert np.all(np.isfinite(values))
 
 
@@ -518,6 +519,33 @@ def test_raw_issuance_registry_releases_dead_base() -> None:
 
     assert reference() is None
     assert key not in g2_module._RAW_BASE_REGISTRY
+
+
+def test_transformed_date_registry_releases_dead_date() -> None:
+    contract = load_g2_contract(_root())
+    namespace = TestRngNamespace.from_contract(contract, _TEST_SEED)
+    base = namespace.draw_base_normals(
+        stream=G2Stream.VALIDATION_POWER,
+        n_dates=252,
+        panel_index=0,
+        date_index=10,
+    )
+    date = transform_date(
+        base,
+        build_cell(contract, target_index=16),
+        contract=contract,
+        phi=contract.confirmatory_ar1,
+        reliability=contract.confirmatory_reliability,
+    )
+    key = id(date)
+    reference = weakref.ref(date)
+
+    assert g2_module._G2_DATE_REGISTRY[key][0]() is date
+    del date
+    gc.collect()
+
+    assert reference() is None
+    assert key not in g2_module._G2_DATE_REGISTRY
 
 
 def test_iid_stream_requires_zero_phi_and_modal_helper_rejects_nonfinite() -> None:
