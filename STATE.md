@@ -11,9 +11,9 @@ derived and independently audited. The sole frozen `N=30`, `K=3`, `T=10^7`
 run passed the strict preregistered discrepancy test without a seed retry. The
 complete evidence commit passed hosted CI.
 
-**G2 — Premise test / kill switch: open, smooth estimator core locally
-verified; hosted verification pending.** No registered resource benchmark,
-registered validation panel, or registered research draw has run.
+**G2 — Premise test / kill switch: open, smooth estimator core locally and
+hosted verified.** No registered resource benchmark, registered validation
+panel, or registered research draw has run.
 S0002 and S0003 were rejected before RNG access. S0004 makes the
 observable integrated-OFI proxy-control opponent and published `CI_I` protocol
 binding, is derived and hash-sealed, and has independent math, inference, and
@@ -278,12 +278,14 @@ Stop before checkpoint/recovery, resource authority, or any registered G2 RNG.
   through C0014, then passed the response-independent design-digest repair.
   Only test seeds `1729`/`9191` were available; no registered G2 realization
   was accessed.
+- Estimator-core commit `5500611da123bdc1dedd2124b0f2fd26e04525db`
+  passed hosted CI run `29492765654`; the parity job completed in 31 seconds.
+  GitHub emitted a Node.js-action deprecation warning, but every required step
+  passed and the warning changes neither estimator evidence nor RNG authority.
 
 ## In flight
 
-1. Commit and host-verify the locally closed smooth estimator core without
-   exposing any registered stream.
-2. In the next separately derived slice, specify checkpoint manifests and
+1. In the next separately derived slice, specify checkpoint manifests and
    recovery authority, write failure-first resume tests, and only then design
    the hashing-inclusive resource benchmark required by A022.
 
@@ -317,9 +319,10 @@ and S0003 were rejected before RNG; S0004 config
 `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc` is
 sealed; the contract/RNG/DGP repair is hosted green at `ff3a343` / run
 `29455143418`; C0003's first estimator attempt failed hostile authority review;
-C0004--C0014 close the in-memory smooth estimator core locally with 49 focused
-tests, 157 repository tests, a 0.65-second/63,766,528-byte-RSS complete issued
-smoke, and final math/contract/code/ledger/verification passes; no registered G2
-stream ran. The next allowed work is checkpoint/recovery derivation and red
-tests, followed by the A022 hashing-inclusive resource design." Do not touch
-empirical tape or any G2 resource, validation, or research seed.
+C0004--C0014 close the in-memory smooth estimator core with 49 focused tests,
+157 repository tests, a 0.65-second/63,766,528-byte-RSS complete issued smoke,
+and final math/contract/code/ledger/verification passes; estimator-core commit
+`5500611` is hosted green at run `29492765654`; no registered G2 stream ran. The
+next allowed work is checkpoint/recovery derivation and red tests, followed by
+the A022 hashing-inclusive resource design." Do not touch empirical tape or any
+G2 resource, validation, or research seed.

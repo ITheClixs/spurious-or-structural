@@ -1582,3 +1582,26 @@ the choice, alternatives, and the evidence that would reopen it.
 - **Reopen if:** A final repository check or hosted CI fails, a shared base can
   produce response-dependent design hashes again, or the checkpoint/resource
   design requires weakening the admitted provenance boundary.
+
+## D0072 — Close the estimator-core slice on hosted parity evidence
+
+- **Date:** 2026-07-16
+- **Diagnosis:** Local acceptance alone does not satisfy the repository's CI
+  contract or prove that the locked Linux test surface can reproduce the exact
+  reviewed estimator-core revision.
+- **Decision:** Close only the smooth estimator-core implementation slice at
+  commit `5500611da123bdc1dedd2124b0f2fd26e04525db` after hosted CI run
+  `29492765654` completed the parity job successfully in 31 seconds. Preserve
+  checkpoint/recovery, resource, validation, and research as separate closed
+  authority surfaces.
+- **Rejected:** Begin checkpoint work before recording the hosted evidence, or
+  treat hosted success as resource admission. CI exercises deterministic and
+  test-seed software checks; it does not run the frozen throughput workload or
+  any registered G2 stream.
+- **Residual risk:** GitHub warned that two actions targeting Node.js 20 were
+  forced onto Node.js 24. This is a CI-maintenance warning, not a failed parity
+  step or scientific result; update action versions in a separately verified
+  engineering change rather than mixing it into this acceptance record.
+- **Reopen if:** The hosted run is invalidated, the committed revision cannot be
+  reproduced locally, or later checkpoint/resource work requires weakening the
+  exact provenance and design-identity contracts.

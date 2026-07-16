@@ -574,7 +574,7 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Multiple-testing count:** zero. No estimator or scientific specification
   changes.
 
-### C0004--C0014 final local closeout evidence
+### C0004--C0014 final estimator-core closeout evidence
 
 - **Focused suite:** 49 G2 DGP/smooth/contract tests passed after C0014; the
   independent final code reviewer reproduced the post-repair result in 0.91
@@ -593,3 +593,7 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Scientific access:** no registered resource, validation, recovery, IID,
   paper-recovery, or research stream ran. These are software-capability checks
   and do not change the empirical or scientific trial count.
+- **Hosted parity:** estimator-core commit
+  `5500611da123bdc1dedd2124b0f2fd26e04525db` passed CI run `29492765654`;
+  the parity job completed in 31 seconds. Hosted execution used only the locked
+  deterministic/test-seed suite and did not open a registered G2 stream.

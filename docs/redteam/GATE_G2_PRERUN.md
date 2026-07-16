@@ -489,3 +489,9 @@ in-process authority. The strongest substantive objection also remains the
 favorable, unidentified 95% proxy reliability and latent decomposition. The
 next slice must derive checkpoint/recovery authority and then test resource
 admission; this verdict licenses neither.
+
+Estimator-core commit `5500611da123bdc1dedd2124b0f2fd26e04525db`
+subsequently passed hosted CI run `29492765654`; its parity job completed in 31
+seconds. That closes the local-versus-hosted software parity objection for this
+revision only. It does not answer A022, serialize authority, or license any
+registered G2 stream.
