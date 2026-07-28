@@ -616,8 +616,9 @@ empirical model trials, but gate-level pipeline variants are recorded.
   uninterrupted/reloaded arrays, receipts, digests, and three coefficient
   outputs match exactly. Artifact, wall-clock, and RSS hard stops are 12 MiB,
   120 seconds, and 1.5 GiB.
-- **Status:** deterministic implementation passed locally; hosted verification
-  and the one-shot remain pending. The first red collection failed because the
+- **Status:** deterministic implementation and hosted verification passed; the
+  one-shot remains pending explicit user authorization. The first red
+  collection failed because the
   named checkpoint module did not exist. Pre-code hostile review rejected an
   initial test shape that pytest-collected seed `9191` and omitted
   fresh-process/RSS/timeout and writer-authority evidence. Post-implementation

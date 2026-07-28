@@ -21,16 +21,18 @@ whole-contract content and sealed-surface passes. Commit `a5c7f1c` passed hosted
 CI run `29448917107`. The sealed contract, test-only RNG namespace, and pure DGP
 maps and the in-memory smooth estimator core are implemented and locally
 hostile-reviewed. Immutable base/cell checkpoint recovery and its one-shot
-supervisor now pass the complete local deterministic gate; their hostile
-closeout, commit, and hosted parity are pending. Resource authority and all
-registered G2 streams remain absent.
+supervisor pass hostile closeout, the complete local deterministic gate, and
+hosted Linux parity at commit `5aca811`/run `30349473867`. The exact A019
+one-shot remains unrun pending explicit user authorization. Resource authority
+and all registered G2 streams remain absent.
 
 ## Session objective
 
-Current session target: derive, test, implement, and host-verify immutable
-base-panel/cell-panel checkpoint recovery, then run the single preregistered
-252-date test-seed-9191 software recovery. Stop before the A022 registered
-resource benchmark, any registered G2 RNG, or any coefficient-to-truth claim.
+Current session target: preserve the hosted-green checkpoint/recovery state
+until explicit user authorization is supplied for the single irreversible
+252-date test-seed-9191 A019 software recovery. Then recheck clean HEAD, matching
+hosted SHA, and absent canonical roots before the exact Make command. Stop
+before A022, any registered G2 RNG, or any coefficient-to-truth claim.
 
 ## Current evidence
 
