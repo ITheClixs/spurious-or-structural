@@ -577,3 +577,61 @@ authorized consumption of the sole irreversible A019 attempt. No workaround
 is permitted, no A019 state exists, and the rejection is not counted as an
 attempt. A019 therefore remains locked pending explicit user authorization and
 a fresh eligibility check.
+
+## Eleventh verdict: A019 passes once; no substantive G2 claim is licensed
+
+The user subsequently authorized the exact irreversible
+`make g2-checkpoint-recovery` command, explicitly naming seed `9191`, one
+consumption, and no retry. The fresh eligibility check immediately before
+execution found an empty porcelain status, HEAD
+`a75ea69d85c5425bd5fe824361869c3a7edb55e7`, successful hosted CI run
+`30350204001` on that exact SHA, all three canonical roots absent, and the
+fixed Make-only dry run. The real command was submitted exactly once and
+exited zero.
+
+The result matches the frozen address: seed `9191`,
+`VALIDATION_RECOVERY`, 252 dates, panel 0, design target 16, response target 0,
+and phase/scenario `23/0`. Its immutable attempt digest is
+`18c70c205ad75d608ad0dc70f3c9873df96d2a636f351b22411599889ddb01c1`.
+The run took 18.907810209 seconds and observed 178,864,128 bytes peak
+process-tree RSS. Its complete base/cell checkpoint tree allocates 9,183,232
+bytes. These are respectively 15.76%, 11.11%, and 72.98% of the frozen hard
+wall, RSS, and artifact stops. No hard stop fired.
+
+Independent read-only checks recomputed the SHA256 of `attempt.json`,
+`result.json`, both manifests, and all three NPY payloads. Every value matches
+its parent receipt: result SHA256
+`7061e9d5a734115cadad728e262eceb177d5eddb9f1cb6391a1f81aa040e7a3c`
+matches the terminal `_SUCCESS`; each manifest and payload digest matches its
+checkpoint `_SUCCESS`; the worker claim binds the attempt digest; and no
+failure marker exists. Before/after array, receipt, design-digest, and all
+three coefficient hashes are exactly equal. The fresh process reproduces the
+oracle, observable, and homogeneous coefficient hashes with
+`fresh_process_rng_draw_count=0`.
+
+Two bounded independent audits passed. They separately reconstructed the
+24-file source snapshot as
+`7eb724851b44a747743452a829ad7ff2619fe4234723f9ce5df53dfd456971d3`,
+the Darwin/arm64 runtime identity as
+`17b80bd40159b4e921983528b04a0050912f19360d99560f8cebfbea0be9513b`,
+all 252 unique date receipts, the data-only array hashes, and the shared design
+digest. They found exactly one worker claim, one base artifact, one cell
+artifact, no symlink or unexpected checkpoint file, empty worker
+stdout/stderr, empty bytecode-cache directories, and no surviving claimed
+worker PID.
+
+The hostile interpretation is narrower than the green status. A019 proves that
+this source/runtime/address recovered its sufficient statistics and coefficient
+bytes once on this machine. It does not compare a coefficient with truth, test
+bias or power, calibrate a market parameter, admit a registered
+resource/validation/research realization, or pass the G2 premise gate. It also
+does not resolve A024: unkeyed hashes cannot authenticate origin against a
+coordinated same-user writer. The 50-ms RSS sampler can miss a shorter peak,
+and the scratch trace is audit evidence rather than a cryptographic transcript.
+
+The strongest remaining mechanical objection is A022. The successful
+18.91-second recovery is not the preregistered hashing-inclusive cold/warm
+resource workload, so extrapolating it to the 15,195,600 validation or
+45,586,800 research LASSO fits would be invalid. The next permitted action is
+derivation and pre-recording of A022 only. A019 is consumed permanently and
+must never be rerun.

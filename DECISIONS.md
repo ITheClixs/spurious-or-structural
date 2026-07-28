@@ -1946,3 +1946,48 @@ the choice, alternatives, and the evidence that would reopen it.
 - **Reopen if:** Any canonical root appears before explicit consent, the
   approved command differs from the exact Make target, HEAD or hosted evidence
   changes, or anyone attempts to bypass the external safety decision.
+
+## D0082 — Accept the sole A019 outcome as software-recovery evidence only
+
+- **Date:** 2026-07-28
+- **Diagnosis:** The user explicitly authorized the exact irreversible
+  `make g2-checkpoint-recovery` command, consuming A019 seed `9191` once with
+  no retry. A fresh read-only preflight immediately before execution proved a
+  clean worktree at `a75ea69d85c5425bd5fe824361869c3a7edb55e7`,
+  successful hosted run `30350204001` on that exact SHA, absent canonical
+  result/checkpoint/scratch roots, and the fixed Make-only launcher. The
+  single public command and its supervised process tree then exited zero.
+- **Decision:** Treat `attempt.json` as irreversible consumption of A019 and
+  accept the terminal outcome as a pass of C0015's software-recovery claim
+  only. Preserve the result and success receipt, never retry seed `9191`, and
+  move next to a derived and pre-recorded A022 resource benchmark. Do not
+  interpret exact coefficient replay as recovery of structural truth, G2
+  premise passage, resource admission, or permission for a registered
+  resource/validation/research realization.
+- **Rejected:** Rerun A019 to demonstrate repeatability; widen or reinterpret
+  the frozen address; compare these coefficients with truth after seeing them;
+  discard the scratch evidence; or count the three coefficient hashes as
+  scientific trials. Each would violate the one-shot or software-only
+  preregistration.
+- **Evidence:** Attempt SHA256
+  `18c70c205ad75d608ad0dc70f3c9873df96d2a636f351b22411599889ddb01c1`
+  binds seed `9191`, `VALIDATION_RECOVERY`, 252 dates, panel 0,
+  design/response targets 16/0, and phase/scenario `23/0`. The immutable result
+  passed in 18.907810209 seconds at 178,864,128 bytes peak RSS; allocated
+  checkpoint size was 9,183,232 bytes. These use 15.76%, 11.11%, and 72.98%
+  of the 120-second, 1.5-GiB, and 12-MiB hard stops. Actual manifest and NPY
+  SHA256 values match both checkpoint `_SUCCESS` receipts. Before/after array,
+  receipt, design-digest, and all three coefficient hashes match exactly; a
+  fresh process reproduced all three coefficient hashes with
+  `fresh_process_rng_draw_count=0`. Result SHA256
+  `7061e9d5a734115cadad728e262eceb177d5eddb9f1cb6391a1f81aa040e7a3c`
+  matches the terminal `_SUCCESS`; no failure marker exists.
+- **Residual risk:** A019 validates one same-machine recovery at the frozen
+  address. It does not test A022 throughput, statistical bias, power, or the
+  premise. The 50-ms process-tree sampler can miss shorter RSS spikes, and
+  A024 still excludes coordinated same-user checkpoint/source forgery because
+  the evidence has no external signing root.
+- **Reopen if:** Any second A019 attempt is executed, a failure marker appears,
+  a committed byte fails its recorded digest, later prose upgrades the result
+  to a coefficient-truth claim, or A022/resource authority is inferred without
+  its own derivation, prediction, and stop rules.

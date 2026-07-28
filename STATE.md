@@ -23,16 +23,17 @@ maps and the in-memory smooth estimator core are implemented and locally
 hostile-reviewed. Immutable base/cell checkpoint recovery and its one-shot
 supervisor pass hostile closeout, the complete local deterministic gate, and
 hosted Linux parity at commit `5aca811`/run `30349473867`. The exact A019
-one-shot remains unrun pending explicit user authorization. Resource authority
-and all registered G2 streams remain absent.
+one-shot passed on its sole authorized seed-9191 attempt from source HEAD
+`a75ea69`; it is permanently consumed. Resource authority and every registered
+resource/validation/research realization remain absent.
 
 ## Session objective
 
-Current session target: preserve the hosted-green checkpoint/recovery state
-until explicit user authorization is supplied for the single irreversible
-252-date test-seed-9191 A019 software recovery. Then recheck clean HEAD, matching
-hosted SHA, and absent canonical roots before the exact Make command. Stop
-before A022, any registered G2 RNG, or any coefficient-to-truth claim.
+Current session target: close the sole passed A019 software-recovery attempt
+with independent receipt/hash/budget review, committed evidence, and hosted CI.
+Then derive and pre-record the hashing-inclusive A022 resource benchmark
+without opening any registered resource/validation/research realization or
+making any coefficient-to-truth claim.
 
 ## Current evidence
 
@@ -286,8 +287,7 @@ before A022, any registered G2 RNG, or any coefficient-to-truth claim.
   passed hosted CI run `29492765654`; the parity job completed in 31 seconds.
   GitHub emitted a Node.js-action deprecation warning, but every required step
   passed and the warning changes neither estimator evidence nor RNG authority.
-- Checkpoint/recovery C0015 is implemented without opening its exact
-  seed-9191 attempt. The checkpoint codec persists separate immutable
+- Checkpoint/recovery C0015 persists separate immutable
   base/cell NPY artifacts, binds exact source/runtime/address/receipt identities,
   restores only stage-specific weak authority, reserves the complete
   root-wide 2 GiB tree before each mutation, and holds shared/exclusive
@@ -314,9 +314,8 @@ before A022, any registered G2 RNG, or any coefficient-to-truth claim.
   `VALIDATION_DATE_FRONTIER` phase/scenario `22/2`. The complete locked local
   gate passes Ruff, format, strict mypy over 22 source files, all 269 tests,
   deterministic demo, and committed-result drift.
-  `make -n g2-checkpoint-recovery` confirms the fixed Make-only command without
-  executing it. The exact
-  preregistration-amendment-A019 seed-9191 recovery remains unrun.
+  Before A019, `make -n g2-checkpoint-recovery` confirmed the fixed Make-only
+  command without executing it.
 - A020 received only a qualified chronology pass: the live session recorded
   prediction, red test, then repair, but the uncommitted worktree and current
   mtimes do not independently preserve that order. Future authority repairs
@@ -328,32 +327,43 @@ before A022, any registered G2 RNG, or any coefficient-to-truth claim.
   exercised and accepted the exact `/proc/self/fd` anonymous-pipe predicate.
   The only annotation is the existing nonblocking Node 20 action deprecation
   warning.
-- The sole A019 command was submitted only after clean/absent-path/hosted-green
-  preflight, but process creation was rejected by the external safety gate
-  because explicit user authorization for this irreversible one-shot was not
-  present. No Make target, worker, seed-9191 draw, attempt, checkpoint, scratch,
-  result, or failure artifact was created. Indirect execution is forbidden.
+- The user explicitly authorized the exact irreversible A019 command, seed
+  `9191`, once with no retry. A fresh preflight proved clean HEAD
+  `a75ea69d85c5425bd5fe824361869c3a7edb55e7`, successful hosted run
+  `30350204001` on that SHA, absent canonical roots, and the fixed dry run.
+  `make g2-checkpoint-recovery` was then executed exactly once and passed.
+- A019 published attempt SHA256
+  `18c70c205ad75d608ad0dc70f3c9873df96d2a636f351b22411599889ddb01c1`
+  and result SHA256
+  `7061e9d5a734115cadad728e262eceb177d5eddb9f1cb6391a1f81aa040e7a3c`.
+  The exact address is seed `9191`, `VALIDATION_RECOVERY`, 252 dates, panel 0,
+  design/response targets 16/0, phase/scenario `23/0`. Wall time was
+  18.907810209 seconds, peak RSS 178,864,128 bytes, and allocated checkpoint
+  size 9,183,232 bytes, all below their frozen stops.
+- Read-only audit recomputed the terminal result, manifest, and payload hashes.
+  Before/after arrays, receipts, design digests, and oracle/observable/
+  homogeneous coefficient hashes match exactly; the fresh process reproduced
+  the three hashes with zero RNG draws. No failure marker exists. A019 is
+  permanently consumed and is software-recovery evidence only.
 
 ## In flight
 
-1. Obtain explicit user authorization to execute the exact irreversible
-   `make g2-checkpoint-recovery` A019 one-shot.
-2. Reconfirm clean HEAD, hosted-green SHA, and absent canonical roots, then
-   consume A019 once with no override or retry.
-3. If and only if A019 passes, derive the hashing-inclusive A022 resource
-   benchmark before any registered resource draw.
+1. Commit and push the immutable A019 result plus ledger/red-team closeout, then
+   require hosted CI green on the evidence revision.
+2. Derive and pre-record the hashing-inclusive A022 cold/warm resource benchmark
+   before any registered resource draw.
+3. Admit or reject the resource stream only from A022's frozen limits and
+   observed evidence; do not infer admission from A019.
 
 ## Blockers
 
 - Registered G2 resource, validation, and research streams remain blocked. The
   estimator core has no authority to run them.
-- The deterministic checkpoint/recovery revision is hostile-reviewed,
-  committed, pushed, and hosted green, but the exact A019 software-recovery
-  attempt remains sealed pending explicit user authorization for the
-  irreversible one-shot. Its `attempt.json` does not exist.
 - A022 remains untested: the 0.65-second software smoke is not the frozen
   hashing-inclusive cold/warm resource benchmark and cannot admit resource
   throughput or memory.
+- A019 passed and is permanently consumed, but it has no coefficient-truth,
+  bias, power, premise, or resource-admission content.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
   they are explicit G3 stop/go assumptions, not evidence that the empirical
   sample fits yet.
@@ -377,9 +387,12 @@ sealed. Contract/RNG/DGP commit `ff3a343` is hosted green at run
 `29492765654`; checkpoint/recovery commit `5aca811` is hosted green at run
 `30349473867`. C0015 has 86 codec tests, 26 seed-1729 supervisor tests, and a
 green 269-test gate after recorded hostile failures. The exact
-preregistration-amendment-A019 seed-9191 attempt remains unrun and all canonical
-roots are absent. Its exact Make command now requires explicit user
-authorization because it irreversibly consumes the sole attempt. No registered
-G2 stream or empirical tape has been touched." Do not work around the safety
-gate, retry a consumed attempt, or touch A022 or any registered resource,
-validation, or research seed before A019 passes.
+preregistration-amendment-A019 seed-9191 attempt passed once from source HEAD
+`a75ea69`: 18.907810209 seconds, 178,864,128 bytes peak RSS, 9,183,232
+allocated checkpoint bytes, exact before/after/fresh coefficient hashes, and
+zero fresh-process RNG draws. Attempt
+`18c70c205ad75d608ad0dc70f3c9873df96d2a636f351b22411599889ddb01c1`
+is permanently consumed. No registered resource/validation/research
+realization or empirical tape has been touched. A022 remains untested." Never
+retry A019 or touch a registered resource, validation, or research seed before
+A022 is derived, predicted, frozen, and passes its own admission rules.

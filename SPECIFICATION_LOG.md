@@ -9,7 +9,7 @@ empirical model trials, but gate-level pipeline variants are recorded.
 
 - Empirical specifications: **0**
 - Simulation estimator specifications: **1 run and passed; 2 G2 designs rejected pre-run; 1 G2 design registered and pending**
-- Software-only pipeline specifications: **3 hosted completed; 1 checkpoint/recovery specification registered and pending**
+- Software-only pipeline specifications: **4 completed; source revisions hosted-green**
 - Holdout opens: **0**
 
 ## P0001 — G0 deterministic record-and-hash smoke path
@@ -616,10 +616,9 @@ empirical model trials, but gate-level pipeline variants are recorded.
   uninterrupted/reloaded arrays, receipts, digests, and three coefficient
   outputs match exactly. Artifact, wall-clock, and RSS hard stops are 12 MiB,
   120 seconds, and 1.5 GiB.
-- **Status:** deterministic implementation and hosted verification passed; the
-  one-shot remains pending explicit user authorization. The first red
-  collection failed because the
-  named checkpoint module did not exist. Pre-code hostile review rejected an
+- **Status:** passed, including the sole preregistration-amendment-A019
+  one-shot. The first red collection failed because the named checkpoint
+  module did not exist. Pre-code hostile review rejected an
   initial test shape that pytest-collected seed `9191` and omitted
   fresh-process/RSS/timeout and writer-authority evidence. Post-implementation
   hostile review then reproduced a direct codec authority bypass,
@@ -642,9 +641,19 @@ empirical model trials, but gate-level pipeline variants are recorded.
   prediction/red-before-repair sequence has no immutable repository-local
   proof, so its chronology pass is explicitly qualified and current mtimes are
   not treated as evidence. Commit `5aca81115400` passed hosted CI run
-  `30349473867`, including the Linux anonymous-pipe path. The exact
-  preregistration-amendment-A019 seed-9191 call has not run: external process
-  creation rejected it pending explicit user authorization for the irreversible
-  one-shot, and every canonical root remains absent.
+  `30349473867`, including the Linux anonymous-pipe path. After explicit user
+  authorization, a fresh preflight proved clean source HEAD
+  `a75ea69d85c5425bd5fe824361869c3a7edb55e7`, successful matching hosted run
+  `30350204001`, and absent canonical roots. The exact command
+  `make g2-checkpoint-recovery` then consumed A019 once, with no retry, and
+  passed. The immutable result records seed `9191`,
+  `VALIDATION_RECOVERY`, 252 dates, panel 0, phase/scenario `23/0`,
+  18.907810209 seconds elapsed, 178,864,128 bytes peak RSS, and 9,183,232
+  allocated checkpoint bytes. Pre-checkpoint, reloaded, and fresh-process
+  oracle/observable/homogeneous coefficient hashes are identical; the fresh
+  process records zero RNG draws. Result SHA256
+  `7061e9d5a734115cadad728e262eceb177d5eddb9f1cb6391a1f81aa040e7a3c`
+  is bound by `_SUCCESS`; no failure marker exists. This consumes the only
+  A019 attempt and cannot be rerun.
 - **Intervals:** not applicable; software integrity/recovery only.
 - **Multiple-testing count:** zero. No coefficient is compared with truth.
