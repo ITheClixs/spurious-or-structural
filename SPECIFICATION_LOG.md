@@ -637,10 +637,13 @@ empirical model trials, but gate-level pipeline variants are recorded.
   cleanup-interrupt precedence, fixed pre-import Make authority, launcher
   source binding, and exact stream/phase/scenario receipts. The complete
   269-test local gate, Ruff, format, strict mypy, deterministic demo, and
-  committed-result drift pass. A020's live-session prediction/red-before-repair
-  sequence has no immutable repository-local proof, so its chronology pass is
-  explicitly qualified and current mtimes are not treated as evidence. The exact
-  preregistration-amendment-A019 seed-9191 call has not run and remains sealed
-  until a committed revision passes hosted CI.
+  committed-result drift pass. A020's live-session
+  prediction/red-before-repair sequence has no immutable repository-local
+  proof, so its chronology pass is explicitly qualified and current mtimes are
+  not treated as evidence. Commit `5aca81115400` passed hosted CI run
+  `30349473867`, including the Linux anonymous-pipe path. The exact
+  preregistration-amendment-A019 seed-9191 call has not run: external process
+  creation rejected it pending explicit user authorization for the irreversible
+  one-shot, and every canonical root remains absent.
 - **Intervals:** not applicable; software integrity/recovery only.
 - **Multiple-testing count:** zero. No coefficient is compared with truth.

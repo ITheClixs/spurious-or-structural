@@ -560,3 +560,20 @@ from the dirty worktree and does not license resource, validation, research, or
 empirical access. A019 may be consumed once only after this exact source state
 is committed, pushed, and passes hosted CI, with the worktree clean and the
 canonical attempt path still absent.
+
+### Hosted addendum and external one-shot authority
+
+Commit `5aca8111540064b9449ef55a806427795cb800bd` subsequently passed
+hosted CI run `30349473867` in 1 minute 22 seconds. This closes the pending
+Linux anonymous-pipe objection for that source state; the job ran the complete
+locked parity suite and emitted only the existing Node 20 action-deprecation
+warning.
+
+A corrected final eligibility check then proved clean HEAD, the same hosted
+SHA, absent canonical result/checkpoint/scratch roots, and the exact Make-only
+dry run. Submission of the real Make command was rejected before process
+creation by the external safety gate because the user had not explicitly
+authorized consumption of the sole irreversible A019 attempt. No workaround
+is permitted, no A019 state exists, and the rejection is not counted as an
+attempt. A019 therefore remains locked pending explicit user authorization and
+a fresh eligibility check.

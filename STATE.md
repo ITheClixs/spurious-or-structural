@@ -320,13 +320,24 @@ resource benchmark, any registered G2 RNG, or any coefficient-to-truth claim.
   mtimes do not independently preserve that order. Future authority repairs
   must commit or otherwise preserve immutable prediction/red evidence before
   implementation.
+- Deterministic checkpoint/recovery commit
+  `5aca8111540064b9449ef55a806427795cb800bd` passed hosted CI run
+  `30349473867` in 1 minute 22 seconds. The Linux recovery suite therefore
+  exercised and accepted the exact `/proc/self/fd` anonymous-pipe predicate.
+  The only annotation is the existing nonblocking Node 20 action deprecation
+  warning.
+- The sole A019 command was submitted only after clean/absent-path/hosted-green
+  preflight, but process creation was rejected by the external safety gate
+  because explicit user authorization for this irreversible one-shot was not
+  present. No Make target, worker, seed-9191 draw, attempt, checkpoint, scratch,
+  result, or failure artifact was created. Indirect execution is forbidden.
 
 ## In flight
 
-1. Complete the read-only hostile closeout, commit the deterministic
-   checkpoint/recovery revision, push it, and require hosted CI success.
-2. Only from that accepted clean revision, consume the single exact
-   preregistration-amendment-A019 seed-9191 recovery attempt once.
+1. Obtain explicit user authorization to execute the exact irreversible
+   `make g2-checkpoint-recovery` A019 one-shot.
+2. Reconfirm clean HEAD, hosted-green SHA, and absent canonical roots, then
+   consume A019 once with no override or retry.
 3. If and only if A019 passes, derive the hashing-inclusive A022 resource
    benchmark before any registered resource draw.
 
@@ -334,9 +345,10 @@ resource benchmark, any registered G2 RNG, or any coefficient-to-truth claim.
 
 - Registered G2 resource, validation, and research streams remain blocked. The
   estimator core has no authority to run them.
-- The exact A019 software-recovery attempt is sealed until the deterministic
-  checkpoint/recovery revision passes hostile closeout, commit, push, and
-  hosted CI. Its `attempt.json` does not exist.
+- The deterministic checkpoint/recovery revision is hostile-reviewed,
+  committed, pushed, and hosted green, but the exact A019 software-recovery
+  attempt remains sealed pending explicit user authorization for the
+  irreversible one-shot. Its `attempt.json` does not exist.
 - A022 remains untested: the 0.65-second software smoke is not the frozen
   hashing-inclusive cold/warm resource benchmark and cannot admit resource
   throughput or memory.
@@ -360,11 +372,12 @@ RNG. S0004 config
 `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc` is
 sealed. Contract/RNG/DGP commit `ff3a343` is hosted green at run
 `29455143418`; estimator-core commit `5500611` is hosted green at run
-`29492765654`. C0015 checkpoint/recovery has 86 codec tests, 26 seed-1729
-supervisor tests, and a green 269-test local gate after recorded hostile
-failures. The exact preregistration-amendment-A019 seed-9191 attempt remains
-unrun and may be consumed once only after hostile closeout plus committed,
-pushed, hosted-green evidence. No registered G2 stream or empirical tape has
-been touched." Continue with hostile closeout/hosted parity; do not run A019
-early and do not touch A022 or any registered resource, validation, or research
-seed.
+`29492765654`; checkpoint/recovery commit `5aca811` is hosted green at run
+`30349473867`. C0015 has 86 codec tests, 26 seed-1729 supervisor tests, and a
+green 269-test gate after recorded hostile failures. The exact
+preregistration-amendment-A019 seed-9191 attempt remains unrun and all canonical
+roots are absent. Its exact Make command now requires explicit user
+authorization because it irreversibly consumes the sole attempt. No registered
+G2 stream or empirical tape has been touched." Do not work around the safety
+gate, retry a consumed attempt, or touch A022 or any registered resource,
+validation, or research seed before A019 passes.

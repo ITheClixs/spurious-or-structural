@@ -1910,3 +1910,39 @@ the choice, alternatives, and the evidence that would reopen it.
   instantiate the exact A019 tuple, hosted Linux rejects the anonymous-pipe
   predicate, or the chronology qualification is presented as stronger evidence
   than the repository contains.
+
+## D0081 — Preserve A019 when external safety authority requires explicit consent
+
+- **Date:** 2026-07-28
+- **Diagnosis:** Exact commit
+  `5aca8111540064b9449ef55a806427795cb800bd` passed hosted CI run
+  `30349473867`, satisfying the deterministic and Linux parity prerequisites.
+  A first non-mutating eligibility shell used zsh's reserved `path` variable as
+  a loop name and consequently erased that subprocess's `PATH`; it stopped at
+  `make -n` with `command not found`, before any mutation or A019 command. The
+  corrected preflight then proved clean HEAD, matching hosted SHA, absent
+  canonical roots, and the exact dry-run command. Submission of
+  `make g2-checkpoint-recovery` was rejected before process creation by the
+  external safety gate because the user had not explicitly authorized this
+  exact irreversible one-shot.
+- **Decision:** Treat the safety rejection as an authority boundary, not a
+  software failure or consumed attempt. Preserve the clean hosted-green state,
+  record that no A019 path exists, and require explicit user authorization
+  before submitting the exact Make command again. Never use an indirect
+  invocation or alternate tool to evade the gate.
+- **Rejected:** Interpret the general instruction to proceed as sufficient
+  external consent; execute the private supervisor directly; alter the command
+  shape; or call the rejected submission an A019 attempt. The safety reviewer
+  explicitly forbade workarounds, and no A019 process or state was created.
+- **Evidence:** Hosted job `90243303390` completed all steps successfully in
+  1 minute 22 seconds. Immediately after the rejected submission, git remained
+  clean and `results/g2_checkpoint_recovery`,
+  `data/g2_checkpoint_recovery/checkpoints`, and
+  `data/g2_checkpoint_recovery/scratch` were all absent. Seed 9191 and every
+  registered stream remain unaccessed.
+- **Residual risk:** A019 is now blocked on explicit human consent rather than
+  code or CI. Once consent is supplied, a fresh non-mutating eligibility check
+  is still required because repository or hosted state may have changed.
+- **Reopen if:** Any canonical root appears before explicit consent, the
+  approved command differs from the exact Make target, HEAD or hosted evidence
+  changes, or anyone attempts to bypass the external safety decision.
