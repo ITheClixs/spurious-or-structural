@@ -654,6 +654,8 @@ empirical model trials, but gate-level pipeline variants are recorded.
   process records zero RNG draws. Result SHA256
   `7061e9d5a734115cadad728e262eceb177d5eddb9f1cb6391a1f81aa040e7a3c`
   is bound by `_SUCCESS`; no failure marker exists. This consumes the only
-  A019 attempt and cannot be rerun.
+  A019 attempt and cannot be rerun. Evidence commit
+  `e328a33f0792ff81c8a0a3e6d54b7ad0a7563f7e` passed hosted CI run
+  `30386325383`.
 - **Intervals:** not applicable; software integrity/recovery only.
 - **Multiple-testing count:** zero. No coefficient is compared with truth.

@@ -635,3 +635,11 @@ resource workload, so extrapolating it to the 15,195,600 validation or
 45,586,800 research LASSO fits would be invalid. The next permitted action is
 derivation and pre-recording of A022 only. A019 is consumed permanently and
 must never be rerun.
+
+### Hosted A019-evidence addendum
+
+Evidence commit `e328a33f0792ff81c8a0a3e6d54b7ad0a7563f7e` passed hosted CI
+run `30386325383`; its parity job completed in 1 minute 19 seconds with every
+required step green. This proves that the committed receipts and living-ledger
+closeout coexist with the locked deterministic suite. It does not replay A019
+and does not weaken any A022 or registered-stream lock.

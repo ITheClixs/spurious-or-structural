@@ -30,10 +30,11 @@ resource/validation/research realization remain absent.
 ## Session objective
 
 Current session target: close the sole passed A019 software-recovery attempt
-with independent receipt/hash/budget review, committed evidence, and hosted CI.
-Then derive and pre-record the hashing-inclusive A022 resource benchmark
+with independent receipt/hash/budget review, committed evidence, and hosted CI,
+then derive and pre-record the hashing-inclusive A022 resource benchmark
 without opening any registered resource/validation/research realization or
-making any coefficient-to-truth claim.
+making any coefficient-to-truth claim. A019 closeout is now complete; A022
+derivation is next.
 
 ## Current evidence
 
@@ -345,14 +346,16 @@ making any coefficient-to-truth claim.
   homogeneous coefficient hashes match exactly; the fresh process reproduced
   the three hashes with zero RNG draws. No failure marker exists. A019 is
   permanently consumed and is software-recovery evidence only.
+- A019 evidence commit
+  `e328a33f0792ff81c8a0a3e6d54b7ad0a7563f7e` passed hosted CI run
+  `30386325383`; its parity job completed in 1 minute 19 seconds. The only
+  annotation is the existing nonblocking Node 20 action deprecation warning.
 
 ## In flight
 
-1. Commit and push the immutable A019 result plus ledger/red-team closeout, then
-   require hosted CI green on the evidence revision.
-2. Derive and pre-record the hashing-inclusive A022 cold/warm resource benchmark
+1. Derive and pre-record the hashing-inclusive A022 cold/warm resource benchmark
    before any registered resource draw.
-3. Admit or reject the resource stream only from A022's frozen limits and
+2. Admit or reject the resource stream only from A022's frozen limits and
    observed evidence; do not infer admission from A019.
 
 ## Blockers
@@ -392,7 +395,8 @@ preregistration-amendment-A019 seed-9191 attempt passed once from source HEAD
 allocated checkpoint bytes, exact before/after/fresh coefficient hashes, and
 zero fresh-process RNG draws. Attempt
 `18c70c205ad75d608ad0dc70f3c9873df96d2a636f351b22411599889ddb01c1`
-is permanently consumed. No registered resource/validation/research
-realization or empirical tape has been touched. A022 remains untested." Never
+is permanently consumed. Evidence commit `e328a33` is hosted green at run
+`30386325383`. No registered resource/validation/research realization or
+empirical tape has been touched. A022 remains untested." Never
 retry A019 or touch a registered resource, validation, or research seed before
 A022 is derived, predicted, frozen, and passes its own admission rules.

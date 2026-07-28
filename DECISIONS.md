@@ -1982,6 +1982,11 @@ the choice, alternatives, and the evidence that would reopen it.
   `fresh_process_rng_draw_count=0`. Result SHA256
   `7061e9d5a734115cadad728e262eceb177d5eddb9f1cb6391a1f81aa040e7a3c`
   matches the terminal `_SUCCESS`; no failure marker exists.
+- **Hosted closeout:** Evidence commit
+  `e328a33f0792ff81c8a0a3e6d54b7ad0a7563f7e` passed hosted CI run
+  `30386325383`; the parity job completed in 1 minute 19 seconds with every
+  required step green. The only annotation is the pre-existing Node 20 action
+  deprecation warning.
 - **Residual risk:** A019 validates one same-machine recovery at the frozen
   address. It does not test A022 throughput, statistical bias, power, or the
   premise. The 50-ms process-tree sampler can miss shorter RSS spikes, and
