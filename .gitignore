@@ -26,3 +26,9 @@ results/*
 !results/g1/_SUCCESS
 !results/g1/estimates.json
 !results/g1/summary.json
+!results/g2_checkpoint_recovery/
+!results/g2_checkpoint_recovery/attempt.json
+!results/g2_checkpoint_recovery/result.json
+!results/g2_checkpoint_recovery/_SUCCESS
+!results/g2_checkpoint_recovery/failure.json
+!results/g2_checkpoint_recovery/_FAILURE

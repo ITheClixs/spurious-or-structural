@@ -9,7 +9,7 @@ empirical model trials, but gate-level pipeline variants are recorded.
 
 - Empirical specifications: **0**
 - Simulation estimator specifications: **1 run and passed; 2 G2 designs rejected pre-run; 1 G2 design registered and pending**
-- Software-only pipeline specifications: **2 locally completed; estimator-core hosted verification pending**
+- Software-only pipeline specifications: **3 hosted completed; 1 checkpoint/recovery specification registered and pending**
 - Holdout opens: **0**
 
 ## P0001 — G0 deterministic record-and-hash smoke path
@@ -232,9 +232,10 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Status:** registered, content-audited, hash-sealed, independently admitted
   at the pre-implementation contract boundary, and unrun. The contract,
   test-only RNG namespace, pure DGP, and in-memory smooth estimator core are
-  locally implemented and hostile-reviewed; checkpointing, resource authority,
-  validation, and research authority remain absent. Hosted verification of the
-  estimator-core commit is pending.
+  implemented and hostile-reviewed; checkpointing, resource authority,
+  validation, and research authority remain absent at this historical entry.
+  The estimator-core commit later passed hosted CI run `29492765654`; see the
+  C0014 closeout evidence below.
   Documentation commit `a5c7f1c02e941a0d6fdef3d645dfea63884cdfd7`
   passed hosted CI run `29448917107`; test-first implementation with test-only
   seeds is open. Registered resource, validation, and research streams remain
@@ -597,3 +598,49 @@ empirical model trials, but gate-level pipeline variants are recorded.
   `5500611da123bdc1dedd2124b0f2fd26e04525db` passed CI run `29492765654`;
   the parity job completed in 31 seconds. Hosted execution used only the locked
   deterministic/test-seed suite and did not open a registered G2 stream.
+
+## C0015 — Immutable G2 panel checkpoint and test-seed recovery
+
+- **Registered:** 2026-07-16, after deriving the persistence trust boundary and
+  before checkpoint code or the seed-9191 recovery call.
+- **Scope:** separate complete base-panel and cell-panel NPY artifacts; exact
+  manifest/source/runtime/address/receipt/payload validation; success-last
+  immutable publication; stage-specific fresh authority restoration;
+  cumulative telemetry recovery; registered-seed refusal; and the single
+  252-date software-recovery run frozen in preregistration amendment A019.
+- **Prediction before implementation:** The current repository fails because no
+  serialized loader exists. After repair, deterministic hostile cases in
+  `docs/derivations/GATE_G2_CHECKPOINT_AUTHORITY.md` fail before issuance, an
+  exact fresh-process round trip succeeds without any RNG draw or upstream
+  replay, and the dedicated preregistration-amendment-A019 one-shot
+  uninterrupted/reloaded arrays, receipts, digests, and three coefficient
+  outputs match exactly. Artifact, wall-clock, and RSS hard stops are 12 MiB,
+  120 seconds, and 1.5 GiB.
+- **Status:** deterministic implementation passed locally; hosted verification
+  and the one-shot remain pending. The first red collection failed because the
+  named checkpoint module did not exist. Pre-code hostile review rejected an
+  initial test shape that pytest-collected seed `9191` and omitted
+  fresh-process/RSS/timeout and writer-authority evidence. Post-implementation
+  hostile review then reproduced a direct codec authority bypass,
+  timestamp-valid stale bytecode acceptance, unreserved transient cap
+  breaches of 94 and 31 bytes, loader/writer TOCTOU, direct private-child path
+  overrides, missing pre-draw identity reinspection, partial final evidence,
+  exited-leader process-group leakage, symlinked-ancestor mutation before
+  attempt rejection, missing post-`SIGKILL` proof, replayable named-FIFO child
+  authority, exceptional-path worker leakage, and dual terminal markers after
+  a directory-fsync fault. Closeout additionally found that execution-source
+  identity omitted the sole Make launcher and that the seed-1729 test
+  attempt/result mislabeled actual date-frontier draws as recovery draws.
+  The repaired checkpoint suite passes 86 tests and the seed-1729 recovery
+  supervisor passes 26, including exact fresh-process recovery with all draw
+  paths blocked, transient/uncertain terminal-publication fault injection,
+  cleanup-interrupt precedence, fixed pre-import Make authority, launcher
+  source binding, and exact stream/phase/scenario receipts. The complete
+  269-test local gate, Ruff, format, strict mypy, deterministic demo, and
+  committed-result drift pass. A020's live-session prediction/red-before-repair
+  sequence has no immutable repository-local proof, so its chronology pass is
+  explicitly qualified and current mtimes are not treated as evidence. The exact
+  preregistration-amendment-A019 seed-9191 call has not run and remains sealed
+  until a committed revision passes hosted CI.
+- **Intervals:** not applicable; software integrity/recovery only.
+- **Multiple-testing count:** zero. No coefficient is compared with truth.

@@ -495,3 +495,68 @@ subsequently passed hosted CI run `29492765654`; its parity job completed in 31
 seconds. That closes the local-versus-hosted software parity objection for this
 revision only. It does not answer A022, serialize authority, or license any
 registered G2 stream.
+
+## Tenth verdict: checkpoint/recovery passes local hostile closeout; A019 remains locked
+
+The first numerically green C0015 implementation did not survive review.
+Hostile probes reproduced a direct writer-authority bypass, acceptance of stale
+timestamp-valid bytecode, transient 2 GiB cap breaches of 94 and 31 bytes,
+loader/writer TOCTOU, redirectable private child roles, missing pre-draw
+source/runtime reinspection, partial final evidence, process-group leakage
+after leader exit, mutation through a symlinked root, a false post-`SIGKILL`
+cleanup success, replay through a named FIFO, missing teardown after an
+unexpected sampler exception, and simultaneous success/failure evidence after
+a directory-fsync fault. Compound fault injection then showed that stage
+cleanup `OSError` or `KeyboardInterrupt` could erase an already-uncertain
+publication outcome. Make itself could be redirected before Python import and
+could mutate through a symlinked `data` ancestor.
+
+Every one of those cases now fails closed under the declared A024 boundary.
+The codec reserves the whole logical/allocated checkpoint tree before mutation
+and holds directory-descriptor leases through write or load-authority
+transitions. Child roles require inherited anonymous-pipe capabilities; roots,
+source, runtime, attempt, and process groups are rechecked at their authority
+boundaries. Terminal publication either becomes durably authoritative, becomes
+durably absent before the opposite outcome, or remains explicitly uncertain
+with the attempt consumed and no opposite marker. Make freezes the literal
+bootstrap/thread contract and rejects observed symlink ancestors before its
+first `mkdir`.
+
+Closeout found two further evidence defects. The sole public `Makefile`
+launcher was absent from the execution-source snapshot, and the seed-1729
+recovery *procedure* printed `VALIDATION_RECOVERY` `23/0` although it actually
+drew the licensed `VALIDATION_DATE_FRONTIER` `22/2` test address. The repaired
+snapshot binds `Makefile` as its seventh declared path. Test spec, attempt,
+checkpoints, draws, and result now all report date-frontier `22/2`; public A019
+alone remains recovery `23/0`.
+
+The fresh stable evidence is 86/86 checkpoint tests, 26/26 recovery tests, and
+112/112 across the combined surface. The complete locked local gate passes
+Ruff, Ruff format, strict mypy over 22 source files, all 269 tests,
+deterministic demo, and committed-result drift. Independent hostile review
+also reran recovery 26/26 and four focused launcher/load-authority probes 4/4.
+The exact A019 result, checkpoint, and scratch paths remain absent. Neither
+seed 9191 nor any registered G2 stream was run.
+
+One governance defect cannot be repaired retroactively. The live session
+recorded A020's prediction, failing Makefile-omission test, and source repair in
+that order, but no immutable repository-local red log preserves the sequence.
+The still-uncommitted worktree and later A021 edits make current mtimes
+non-probative. A020 therefore receives only a qualified chronology pass. Future
+authority repairs must commit, or otherwise immutably preserve, prediction and
+red evidence before implementation.
+
+The strongest remaining mechanical objections are explicit: Linux
+anonymous-pipe identity still needs committed hosted execution; 50 ms RSS
+sampling can miss a shorter peak; a power loss or compound publication
+uncertainty can consume A019 with only its attempt; and advisory locks plus
+unkeyed hashes cannot defeat the coordinated same-user writer/race excluded by
+A024. A022 also remains entirely untested: the checkpoint smoke is not the
+hashing-inclusive cold/warm resource benchmark.
+
+The deterministic local checkpoint/recovery revision passes hostile closeout
+with the A020 chronology qualification. This verdict does **not** license A019
+from the dirty worktree and does not license resource, validation, research, or
+empirical access. A019 may be consumed once only after this exact source state
+is committed, pushed, and passes hosted CI, with the worktree clean and the
+canonical attempt path still absent.

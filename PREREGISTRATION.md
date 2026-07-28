@@ -704,3 +704,120 @@ outcomes.
 - **Access statement:** The diagnosis uses only authorized test seed `1729` and
   deterministic digest comparison. No registered, empirical, evaluation, or
   holdout stream was accessed.
+
+### A018 — Define checkpoint integrity without claiming impossible origin authentication
+
+- **Date:** 2026-07-16.
+- **Reason:** A010 deferred a future loader but did not define its trust root,
+  manifest variants, completion ranges, atomic state machine, or authority
+  restoration rule. Unkeyed hashes can detect corruption but cannot prove
+  licensed origin against an actor who may rewrite a payload and recompute all
+  hashes. Leaving that distinction implicit would make the checkpoint claim
+  indefensible.
+- **Amendment:** Persist separate complete date-major base-panel and cell-panel
+  sufficient-statistic artifacts; never persist raw rows, `X0`, PCA matrices,
+  aggregates, or weak receipts. Each success-last immutable artifact binds the
+  four seals, exact contract/source/runtime identity, canonical full DGP address
+  domain, complete date range, exact design and response receipts, separate
+  design/response digests, exact NPY payload contracts, cumulative telemetry,
+  and all content hashes. Stage-specific loaders snapshot and validate every
+  file, reconstruct exact immutable panels, and mint only their own weak
+  registry entry inline. No generic registrar exists. This slice accepts only
+  test seeds `1729` and `9191`; registered seeds remain blocked pending a later
+  runtime-preflight and resource-authority capability. The trusted-origin
+  boundary is the local writer process plus checkpoint directory; coordinated
+  same-user recomputation of all bytes and hashes is explicitly out of scope.
+  The complete contract is derived in
+  `docs/derivations/GATE_G2_CHECKPOINT_AUTHORITY.md`.
+- **Inference effect:** None. The amendment serializes already frozen
+  sufficient statistics and changes no DGP, estimator, target, threshold,
+  interval, scientific family, or trial count.
+- **Test prediction:** The current code fails because no loader exists. The
+  repaired code must round-trip base/cell bytes exactly, regain authority in a
+  fresh process without any RNG draw or upstream replay, reject the enumerated
+  malformed, mixed, stale, substituted, and publication-fault classes before
+  issuance, preserve cumulative resource accounting, refuse overwrite, and
+  reject registered or otherwise unlicensed seeds before filesystem access.
+- **Access statement:** Deterministic derivation and code review only. No RNG,
+  registered stream, empirical data, evaluation data, or holdout was accessed.
+
+### A019 — License one exact 252-date test-seed checkpoint recovery
+
+- **Date:** 2026-07-16.
+- **Reason:** The estimator derivation deferred a full-size recovery until its
+  sample, tolerance, and prediction were written before the stochastic call.
+- **Amendment:** After the deterministic checkpoint suite passes, run exactly
+  one dedicated, non-pytest one-shot `master_seed=9191`,
+  `VALIDATION_RECOVERY`, `n_dates=252`,
+  `panel_index=0`, target-16, non-paper-recovery, `phi=0.60`,
+  reliability-0.95 panel. Compare uninterrupted and post-GC reloaded base/cell
+  arrays, receipts, digests, and all three smooth point coefficients by exact
+  byte/SHA equality, with no positive tolerance. A fresh subprocess must
+  reproduce the three coefficient hashes from checkpoints with every RNG draw
+  path instrumented to fail. Combined artifacts must be below 12 MiB;
+  expected/hard wall time is 30/120 seconds and expected/hard peak RSS is
+  1/1.5 GiB. The runner records actual elapsed/RSS/hash/source/runtime evidence
+  once and refuses overwrite. Exact procedure and stop rules are in
+  `docs/predictions/GATE_G2_CHECKPOINT.md`.
+- **Inference effect:** This is software recovery only. It makes no comparison
+  with structural truth, no premise claim, and has no statistical interval or
+  multiple-testing count.
+- **Access statement:** A019 was recorded before seed `9191` was used for this
+  run. No registered seed or empirical data was accessed.
+
+### A020 — Bind the Make-only recovery launcher into execution-source identity
+
+- **Date:** 2026-07-28.
+- **Reason:** Hostile closeout made the Make target part of the one-shot
+  authority boundary by freezing its path/thread constants and pre-import
+  symlink checks. The existing six-path source snapshot covered the Python
+  implementation and frozen configs but omitted `Makefile`; a modified
+  launcher could therefore remain outside the attempt hash and the public
+  clean-source predicate.
+- **Amendment:** Add the repository-root `Makefile` as the seventh declared
+  execution-source path for checkpoint/recovery identity. Its exact mode,
+  bytes, size, and SHA256 enter the same canonical tracked-plus-untracked
+  snapshot as `src/xid`, the two G2 configs, `pyproject.toml`, `uv.lock`, and
+  `.python-version`. Public A019 preflight requires this expanded declared
+  snapshot to be clean and stable before `attempt.json`; checkpoint roots
+  remain disjoint from every declared path.
+- **Inference effect:** None. This strengthens launcher provenance and changes
+  no DGP, estimator, address, target, threshold, interval, trial count, or
+  stochastic realization.
+- **Test prediction:** Before implementation, source enumeration does not
+  observe `Makefile`. After implementation, a behavioral spy over the stable
+  source-file identity function observes `Makefile`, its bytes change the
+  snapshot hash, and ordinary source/runtime bracketing remains green.
+- **Access statement:** Amendment and deterministic test design only. Seed
+  `9191`, every registered G2 stream, empirical data, evaluation data, and the
+  holdout remain untouched.
+
+### A021 — Report the test-smoke RNG address without recovery relabeling
+
+- **Date:** 2026-07-28.
+- **Reason:** The seed-1729/48-date supervisor smoke intentionally draws the
+  already licensed `VALIDATION_DATE_FRONTIER` test address so pytest cannot
+  instantiate the exact A019 recovery address. Its in-memory spec and public
+  test receipt nevertheless said `VALIDATION_RECOVERY` and phase/scenario
+  `23/0`, while checkpoint construction actually used date-frontier
+  phase/scenario `22/2`. A software-procedure label cannot override the
+  stochastic address in evidence.
+- **Amendment:** The test-only `RecoveryRunSpec`, `attempt.json`, worker
+  contract, and result receipt must name the actual
+  `VALIDATION_DATE_FRONTIER` stream and contract-derived `22/2` phase/scenario.
+  Remove the stream-substitution helper. The phrase “seed-1729 recovery
+  supervisor” describes checkpoint/write/drop/reload/fresh-process procedure
+  only; it is not an RNG-stream claim. Public A019 remains exactly seed 9191,
+  `VALIDATION_RECOVERY`, 252 dates, phase/scenario `23/0`, and cannot appear in
+  pytest.
+- **Inference effect:** None. No stochastic input changes; this corrects
+  receipts to the stream already drawn and changes no estimator, target,
+  threshold, interval, trial count, or public A019 address.
+- **Test prediction:** Before repair, the seed-1729 result asserts recovery
+  although its checkpoint receipts are date-frontier. After repair, spec,
+  attempt, checkpoint receipts, and result agree on
+  `VALIDATION_DATE_FRONTIER`/`22/2`, exact fresh-process hashes remain equal,
+  and public A019 tests still fail before construction.
+- **Access statement:** Governance correction from existing seed-1729
+  software-smoke evidence only. Seed 9191, every registered G2 stream,
+  empirical data, evaluation data, and the holdout remain untouched.

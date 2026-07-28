@@ -378,6 +378,17 @@ Additional hard stops:
   foreground run, without relying on it for recovery.
 
 Every success-last checkpoint binds the raw config hash, both target hashes,
-tracked execution-source digest, numerical-runtime fingerprint, full seed key,
-completed replicate range, resource telemetry, and payload hash. Cumulative
-time and maximum RSS reload on resume so restarting cannot reset a stop.
+the LASSO-ratio hash, tracked execution-source digest, numerical-runtime fingerprint, its
+kind-specific complete RNG-address domain, completion inventory, resource
+telemetry, and payload hash. Date-panel artifacts bind all five DGP component
+keys over the exact complete half-open date range and have no replicate range;
+bootstrap artifacts bind their exact parent coordinates and half-open replicate
+range. The versioned variant rules are derived before each variant becomes
+executable; `docs/derivations/GATE_G2_CHECKPOINT_AUTHORITY.md` licenses only
+base-panel and cell-panel variants before A022. Cumulative time and maximum RSS
+reload on resume so restarting cannot reset a stop. The 2 GB allocation applies
+to the complete active phase checkpoint tree, including simultaneous staging
+bytes, rather than to each artifact independently. A root-wide advisory
+reader/writer lease serializes cooperating access; every lock, prefix, stage,
+file, and rename mutation is conservatively reserved before it occurs and
+checked against actual logical and allocated usage immediately afterward.

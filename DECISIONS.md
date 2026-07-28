@@ -1605,3 +1605,308 @@ the choice, alternatives, and the evidence that would reopen it.
 - **Reopen if:** The hosted run is invalidated, the committed revision cannot be
   reproduced locally, or later checkpoint/resource work requires weakening the
   exact provenance and design-identity contracts.
+
+## D0073 — Make the checkpoint trust boundary explicit before writing a loader
+
+- **Date:** 2026-07-16
+- **Diagnosis:** A manifest plus unkeyed hashes can prove byte consistency but
+  cannot prove that a writable local artifact originated in the licensed
+  in-memory issuance chain. Any same-user actor who can replace the payload can
+  also recompute every SHA256. More hashes would disguise, not solve, that
+  impossibility. Full upstream replay would prove origin but erase checkpoint
+  savings and invalidate the frozen resource measurement.
+- **Decision:** Treat the local writer process and checkpoint directory as the
+  trusted origin boundary. Defend rigorously against crash/torn publication,
+  stale source/runtime/config, mixed artifacts, malformed schemas, accidental
+  corruption, ordinary substitution, relabeling, and hash-then-reopen races.
+  State explicitly that coordinated same-user recomputation is out of scope.
+  Persist separate complete base and cell date panels, use exact NPY files,
+  validate one in-memory snapshot of every file, and restore authority only in
+  exact stage-specific loaders with inline registry writes.
+- **Rejected:** Claim content hashes authenticate origin; embed a private key in
+  source; depend on an external signing service; replay all RNG/PCA/moment work
+  at load; serialize only the aggregate; or expose a generic decoded-object
+  registrar.
+- **Residual risk:** A malicious actor with write access to the checkpoint tree
+  and execution ability can forge a self-consistent artifact. This limitation
+  must remain prominent. A022 must still measure actual hash/I/O/issuance cost.
+- **Reopen if:** A defensible external trust anchor becomes available, the
+  checkpoint directory cannot be treated as trusted, a loader hashes different
+  bytes from those it decodes, or bootstrap execution requires a different
+  artifact granularity.
+
+## D0074 — Reject the first checkpoint test shape before codec implementation
+
+- **Date:** 2026-07-16
+- **Diagnosis:** The first red suite correctly failed because the loader module
+  did not exist, but hostile pre-code review found that its positive contract
+  was internally inconsistent. It pytest-collected the one-shot seed-9191
+  recovery, called a draw-capable namespace “without RNG,” accepted a
+  caller-selected design anchor, did not validate writer issuance or the
+  referenced base artifact, and left the exact manifest, success hash, global
+  allocation lock, import binding, timeout, and RSS evidence underspecified.
+- **Decision:** Keep the missing-module red as evidence, then rewrite the
+  contract and tests before codec code. Ordinary checkpoint tests use only seed
+  1729 and a true target-16-design/target-0-response cross-cell. Seed 9191 moves
+  to one dedicated success-last CLI after deterministic green. Writers and
+  loaders require exact test authority, exact live panel issuance, internally
+  derived design identity, stable source/runtime/import identity, a root-wide
+  lock, immutable publication, and exact byte/hash recovery. The fresh-process
+  claim is narrowed to no RNG draws or upstream replay.
+- **Rejected:** Treat test collection order as a one-shot gate; use fake
+  telemetry; let an equality-compatible panel become a checkpoint; accept an
+  evidence dataclass without revalidating its on-disk base artifact; or start
+  coding while the serialized protocol remained ambiguous.
+- **Residual risk:** Content hashes still do not authenticate origin against a
+  coordinated same-user rewrite. The one-shot runner and full hostile suite
+  remain unexecuted until the deterministic codec is green.
+- **Reopen if:** Seed 9191 enters ordinary pytest, a writer can serialize an
+  unissued panel, a loader draws or replays upstream data, or the 2 GB cap can
+  race across coordinates.
+
+## D0075 — Consume A019 only from an accepted clean checkpoint revision
+
+- **Date:** 2026-07-16
+- **Diagnosis:** `attempt.json` makes the seed-9191 recovery intentionally
+  non-rerunnable. Running it from a dirty or locally unverified checkpoint
+  implementation would turn an ordinary software defect into an irreversible
+  loss of the sole recovery attempt. The earlier prediction named wall/RSS
+  stops but did not fully specify process-tree accounting or the failure
+  receipt.
+- **Decision:** Freeze the exact supervisor/worker state machine and receipt
+  schemas before runner code. The public command has no seed/date overrides,
+  requires a clean declared source snapshot and all six numerical thread
+  variables fixed at one, and is eligible only after deterministic local
+  checks, hostile review, a committed revision, and hosted CI pass. Publish
+  `attempt.json` before spawning the one claimed worker; poll the complete
+  worker process tree; publish either success-last result evidence or an
+  immutable failure receipt; never retry.
+- **Rejected:** Treat a local green test as enough for an irreversible run;
+  monitor only the direct worker PID; let the worker choose an address; delete
+  a failed attempt; or interpret sampled RSS as proof that no sub-poll spike
+  occurred.
+- **Residual risk:** A power loss can leave only `attempt.json`, and sampled
+  RSS can miss a shorter transient peak. Both limitations are explicit; the
+  former consumes A019 and the latter narrows the resource claim to observed
+  process-tree samples.
+- **Reopen if:** Hosted deterministic verification fails, the public runner
+  exposes address overrides, a second worker can draw after the claim exists,
+  or the supervisor cannot terminate the complete process group at a hard
+  stop.
+
+## D0076 — Treat disk-cap admission and load/write exclusion as pre-mutation invariants
+
+- **Date:** 2026-07-27
+- **Diagnosis:** The first apparently green checkpoint codec enforced the
+  2 GiB root cap only after creating its writer marker and created prefix/stage
+  directories before reserving them. Exact sparse-tree probes reached
+  2,147,483,742 logical bytes during marker creation and 2,147,483,679 bytes
+  after a reservation that omitted logical directory growth: 94 and 31 bytes
+  above the sealed cap. Separately, loaders checked the durable marker before
+  decoding but could return newly issued panel authority after a cooperating
+  writer appeared later.
+- **Decision:** Take a nonblocking exclusive advisory lease on the pinned root
+  directory for every writer and a shared lease for the complete
+  decode/reconstruct/registry-issuance interval. Keep the create-exclusive
+  marker as crash evidence, not as the live mutual-exclusion primitive.
+  Conservatively reserve marker bytes and entry growth before the first
+  mutation; reserve all missing prefixes, the stage, file entries, payloads,
+  and rename slack before directory creation; repeat remaining-stage
+  admission; and check actual logical and allocated usage after every
+  mutation. Final marker checks remain defense against uncoordinated local
+  mutation.
+- **Rejected:** Keep a marker-only protocol with one final check; count only
+  payload bytes; create directories and then decide whether they fit; or call a
+  post-write cap exception compliance. Each alternative permits the forbidden
+  transient state even if cleanup later succeeds.
+- **Evidence:** All three original hostile probes failed before repair. The
+  repaired exact one-byte-below-cap test refuses before even the marker write,
+  the directory-growth reservation refuses the previously admitted payload,
+  an injected late marker returns no authority, and a live shared reader lease
+  blocks the cooperating writer through issuance. The complete checkpoint
+  suite passes 85 tests.
+- **Residual risk:** Advisory locks require cooperating processes. A
+  coordinated same-user actor can ignore them and can forge content under
+  A024's explicit trusted-origin boundary. The final marker checks detect the
+  tested uncoordinated appearance but are not a cryptographic trust root.
+- **Reopen if:** Any mutation can transiently exceed the root cap, a writer can
+  acquire its lease while loaded authority is being minted, a handled failure
+  leaks a kernel descriptor, or the target filesystem does not support the
+  tested directory-descriptor `flock` semantics.
+
+## D0077 — Make private recovery roles capabilities, not alternate public CLIs
+
+- **Date:** 2026-07-27
+- **Diagnosis:** The first A019 supervisor let `_worker` and `_fresh` accept
+  arbitrary serialized roots and labels, so a direct child invocation could
+  bypass the canonical public supervisor. The primary worker also trusted only
+  the parent's earlier source/runtime preflight, allowing a later identity
+  change to reach the panel construction. Follow-on fault injection showed
+  that an interrupted create-exclusive evidence write exposed a partial final
+  file and that an exited leader could leave descendants without process-group
+  cleanup.
+- **Decision:** Make the public surface the exact Make target only. Bind every
+  private child to a one-shot inherited FIFO capability carrying its role,
+  immediate parent PID, immutable attempt digest, and exact internal-spec
+  digest; require the canonical scratch path before reading the spec. Require
+  exact public repository/result/checkpoint/scratch roots, keep every bytecode
+  prefix below the scratch root, and re-inspect live source/runtime/clean-state
+  against `attempt.json` before the worker claim or any draw and again for the
+  fresh reload. Publish evidence by fsynced staging plus no-overwrite hard link,
+  and detect/terminate a surviving process group even after its leader exits.
+- **Rejected:** Rely on underscore-prefixed CLI names; let a private child
+  select its roots; accept source/runtime verification only in the parent;
+  write final evidence in place; or stop monitoring once the leader PID exits.
+  These are naming conventions or happy-path behavior, not one-shot authority.
+- **Evidence:** Six initial capability/path/identity tests and two later
+  evidence/process-group tests failed before their respective repairs. The
+  final seed-1729-only supervisor suite passes 15 tests in 3.39 seconds,
+  including an exact fresh-process zero-draw round trip. Targeted Ruff, format,
+  and mypy pass; `make -n g2-checkpoint-recovery` confirms the fixed launcher
+  without executing it.
+- **Residual risk:** The inherited pipe and Make marker prevent ordinary or
+  accidental alternate invocation; they cannot defeat a coordinated same-user
+  actor inside A024's excluded threat model. Process-tree RSS is sampled every
+  50 ms and may miss a shorter spike, exactly as preregistered.
+- **Reopen if:** A child can read an arbitrary spec without the one-shot
+  capability, any identity mismatch reaches the claim or first draw, a partial
+  final receipt becomes visible, a descendant survives a stop, or any public
+  address/path override appears.
+
+## D0078 — Make one-shot recovery fail closed under compound host faults
+
+- **Date:** 2026-07-27
+- **Diagnosis:** Hostile closeout found five gaps after the earlier 15-test
+  recovery suite was green. A symlinked ancestor admitted filesystem mutation
+  before later child rejection; a group reported alive after `SIGKILL` was
+  treated as gone; a named FIFO could replay the child payload twice; an
+  unexpected sampler exception escaped without teardown; and one
+  post-link directory-fsync fault produced both `_SUCCESS` and `_FAILURE`.
+  Five focused regressions failed together before repair. A sixth compound
+  probe then exercised failed success-link fsync, failed retry, and failed
+  rollback fsync.
+- **Decision:** Require absolute canonical identity for every root before
+  mutation and strict identity after creation. Attest child descriptors as
+  anonymous Darwin kernel pipes or exact Linux `/proc` pipe identities and
+  reject unsupported platforms. Bracket every successful `Popen` with
+  unconditional process-group cleanup; require post-`SIGKILL` disappearance
+  or raise. Retry the final-link directory durability barrier once, otherwise
+  durably roll back; if rollback durability is uncertain, publish no opposite
+  terminal outcome. Refuse failure publication while success is visible.
+- **Rejected:** Treat a final-component `lstat` as path canonicality; assume
+  `SIGKILL` success from the syscall return; call every FIFO one-shot; clean up
+  only named monitor failures; suppress directory-fsync errors; or let an
+  uncertain rollback become a failure receipt. Each can consume or contradict
+  the sole A019 attempt.
+- **Evidence:** The five original probes failed together, then passed 5/5
+  after repair. The three-fsync compound probe leaves `attempt.json` present
+  with neither terminal marker. The seed-1729 recovery suite passes 21 tests,
+  the checkpoint/recovery surface passes 106 tests, and the complete locked
+  repository gate passes Ruff, format, strict mypy over 22 source files, all
+  263 tests, deterministic demo, and committed-result drift. Seed 9191 and all
+  registered G2 streams remain unrun.
+- **Residual risk:** Path checks are same-process preflight, not protection
+  against a coordinated same-user actor racing every pathname operation.
+  Anonymous endpoint attestation prevents named replay but is not a secret
+  against a same-user process that can execute project code. Power loss can
+  leave a consumed attempt without a terminal marker, and sampled RSS can miss
+  a sub-50-ms peak.
+- **Reopen if:** Any alias reaches mutation, a named endpoint reaches payload
+  parsing, supervision exits while its group remains, both terminal markers
+  can coexist, Linux hosted CI rejects the anonymous-pipe predicate, or an
+  uncertain publication emits the opposite terminal outcome.
+
+## D0079 — Put pre-import launch and cleanup exceptions inside the authority boundary
+
+- **Date:** 2026-07-28
+- **Diagnosis:** The first compound repair still left two authority surfaces
+  outside its model. Make accepted a command-line bootstrap override and
+  followed a symlinked `data` ancestor before Python preflight. Separately,
+  stage cleanup could replace `_PublicationStateUncertain`: first through
+  `OSError`, then through an asynchronous `KeyboardInterrupt`. In each cleanup
+  case the supervisor could publish `_FAILURE` although the earlier `_SUCCESS`
+  unlink was not durably established. Three Make/cleanup tests and the later
+  interrupt variant were recorded red before repair.
+- **Decision:** Freeze the recovery bootstrap path and six-thread environment
+  with Make `override :=` constants. Test every literal path component for a
+  symlink before the pre-import `mkdir`, with Python retaining an independent
+  canonical post-creation check. In `_exclusive_write`, capture the primary
+  publication outcome before cleanup. Suppress any cleanup `BaseException`
+  only when an already-active publication uncertainty must retain precedence;
+  otherwise preserve ordinary interrupt propagation.
+- **Rejected:** Trust Python to reject a mutation Make already made; leave
+  research-critical Make variables caller-overridable; suppress only ordinary
+  filesystem exceptions; suppress every cleanup interrupt unconditionally; or
+  allow cleanup exception type to choose whether opposite terminal evidence is
+  legal.
+- **Evidence:** The override dry-run emits only the canonical path/thread
+  contract. A copied Make surface with `data` symlinked outside fails with the
+  outside directory still empty. Three fsync faults plus either stage-cleanup
+  `OSError` or `KeyboardInterrupt` leave a consumed attempt with neither
+  terminal marker nor failure receipt, while the no-uncertainty interrupt
+  control propagates. Recovery passes 26 tests; checkpoint plus recovery passes
+  111 tests; the complete locked gate passes Ruff, format, strict mypy over 22
+  source files, all 268 tests, deterministic demo, and committed-result drift.
+  Seed 9191 and all registered G2 streams remain unrun.
+- **Residual risk:** Separate Make shell checks cannot defeat a coordinated
+  same-user actor racing components between checks and `mkdir`; A024 excludes
+  that threat. A power loss may still leave only the authoritative consumed
+  attempt, and Linux anonymous-pipe attestation still needs hosted execution
+  on the committed candidate.
+- **Reopen if:** Any Make assignment redirects the public address or thread
+  contract, a symlinked ancestor is mutated before rejection, cleanup masks an
+  active uncertainty, an ordinary interrupt is silently swallowed without
+  uncertainty, hosted Linux rejects its exact pipe identity, or both terminal
+  markers can coexist.
+
+## D0080 — Bind the launcher and report the address actually drawn
+
+- **Date:** 2026-07-28
+- **Diagnosis:** Final closeout found two evidence-identity defects after the
+  recovery behavior itself was green. First, the root `Makefile` had become the
+  sole public constructor of the frozen A019 environment, but the declared
+  execution-source snapshot still covered only six Python/config/runtime paths.
+  A changed launcher could therefore remain outside both the source digest and
+  clean-source predicate. Second, the seed-1729/48-date smoke reported
+  `VALIDATION_RECOVERY` phase/scenario `23/0` in its spec and terminal receipt
+  while a private helper actually drew `VALIDATION_DATE_FRONTIER` `22/2`.
+  Calling the procedure a recovery did not license relabeling its RNG address.
+- **Decision:** Make the root `Makefile` the seventh declared source path and
+  bind its exact mode, bytes, size, and digest into every checkpoint/recovery
+  source identity. Freeze test-mode specs to
+  `VALIDATION_DATE_FRONTIER` and public mode to `VALIDATION_RECOVERY`; delete
+  the substitution helper and use `spec.stream` for expectations, draws,
+  attempt evidence, checkpoint receipts, and terminal results. A019 remains
+  exactly seed 9191, 252 dates, `VALIDATION_RECOVERY`, phase/scenario `23/0`,
+  outside pytest.
+- **Rejected:** Treat the Make recipe as deployment scaffolding outside the
+  scientific source boundary; infer the draw address from a private helper
+  while printing a different public label; or silently change the seed-1729
+  draw to match its old receipt. The first leaves authority construction
+  unhashed, the second makes evidence false, and the third would consume a new
+  stochastic input instead of correcting the record.
+- **Evidence:** A behavioral source-enumeration test observes `Makefile` and a
+  byte-altered launcher changes the source snapshot. The exact seed-1729
+  supervisor round trip now reports date-frontier `22/2` from spec through
+  result while retaining zero draws in the fresh reload. Checkpoint passes 86
+  tests, recovery passes 26, the combined surface passes 112, and the complete
+  locked gate passes Ruff, format, strict mypy over 22 source files, all 269
+  tests, deterministic demo, and committed-result drift. No A019 artifact or
+  registered G2 realization was opened.
+- **Chronology limitation:** The live session recorded the A020 prediction,
+  failing omission test, and repair in that order, but no immutable
+  repository-local red log preserves it. The worktree was still uncommitted,
+  later A021 edits changed relevant mtimes, and current mtimes are therefore
+  non-probative. A020 receives a qualified deterministic-closeout pass, not an
+  independently git-verifiable chronology pass. Future authority repairs must
+  commit, or otherwise preserve immutable, the prediction and red evidence
+  before implementation.
+- **Residual risk:** A024 still excludes coordinated same-user source or
+  checkpoint forgery. Linux anonymous-pipe attestation remains a hosted-CI
+  prerequisite, sampled RSS may miss a sub-50-ms peak, and power loss can
+  consume A019 with only `attempt.json`.
+- **Reopen if:** Any launcher byte can change without changing source identity,
+  any test receipt differs from the address actually drawn, pytest can
+  instantiate the exact A019 tuple, hosted Linux rejects the anonymous-pipe
+  predicate, or the chronology qualification is presented as stronger evidence
+  than the repository contains.

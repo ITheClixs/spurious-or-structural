@@ -16,11 +16,24 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from enum import StrEnum
 from itertools import pairwise
+from pathlib import Path
 from typing import cast
 
 import numpy as np
 from numpy.typing import NDArray
 
+from xid.models.g2_checkpoint import (
+    G2CheckpointEvidence,
+    G2CheckpointTelemetry,
+    G2PanelCheckpointExpectation,
+    _BasePanelWriteSnapshot,
+    _CellPanelWriteSnapshot,
+    _checkpoint_load_guard,
+    _load_base_artifact,
+    _load_cell_artifact,
+    _write_base_artifact,
+    _write_cell_artifact,
+)
 from xid.sim.g2 import (
     BaseProvenance,
     G2Contract,
@@ -28,9 +41,21 @@ from xid.sim.g2 import (
     G2DateReceipt,
     G2ResponseMapIdentity,
     G2Stream,
+    TestRngNamespace,
     validate_g2_contract,
     validate_g2_date,
 )
+
+
+def _module_source_sha256() -> str:
+    digest = hashlib.sha256()
+    with Path(__file__).open("rb") as source:
+        while chunk := source.read(1024 * 1024):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+_XID_LOADED_SOURCE_SHA256 = _module_source_sha256()
 
 
 class G2FlowView(StrEnum):
@@ -122,6 +147,22 @@ class SmoothCellPanelMoments:
     design_sha256s: tuple[str, ...]
     x0ty: NDArray[np.float64]
     yty_upper: NDArray[np.float64]
+
+
+@dataclass(frozen=True, slots=True)
+class LoadedContractBasePanelCheckpoint:
+    """A freshly issued base panel plus its validated checkpoint evidence."""
+
+    panel: SmoothBasePanelMoments
+    evidence: G2CheckpointEvidence
+
+
+@dataclass(frozen=True, slots=True)
+class LoadedContractCellPanelCheckpoint:
+    """A freshly issued cell panel plus its validated checkpoint evidence."""
+
+    panel: SmoothCellPanelMoments
+    evidence: G2CheckpointEvidence
 
 
 @dataclass(frozen=True, slots=True, weakref_slot=True)
@@ -1167,6 +1208,258 @@ def stack_contract_cell_moments(
     return panel
 
 
+def _validate_contract_panel_alignment(
+    base: SmoothBasePanelMoments,
+    cell: SmoothCellPanelMoments,
+) -> None:
+    if base.date_indices != cell.date_indices:
+        raise ValueError("base and cell panel date provenance differs")
+    if base.design_sha256s != cell.design_sha256s:
+        raise ValueError("base and cell panels contain different design digests")
+    if base.source_receipts != cell.design_receipts:
+        raise ValueError("base and cell panels contain different design provenance")
+    if (base.n_rows, base.n_assets, base.x0_width) != (
+        cell.n_rows,
+        cell.n_assets,
+        cell.x0_width,
+    ):
+        raise ValueError("base and cell panel dimensions differ")
+
+
+def _checkpoint_base_snapshot(panel: object) -> _BasePanelWriteSnapshot:
+    if type(panel) is not SmoothBasePanelMoments:
+        raise TypeError("checkpoint base writer requires exact SmoothBasePanelMoments")
+    base = panel
+    token = _base_panel_token(base)
+    _validate_issued(
+        base,
+        _CONTRACT_BASE_PANEL_REGISTRY,
+        token,
+        name="contract base panel",
+    )
+    if any(receipt is None for receipt in base.source_receipts):
+        raise ValueError("contract base panel lost issued source receipts")
+    return _BasePanelWriteSnapshot(
+        date_indices=base.date_indices,
+        n_rows=base.n_rows,
+        n_assets=base.n_assets,
+        n_levels=base.n_levels,
+        x0_width=base.x0_width,
+        source_receipts=tuple(cast(G2DateReceipt, receipt) for receipt in base.source_receipts),
+        design_sha256s=base.design_sha256s,
+        x0tx0_upper=base.x0tx0_upper,
+        panel_token=token,
+    )
+
+
+def _checkpoint_cell_snapshot(
+    base_panel: object,
+    cell_panel: object,
+) -> _CellPanelWriteSnapshot:
+    if type(base_panel) is not SmoothBasePanelMoments:
+        raise TypeError("checkpoint cell writer requires exact SmoothBasePanelMoments")
+    if type(cell_panel) is not SmoothCellPanelMoments:
+        raise TypeError("checkpoint cell writer requires exact SmoothCellPanelMoments")
+    base = base_panel
+    cell = cell_panel
+    base_token = _base_panel_token(base)
+    cell_token = _cell_panel_token(cell)
+    _validate_issued(
+        base,
+        _CONTRACT_BASE_PANEL_REGISTRY,
+        base_token,
+        name="contract base panel",
+    )
+    _validate_issued(
+        cell,
+        _CONTRACT_CELL_PANEL_REGISTRY,
+        cell_token,
+        name="contract cell panel",
+    )
+    _validate_contract_panel_alignment(base, cell)
+    if any(receipt is None for receipt in cell.design_receipts) or any(
+        receipt is None for receipt in cell.response_receipts
+    ):
+        raise ValueError("contract cell panel lost issued date receipts")
+    return _CellPanelWriteSnapshot(
+        date_indices=cell.date_indices,
+        n_rows=cell.n_rows,
+        n_assets=cell.n_assets,
+        x0_width=cell.x0_width,
+        design_receipts=tuple(cast(G2DateReceipt, receipt) for receipt in cell.design_receipts),
+        response_receipts=tuple(cast(G2DateReceipt, receipt) for receipt in cell.response_receipts),
+        design_sha256s=cell.design_sha256s,
+        x0ty=cell.x0ty,
+        yty_upper=cell.yty_upper,
+        base_panel_token=base_token,
+        cell_panel_token=cell_token,
+    )
+
+
+def write_contract_base_panel_checkpoint(
+    checkpoint_root: Path,
+    panel: SmoothBasePanelMoments,
+    *,
+    expected: G2PanelCheckpointExpectation,
+    authority: TestRngNamespace,
+    contract: G2Contract,
+    repository_root: Path,
+    telemetry: G2CheckpointTelemetry,
+) -> G2CheckpointEvidence:
+    """Persist one exact live issued base panel as an immutable checkpoint."""
+    return _write_base_artifact(
+        checkpoint_root,
+        expected=expected,
+        contract=contract,
+        authority=authority,
+        repository_root=repository_root,
+        telemetry=telemetry,
+        panel=panel,
+    )
+
+
+def write_contract_cell_panel_checkpoint(
+    checkpoint_root: Path,
+    base: SmoothBasePanelMoments,
+    cell: SmoothCellPanelMoments,
+    *,
+    base_checkpoint: G2CheckpointEvidence,
+    expected: G2PanelCheckpointExpectation,
+    authority: TestRngNamespace,
+    contract: G2Contract,
+    repository_root: Path,
+    telemetry: G2CheckpointTelemetry,
+) -> G2CheckpointEvidence:
+    """Persist one exact issued response panel bound to its base artifact."""
+    return _write_cell_artifact(
+        checkpoint_root,
+        base_checkpoint=base_checkpoint,
+        expected=expected,
+        contract=contract,
+        authority=authority,
+        repository_root=repository_root,
+        telemetry=telemetry,
+        base_panel=base,
+        cell_panel=cell,
+    )
+
+
+def load_contract_base_panel_checkpoint(
+    checkpoint_root: Path,
+    *,
+    expected: G2PanelCheckpointExpectation,
+    authority: TestRngNamespace,
+    contract: G2Contract,
+    repository_root: Path,
+) -> LoadedContractBasePanelCheckpoint:
+    """Load, validate, reconstruct, and issue one base-panel checkpoint."""
+    with _checkpoint_load_guard(
+        checkpoint_root,
+        repository_root,
+        expected=expected,
+        contract=contract,
+        authority=authority,
+        artifact_kind="base-panel",
+    ):
+        decoded = _load_base_artifact(
+            checkpoint_root,
+            expected=expected,
+            authority=authority,
+            contract=contract,
+            repository_root=repository_root,
+        )
+        panel = SmoothBasePanelMoments(
+            date_indices=decoded.date_indices,
+            n_rows=decoded.n_rows,
+            n_assets=decoded.n_assets,
+            n_levels=decoded.n_levels,
+            x0_width=decoded.x0_width,
+            source_receipts=decoded.source_receipts,
+            design_sha256s=decoded.design_sha256s,
+            x0tx0_upper=decoded.x0tx0_upper,
+        )
+        token = _base_panel_token(panel)
+        if token != decoded.evidence.panel_token:
+            raise ValueError("loaded base panel token differs from its checkpoint manifest")
+        panel_key = id(panel)
+
+        def discard_panel(reference: weakref.ReferenceType[SmoothBasePanelMoments]) -> None:
+            current = _CONTRACT_BASE_PANEL_REGISTRY.get(panel_key)
+            if current is not None and current[0] is reference:
+                _CONTRACT_BASE_PANEL_REGISTRY.pop(panel_key, None)
+
+        panel_reference = cast(
+            weakref.ReferenceType[object],
+            weakref.ref(panel, discard_panel),
+        )
+        _CONTRACT_BASE_PANEL_REGISTRY[panel_key] = (panel_reference, token)
+        return LoadedContractBasePanelCheckpoint(panel=panel, evidence=decoded.evidence)
+
+
+def load_contract_cell_panel_checkpoint(
+    checkpoint_root: Path,
+    *,
+    base_checkpoint: LoadedContractBasePanelCheckpoint,
+    expected: G2PanelCheckpointExpectation,
+    authority: TestRngNamespace,
+    contract: G2Contract,
+    repository_root: Path,
+) -> LoadedContractCellPanelCheckpoint:
+    """Load, align, reconstruct, and issue one cell-panel checkpoint."""
+    if type(base_checkpoint) is not LoadedContractBasePanelCheckpoint:
+        raise TypeError("cell loading requires an exact loaded base checkpoint")
+    _validate_issued(
+        base_checkpoint.panel,
+        _CONTRACT_BASE_PANEL_REGISTRY,
+        _base_panel_token(base_checkpoint.panel),
+        name="loaded contract base panel",
+    )
+    with _checkpoint_load_guard(
+        checkpoint_root,
+        repository_root,
+        expected=expected,
+        contract=contract,
+        authority=authority,
+        artifact_kind="cell-panel",
+    ):
+        decoded = _load_cell_artifact(
+            checkpoint_root,
+            base_checkpoint=base_checkpoint.evidence,
+            expected=expected,
+            authority=authority,
+            contract=contract,
+            repository_root=repository_root,
+        )
+        panel = SmoothCellPanelMoments(
+            date_indices=decoded.date_indices,
+            n_rows=decoded.n_rows,
+            n_assets=decoded.n_assets,
+            x0_width=decoded.x0_width,
+            design_receipts=decoded.design_receipts,
+            response_receipts=decoded.response_receipts,
+            design_sha256s=decoded.design_sha256s,
+            x0ty=decoded.x0ty,
+            yty_upper=decoded.yty_upper,
+        )
+        _validate_contract_panel_alignment(base_checkpoint.panel, panel)
+        token = _cell_panel_token(panel)
+        if token != decoded.evidence.panel_token:
+            raise ValueError("loaded cell panel token differs from its checkpoint manifest")
+        panel_key = id(panel)
+
+        def discard_panel(reference: weakref.ReferenceType[SmoothCellPanelMoments]) -> None:
+            current = _CONTRACT_CELL_PANEL_REGISTRY.get(panel_key)
+            if current is not None and current[0] is reference:
+                _CONTRACT_CELL_PANEL_REGISTRY.pop(panel_key, None)
+
+        panel_reference = cast(
+            weakref.ReferenceType[object],
+            weakref.ref(panel, discard_panel),
+        )
+        _CONTRACT_CELL_PANEL_REGISTRY[panel_key] = (panel_reference, token)
+        return LoadedContractCellPanelCheckpoint(panel=panel, evidence=decoded.evidence)
+
+
 def _validate_date_weights(weights: NDArray[np.float64], *, n_dates: int) -> None:
     if type(weights) is not np.ndarray or weights.dtype != np.dtype(np.float64):
         raise TypeError("date weights must be an exact float64 ndarray")
@@ -1240,18 +1533,7 @@ def _aggregate_smooth_moments(
     """Aggregate all three moment fields with one matrix multiplication each."""
     if type(base) is not SmoothBasePanelMoments or type(cell) is not SmoothCellPanelMoments:
         raise TypeError("aggregation requires exact smooth panel moment types")
-    if base.date_indices != cell.date_indices:
-        raise ValueError("base and cell panel date provenance differs")
-    if base.design_sha256s != cell.design_sha256s:
-        raise ValueError("base and cell panels contain different design digests")
-    if base.source_receipts != cell.design_receipts:
-        raise ValueError("base and cell panels contain different design provenance")
-    if (base.n_rows, base.n_assets, base.x0_width) != (
-        cell.n_rows,
-        cell.n_assets,
-        cell.x0_width,
-    ):
-        raise ValueError("base and cell panel dimensions differ")
+    _validate_contract_panel_alignment(base, cell)
     n_dates = len(base.date_indices)
     _validate_date_weights(weights, n_dates=n_dates)
     packed_gram = np.matmul(weights, base.x0tx0_upper)

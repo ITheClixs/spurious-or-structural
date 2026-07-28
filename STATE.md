@@ -1,6 +1,6 @@
 # Research state
 
-Last updated: 2026-07-16
+Last updated: 2026-07-28
 
 ## Current gate
 
@@ -20,15 +20,17 @@ binding, is derived and hash-sealed, and has independent math, inference, and
 whole-contract content and sealed-surface passes. Commit `a5c7f1c` passed hosted
 CI run `29448917107`. The sealed contract, test-only RNG namespace, and pure DGP
 maps and the in-memory smooth estimator core are implemented and locally
-hostile-reviewed; checkpoint/resource authority and all registered G2 streams
-remain absent.
+hostile-reviewed. Immutable base/cell checkpoint recovery and its one-shot
+supervisor now pass the complete local deterministic gate; their hostile
+closeout, commit, and hosted parity are pending. Resource authority and all
+registered G2 streams remain absent.
 
 ## Session objective
 
-Current session target: derive, test, implement, and host-verify the S0004
-smooth sufficient-statistic, observable-PCA, condition-ridge, and pooled-
-homogeneous estimator core using deterministic fixtures and test-only smoke.
-Stop before checkpoint/recovery, resource authority, or any registered G2 RNG.
+Current session target: derive, test, implement, and host-verify immutable
+base-panel/cell-panel checkpoint recovery, then run the single preregistered
+252-date test-seed-9191 software recovery. Stop before the A022 registered
+resource benchmark, any registered G2 RNG, or any coefficient-to-truth claim.
 
 ## Current evidence
 
@@ -282,20 +284,59 @@ Stop before checkpoint/recovery, resource authority, or any registered G2 RNG.
   passed hosted CI run `29492765654`; the parity job completed in 31 seconds.
   GitHub emitted a Node.js-action deprecation warning, but every required step
   passed and the warning changes neither estimator evidence nor RNG authority.
+- Checkpoint/recovery C0015 is implemented without opening its exact
+  seed-9191 attempt. The checkpoint codec persists separate immutable
+  base/cell NPY artifacts, binds exact source/runtime/address/receipt identities,
+  restores only stage-specific weak authority, reserves the complete
+  root-wide 2 GiB tree before each mutation, and holds shared/exclusive
+  directory-descriptor leases across load/write authority transitions.
+- Hostile red evidence includes a direct writer-authority bypass, stale
+  timestamp-bytecode acceptance, two transient cap breaches (94 and 31 bytes),
+  loader/writer TOCTOU, redirectable private recovery roles, missing pre-draw
+  identity reinspection, partial final evidence, process-group leakage after
+  leader exit, a symlinked-root preflight mutation, a post-`SIGKILL` cleanup
+  false positive, named-FIFO capability replay, missing exceptional teardown,
+  contradictory terminal markers after a directory-fsync fault, omission of
+  the Make-only launcher from execution-source identity, and a seed-1729 test
+  receipt that mislabeled date-frontier draws as recovery draws. All numeric
+  and stochastic evidence remained test-only.
+- The repaired checkpoint suite passes 86 tests; the seed-1729 recovery
+  supervisor passes 26 tests and performs an exact fresh-process zero-draw
+  round trip. The additional compound durability probe injects three
+  directory-fsync failures plus either a cleanup `OSError` or
+  `KeyboardInterrupt` and leaves only the consumed attempt, with neither
+  terminal marker; an ordinary cleanup interrupt without prior uncertainty
+  still propagates. Make path/thread overrides and pre-import symlink ancestors
+  fail before mutation; `Makefile` is now the seventh declared source path;
+  test attempt/checkpoint/result evidence agrees on
+  `VALIDATION_DATE_FRONTIER` phase/scenario `22/2`. The complete locked local
+  gate passes Ruff, format, strict mypy over 22 source files, all 269 tests,
+  deterministic demo, and committed-result drift.
+  `make -n g2-checkpoint-recovery` confirms the fixed Make-only command without
+  executing it. The exact
+  preregistration-amendment-A019 seed-9191 recovery remains unrun.
+- A020 received only a qualified chronology pass: the live session recorded
+  prediction, red test, then repair, but the uncommitted worktree and current
+  mtimes do not independently preserve that order. Future authority repairs
+  must commit or otherwise preserve immutable prediction/red evidence before
+  implementation.
 
 ## In flight
 
-1. In the next separately derived slice, specify checkpoint manifests and
-   recovery authority, write failure-first resume tests, and only then design
-   the hashing-inclusive resource benchmark required by A022.
+1. Complete the read-only hostile closeout, commit the deterministic
+   checkpoint/recovery revision, push it, and require hosted CI success.
+2. Only from that accepted clean revision, consume the single exact
+   preregistration-amendment-A019 seed-9191 recovery attempt once.
+3. If and only if A019 passes, derive the hashing-inclusive A022 resource
+   benchmark before any registered resource draw.
 
 ## Blockers
 
 - Registered G2 resource, validation, and research streams remain blocked. The
   estimator core has no authority to run them.
-- No checkpoint loader can yet validate serialized manifests and mint fresh
-  in-process panel/aggregate authority. Registered recovery is therefore
-  unavailable.
+- The exact A019 software-recovery attempt is sealed until the deterministic
+  checkpoint/recovery revision passes hostile closeout, commit, push, and
+  hosted CI. Its `attempt.json` does not exist.
 - A022 remains untested: the 0.65-second software smoke is not the frozen
   hashing-inclusive cold/warm resource benchmark and cannot admit resource
   throughput or memory.
@@ -314,15 +355,16 @@ Stop before checkpoint/recovery, resource authority, or any registered G2 RNG.
 ## Cold-resume next action
 
 Read the four ledgers, `docs/redteam/GATE_G2_PRERUN.md`, and the G2 section of
-`docs/GATES.md`, then state: "G1 is closed on evidence commit `44965d0`; S0002
-and S0003 were rejected before RNG; S0004 config
+`docs/GATES.md`, then state: "G1 is closed. S0002/S0003 were rejected before
+RNG. S0004 config
 `f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc` is
-sealed; the contract/RNG/DGP repair is hosted green at `ff3a343` / run
-`29455143418`; C0003's first estimator attempt failed hostile authority review;
-C0004--C0014 close the in-memory smooth estimator core with 49 focused tests,
-157 repository tests, a 0.65-second/63,766,528-byte-RSS complete issued smoke,
-and final math/contract/code/ledger/verification passes; estimator-core commit
-`5500611` is hosted green at run `29492765654`; no registered G2 stream ran. The
-next allowed work is checkpoint/recovery derivation and red tests, followed by
-the A022 hashing-inclusive resource design." Do not touch empirical tape or any
-G2 resource, validation, or research seed.
+sealed. Contract/RNG/DGP commit `ff3a343` is hosted green at run
+`29455143418`; estimator-core commit `5500611` is hosted green at run
+`29492765654`. C0015 checkpoint/recovery has 86 codec tests, 26 seed-1729
+supervisor tests, and a green 269-test local gate after recorded hostile
+failures. The exact preregistration-amendment-A019 seed-9191 attempt remains
+unrun and may be consumed once only after hostile closeout plus committed,
+pushed, hosted-green evidence. No registered G2 stream or empirical tape has
+been touched." Continue with hostile closeout/hosted parity; do not run A019
+early and do not touch A022 or any registered resource, validation, or research
+seed.

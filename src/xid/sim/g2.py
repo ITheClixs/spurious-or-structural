@@ -24,6 +24,17 @@ import numpy as np
 from numpy.typing import NDArray
 
 
+def _module_source_sha256() -> str:
+    digest = hashlib.sha256()
+    with Path(__file__).open("rb") as source:
+        while chunk := source.read(1024 * 1024):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+_XID_LOADED_SOURCE_SHA256 = _module_source_sha256()
+
+
 @dataclass(frozen=True, slots=True)
 class G2Seals:
     """The four independent A005 immutability seals."""
@@ -1692,6 +1703,94 @@ class G2DateReceipt:
     date_content_sha256: str
 
 
+def validate_g2_date_receipt_metadata(
+    receipt: G2DateReceipt,
+    contract: G2Contract,
+    *,
+    require_canonical_reliability: bool = False,
+) -> None:
+    """Validate serialized receipt fields without granting DGP issuance authority.
+
+    This pure validator is intentionally weaker than :func:`validate_g2_date`:
+    it checks the exact sealed metadata representation but cannot establish that
+    a receipt originated from live transformed arrays. Checkpoint loaders may
+    use it only inside their separately documented trusted filesystem boundary.
+    """
+    validate_g2_contract(contract)
+    if type(receipt) is not G2DateReceipt:
+        raise TypeError("receipt metadata must use the exact G2DateReceipt type")
+    if type(require_canonical_reliability) is not bool:
+        raise TypeError("canonical-reliability flag must be an exact Python bool")
+    provenance = receipt.provenance
+    if type(provenance) is not BaseProvenance:
+        raise TypeError("receipt provenance must use the exact BaseProvenance type")
+    if type(provenance.stream) is not G2Stream:
+        raise TypeError("receipt stream must use the exact G2Stream type")
+    for name, value in (
+        ("master_seed", provenance.master_seed),
+        ("phase_id", provenance.phase_id),
+        ("scenario_id", provenance.scenario_id),
+        ("n_dates", provenance.n_dates),
+        ("panel_index", provenance.panel_index),
+        ("date_index", provenance.date_index),
+    ):
+        if type(value) is not int or not 0 <= value < 2**32:
+            raise ValueError(f"receipt {name} must be a uint32-range Python integer")
+    _validate_stream_coordinates(
+        provenance.stream,
+        n_dates=provenance.n_dates,
+        panel_index=provenance.panel_index,
+        date_index=provenance.date_index,
+    )
+    if (provenance.phase_id, provenance.scenario_id) != contract.phase_scenario(provenance.stream):
+        raise ValueError("receipt phase/scenario is not licensed by its stream")
+    response_map = receipt.response_map
+    if type(response_map) is not G2ResponseMapIdentity:
+        raise TypeError("receipt response map must use the exact G2ResponseMapIdentity type")
+    if type(response_map.target_index) is not int or not (
+        0 <= response_map.target_index < len(contract.population_targets)
+    ):
+        raise ValueError("receipt target index is outside the sealed target grid")
+    if type(response_map.paper_recovery) is not bool:
+        raise TypeError("receipt paper_recovery must be an exact Python bool")
+    if type(response_map.phi) is not float or not math.isfinite(response_map.phi):
+        raise TypeError("receipt phi must be an exact finite Python float")
+    expected_phi = (
+        contract.iid_ar1
+        if provenance.stream is G2Stream.VALIDATION_IID
+        else contract.confirmatory_ar1
+    )
+    if response_map.phi != expected_phi:
+        raise ValueError("receipt phi is not licensed by its stream")
+    if type(response_map.reliability) is not float or not math.isfinite(response_map.reliability):
+        raise TypeError("receipt reliability must be an exact finite Python float")
+    if not 0.95 <= response_map.reliability <= 1.0:
+        raise ValueError("receipt reliability lies outside the sealed range")
+    if (
+        require_canonical_reliability
+        and response_map.reliability != contract.confirmatory_reliability
+    ):
+        raise ValueError("smooth checkpoint receipt is not at the canonical reliability")
+    recovery_streams = frozenset((G2Stream.RESOURCE_PAPER, G2Stream.VALIDATION_PAPER_RECOVERY))
+    if response_map.paper_recovery and (
+        response_map.target_index != len(contract.population_targets) - 1
+        or provenance.stream not in recovery_streams
+    ):
+        raise ValueError("receipt paper-recovery map is not licensed")
+    if provenance.stream is G2Stream.VALIDATION_PAPER_RECOVERY and not response_map.paper_recovery:
+        raise ValueError("paper-recovery stream requires the gamma-zero response map")
+    for name, digest in (
+        ("base identity", receipt.base_identity),
+        ("date content", receipt.date_content_sha256),
+    ):
+        if (
+            type(digest) is not str
+            or len(digest) != 64
+            or any(character not in "0123456789abcdef" for character in digest)
+        ):
+            raise ValueError(f"receipt {name} must be a lowercase SHA256 digest")
+
+
 @dataclass(frozen=True, slots=True)
 class _G2DateIssuance:
     """Module-owned binding between one transformed wrapper and its contents."""
@@ -2119,12 +2218,14 @@ def validate_g2_date(date: G2Date, contract: G2Contract) -> G2DateReceipt:
     content_token = _g2_date_content_token(date)
     if content_token != issuance.date_content_sha256:
         raise ValueError("transformed date content no longer matches its issued receipt")
-    return G2DateReceipt(
+    receipt = G2DateReceipt(
         provenance=provenance,
         base_identity=expected_base_identity,
         response_map=date.response_map,
         date_content_sha256=content_token,
     )
+    validate_g2_date_receipt_metadata(receipt, contract)
+    return receipt
 
 
 def transform_date(
