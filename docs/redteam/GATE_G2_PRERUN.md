@@ -511,7 +511,8 @@ cleanup `OSError` or `KeyboardInterrupt` could erase an already-uncertain
 publication outcome. Make itself could be redirected before Python import and
 could mutate through a symlinked `data` ancestor.
 
-Every one of those cases now fails closed under the declared A024 boundary.
+Every one of those cases now fails closed under the declared assumption-A024
+boundary.
 The codec reserves the whole logical/allocated checkpoint tree before mutation
 and holds directory-descriptor leases through write or load-authority
 transitions. Child roles require inherited anonymous-pipe capabilities; roots,
@@ -551,7 +552,8 @@ anonymous-pipe identity still needs committed hosted execution; 50 ms RSS
 sampling can miss a shorter peak; a power loss or compound publication
 uncertainty can consume A019 with only its attempt; and advisory locks plus
 unkeyed hashes cannot defeat the coordinated same-user writer/race excluded by
-A024. A022 also remains entirely untested: the checkpoint smoke is not the
+assumption A024. A022 also remains entirely untested: the checkpoint smoke is
+not the
 hashing-inclusive cold/warm resource benchmark.
 
 The deterministic local checkpoint/recovery revision passes hostile closeout
@@ -625,7 +627,7 @@ this source/runtime/address recovered its sufficient statistics and coefficient
 bytes once on this machine. It does not compare a coefficient with truth, test
 bias or power, calibrate a market parameter, admit a registered
 resource/validation/research realization, or pass the G2 premise gate. It also
-does not resolve A024: unkeyed hashes cannot authenticate origin against a
+does not resolve assumption A024: unkeyed hashes cannot authenticate origin against a
 coordinated same-user writer. The 50-ms RSS sampler can miss a shorter peak,
 and the scratch trace is audit evidence rather than a cryptographic transcript.
 
@@ -643,3 +645,355 @@ run `30386325383`; its parity job completed in 1 minute 19 seconds with every
 required step green. This proves that the committed receipts and living-ledger
 closeout coexist with the locked deterministic suite. It does not replay A019
 and does not weaken any A022 or registered-stream lock.
+
+## Twelfth hostile pre-run verdict — A022 first draft failed before code
+
+Two independent reviewers rejected the first A022 resource-admission draft.
+The mathematical review found no append-only authority, non-unique registered
+panel allocation, an undefined held-out normalization under unequal block
+counts, and timing-selected microbatch discretion. The systems review found
+unnamed byte schemas, conflict with the existing exact `base-panel`/
+`cell-panel` kinds, a resume path that could discard bad timing evidence,
+incomplete PID/RSS and disk-root accounting, and descriptive rather than exact
+source/publication provenance.
+
+The revised design responds mechanically:
+
+- A022 is append-preregistered before implementation.
+- Registered claims are contiguous `b=0,1,2,...`; cold, thermal, equal, and
+  phase roles have an exact ordering and reservations precede draws.
+- Timing cannot select a workload. Fixed
+  `k3=25,k4=225,k5=225,k6=225,k7=4096` subblocks face three exact
+  seed-1729 measurability falsifiers at panels `10000..10002`.
+- Held-out transfer uses indexed unit and conservative-duration sums, with an
+  exact slower-of-other-two integer formula for unequal block counts.
+- Any live sampler/accounting gap is terminal. Resume requires external
+  evidence, preserves every completed verdict and high water, and charges all
+  same-boot elapsed.
+- RSS uses PID plus kernel start identity and `wait4`; disk covers the baseline
+  and all three roots at every mutation with decimal caps.
+- Existing panel bytes and kinds remain unchanged through separate
+  resource-stage entry points. Their original seven-path source identity is
+  nested inside an expanded 13-path A022 attempt/trace identity. A separate
+  pre-code derivation freezes every new byte schema and marker.
+
+This is not yet a pass. Two fresh reviewers must attack the complete repaired
+package after the artifact authority exists. The strongest unresolved
+objection is scientific-computational transfer: tiled paper-cache fixtures
+exercise exact shape and byte work but not 252-date heterogeneity or a
+12-hour object-lifetime trajectory. A022 cannot claim that threat away;
+validation/research runtime reforecast and hard stops remain binding.
+
+## Thirteenth hostile pre-run verdict — the repaired A022 draft still failed
+
+Two fresh independent reviews attacked the complete admission and artifact
+package on 2026-07-29 before code or rehearsal. Both failed it.
+
+The methodological review found that the fixed validation and research traces
+are not proportional to `W`. The existing held-out formula predicts one phase
+from the same phase in other warm blocks, so it tests temporal stability rather
+than transfer to a new workload mixture. Exact proportional downscaling is
+impossible: unit kernel-14 work forces a full phase, and the remaining integer
+work counts also have greatest common divisor one. A rounded kernel-13-sized
+trace repeated by the minimum warm schedule would consume roughly 60% of both
+phases before cold/equal/thermal work. The review therefore rejected the
+“production-equivalent” claim.
+
+The byte-authority review found six separate implementation blockers:
+
+1. four issuable new wrapper classes were absent from the fixed registry
+   accounting;
+2. rehearsal terminal paths bound two source identities even though the
+   registered path required three;
+3. the NPY header was semantically described rather than byte-unique;
+4. crash-stage paths, debris rows, and valid-final digests were not uniquely
+   derivable;
+5. deleting rehearsal artifacts left only an opaque aggregate digest; and
+6. disk modes, outside-baseline membership, and `statvfs` allocation units
+   admitted multiple encodings.
+
+Append-only A023 and the corrected derivations respond mechanically:
+
+- phase vectors and addresses stay unchanged, but projection is explicitly
+  conditional on per-kernel linear extrapolation;
+- six same-phase rows are labeled temporal checks, while 72 opposite-phase
+  per-kernel/aggregate rows test shared kernels `1..10,14`;
+- one ninth `_RESOURCE_ARTIFACT_REGISTRY` is counted everywhere;
+- every rehearsal terminal path binds panel, executable, and historical
+  authority identities, with only executable equality required after the
+  governance-changing prediction seal;
+- NPY v1 files use one literal 118-byte header and byte-checked 128-byte
+  prefix;
+- artifact, receipt, and root-file stages have one deterministic spelling;
+  debris inventories and final-leaf digests have exact schemas;
+- rehearsal `result.json` retains all artifact rows and kind counts before
+  binary cleanup; and
+- all workspace/root scans use one six-digit-octal no-follow row grammar and
+  a positive `f_frsize`-else-`f_bsize` allocation-unit rule.
+
+This remains a failed verdict until two independent reviewers pass the
+corrected package. Even on a future pass, assumption A026, heterogeneous 252-date cache
+lifetime, excluded kernel-11--13 cross-context behavior, and a 12-hour thermal
+trajectory remain explicit unresolved limitations rather than inferred
+guarantees.
+
+## Fourteenth hostile pre-run verdict — A024 restartability failed before code
+
+A fresh state-machine audit attacked the A023-corrected resource package on
+2026-07-29 before implementation or rehearsal and failed it. The immediate
+dependency defects were decisive: k1's boundary could not serialize the live
+raw operands required by k2, and the prior record order let k8 bind k9/k10
+parents that had not yet been published. Review then found nine additional
+transition blockers:
+
+1. loss after an attempt but before boundary zero had no representable state;
+2. a second supervisor loss could not chain before a resumed worker boundary;
+3. a clean continuation could erase a replay penalty already carried by the
+   durable trace prefix;
+4. per-record RNG upper inventories and replay increments lacked exact digest
+   domains;
+5. the first and inter-trace worker-ready cutoffs did not uniquely anchor
+   cumulative time;
+6. a complete trace or measurement receipt without its following boundary had
+   no unique completion transition;
+7. resumed worker-ready evidence omitted durable trace-prefix fields;
+8. supervisor-only cleanup continuation lacked the ordinary 480/60/540-second
+   watchdog; and
+9. terminal failure could delete artifact state before an immutable outcome
+   selected failure, so a crash could reopen work or destroy the evidence
+   required to publish the terminal record.
+
+Append-only A024 and the revised artifact authority now respond mechanically.
+The exact record order is
+`k1,k2,k3,k4,k5,k6,k7,k9,k10,k8,k11,k12,k13-recovery,k13-research,k14`.
+Kernels 1 and 2 are one indivisible first-operand epoch with one physical-loss
+ordinal but a full per-record admission penalty. Resume state contains only
+the exact panels, weights, and focal arrays needed by later consumers;
+k4--k6 aggregates are recomputed through their normal path. The canonical
+schedule has 15 boundary leaves and four cleanup-intent leaves per trace, so
+the three-panel rehearsal must prove exactly 45 boundaries, 12 cleanup
+intents, and 57 capped checkpoint intervals.
+
+Capability release now follows validated attempt, worker claim, reservation,
+and worker-ready publication; any earlier worker loss is terminal before
+`SeedSequence`. Interruption receipts can chain without minting a replay
+ordinal, preserve the complete trace prefix and pending replay, and carry one
+unique cumulative-clock anchor. An exact marked trace/measurement receipt may
+only publish its derived missing boundary. Cleanup continuations keep the
+same watchdogs as ordinary work.
+
+Terminal failure now has a separate fail-closed journal. Before deleting a
+terminal artifact, one immutable failure-intent receipt binds the failure
+identity, publisher/process deaths, durable receipt/artifact/RNG/log evidence,
+and the complete child-before-parent cleanup order. Publication selects
+failure irrevocably. Cleanup may then advance only as a missing prefix through
+contiguous failure-resume receipts; the final failure JSON must reproduce the
+intent and proves the bound roots absent before `_FAILURE`. A hidden
+failure-intent or failure-resume stage cannot be reassigned to a new
+publisher, deleted as ordinary debris, or used to reopen work.
+
+This is still a failed verdict, not a pass. The first A024 audit supplied the
+defects that shaped the corrected draft; it did not validate that correction.
+Two fresh independent hostile reviews must pass the settled cross-document
+package, followed by the locked deterministic suite and hosted CI, before
+test-seed implementation. No rehearsal, registered resource command, or
+registered resource/validation/research seed has run.
+
+## Fifteenth hostile pre-run verdict — three fresh A024 reviews failed before code
+
+Three fresh independent methods, systems, and schema reviews attacked the
+corrected A024 package on 2026-07-29 before implementation, rehearsal, or any
+registered G2 access. All three **FAILED** it.
+
+The methods/state review found that the successful RNG sequence and shared
+paper-bootstrap-weight lifecycle were not closed, the reservation's immutable
+creator conflicted with resumed current-worker equality, and interruption at a
+trace edge left thermal qualification ambiguous. The systems review found that
+valid ordinary receipt-publication stages could be deleted as debris,
+whole-leaf cleanup could not represent a crash after one child unlink, terminal
+cleanup could finish without a final durable checkpoint, a lost supervisor
+could erase unfavorable telemetry, and terminal success had no bounded close
+interval. The schema review found underdetermined failure clocks and
+process-death nullability/order, no finite terminal-evidence liveness envelope,
+and a marked-failure prefix grammar that admitted noncanonical tails. These
+were specification defects, not observed benchmark results.
+
+Append-only A025 responds without changing A022--A024's seeds, address domains,
+record order, numerical kernels, work matrix, estimators, thresholds, budgets,
+or conditional interpretation:
+
+- successful DGP/bootstrap calls now have exact position-order sequences and
+  count vectors;
+- the first positive kernel-13 position publishes one immutable
+  paper-bootstrap-weight artifact and its last positive position deletes it,
+  making each trace's resume state exactly seven rows;
+- valid ordinary receipt-only or complete stages have one idempotent adoption
+  transition after publisher-death proof, while malformed or conflicting
+  stages remain forensically incomplete;
+- ordinary cleanup, debris, and terminal cleanup use the same exact
+  child-before-parent entry rows and monotone missing-prefix progress;
+- immutable failure selection is followed by at least one contiguous
+  failure-resume checkpoint, including an exact final cleanup receipt, with
+  predecessor-bound clocks and the same 480/60/540-second envelope;
+- process-death methods, nullability, ordering, reservation ancestry, thermal
+  reset, and closed-segment telemetry carry are byte-authoritative; unknown
+  predecessor closure fails resource admission;
+- worker, interruption, trace, cleanup-row, death-row, and path caps keep the
+  root failure receipt strictly below 1 MiB, and count exhaustion selects
+  terminal failure before another object is created;
+- marked failure admits only scheduler-derived category-contiguous prefixes;
+  and
+- terminal success is one atomic success-last directory with one additional
+  fixed accounting row; visible-directory existence attests the final seal, but
+  the charge does not claim end-to-end close latency.
+
+The current successful-rehearsal grammar therefore has exactly 13 retained
+artifact kinds and 51 retained artifact rows, seven resume-state rows per
+trace, 45 canonical boundaries, 12 cleanup intents, 57 capped ordinary
+checkpoint intervals, and one terminal-success accounting row: 58
+resource-accounting rows in total. At the A025 freeze, the exact config recomputed to
+9,061 bytes, SHA256
+`1a196dc09b9fdee9b9df6389d44b43bf24f10cd07cfef0140a6696ebcb1ec9fe`,
+184 type rows, and type-tree SHA256
+`838f74d41bd4f553bd5c01dceebe279de0ed7fa998d88ba0cff510e470a40df6`;
+fresh review must independently reproduce it. The
+Fourteenth verdict's 57-interval value and two-review requirement remain only
+as historical A024 state; the A025 gate at that verdict required 58
+resource-accounting rows and fresh methods, systems, and schema reviews.
+
+This fifteenth verdict remains **FAILED**. A025 records the response to the
+three failed A024 reviews; it has not been accepted by them. Fresh independent
+methods, systems, and schema reviews still had to pass the settled A025
+cross-document package, followed by the locked deterministic suite and hosted
+CI, before any test-seed implementation. No implementation, rehearsal,
+registered resource command, registered resource/validation/research seed,
+empirical data, evaluation data, or holdout was accessed.
+
+## Sixteenth hostile verdict — A025 schema passes; methods and systems fail
+
+Three fresh independent reviews were run against the settled A025 document
+package before code, rehearsal, or registered access.
+
+The schema review **PASSED** its bounded scope. A fresh deterministic process
+reproduced 9,061 config bytes, SHA256
+`1a196dc09b9fdee9b9df6389d44b43bf24f10cd07cfef0140a6696ebcb1ec9fe`,
+184 leaf-type rows, and type-tree SHA256
+`838f74d41bd4f553bd5c01dceebe279de0ed7fa998d88ba0cff510e470a40df6`.
+It independently recovered `45/12/57+1/58`, `13/51`, and seven resume rows,
+verified the 118-byte NPY header/128-byte data offset fixtures, and found the
+remaining stale tokens only in explicit historical or negating contexts. This
+was a byte/schema pass, not execution admission.
+
+The methods review **FAILED** one high-severity branch. A025 required a fresh
+thermal cycle only before the *next* warm trace, while allowing the suspended
+rate-bearing trace to complete and remain in admission. Cooling or state change
+during interruption could therefore improve the resumed suffix before reset;
+the replay monotonicity fixture did not detect that selection. A fixed trace
+could enter `Rplus/Aplus` without being uninterrupted.
+
+The systems review **FAILED** two high-severity branches:
+
+1. a visible launch intent consumed the attempt, but same-boot supervisor death
+   before visible birth was declared forensically incomplete and also forbidden
+   from publishing the otherwise-required pre-RNG terminal failure; and
+2. death or publication failure after the final success boundary or final
+   cleanup-complete failure resume consumed the selected outcome while
+   forbidding both successor publication and any terminal directory.
+
+The verdict on A025 is therefore **FAILED** despite the schema pass. No review
+licensed implementation or rehearsal.
+
+### Append-only A026 response
+
+Amendment A026 preserves every scientific address, kernel, estimator,
+threshold, budget, artifact shape, and successful-rehearsal count while
+superseding only those three failed branches:
+
+- any interruption inside a cold/equal/validation/research rate-bearing trace
+  selects ordinary terminal failure, contributes no timing operand, and cannot
+  be completed or replaced. Between-trace interruption requires a fresh
+  uninterrupted 600-second thermal cycle; interruption inside that cycle
+  restarts it from zero;
+- each atomic launch-intent directory contains an exact mode-`0600`
+  `quiescence.lock` held under Darwin `flock` before visibility and inherited
+  by the bootstrap child as the sole duplicate open-file-object reference.
+  After exact supervisor death, only a fresh independent acquisition of that
+  same stable inode permits pre-RNG failure. A live holder yields
+  `EWOULDBLOCK`; unlock, duplication, passing, leaking, descendant creation,
+  path replacement, or unsupported locking fails closed; and
+- an exact success/failure terminal-entry object whose selected outcome cannot
+  be certified closes only through an immutable lock-bearing nonpass intent
+  and successor-rebuildable
+  `terminal/nonpass/{nonpass.json,_NONPASS}`. Both policy Booleans are false;
+  no Git retry, RNG/timing work, selected outcome, opposite outcome, or seed
+  retry is permitted.
+
+Primary Darwin review confirmed that `flock` is suitable only for this narrow
+open-file-object quiescence proof: `fork`/`dup` references share the lock,
+final close releases it, and a fresh incompatible nonblocking acquisition
+fails while a holder remains. It is explicitly combined with the separate
+PID/start/boot supervisor-death proof and is not called child-death evidence.
+The descriptor-control and local-filesystem assumptions are frozen as
+falsifiers rather than inferred at runtime.
+
+The amended config deterministically recomputes to 9,799 ASCII bytes, SHA256
+`3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29`,
+194 leaf-type rows, and type-tree SHA256
+`e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3`.
+Successful rehearsal remains `3/45/12/57+1/58/13/51/7`; the maximum nonpass
+intent is 131,072 bytes.
+
+This sixteenth verdict remains **FAILED/PENDING REVIEW**. A026 is a response
+to failed review, not acceptance. Fresh independent methods, systems, and
+schema reviews must pass the settled A022--A026 package before any test-seed
+implementation. No rehearsal, registered resource command, registered seed,
+external data, or holdout was accessed.
+
+## Seventeenth hostile verdict — A026 document authority passes after seal repair
+
+Three fresh independent lanes reviewed the settled A026 package without
+running implementation, rehearsal, a registered command, a registered RNG
+path, external data, or holdout.
+
+The methods review **PASSED**. It found that an interruption from worker-ready
+through the boundary of any cold, equal-work, validation, or research rate
+trace now selects terminal failure, contributes no `N`, `U`, `Rplus`,
+`Aplus`, `H`, `X`, minimum, stationarity, temporal, cross-context, or
+projection operand, and cannot be resumed or replaced. It also confirmed that
+a between-trace interruption preserves already completed evidence but requires
+a fresh uninterrupted 600-second thermal cycle before the next warm trace.
+
+The systems/recovery review **PASSED**. It found the launch-only transition
+total under the declared Darwin/local-filesystem assumptions: exact supervisor
+death plus a fresh same-inode nonblocking `flock` acquisition proves
+quiescence and selects pre-RNG failure, while `EWOULDBLOCK` authorizes no
+mutation. It also found the terminal-entry transition total: payload-only,
+marker-complete, hidden-stage, partial-nonpass, uncertain-rename, and repeated
+successor-death cuts either remain pending, fail closed, or reproduce the same
+terminal nonpass bytes with admission and retry false. The review did not call
+the lock child-death evidence and found no capability, RNG, Git-retry, or
+opposite-outcome path.
+
+The first schema review **FAILED** one clerical seal error. The documented
+`CJSON` definition appends one LF, but the active type-tree digest had been
+computed without that byte. The full authority was corrected from the wrong
+digest to
+`e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3`
+without changing the TOML, its semantics, or any scientific choice. A second
+schema review independently reproduced the corrected digest but **FAILED** one
+stale abbreviated prior-seal token in the cold-resume instruction. That
+residue was corrected. The third schema review **PASSED** 9,799 ASCII bytes,
+config SHA256
+`3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29`,
+194 leaf-type rows, 9,473 LF-terminated CJSON bytes, the corrected type-tree
+digest, and an empty stale-token scan. It also preserved the exact
+`3/45/12/57+1/58/13/51/7` successful-rehearsal tuple and all finite bounds.
+
+The seventeenth verdict is **PASS FOR DOCUMENT AUTHORITY ONLY**. C0016 remains
+deterministically red at the executable gate: the accepted mechanisms have no
+implementation or test-seed rehearsal, and no quantitative registered
+prediction is sealed. The next admissible actions are the locked deterministic
+suite, a resumable design commit with hosted verification, and then test-first
+implementation under the disjoint seed-1729 software namespace. The locked
+suite subsequently passed Ruff, format, strict mypy over 22 source files, all
+269 tests, the deterministic demo, and committed-result drift.

@@ -659,3 +659,87 @@ empirical model trials, but gate-level pipeline variants are recorded.
   `30386325383`.
 - **Intervals:** not applicable; software integrity/recovery only.
 - **Multiple-testing count:** zero. No coefficient is compared with truth.
+
+## C0016 — A022--A026 conditional, restartable G2 resource admission
+
+- **Registered:** 2026-07-28, through append-only preregistration amendment
+  A022, followed on 2026-07-29 by pre-implementation amendments A023--A025
+  and on 2026-08-06 by pre-implementation amendment A026, before resource-run
+  code, rehearsal, or any registered resource, validation, or research RNG
+  access.
+- **Scope:** preserve the frozen fourteen kernels, full validation/research
+  work matrix, science, seeds, and budgets while replacing only the impossible
+  one-unit resource bundle and last-three-only admission statistic. Measure
+  fixed operand-complete cold/equal blocks, exact non-`W`-proportional phase
+  traces, thermal stationarity, blocked temporal stability, shared-kernel
+  cross-context robustness, source/runtime/artifact provenance, process-tree
+  RSS, three-root disk, registries, crash/resume, and success-last publication.
+  Amendment A024 freezes exact record order
+  `k1,k2,k3,k4,k5,k6,k7,k9,k10,k8,k11,k12,k13-recovery,k13-research,k14`,
+  a composite k1+k2 epoch, minimal resume-only panels/weights/focals, one
+  ordinary/resume aggregate-recomputation path, cleanup intents, chained
+  interruption evidence, and immutable terminal-failure selection. Amendment
+  A025 closes the receipt-stage, entry-level cleanup, failure-checkpoint,
+  process-death, reservation-ancestry, thermal-reset, telemetry-continuity,
+  finite-evidence, paper-weight, failure-prefix, and terminal-success schemas
+  without changing the record order, numerical work, or scientific addresses.
+  Amendment A026 makes any interruption inside a rate-bearing trace terminal,
+  adds an inherited Darwin `flock` quiescence lease to launch intents, and adds
+  successor-rebuildable forensic terminal nonpass after an uncertifiable exact
+  success/failure terminal-entry state.
+- **Prediction before implementation:** The repository fails closed because no
+  typed compute parser, resource config/capability/supervisor, complete paper
+  and interval paths, or byte-licensed new artifacts exist. After test-seed
+  repair, three fixed seed-1729 rehearsals at panels `10000..10002` must show
+  each of `k3=25,k4=225,k5=225,k6=225,k7=4096` lasting at least 100 ms without
+  tuning. Each repaired trace must close seven resume-state rows, and the
+  successful rehearsal must retain exactly 13 artifact-kind counts and 51
+  artifact rows, publish 45 canonical boundaries and 12 cleanup intents, and
+  expose 57 capped ordinary checkpoint intervals plus one terminal
+  accounting row: 58 resource-accounting rows in total. The 60-second terminal
+  value is a fixed charge, not an end-to-end close-time claim. Only then may a
+  quantitative registered prediction be append-sealed
+  and hostile-reviewed.
+- **Status:** current deterministic red; design registered, implementation not
+  started. The first two independent hostile design reviews failed eight
+  material ambiguities. A fresh methodological review then rejected the
+  repaired draft's full-mixture interpretation, and a fresh systems review
+  found six byte-level blockers. A023 now makes projection conditional, retains
+  six temporal rows, adds 72 cross-context rows, counts nine registries, and
+  freezes three-source rehearsal identity, literal NPY bytes, deterministic
+  stages/debris, retained rehearsal inventory rows, and exact disk/statvfs
+  encodings. Recovery review then rejected the A023 package because k1's
+  boundary was not executable on resume and k8's parents did not yet exist.
+  A024 repairs dependency order and operand lifetime and adds conservative
+  replay, cleanup, interruption, and terminal-failure journals. The first
+  hostile A024 review failed nine further transitions. Three fresh independent
+  hostile reviews of the corrected A024 package then failed receipt
+  publication, entry-level cleanup, terminal checkpoint/clock, process-death,
+  reservation ancestry, thermal reset, telemetry continuity, finite evidence,
+  paper-weight lifecycle, failure-prefix, and terminal-success closure. A025
+  incorporated those findings. Fresh A025 schema review passed, but methods
+  review found interruption-tainted rate evidence and systems review found
+  launch-only and terminal-entry consumed dead ends. A026 records the
+  append-only repair, with active config seal 9,799 bytes/
+  `3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29`,
+  194 leaf rows/type-tree
+  `e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3`.
+  Fresh A026 methods and systems reviews passed. Schema review failed first on
+  an LF-omitting type-tree hash and then on one stale abbreviated prefix; after
+  both clerical corrections, an independent third recomputation passed 9,799
+  bytes, the config hash, 194 rows, 9,473 CJSON bytes, and the corrected
+  type-tree hash with no stale residue. Document authority is accepted, but the
+  executable gate remains red: implementation and rehearsal have not started.
+  The post-acceptance locked deterministic gate passed Ruff, format, strict
+  mypy over 22 source files, all 269 tests, deterministic demo regeneration,
+  and committed-result drift.
+- **Intervals:** eventual timings use the named
+  `[max(1,D-2h),D+2h]` clock-resolution enclosure, warm-block min--max ranges,
+  and exact rational upper projections; three serial warm blocks are never
+  called a probabilistic confidence interval.
+- **Multiple-testing count:** zero scientific trials. Deterministic failure
+  classes, test-seed software rehearsals, and resource timing diagnostics do
+  not inspect coefficients against truth or alter the scientific trial ledger.
+- **Access:** registered resource seed `2026071529`, validation seed
+  `2026071521`, research seed `2026071522`, empirical data, evaluation data,
+  and holdout remain untouched.

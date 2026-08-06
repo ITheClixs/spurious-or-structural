@@ -1202,9 +1202,9 @@ def _supervise_worker(
                     observed_rss = _sample_process_tree_rss(process.pid)
                 except (OSError, ValueError, subprocess.SubprocessError) as error:
                     if spec.mode == "test" and isinstance(error, PermissionError):
-                        # The Codex filesystem/process sandbox denies ``ps`` even
-                        # though the same command is available on the target Mac
-                        # and hosted CI.  The public one-shot remains fail-closed.
+                        # Some restricted test environments deny ``ps`` even
+                        # though it is available on the target Mac and hosted
+                        # CI. The public one-shot remains fail-closed.
                         observed_rss = 0
                     else:
                         failure_stage = "rss_poll"

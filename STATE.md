@@ -1,6 +1,6 @@
 # Research state
 
-Last updated: 2026-07-28
+Last updated: 2026-08-06
 
 ## Current gate
 
@@ -11,9 +11,11 @@ derived and independently audited. The sole frozen `N=30`, `K=3`, `T=10^7`
 run passed the strict preregistered discrepancy test without a seed retry. The
 complete evidence commit passed hosted CI.
 
-**G2 — Premise test / kill switch: open, smooth estimator core locally and
-hosted verified.** No registered resource benchmark, registered validation
-panel, or registered research draw has run.
+**G2 — Premise test / kill switch: open; the C0016/A026 document authority has
+passed fresh methods, systems, and schema review, while executable resource
+admission remains failed and the smooth estimator core is locally and hosted
+verified.** No registered resource benchmark, registered validation panel, or
+registered research draw has run.
 S0002 and S0003 were rejected before RNG access. S0004 makes the
 observable integrated-OFI proxy-control opponent and published `CI_I` protocol
 binding, is derived and hash-sealed, and has independent math, inference, and
@@ -25,16 +27,19 @@ supervisor pass hostile closeout, the complete local deterministic gate, and
 hosted Linux parity at commit `5aca811`/run `30349473867`. The exact A019
 one-shot passed on its sole authorized seed-9191 attempt from source HEAD
 `a75ea69`; it is permanently consumed. Resource authority and every registered
-resource/validation/research realization remain absent.
+resource/validation/research realization remain absent. C0016/A022, A023, and
+amendments A024--A026 are now append-preregistered and deterministically
+red: A026 has fresh methods, systems, and schema passes, but its implementation,
+rehearsal evidence, and quantitative execution seal do not exist.
 
 ## Session objective
 
-Current session target: close the sole passed A019 software-recovery attempt
-with independent receipt/hash/budget review, committed evidence, and hosted CI,
-then derive and pre-record the hashing-inclusive A022 resource benchmark
-without opening any registered resource/validation/research realization or
-making any coefficient-to-truth claim. A019 closeout is now complete; A022
-derivation is next.
+Current session target: verify, commit, and host-verify the methods-, systems-,
+and schema-accepted append-only A026 document authority before beginning any
+test-seed implementation. A019 closeout is complete and permanently
+non-rerunnable. No resource rehearsal, registered resource/validation/research
+realization, or coefficient-to-truth comparison is permitted in this design
+slice.
 
 ## Current evidence
 
@@ -350,21 +355,113 @@ derivation is next.
   `e328a33f0792ff81c8a0a3e6d54b7ad0a7563f7e` passed hosted CI run
   `30386325383`; its parity job completed in 1 minute 19 seconds. The only
   annotation is the existing nonblocking Node 20 action deprecation warning.
+- A019 acceptance-documentation commit
+  `9b8a45ca87efa23e99fa4ef1d8558c7acdac5c29` passed hosted CI run
+  `30386542464`. This final closeout changed no A019 bytes and ran no
+  stochastic command.
+- A022 amendment C0016 is registered before implementation. Its first two
+  independent hostile reviews failed non-unique panels, adaptive microbatch
+  discretion, undefined held-out normalization, absent byte schemas,
+  erasable sampler gaps, and incomplete process/disk provenance. The repaired
+  draft fixed contiguous claims from zero, fixed
+  `k3=25,k4=225,k5=225,k6=225,k7=4096` blocks, terminal live-accounting gaps,
+  cumulative resume evidence, and a separate pre-code artifact authority.
+  Fresh hostile review then rejected its full-mixture interpretation and found
+  six byte-authority blockers. A023 now makes projection conditional on
+  assumption A026,
+  retains six temporal checks, adds 72 opposite-phase shared-kernel checks,
+  counts nine registries, and freezes three-source rehearsal identity, literal
+  NPY headers, deterministic stages/debris, full rehearsal inventory rows, and
+  exact no-follow disk/statvfs encodings.
+- Fresh recovery review rejected the A023-corrected design before
+  implementation or rehearsal. The boundary after k1 discarded operands that
+  k2 still requires, while the old order let k8 name k9/k10 parents before
+  they existed. Amendment A024 freezes the order
+  `k1,k2,k3,k4,k5,k6,k7,k9,k10,k8,k11,k12,k13-recovery,k13-research,k14`,
+  makes k1+k2 one indivisible first-operand epoch, persists exactly
+  8,811,936 numeric bytes across the two resume-only base/cell panel payloads,
+  and requires k4--k6 aggregates to be recomputed through the normal path.
+- The first hostile state-machine audit of A024 still failed nine transition
+  branches: pre-boundary loss, chained supervisor loss, clean replay carry,
+  RNG-upper hashing, cumulative-clock anchoring, marked-receipt completion,
+  resumed-prefix copying, cleanup watchdogs, and destructive terminal failure
+  before immutable outcome selection. The corrected draft now withholds RNG
+  capability until attempt/claim/reservation/worker-ready validation, copies
+  the full durable prefix through chained interruptions, gives marked receipts
+  one boundary-completion action, preserves replay and clock anchors, and
+  journals terminal failure before deletion through one immutable intent plus
+  contiguous failure-resume receipts. This correction has not yet passed the
+  required fresh hostile reviews.
+- Three fresh independent hostile reviews of that A024-corrected package then
+  failed it before code. They found unclosed ordinary receipt stages,
+  whole-leaf rather than entry-level cleanup progress, an uncheckpointed
+  terminal-cleanup suffix, underdefined failure clocks/process-death bytes,
+  reservation ancestry and post-interruption thermal contradictions,
+  erasable closed-segment telemetry, no finite terminal-JSON envelope, a
+  missing paper-bootstrap-weight lifecycle, and an unbounded terminal-success
+  tail. Append-only A025 responds with exact successful RNG sequences,
+  idempotent receipt-stage adoption, entry-level cleanup/debris prefixes,
+  mandatory contiguous failure-resume checkpointing, exact death-proof
+  nullability/order, immutable claim ancestry, thermal reset, fail-closed
+  unknown-loss telemetry, finite evidence caps, and one fixed terminal
+  accounting row whose later final seal is attested by visible-directory
+  existence rather than a self-attested latency bound. A successful rehearsal
+  now has exactly seven resume-state rows per
+  trace, 13 retained artifact kinds, 51 retained artifact rows, 45 canonical
+  boundaries, 12 cleanup intents, 57 capped ordinary checkpoint intervals, and
+  one terminal-success accounting row: 58 resource-accounting rows in total.
+  The A025 config at that freeze sealed at 9,061 bytes/
+  `1a196dc09b9fdee9b9df6389d44b43bf24f10cd07cfef0140a6696ebcb1ec9fe`
+  with 184 type rows/type-tree
+  `838f74d41bd4f553bd5c01dceebe279de0ed7fa998d88ba0cff510e470a40df6`.
+  This was an A025 response to failed reviews, not a pass. Fresh A025 schema
+  review subsequently passed its byte/count scope, while methods review failed
+  interruption-tainted timing evidence and systems review failed the same-boot
+  launch-only and post-terminal-entry consumed states.
+- Append-only A026 responds without changing scientific addresses, kernels,
+  thresholds, budgets, artifact shapes, or the successful-rehearsal tuple. A
+  rate-bearing trace must now be uninterrupted or select terminal failure;
+  between-trace recovery requires a fresh uninterrupted 600-second thermal
+  cycle. Each launch intent binds an inherited stable Darwin `flock` lease, so
+  exact supervisor death plus fresh acquisition of the same inode can select
+  pre-RNG failure. An uncertifiable exact success/failure terminal-entry state
+  can close only through a lock-bearing, successor-rebuildable terminal
+  nonpass with admission and retry both false. The active config now seals at
+  9,799 bytes/
+  `3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29`,
+  194 type rows/type-tree
+  `e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3`.
+  Fresh independent A026 methods and systems reviews passed the uninterrupted-
+  trace, launch-quiescence, and terminal-nonpass design. Schema review first
+  failed a type-tree hash computed without the required CJSON LF and then one
+  stale abbreviated prefix; after both clerical residues were corrected, a
+  third independent recomputation passed 9,799 bytes, the config hash, 194
+  rows, 9,473 CJSON bytes, and the type-tree hash with no stale prior-seal
+  token.
+  This accepts document authority only, not implementation or resource
+  admission.
+- Registered resource seed `2026071529`, validation seed `2026071521`, and
+  research seed `2026071522` remain untouched. No A022 rehearsal, registered
+  resource command, or registered RNG path has run. The locked deterministic
+  `make check` suite was rerun after A026 document acceptance and passed Ruff,
+  format, strict mypy over 22 source files, all 269 tests, the deterministic
+  demo, and committed-result drift. It did not construct a registered
+  namespace.
 
 ## In flight
 
-1. Derive and pre-record the hashing-inclusive A022 cold/warm resource benchmark
-   before any registered resource draw.
-2. Admit or reject the resource stream only from A022's frozen limits and
-   observed evidence; do not infer admission from A019.
+1. Commit and host-verify this deterministic design slice before implementing
+   any resource path under test seeds.
+2. Implement the accepted authority test-first under the disjoint seed-1729
+   software namespace; do not start the A022 rehearsal or registered path.
 
 ## Blockers
 
 - Registered G2 resource, validation, and research streams remain blocked. The
   estimator core has no authority to run them.
-- A022 remains untested: the 0.65-second software smoke is not the frozen
-  hashing-inclusive cold/warm resource benchmark and cannot admit resource
-  throughput or memory.
+- A022/A026 remain unimplemented and untested. The 0.65-second software smoke
+  and 18.91-second A019 recovery are not the frozen hashing-inclusive
+  cold/warm resource benchmark and cannot admit resource throughput or memory.
 - A019 passed and is permanently consumed, but it has no coefficient-truth,
   bias, power, premise, or resource-admission content.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
@@ -381,22 +478,22 @@ derivation is next.
 
 ## Cold-resume next action
 
-Read the four ledgers, `docs/redteam/GATE_G2_PRERUN.md`, and the G2 section of
-`docs/GATES.md`, then state: "G1 is closed. S0002/S0003 were rejected before
-RNG. S0004 config
-`f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc` is
-sealed. Contract/RNG/DGP commit `ff3a343` is hosted green at run
-`29455143418`; estimator-core commit `5500611` is hosted green at run
-`29492765654`; checkpoint/recovery commit `5aca811` is hosted green at run
-`30349473867`. C0015 has 86 codec tests, 26 seed-1729 supervisor tests, and a
-green 269-test gate after recorded hostile failures. The exact
-preregistration-amendment-A019 seed-9191 attempt passed once from source HEAD
-`a75ea69`: 18.907810209 seconds, 178,864,128 bytes peak RSS, 9,183,232
-allocated checkpoint bytes, exact before/after/fresh coefficient hashes, and
-zero fresh-process RNG draws. Attempt
-`18c70c205ad75d608ad0dc70f3c9873df96d2a636f351b22411599889ddb01c1`
-is permanently consumed. Evidence commit `e328a33` is hosted green at run
-`30386325383`. No registered resource/validation/research realization or
-empirical tape has been touched. A022 remains untested." Never
-retry A019 or touch a registered resource, validation, or research seed before
-A022 is derived, predicted, frozen, and passes its own admission rules.
+Read the four ledgers, A022--A026 amendments, both A022 derivations,
+prediction,
+`docs/redteam/GATE_G2_PRERUN.md`, and the G2 gate. Then state: "G1 is closed.
+S0002/S0003 were rejected before RNG. S0004 config `f6291894...` is sealed.
+C0015/A019 passed once from source `a75ea69`: 18.907810209 seconds,
+178,864,128 bytes RSS, 9,183,232 allocated checkpoint bytes, exact
+before/after/fresh coefficient hashes, and zero fresh-process RNG draws.
+Attempt `18c70c20...` is permanently consumed; acceptance commit `9b8a45c`
+is hosted green at run `30386542464`. C0016/A022--A026 is
+append-preregistered, deterministically red; its active config seal is
+`9799/3408b35d.../194/e922c590...`, and it has run no rehearsal,
+registered resource command, or registered seed.
+Registered resource/validation/research realizations and empirical tape remain
+untouched." A026 document authority has fresh methods, systems, and schema
+passes. Run the locked deterministic suite, then commit and host-verify the
+accepted document package before any test-seed implementation. Never retry
+A019 or touch a registered resource, validation,
+or research seed before A022's later quantitative prediction seal, clean
+hosted SHA, absent roots, and explicit one-shot human authorization.

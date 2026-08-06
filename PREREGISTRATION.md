@@ -821,3 +821,932 @@ outcomes.
 - **Access statement:** Governance correction from existing seed-1729
   software-smoke evidence only. Seed 9191, every registered G2 stream,
   empirical data, evaluation data, and the holdout remain untouched.
+
+### A022 — Replace the non-executable resource bundle with an operand-complete admission experiment
+
+- **Date:** 2026-07-28.
+- **Reason:** The frozen resource plan named fourteen production kernels but
+  timed one nominal unit of each and admitted from the last three warm
+  equal-context bundles. That bundle cannot construct an honest 252-date
+  base/cell panel from one date, cannot construct a paper cache from one paper
+  date, leaves cheap kernels vulnerable to clock resolution, and does not test
+  transfer from an equal mixture to the radically different validation and
+  research mixtures. Artifact, capability, resume, RSS, and disk authority
+  were also not executable. These failures were diagnosed before method
+  selection and before any registered resource access.
+- **Narrow supersession:** Preserve unchanged the fourteen kernels, the full
+  validation/research work matrix `W`, DGP, estimators, targets, thresholds,
+  interval family, phase/scenario map, registered seeds, one-/12-/three-/
+  16-hour expected budgets, two-/24-/six-hour hard stops, 480-second task cap,
+  3.5-GB RSS cap, decimal 2,000,000,000-byte checkpoint cap, and all scientific
+  trial counts in `configs/g2.toml`. Supersede only (a) the one-unit
+  `benchmark_bundle`, (b) the last-three equal-context warm rate as the sole
+  admission statistic, (c) the undefined larger publication payload, and
+  (d) ambiguity over combined I/O work. The sealed `configs/g2.toml` remains
+  byte-unchanged; `configs/g2_resource.toml` must bind it and this amendment.
+- **Fixed operand block:** One cold or equal-context block has exact kernel
+  units
+  `252,252,25,225,225,225,4096,1,1,1,1,1,6048000/53298000,1`
+  for `k1..k14`, where the two `k13` values are separately timed recovery and
+  research variants. The 4,096 `k7` calls reuse one exact 499-value fixture
+  and must be byte-identical; frozen phase/task work remains `k7=1`. The
+  recovery paper cache is one little-endian float64 `(252,960)` fixture; the
+  research cache is four `(63,8460)` shards. Rows repeat one actually issued
+  paper-date summary and are benchmark-only: every scientific loader rejects
+  them. The larger publication is exactly 50 little-endian float64
+  `(595000,)` shards, 238,000,000 numeric bytes total, with construction,
+  hashing, fsync, success-last publication, reload, validation, and cleanup
+  timed.
+- **No adaptive timing choice:** Before registered authority, exactly three
+  test-seed-1729 measurability rehearsals use panel indices
+  `10000,10001,10002`. Fixed subblocks
+  `k3=25,k4=225,k5=225,k6=225,k7=4096` must each last at least 100,000,000 ns
+  in every rehearsal. In all three rehearsals the complete one-unit k14
+  envelope-plus-terminal-close-probe must also satisfy
+  `ceil_div(25*D_plus,12) <= 480,000,000,000` ns; this licenses only the fixed
+  k14 task projection. Every rehearsal has `r=0`, so this persisted
+  `D_plus` is exactly equal to `Aplus`; the legacy field name is a zero-replay
+  alias, not permission to use `Rplus` in a registered absolute projection.
+  It supplies no terminal-close latency bound.
+  As corrected before implementation by A024, the same rehearsal publishes
+  one worker-ready plus fourteen work boundaries and four cleanup intents per
+  panel: all 57 work/publication/marker intervals must be at most 480/60/540
+  seconds without adapting a count. Bootstrap from the
+  first supervisor instruction through durable `attempt.json` must also be at
+  most 480 seconds.
+  Counts and addresses are frozen in
+  `configs/g2_resource.toml` before rehearsal; measured evidence publishes
+  success-last under `results/g2_resource_rehearsal/` and is bound by the
+  later quantitative prediction seal, never written back into the config.
+  Execute exact command `make g2-resource-rehearsal` once with no timing retry
+  after its disjoint result/checkpoint/scratch roots are absent. Separately
+  named test-stage codecs require exact `TestRngNamespace` and are rejected by
+  every registered loader; both stages share only private production
+  serialization/validation functions.
+  Failure requires an append-only amendment; it cannot select a larger count,
+  retry a rehearsal, tune a private kernel, or inspect a registered
+  realization.
+- **Registered address schedule:** Registered resource panels are claimed
+  durably and contiguously as `b=0,1,2,...`; gaps, duplicates, caller-selected
+  indices, or reassignment to a different trace are terminal. A lost current
+  position may be deterministically re-executed under the same reservation
+  only with the replay evidence and penalty below. Panel zero is the cold
+  `EQUAL` trace.
+  Thermalization consumes one panel per role in exact repeated order
+  `V,R,R,V` until a complete four-role cycle ends after at least 600 seconds
+  of successful completed work.
+  Each of exactly three warm blocks consumes one `EQUAL` panel, then repeats
+  `V,R,R,V` for at least two cycles and until a complete cycle ends after at
+  least 200 seconds of successful completed work. Replay penalties cannot
+  shorten either stop. No fourth warm block may be added. Every reservation
+  precedes its first draw and enters immutable evidence.
+- **Timing and falsification:** Use integer `perf_counter_ns`, clock resolution
+  `h`, raw `D_plus=D+2h`, replay count `r`,
+  `D_admission_plus=D+480000000000*r+2h`, and
+  `ceil_div(a,b)=(a+b-1)//b`. Cold projection is
+  `ceil_div(5*W*D_admission_plus,3*U)`. Sequential total and phase-specific pair
+  throughput must satisfy
+  `20*N_j*D_(j-1) >= 19*N_(j-1)*D_j` for warm blocks 2 and 3. For held-out
+  block `j`, phase `p`, kernel `k`, and other blocks `a,b`, define
+  `H[j,p,k]=max(ceil_div(U[j,p,k]*Aplus[a,p,k],U[a,p,k]),`
+  `ceil_div(U[j,p,k]*Aplus[b,p,k],U[b,p,k]))`, where `Aplus` sums
+  replay-penalized conservative durations, and
+  `H[j,p]=sum_k H[j,p,k]`. Require
+  `Oplus[j,p] <= ceil_div(5*H[j,p],4)` for both phases and all three held-out
+  blocks. Final phase projections take the slowest of cold, all three equal,
+  and all three applicable phase contexts per kernel, add exact startup, then
+  multiply by 1.25. The complete phase/task vectors and integer formulas are
+  frozen in `docs/derivations/GATE_G2_RESOURCE_ADMISSION.md`.
+- **Capability and artifact authority:** Add a separate
+  `ResourceRngNamespace`; never widen `TestRngNamespace`. Its only factory
+  consumes a supervisor-minted one-use anonymous-pipe capability bound to the
+  attempt, worker PID/start identity, source/runtime/config hashes, and nonce.
+  The child blocks before authority: the supervisor derives the payload,
+  publishes and validates the complete worker claim/marker containing its
+  hash, and only then writes the pipe; the child validates that pair before
+  its factory can construct the namespace.
+  It can issue only seed `2026071529` at `RESOURCE_SMOOTH` and
+  `RESOURCE_PAPER` addresses and cannot construct validation or research
+  coordinates. Preserve existing exact `base-panel` and `cell-panel` byte
+  schemas, kinds, paths, hashes, and weak-issuance semantics, while leaving
+  their C0015 test-only entry points unchanged. Separately derived
+  resource-stage entry points accept only exact resource authority. Panel
+  manifests retain the original seven-path source snapshot. Test rehearsal and
+  registered execution share one exact eight-path executable snapshot, adding
+  `configs/g2_resource.toml`; outer A022 receipts additionally bind the
+  expanded 13-path authority snapshot plus exact panel hashes and tokens.
+  Every new reservation, null, paper, cache, bootstrap,
+  publication, trace, measurement, attempt, result, and failure artifact must
+  match the pre-code byte authority in
+  `docs/derivations/GATE_G2_RESOURCE_ARTIFACT_AUTHORITY.md`; success/failure is
+  published last and the 5-MiB per-payload ceiling remains binding.
+- **Source, process, and storage authority:** Bind the exact tracked-plus-
+  untracked, clean, stable A020 snapshot algorithm separately over the
+  seven-path panel, eight-path executable, and 13-path authority tuples frozen
+  in the admission derivation. No config contains its own digest. The
+  registered executable digest must equal the fixed rehearsal digest. Before
+  the first worker, run exactly one twelve-child full Git check and persist its
+  complete source/control/output/wait/rusage rows in `attempt.json`.
+  Subprocess-free stable-byte source/control seals reconstructed against that
+  bootstrap check run before and after sealed contract/resource-config loading,
+  immediately before and after every nonterminal resource-root mutation, before
+  every worker capability, and after every measurement block. After every
+  issued worker identity is closed, no worker is alive, and every currently
+  waitable direct child has been reaped, run exactly one second twelve-child
+  full check, persist it in the selected terminal JSON, and permit no other
+  preterminal Git subprocess. Require the three canonical resource roots absent
+  before a new
+  attempt. Sample the
+  process tree every 50 ms by PID plus kernel start identity; reconcile every
+  child through `wait4`/Darwin byte-normalized `ru_maxrss`. A sampler gap,
+  unaccounted descendant, or process-identity mismatch is terminal. Route all
+  temporary/cache writes into the three roots and scan logical plus allocated
+  bytes at every mutation. The resource supervisor holds exclusive ownership
+  and pre-reserves each complete panel mutation against the stricter decimal
+  checkpoint cap before the shared serializer; the generic codec ceiling
+  cannot widen it. Require resource transient at most 6 GB, baseline plus
+  transient at most 30 GB, baseline plus terminal at most 25 GB, and 25%
+  headroom inside both RSS and checkpoint caps. Invalid/partial panel finals
+  are terminal and never regenerated in place.
+- **One attempt and resume:** The public command is exactly
+  `make g2-resource-benchmark`, with one logical seed-`2026071529` attempt and
+  no seed retry. Durable boundaries publish after worker readiness, every
+  kernel position including zero-unit positions, every trace receipt, and
+  every measurement receipt. Work from the predecessor marker through the
+  next cutoff is capped at 480 seconds; atomic boundary publication has a
+  separate 60-second upper, so every durable-marker interval is at most 540
+  seconds. Pre-attempt bootstrap through durable `attempt.json` has its own
+  480-second watchdog. A work timeout is terminal. A supervisor-recorded
+  termination signal, changed boot with the old PID/start absent, or exact
+  same-boot dead-worker proof may resume from the latest complete boundary. A
+  partial trace continues only its exact next position under the same
+  reservation; a partial measurement block retains every completed
+  measurement-role trace.
+  A lost execution adds a fixed 480-second replay penalty and its full
+  licensed RNG-call upper to all admission formulas, so loss cannot improve a
+  result. Atomic nonterminal receipt directories expose no torn pair; one
+  uniquely implied hidden stage is inventoried, bound, and idempotently
+  deleted, while an exact valid final is reused byte-for-byte. Completed
+  receipts, prefixes, measurement blocks, and stationarity/transfer/cap/
+  failure verdicts are irrevocable; claimed panels are never reassigned.
+  Each complete boundary carries
+  nondecreasing conservative RSS and created-root uppers that enclose its own
+  publication; resume keeps those uppers separate from actual observed
+  telemetry and never reapplies the 25% margin to a carried RSS upper. After
+  completing any suspended trace, a resumed process starts a new thermal
+  epoch and accumulates 600 seconds of successful thermalization before any
+  later warm trace; an active block then continues its next measurement-role
+  pair. Cumulative timing starts at the first
+  resource-supervisor bootstrap instruction before project import, preflight,
+  baseline measurement, or root mutation; external Make/shell/uv/interpreter
+  launch latency is explicitly outside that measured scope. The terminal
+  result measures cumulative active elapsed only through the exact
+  pre-encoding accounting cutoff. As superseded by A025 before implementation,
+  acceptance adds a separately reported fixed 60-second terminal accounting
+  charge that is independent of kernel-14 timing; it is a projection
+  convention and never claims to measure its own later fsync. No powered-off
+  interval is subtracted because no trustworthy
+  prior-shutdown timestamp exists; `excluded_poweroff_ns=0`.
+- **Execution gate and prediction:** The current repository is predicted to
+  fail closed before RNG because the production kernels, typed compute parser,
+  resource capability/config/runner, and exact new artifact codecs do not yet
+  exist. Implementation begins under test seeds only. Before any registered
+  resource authority, all fourteen production paths must recover known truth
+  where applicable, deterministic hostile tests must pass, the exact
+  test-seed timing/RSS/disk evidence and quantitative registered prediction
+  must be append-sealed in `docs/predictions/GATE_G2_RESOURCE.md`, two hostile
+  reviews and hosted CI must pass on the exact clean SHA, all roots must be
+  absent, and the human must explicitly authorize the irreversible Make
+  command. No derivation or test alone licenses it.
+- **Inference effect:** None. A022 is an engineering admission design. It
+  cannot report coefficients, truth comparisons, bias, power, premise
+  outcomes, or scientific intervals. Deterministic failure classes and
+  resource timings add zero scientific trials.
+- **Access statement:** This amendment, its derivations, prediction, and
+  hostile design reviews were written before resource-run implementation.
+  Registered resource seed `2026071529`, validation seed `2026071521`,
+  research seed `2026071522`, empirical data, evaluation data, and the holdout
+  remain untouched.
+
+### A023 — Narrow A022 to conditional projection and close byte-authority gaps
+
+- **Date:** 2026-07-29, before resource-run implementation or any A022
+  rehearsal.
+- **Reason:** Fresh hostile review found that A022's fixed phase traces are not
+  proportional to the frozen work matrix `W`. No nontrivial exact proportional
+  trace exists: if `alpha=a/b` is reduced, integrality at kernel 14 where
+  `W[p,14]=1` forces `b=1`; removing kernel 14 still leaves greatest common
+  divisor one in both phases. The existing same-phase held-out formula tests
+  temporal stability only, not transfer to a realized full-workload mixture.
+  A separate systems review also found underdetermined registry, rehearsal
+  identity, NPY-header, stage/debris, retained-inventory, and disk-accounting
+  bytes.
+- **Narrow supersession:** Preserve every A022 RNG address, panel schedule,
+  cold/equal/validation/research trace vector, kernel atom, artifact payload,
+  cap, stop, frozen `W` count, and no-adaptation rule. Supersede only A022's
+  full-mixture transfer interpretation and the incomplete byte encodings named
+  here. The corrected claim is: on the frozen runtime and resource address
+  law, all production kernels are timed in operand-complete cold/equal
+  contexts and two fixed, non-`W`-proportional phase-labelled stress contexts.
+  Admission is conditional on per-kernel linear extrapolation from the
+  slowest admissible context to `W`. The blocked checks establish temporal
+  stability and cross-context robustness of shared kernels; they do not
+  establish exact transfer to the full validation or research mixture.
+- **Temporal and cross-context falsifiers:** Retain A022's same-phase
+  leave-one-warm-block-out `H[j,p,k]` formula and aggregate 1.25 check as
+  `temporal_checks`. For held-out block `j`, phase `p`, other phase `q`, and
+  other blocks `a,b`, freeze
+  `C={1,2,3,4,5,6,7,8,9,10,14}` and define
+  `X[j,p,k]=max(ceil_div(U[j,p,k]*Aplus[a,q,k],U[a,q,k]),`
+  `ceil_div(U[j,p,k]*Aplus[b,q,k],U[b,q,k]))`.
+  Require both
+  `Aplus[j,p,k] <= ceil_div(5*X[j,p,k],4)` for every `k in C` and
+  `sum_C Aplus[j,p,k] <= ceil_div(5*sum_C X[j,p,k],4)`.
+  The exact six temporal and 72 cross-context receipt rows are frozen in the
+  A022 derivations. Kernels 11, 12, and both kernel-13 variants stay outside
+  the cross-phase set and use cold/equal/own-phase slowest rates.
+- **Byte-authority correction:** Before A024's two private resume-wrapper
+  classes, count the four A022 issuable new wrapper classes
+  in one ninth weak `_RESOURCE_ARTIFACT_REGISTRY`; all live-count vectors have
+  nine entries. Rehearsal attempt/trace/result/failure receipts bind panel,
+  executable, and historical authority snapshots; only the executable digest
+  must equal registered execution because the later prediction seal changes
+  governance bytes. Freeze the literal NumPy-1.0 118-byte header grammar,
+  deterministic artifact/receipt/file stage names, complete debris rows and
+  final-leaf digests, full rehearsal artifact-inventory rows, six-digit octal
+  no-follow disk rows, repository-relative outside-baseline coverage, and
+  positive `f_frsize`-else-`f_bsize` allocation units. The exact encodings in
+  `docs/derivations/GATE_G2_RESOURCE_ARTIFACT_AUTHORITY.md` control.
+- **Inference effect:** None. This correction weakens an engineering
+  interpretation and strengthens falsification/provenance. It changes no
+  scientific hypothesis, estimator, interval, threshold, or trial count.
+- **Access statement:** A023 was written from document review and deterministic
+  local checks only. No A022 rehearsal, registered resource, validation,
+  research, empirical-data, evaluation-data, or holdout access occurred.
+
+### A024 — Make A022 restartable without persisting raw statistical state
+
+- **Date:** 2026-07-29, before resource-run implementation, any A022
+  rehearsal, or any registered G2 access.
+- **Reason:** Fresh hostile recovery review found that A022's boundary after
+  kernel 1 is not executable. Kernel 2 requires the exact live issued raw base
+  and `SmoothDateDesign`, including `X0` and PCA state; the durable boundary
+  stores only timing metadata. Later boundaries likewise omit the bootstrap
+  weights and candidate focal values required by subsequent kernels. A worker
+  or boot loss therefore could not continue the claimed next position without
+  either redrawing RNG, silently replaying completed stochastic work, or
+  inventing unregistered operand bytes. The same review found that kernel 8's
+  null-batch manifest names kernel-9/10 panel artifact hashes before those
+  artifacts exist in the A022 order.
+- **Narrow supersession:** Preserve all seeds, address domains, panel counts,
+  fourteen kernel definitions, unit counts, numerical procedures, artifact
+  payloads, phase vectors, frozen work matrix `W`, rates, falsifiers, budgets,
+  and scientific interpretations. Supersede only A022's record order,
+  per-position boundary claim, and missing resume-state lifecycle. The exact
+  15-record order is now
+  `(k1,k2,k3,k4,k5,k6,k7,k9,k10,k8,k11,k12,k13-recovery,`
+  `k13-research,k14)`. Moving only the three smooth I/O records makes the
+  base artifact precede the cell artifact and both precede the null artifact
+  that binds their hashes; the numerical dependency `k7 -> k8` remains
+  intact. Because k8, k9, and k10 each have one unit in every trace role, the
+  three exact numerical unit vectors remain byte-for-byte unchanged.
+- **First operand epoch:** Kernels 1 and 2 remain individually timed in their
+  canonical order but form one indivisible operand epoch. There is no durable
+  boundary between them. The first kernel boundary is published only after
+  both records and their resume-only panel state are durable. A literal
+  `480,000,000,000`-ns watchdog covers the combined work from the worker-ready
+  marker through the pre-boundary cutoff, and the boundary publisher retains
+  its separate `60,000,000,000`-ns cap. Any rehearsal in which this fixed
+  epoch does not fit fails; no count, date, shape, or timing denominator may
+  adapt. One non-durable cumulative monotonic cutoff is sampled after all k1
+  work and before any k2 work. It is the exact k1 accounting end and k2
+  accounting start, so the two record durations partition the epoch exactly
+  without overlap. Registry conformance is epoch-level: all nine registries
+  equal the pre-k1 baseline before k1; k1's raw/design authority may remain
+  live only through the internal cutoff and its retained/high-water vector is
+  recorded; after k2 state issuance, release, and collection, all nine counts
+  must again equal baseline before the durable boundary.
+- **Minimal resume state:** The first boundary binds separate immutable
+  resume-only base and cell sufficient-statistic artifacts containing exactly
+  the existing panel payload arrays: base `x0tx0_upper (252,2016)` and cell
+  `x0ty (252,63,30)` plus `yty_upper (252,465)`, totaling exactly
+  `8,811,936` numeric bytes. They are distinct from the later timed k9/k10
+  production artifacts. After k3, one immutable artifact stores the exact
+  `(25,252)` float64 bootstrap-weight matrix, its licensed address inventory,
+  and the ordered digest of the 25 aggregate outputs. After each of k4, k5,
+  and k6, one immutable candidate artifact stores the exact focal array:
+  `(25,9)` in rehearsal/equal/validation roles or `(25,1)` in a research
+  role, plus the complete fit-output inventory digest. Resume loaders are
+  private, stage-specific, attempt-bound, and benchmark-only; they reissue
+  only the existing immutable panel types or private weight/focal wrappers.
+  Scientific, validation, research, coefficient-to-truth, and generic
+  registrars reject every resume kind. Raw normals, `X0`, PCA matrices,
+  aggregate objects, and fit objects remain unpersisted. Before each of k4,
+  k5, and k6, both ordinary continuation and resume load the saved panels and
+  weights, deterministically recompute all 25 aggregates, verify the frozen
+  aggregate digest, and charge that reconstruction to that record's prelude.
+  They release and collect those objects before the boundary and never redraw
+  RNG. Ordinary and resumed execution therefore have one operand path.
+- **Boundary and replay correction:** Each trace now has one worker-ready
+  boundary plus 14 work boundaries: after the indivisible k1+k2 epoch and
+  after each remaining record. Their exact next-position sequence is
+  `[0,2,3,4,5,6,7,8,9,10,11,12,13,14,15]`. The three fixed rehearsals
+  therefore publish exactly 45 boundary leaves, not 48. Every boundary carries
+  a sorted, path-complete resume-state inventory and the exact completed record
+  prefix. A loss before the next boundary replays only the current indivisible
+  epoch or record under the same reservation and address schedule, with the
+  fixed replay penalty and full licensed RNG upper; no prior durable prefix is
+  rerun. An uncommitted valid final is bound and removed before replay rather
+  than reused as if its missing timing record existed. A lost k1+k2 epoch has
+  one epoch replay ordinal `r`, but both eventual records carry
+  `replay_count=r`, `replay_penalty_ns=480000000000*r`, and only their own
+  complete licensed RNG-call sequence repeated `r` times in their upper
+  inventories. This deliberately conservative double admission charge keeps
+  neither per-kernel rate eligible to improve through interruption selection;
+  lifecycle and cumulative elapsed count the physical epoch only once.
+  Boundaries store an exact two-position pending-epoch object rather than
+  pretending that either record was independently durable.
+- **Cleanup journal:** Before any timed last-use deletion, publish one
+  immutable cleanup-intent receipt binding the predecessor boundary, completed
+  successful-work fields, complete artifact/resume-state rows, and exact
+  descending-path deletion order. Cleanup then continues idempotently across
+  worker or boot loss, and the following boundary closes the originating
+  record's full prelude/kernel/epilogue and five-substage duration. A cleanup
+  intent cannot authorize new numerical work, RNG, a different deletion
+  order, or a different terminal outcome. Resume-only smooth state remains
+  available through k8, whose intent removes the null artifact, production
+  base/cell artifacts, and all smooth resume operands; recovery/full paper
+  parents remain available through their exact k13 consumers. The byte
+  schemas, receipt inventories, failure
+  limits, and no-marker forensic-incomplete branch are frozen in
+  `docs/derivations/GATE_G2_RESOURCE_ARTIFACT_AUTHORITY.md`.
+  Each equal/test trace has exactly four cleanup intents, so the three
+  rehearsals have 45 boundary leaves, 12 cleanup-intent leaves, and 57
+  checkpoint intervals whose work/publication/marker caps all must pass.
+- **Interruption and terminal-selection correction:** A worker capability is
+  released only after its claim, reservation, and worker-ready marker all
+  validate. Loss before the first worker-ready boundary is terminal before
+  `SeedSequence`, not an invented resume point. A registered interruption may
+  chain through further supervisor loss before a new worker-ready boundary;
+  the chained receipt carries the same boundary, complete trace-progress
+  object, next position, pending replay, debris, and recovery action without
+  adding another replay ordinal. A clean boundary signal likewise preserves
+  any already-pending replay count. A resumed worker-ready copies every
+  trace-start/reservation/progress field and advances nothing. An exact marked
+  trace or measurement receipt may complete only its uniquely derived missing
+  following boundary. Ordinary and supervisor-only cleanup suffixes retain the
+  480/60/540-second watchdogs.
+
+  Terminal failure is selected before destructive cleanup by one immutable
+  failure-intent receipt that binds the failure identity, durable
+  receipt/artifact/RNG/log evidence, and the complete checkpoint/scratch
+  deletion order. Once marked, it forbids all ordinary work, RNG, success, or a
+  different failure. Cleanup may continue only through contiguous
+  failure-resume receipts and an exact missing-prefix/remaining-suffix state;
+  the final failure JSON reproduces the intent and publishes `_FAILURE`
+  success-last. A crash during terminal cleanup can therefore delay evidence
+  closure but cannot change the selected outcome.
+- **Configuration and review gate:** `configs/g2_resource.toml` is a
+  preregistered source artifact, not a measured result. Its exact LF-terminated
+  bytes, digest, key/type schema, source tuples, reordered record list,
+  boundary count, roots, addresses, caps, shapes, schedule, and registry names
+  must be frozen in the artifact authority before implementation. The
+  corrected package requires two fresh independent hostile passes, the locked
+  local suite, and hosted CI before any test-seed rehearsal.
+- **Inference effect:** None. A024 repairs persistence and dependency order for
+  an engineering benchmark. It does not inspect or change a coefficient,
+  truth comparison, interval, threshold, trial count, or scientific gate.
+- **Access statement:** A024 was derived from source and document inspection
+  only. No A022 rehearsal, registered resource seed `2026071529`, validation
+  seed `2026071521`, research seed `2026071522`, empirical data, evaluation
+  data, or holdout was accessed.
+
+### A025 — Close the A024 hostile state-machine audit before implementation
+
+- **Date:** 2026-07-29, before resource-run implementation, any A022
+  rehearsal, or any registered G2 access. Amendment A025 is independent of
+  assumption A025 in `ASSUMPTIONS.md`.
+- **Reason:** Three fresh hostile reviews of the A024-corrected package still
+  failed it. They found receipt-publication crash states with no transition,
+  whole-leaf cleanup rows that could not represent a crash after one child
+  unlink, an uncheckpointed terminal-cleanup suffix, underdefined failure
+  clocks and process-death bytes, a reservation/current-worker identity
+  contradiction, an ambiguous post-interruption thermal rule, telemetry that
+  a lost supervisor could erase, no finite terminal-JSON liveness bound, a
+  missing paper-bootstrap-weight lifecycle, and an unbounded terminal-success
+  tail. A subsequent exact methods review also found that replay-penalizing
+  both a held/current duration and its predictor/reference duration can make a
+  failed stationarity or transfer check pass after an interruption. These are
+  pre-code specification failures; no result was observed. The same freeze's
+  systems re-review additionally found that spawn preceded durable child
+  identity, Darwin absence evidence lacked an executable syscall truth table,
+  a dead final-success boundary could fall through generic adoption, worker
+  deadlines were not precommitted by the authorizing receipt, and the
+  failure-intent size proof did not cover every terminal file shape.
+- **Narrow supersession:** Preserve A022--A024's seeds, address domains,
+  record order, numerical kernels, unit vectors, work matrix, estimators,
+  thresholds, budgets, and conditional interpretation. Supersede only the
+  failed receipt, cleanup, interruption, evidence-carry, RNG-lifecycle, and
+  terminal-close clauses and the replay-timing comparator operand roles with
+  the exact A025 authority below, including durable launch/birth receipts,
+  factorized Darwin absence evidence, watchdog-arm provenance, non-adoptable
+  terminal entry, and all-terminal size preflight. In particular, earlier
+  A022--A024 uses of a
+  replay-penalized duration on the predictor/reference side are historical and
+  superseded. If an earlier A022--A024 sentence conflicts with A025, A025
+  controls and the validator must reject the historical branch.
+- **Exact successful RNG sequences:** Let `D(s,d,c)` denote the existing
+  13-word DGP address for stream `s`, date `d`, and component `c`, and let
+  `B(s,r)` denote the existing 13-word bootstrap address for stream `s` and
+  replicate `r`, always with the current reserved panel. In record-position
+  order, the complete successful call sequences are:
+
+  ```text
+  position 0:  [D(resource_smooth,d,c)
+                for d in 0..251, then c in 1..5]
+  position 2:  [B(resource_smooth,r) for r in 0..24]
+  position 10: [D(resource_paper,0,c) for c in 1..5] if units > 0, else []
+  position 11: [D(resource_paper,1,c) for c in 1..5] if units > 0, else []
+  position 12: [B(resource_paper,r) for r in 0..24]
+               for equal/validation roles, else []
+  position 13: [B(resource_paper,r) for r in 0..24]
+               for research roles, else []
+  every other position: []
+  ```
+
+  The resulting 15-position count vectors are exactly
+  `[1260,0,25,0,0,0,0,0,0,0,5,5,25,0,0]` for equal/rehearsal,
+  `[1260,0,25,0,0,0,0,0,0,0,0,5,25,0,0]` for validation, and
+  `[1260,0,25,0,0,0,0,0,0,0,5,0,0,25,0]` for research. Call order,
+  successful inventories, and every replay copy use those sequences without
+  sorting or deduplication.
+- **Shared paper-weight lifecycle:** The first positive kernel-13 position in
+  a trace draws the 25 paper bootstrap vectors and publishes one immutable
+  `resource-resume-paper-bootstrap-weights-v1` `(25,252)` artifact. The last
+  positive kernel-13 position is its sole last consumer and deletes it through
+  that position's cleanup intent. Thus producer/last-consumer positions are
+  `12/13` for equal/rehearsal, `12/12` for validation, and `13/13` for
+  research. Both positive equal-context variants load the same bytes. A
+  zero-unit kernel-13 variant draws nothing. This adds no scientific payload
+  and uses the existing private resource-wrapper registry. A successful
+  rehearsal now retains 13 artifact-kind counts and 51 artifact rows.
+- **Receipt-stage normalization:** An ordinary atomic receipt stage is not
+  debris. Before deriving a transition, the recovery supervisor admits only:
+  absent stage/final; one valid canonical receipt file from which the exact
+  marker is derived; one valid complete staged receipt/marker pair; or one
+  valid visible final pair. A valid receipt-only stage is completed, and a
+  valid complete stage is renamed and parent-fsynced without changing its
+  bytes. A successor may perform that idempotent adoption only after proving
+  the encoded publisher dead; the next durable receipt binds that death.
+  Marker-only, partial/corrupt, extra-entry, mismatched, or conflicting
+  states are forensically incomplete. An absent work-boundary stage means the
+  current record was not committed and is replayed; an absent trace or
+  measurement receipt is reconstructed only from its complete durable prefix
+  and followed by its uniquely derived boundary. The measurement literal is
+  exactly `"resource-measurement-block-v1"`. Every adoptable claim/receipt
+  encodes and revalidates its unique publisher PID/start identity. The
+  temporary kernel-14 probe and hidden terminal outcomes are not
+  successor-adoptable checkpoints. Neither are worker-birth stages, the
+  registered `terminal_entry=true` final block-3 boundary, the final
+  rehearsal boundary, or a cleanup-complete final failure-resume stage after
+  publisher death. Their same live publisher may finish exact staged bytes;
+  a dead publisher authorizes no adoption, next receipt, terminal Git check,
+  outcome creation, or opposite outcome.
+- **Entry-level ordinary cleanup and debris:** A cleanup intent first freezes
+  logical targets and then a complete child-before-parent filesystem-entry
+  sequence. Regular-file rows bind exact mode, logical/allocated bytes, and
+  content SHA256; directory rows bind exact type/mode and use null byte/hash
+  fields so deleting a child cannot invalidate a surviving parent row. A
+  filesystem is legal only when an exact row prefix is absent and the suffix
+  validates, with no extra path. Debris uses the same entry rows plus a
+  monotone completed-prefix count and remaining-suffix digest. Chained
+  interruptions copy the immutable target/row bytes but advance those two
+  progress fields from the actual filesystem; they do not falsely copy stale
+  progress byte-for-byte. Artifact finals bind the exact artifact SHA256;
+  receipt finals bind the receipt-final domain digest. Kernel 14's close probe
+  uses the ordinary atomic receipt-directory publisher, eliminating an
+  unrepresentable partial root-file probe state. Every entry is assigned to
+  the unique deepest matching target; terminal root targets own all remaining
+  ancestors/ordinary entries; target slices are positive, contiguous, and
+  exhaustive; and tree/root evidence hashes the exact target slice. Before
+  every checkpoint/scratch mutation, the exact prospective terminal plan must
+  remain within the row/path/byte caps.
+- **Terminal-failure checkpointing:** Failure selection remains immutable
+  before deletion. Cleanup inventories use the same entry-level row grammar.
+  Between one and 641 contiguous failure-resume receipts are mandatory,
+  including an exact final receipt published only after every cleanup row is
+  absent and every required parent fsync is complete. Resume zero has predecessor kind
+  `"failure-intent"` and its digest; later resumes have predecessor kind
+  `"failure-resume"` and the immediately prior resume digest. Each resume
+  stores prior durable wall/perf/cumulative anchors, current resume and cutoff
+  wall/perf samples, a same-boot monotonic or cross-boot wall charged gap,
+  current active work, and the exact cumulative sum. After predecessor
+  publication/adoption, each segment takes its resume samples before its first
+  deletion or parent fsync and its cutoff samples after every prefix advance
+  and fsync charged to that segment. Resume zero therefore encodes completed
+  prefix zero and is cleanup-complete iff the intent has zero entries. Active
+  cleanup work is at most 480 seconds; each failure-intent/resume row receives
+  a fixed 60-second publication accounting charge; and the accounted sum is at
+  most 540 seconds. The charge is not an observed or enforced receipt-close
+  latency bound. After the final full-prefix receipt,
+  deterministic
+  `failure.json` plus `_FAILURE` close receives the same fixed terminal
+  accounting charge and cannot reopen work. The terminal
+  outcome is one atomic directory
+  `terminal/failure/{failure.json,_FAILURE}`: both children are written and
+  fsynced in the unique hidden stage. `_FAILURE` binds the exact JSON and
+  carries the same post-JSON Git/process/publication-RSS certificate as
+  `_SUCCESS`; after marker/stage fsync the same final in-process seal gates the
+  no-overwrite directory rename and terminal-parent fsync. No visible
+  JSON-without-marker state exists. Resume zero is the
+  pre-deletion anchor; every later nonfinal receipt strictly advances the
+  cleanup prefix or binds a newly dead publisher. A nonfinal staged resume may
+  be adopted and bound by the next receipt only when a later slot/death row is
+  available, but a last-slot or dead-publisher
+  cleanup-complete stage is forensically incomplete rather than duplicated.
+  The final-resume publisher is encoded in `failure.json` and must remain
+  continuously alive through outcome-directory rename and therefore
+  visibility. Its earlier death permits no successor creation or rename; an
+  exact visible final may only be revalidated and followed by an idempotent
+  terminal-parent fsync.
+- **Durable worker birth and watchdog provenance:** Before every worker spawn,
+  the supervisor publishes a launch intent containing the capability-nonce
+  commitment, parent identity, and an arithmetically derived watchdog arm:
+  480 seconds of work followed by a distinct 60-second reap grace. The
+  bootstrap-only child inherits parent-liveness and capability descriptors,
+  exits on pre-capability parent loss, and publishes its PID/start/boot birth
+  record as its first durable action. Only a complete validated launch/birth
+  pair may be referenced by the worker claim, reservation, worker-ready
+  boundary, and capability release. A complete birth must later join an exact
+  wait/death proof even if no claim followed. Every boundary, cleanup intent,
+  or interruption that can precede worker work persists the next arm before
+  that work; wait/death rows bind its exact receipt digest, work deadline, and
+  reap deadline. No deadline may first appear in a wait row, be recomputed
+  from a later clock, or be extended because earlier setup consumed time.
+- **Process identities and death proofs:** Both registered and rehearsal
+  attempts bind the initial supervisor PID, kernel start identity, and boot
+  digest. Every claimed-worker `wait4` appends one hash-bound cumulative row carrying
+  worker claim/identity, raw status, byte-normalized `ru_maxrss`, post-wait
+  sample, and deadline. Process-death rows additionally bind the old boot
+  digest and use only three exact methods: `wait4-reaped`, with that same
+  status/`ru_maxrss`/sample/deadline evidence;
+  `double-process-identity-absence`, with two same-boot zeroed-buffer
+  `proc_pidinfo(PROC_PIDTBSDINFO)` checks 50 ms to 1 second apart and null
+  wait/rusage/deadline fields; or `boot-identity-changed`, with all
+  perf/wait/rusage/deadline fields null and unequal boot digests. Double
+  absence passes only two zero/`ESRCH` observations or two complete reads
+  naming the same stable replacement PID/start identity. Target presence,
+  mixed absence classes, changing replacement identity, permission failure,
+  ambiguous zero/zero, short/oversize return, malformed struct, PID mismatch,
+  ABI failure, or boot change between observations fails. The shared
+  verdict/replacement identity is factorized once with two raw
+  `[perf_counter_ns,return_bytes,errno]` samples, preserving exact evidence
+  while keeping the maximum process-death row within 512 canonical bytes.
+  Per-method nullability and ordering are byte-authoritative. Interruption,
+  failure-intent, and failure-resume chains prove every superseded identity
+  exactly once, with at most 128 distinct death rows across the whole attempt.
+  Kernel 14's receipt probe is not a child role. Git subprocesses are legal only
+  in three twelve-child sets: bootstrap before the first worker;
+  terminal-pre-JSON after every issued worker identity is closed, no worker is
+  alive, and every currently waitable direct child has been reaped; and
+  post-JSON inside the terminal marker certificate. The first two sets' 24
+  complete rows remain
+  reconstructible from `attempt.json` plus terminal JSON; the third set remains
+  in the marker. Intermediate seals launch no subprocess, no Git child overlaps
+  a worker, and Git children are wait-only: missing Git wait/rusage evidence is
+  forensically incomplete, not replaceable by a worker death proof.
+- **Reservation ancestry:** A reservation permanently retains its original
+  worker-claim digest. An initial capability requires direct equality among
+  payload, worker claim, reservation, and worker-ready boundary. A resumed
+  capability requires payload/current-claim/worker-ready equality and walks
+  the finite, gap-free, repetition-free predecessor chain backward from the
+  current claim to the unique immutable creator digest. Every link in that
+  suffix has one authorizing contiguous interruption; older claims may occur
+  only beyond the creator, and an interruption retaining the same worker
+  creates no claim link. It never rewrites the reservation or equates an old
+  claimant with the current child.
+- **Thermal reset after interruption:** Every admitted interruption, whether
+  inside a trace or exactly at a trace/measurement boundary, resets thermal
+  qualification. A suspended trace first completes but contributes nothing to
+  the new recovery epoch. Before the next warm measurement trace, consume new
+  contiguous panels in a reset
+  `validation,research,research,validation` cycle until complete successful
+  recovery-thermal traces total at least 600 seconds. These traces do not
+  count toward measurement pairs or their 200-second minima. A second
+  interruption discards only recovery-thermal qualification since the prior
+  interruption; completed scientific/timing receipt prefixes remain. No
+  thermal work is required when no later warm trace exists.
+- **Replay-monotone timing roles and falsifier:** For record `i`, freeze
+  `Rplus_i=duration_plus_ns_i=D_i+2*h_i` and
+  `Aplus_i=admission_duration_plus_ns_i=Rplus_i+480000000000*r_i`.
+  Aggregates sum those exact record fields:
+  `Rplus[j,p,k]=sum_i Rplus_i`, `Aplus[j,p,k]=sum_i Aplus_i`,
+  `Rplus[j,p]=sum_k Rplus[j,p,k]`, and
+  `Aplus[j,p]=sum_k Aplus[j,p,k]`. `Rplus` is used only for
+  predictor/reference operands. `Aplus` is used only for held/current
+  operands and for every cold, conservative/projected task, block, phase,
+  combined, and final absolute projection or budget. Raw `D` remains
+  diagnostic timing and the successful-work stop clock.
+  For measurement block `j`, `N_j` is its complete balanced-pair count. For
+  `s in {overall,validation,research}`, `Rplus[j,s]` and `Aplus[j,s]` sum the
+  corresponding record fields over the named phase traces, excluding the
+  `EQUAL` trace; `overall` combines validation and research. Stationarity is
+  exactly
+  `20*N_j*Rplus[j-1,s] >= 19*N_(j-1)*Aplus[j,s]`. For held-out warm block
+  `j`, phase `p`, kernel `k`, and the other blocks `a,b`, temporal reference is
+  `H[j,p,k]=max(ceil_div(U[j,p,k]*Rplus[a,p,k],U[a,p,k]),`
+  `ceil_div(U[j,p,k]*Rplus[b,p,k],U[b,p,k]))`; set
+  `H[j,p]=sum_{k:U[j,p,k]>0} H[j,p,k]` and require
+  `Aplus[j,p] <= ceil_div(5*H[j,p],4)`. For other phase `q` and
+  `C={1,2,3,4,5,6,7,8,9,10,14}`, cross-context reference is
+  `X[j,p,k]=max(ceil_div(U[j,p,k]*Rplus[a,q,k],U[a,q,k]),`
+  `ceil_div(U[j,p,k]*Rplus[b,q,k],U[b,q,k]))`; require both
+  `Aplus[j,p,k] <= ceil_div(5*X[j,p,k],4)` for every `k in C` and
+  `sum_C Aplus[j,p,k] <= ceil_div(5*sum_C X[j,p,k],4)`.
+  The pre-code falsifier fixes raw `D`, units `U`, and resolution `h`, then
+  increments each record's replay count separately. Every reference-side
+  `Rplus`, `H`, and `X` must remain unchanged; every affected held/current
+  `Aplus` and dependent absolute projection must weakly increase; the raw
+  successful-work stop clocks must remain unchanged; and no stationarity,
+  temporal, cross-context, task, phase, total, or overall acceptance Boolean
+  may change from false to true. Two mandatory fixtures reject the superseded
+  symmetric-`Aplus` rules: equal-count stationarity with raw block totals
+  `600 s,640 s`, where replaying the prior block must not turn
+  `20*600 < 19*640` into a pass; and unit-one temporal blocks with raw totals
+  `[1000 s,1000 s,1300 s]` and replay counts `[1,0,0]`, where the third block
+  must still fail the `1.25*1000 s` upper. This correction changes only which
+  already-bound duration enters each comparator; no threshold, seed, unit,
+  work vector, window, budget, or scientific inference changes.
+- **Closed-segment telemetry continuity:** Observed samples remain labeled
+  observed, and only a durably closed process segment can preserve pass
+  authority. A live supervisor closes a worker-loss segment only after
+  continuous sampling, cumulative hash-bound `wait4`/rusage rows, and a final
+  disk scan; a
+  cross-boot successor may carry that segment only through its already
+  durable clean-exit interruption receipt. Abrupt supervisor loss or direct
+  boot loss has predecessor-close method `"unknown-loss"` and assigns
+  admission uppers strictly above their limits: RSS `3,500,000,001` bytes,
+  checkpoint tree `2,000,000,001` bytes, created roots `6,000,000,001` bytes,
+  and absolute workspace `30,000,000,001` bytes. It therefore selects
+  terminal failure `"select-terminal-failure-telemetry-gap"` before a new
+  worker, capability, RNG call, or thermal trace. Complete segments use the
+  maximum of their prior durable upper and current observed margin, never
+  relabel a bound as a sample, and never apply the 25% margin twice. The
+  cumulative rusage envelope adds the supervisor high water to the larger of
+  the maximum cumulative worker-wait `ru_maxrss` and the maximum Git-child
+  `ru_maxrss` across every complete preterminal check available at that cutoff.
+  The bootstrap maximum is present at every durable cutoff; the terminal
+  pre-JSON maximum joins it only at the terminal cutoff. The post-JSON set
+  remains in the separate publication envelope. The
+  separate 1.6-GB pre-mutation checkpoint ceiling remains the largest
+  admitted observed tree compatible with the 2-GB post-margin cap.
+- **Finite evidence liveness:** Registered execution admits at most 64 worker
+  launch intents, 64 worker births, 64 worker claims, 63 interruptions, 4,096
+  traces, and 641 failure resumes. A terminal
+  cleanup inventory has at most 512 rows; the attempt-wide process-death union
+  has at most 128 rows; the cumulative worker-wait inventory has at most 64
+  rows; and every canonical path has at most 240 ASCII bytes. Each cleanup row
+  must encode in at most 1,024 canonical bytes and each death or worker-wait
+  row in at most 512. The 131,072-byte non-row term is the exact failure-intent
+  encoding with all three row arrays replaced by empty arrays, including all
+  delimiters/enclosures.
+  Therefore
+  the intent envelope is below
+  `512*1024 + 128*512 + 64*512 + 131072 = 753,664` bytes, strictly below the
+  1,048,576-byte root-receipt cap. Before failure selection, a count/path/
+  encoding bound selects terminal failure before the one-past object is
+  created. After selection, resume/death/encoding-cap exhaustion stops the
+  consumed failure as forensically incomplete before mutation; it cannot
+  become an unmarked cleanup dead end.
+  The intent equation is not accepted as proof for other files. A frozen
+  fixture-schema digest separately constructs maximum canonical failure
+  intent, index-zero/progress/death/cleanup-complete failure resumes,
+  rehearsal and registered success/failure JSON, and `_SUCCESS`/`_FAILURE`.
+  Each applicable fixture uses all 64 waits, 128 deaths, 512 cleanup rows, 641
+  resumes, 240-byte paths, maximum scalar/string widths, all source/control
+  rows, 24 preterminal Git rows, 12 post-JSON Git rows, and 1,201
+  publication-RSS samples. Every exact file including terminal LF must remain
+  at or below 1,048,576 bytes and every one-past mutation fails before file or
+  stage creation.
+- **Terminal-outcome accounting row:** The complete rehearsal and registered
+  schedules add one root terminal accounting row, not a new work boundary.
+  Success and any fully closed marked failure use the same certificate and
+  final-seal protocol. From the
+  final durable boundary through waits, scans, aggregation, the exact
+  terminal-pre-JSON full Git check, child reaping/rusage, and the pre-JSON
+  cutoff, active work is at most 480 seconds. `attempt.json` already contains
+  the exact bootstrap check. Terminal JSON contains its digest, the exact
+  second check, their two-check inventory/hash, and cumulative RSS whose
+  preterminal Git high-water reconstructs from the 24 child rows jointly bound
+  by `attempt.json` plus terminal JSON.
+  Before non-resumable terminal entry, the final registered-success boundary
+  persists passing size uppers for `result.json/_SUCCESS`; the final rehearsal
+  boundary does the same for its success schema; and the cleanup-complete
+  failure resume persists passing uppers for `failure.json/_FAILURE`. Every
+  preflight binds the frozen fixture-schema digest and 1,048,576-byte cap. A
+  missing/failing success preflight selects ordinary failure before terminal
+  entry. After failure selection, a missing/failing final preflight stops
+  before final-resume publication or any terminal-stage mutation and remains
+  forensically incomplete.
+  The selected atomic directory is
+  `terminal/success/{result.json,_SUCCESS}` or
+  `terminal/failure/{failure.json,_FAILURE}`: the hidden stage is created and
+  the terminal parent fsynced, and the exact JSON written/fsynced. A final
+  twelve-child Git check then runs under the live sampler. `_SUCCESS` binds the
+  result and `_FAILURE` binds the failure; both carry the same post-JSON
+  certificate: complete Git child output/wait/rusage, source and Git-control
+  rows, runtime/module/boot/publisher identities, publication-local sampler
+  state, and the recomputed 25%-margin RSS upper. After marker/stage fsync, a
+  no-subprocess final seal recomputes those identities, proves no descendants,
+  stops/joins the sampler, requires the publisher to be the only live thread,
+  and takes the final self-resident/RUSAGE_SELF sample. Every final gap is at
+  most one second, the observed envelope is at most 2.8 GB, and its 25%-margin
+  admission upper is at most 3.5 GB; only then does it license the no-overwrite
+  rename plus terminal-parent fsync. The measured pre-JSON work is at most 480
+  seconds; the later complete publication sequence receives a fixed 60-second
+  accounting charge, giving an accounted sum at most 540 seconds. The charge is
+  not an observed or enforced end-to-end latency upper. No visible
+  JSON-without-marker branch exists. Forward cutover occurs only after exclusive
+  hidden-stage creation and successful terminal-parent fsync. A stage absent
+  after a crash in the intervening window is pre-cutover; an exact surviving
+  stage conservatively locks its kind. The same live publisher may finish it
+  and an exact visible final is reusable after a current-live terminal-parent
+  fsync, but a dead-publisher hidden outcome is forensically incomplete and
+  never permits the opposite outcome. Terminal JSON and marker certificate
+  both bind the publisher; success matches the
+  final-boundary publisher and failure matches the final-resume publisher.
+  Publication of that final boundary or final resume is non-resumable terminal
+  entry: its publisher must remain continuously alive through visibility.
+  Publisher death or a failed/incomplete terminal-pre-JSON check is
+  forensically incomplete, cannot select the opposite outcome, and never
+  authorizes a retry or third preterminal check.
+  Publication RSS is a 50-ms sampled empirical envelope plus child `wait4`
+  high-water evidence and 25% policy headroom, not a continuous mathematical
+  bound; a sub-sample parent-process spike remains an explicit limitation.
+  The 60 seconds are a conservative accounting charge, not a false
+  observation of the marker/rename/parent-fsync suffix; visible-directory
+  existence attests the final seal, and an external post-seal source race
+  remains outside the trusted local-process boundary.
+  Kernel 14 remains a benchmark probe but
+  supplies no terminal-close bound. Rehearsal `TC` and `TS` remain immutable
+  evidence roots on success; there is no post-result cleanup suffix. The
+  rehearsal therefore has 45 canonical boundaries, 12 cleanup intents, 57
+  capped ordinary checkpoint intervals, one terminal accounting row, and 58
+  resource-accounting rows in total.
+- **Failure-prefix and byte-order closure:** Marked failure admits only
+  category-contiguous receipt prefixes with at most one active incomplete
+  trace and with every cross-category count derived by the canonical
+  scheduler. Generic parent arrays are UTF-8 role-sorted; the null-batch order
+  is `base-panel`, `cell-panel`, `resume-homogeneous-focals`,
+  `resume-observable-focals`, `resume-oracle-focals`. Cleanup object-kind
+  literals, target order, and entry order are frozen in the artifact
+  authority. The exhaustive receipt-kind list includes terminal failure
+  intent and resume.
+- **Configuration and review gate:** The amended
+  `configs/g2_resource.toml` freezes these counts, call-count vectors, caps,
+  paper-weight shape/lifecycle, terminal accounting row, thermal reset,
+  immutable reservation-creator ancestry, closed-segment telemetry continuity,
+  the one-sided `Rplus`/`Aplus` comparator roles, and the deterministic
+  replay-monotonicity falsifier. The artifact authority additionally freezes
+  launch/birth receipt schemas, watchdog-arm arithmetic, Darwin absence
+  factorization, terminal-entry nonadoption, and the terminal-size fixture
+  digest; these use existing numeric caps and therefore do not alter the
+  sealed TOML bytes.
+  Implementation remains forbidden until the exact config byte/hash/type
+  seal is recomputed, all cross-document stale values are removed or
+  explicitly historical, and fresh independent methods, systems, and schema
+  reviews pass. The locked local suite and hosted CI follow those reviews
+  before test-seed implementation.
+- **Inference effect:** None. A025 removes implementation discretion and
+  strengthens interruption-selection falsification in an engineering
+  benchmark. It changes no statistical estimator, target, interval,
+  threshold, scientific trial, or registered validation/research address.
+- **Access statement:** A025 was derived from source and document inspection
+  plus deterministic byte/count calculations only. No A022 rehearsal,
+  registered resource seed `2026071529`, validation seed `2026071521`,
+  research seed `2026071522`, empirical data, evaluation data, or holdout was
+  accessed.
+
+### A026 — Close interruption selection and consumed terminal crash states
+
+- **Date:** 2026-08-06, before resource-run implementation, any A022
+  rehearsal, or any registered G2 access. Amendment A026 is independent of
+  assumption A026 in `ASSUMPTIONS.md`.
+- **Reason:** Fresh review of amendment A025 passed the byte/schema audit but
+  failed methods and systems review. First, a worker interruption inside a
+  rate-bearing trace could cool the machine and still let the resumed suffix
+  enter the admitted timing sample before rethermalization. Second, same-boot
+  supervisor death after a visible launch intent but before a visible worker
+  birth consumed the attempt while authorizing neither work nor marked
+  failure. Third, death after the non-resumable terminal-entry receipt could
+  consume the selected outcome without any terminal directory. These are
+  deterministic specification failures; no timing result, random draw, or
+  data value was observed.
+- **Narrow supersession:** Preserve amendments A022--A025's seeds, address
+  domains, RNG sequences, record order, numerical kernels, work matrix,
+  estimators, thresholds, budgets, artifact shapes, successful-rehearsal
+  counts, and conditional per-kernel interpretation. Supersede only their
+  conflicting interruption-admission, launch-only recovery, and
+  terminal-entry dead-publisher clauses. In every conflict, amendment A026
+  controls.
+- **Rate-bearing interruption rule:** A rate-bearing trace is any cold,
+  equal-context, validation-context, or research-context trace whose elapsed
+  kernel durations could enter `N`, `U`, `Rplus`, `Aplus`, `H`, `X`, a warm
+  minimum, a stationarity statistic, a temporal comparison, a cross-context
+  comparison, or a phase projection. From the trace's worker-ready boundary
+  through its trace boundary, any interruption selects ordinary terminal
+  failure. The unfinished trace contributes no rate or comparison operand,
+  cannot be completed or replaced, and no later measurement trace is legal.
+  Its durable prefix remains available only for failure evidence and bounded
+  cleanup. Every record admitted from a successful rate-bearing trace therefore
+  has `replay_count=0` and byte-equal `Rplus=Aplus`; any nonzero replay count in
+  an admission-bearing record is terminal failure. The replay-monotonicity
+  fixtures remain mandatory negative tests but cannot license replayed rate
+  evidence. An interruption strictly between two completed rate-bearing traces
+  preserves the earlier completed evidence but requires a fresh uninterrupted
+  600-second recovery-thermal cycle before the next warm trace. An
+  interruption inside that recovery cycle discards the partial cycle and
+  restarts the full cycle after recovery; recovery-cycle time never enters a
+  rate operand. Thus no post-interruption suffix can improve an admitted rate,
+  and no failure-selected trace can be replaced by a more favorable trace.
+- **Launch-quiescence lease:** Every worker launch intent is one atomic
+  receipt directory that contains its exact JSON/marker pair and one regular
+  file named `quiescence.lock`, mode decimal `384`. Before the directory
+  becomes visible, the supervisor opens that file once, verifies its stable
+  inode/type/mode/link identity, acquires a nonblocking whole-file exclusive
+  Darwin `flock`, and keeps the sole intended open-file object live. Spawn is
+  forbidden before the complete intent directory is visible. The bootstrap
+  child inherits exactly one duplicate reference to that same open-file
+  object; neither process may call `LOCK_UN`, reopen the file, duplicate or
+  pass the descriptor, leak it to another process, unlink or replace the
+  path, or spawn a descendant while launch-only. The descriptor is not
+  close-on-exec and remains held through visible birth and claim; afterward
+  the ordinary exact PID/start/boot process authority controls. A hidden
+  launch-intent stage is normalized under the ordinary receipt rule while its
+  original publisher is live, or after publisher death only by a successor
+  that validates the same lease inode and acquires the lock as below.
+- **Launch-only recovery:** A same-boot launch intent without complete visible
+  birth is recovery-pending, not forensically terminal. A successor first
+  proves the encoded supervisor dead with the existing factorized
+  PID/start/boot evidence. It then independently opens the visible or valid
+  staged `quiescence.lock` with no-follow semantics, revalidates the bound
+  inode/type/mode/link identity, and attempts `LOCK_EX|LOCK_NB`. `EWOULDBLOCK`
+  authorizes no mutation and leaves the state recovery-pending. Successful
+  acquisition proves that no incompatible lock remains on the inherited
+  Darwin open-file object; under the frozen no-unlock/no-dup/no-pass/no-
+  descendant bootstrap discipline, no launch-only child can retain authority.
+  The successor then selects the ordinary pre-RNG terminal-failure lane,
+  without releasing a capability or constructing `SeedSequence`. A changed
+  boot retains the existing pre-capability failure rule because neither
+  process nor inherited descriptor survives. This lease is a quiescence proof
+  combined with the named supervisor-death proof; it is not represented as a
+  PID-only child-death proof.
+- **Forensic terminal nonpass:** The terminal root has a third mutually
+  exclusive close kind,
+  `terminal/nonpass/{nonpass.json,_NONPASS}`, staged at
+  `terminal/.nonpass.xid-g2-terminal-stage-v1`. It is legal only after an
+  immutable `terminal_entry=true` success boundary or cleanup-complete final
+  failure resume has selected success or failure and the encoded terminal
+  publisher is proved dead, or after that same publisher encounters a
+  post-entry Git, process, sampler, seal, or publication failure. Before any
+  nonpass-stage mutation, one ordinary successor-adoptable
+  `resource-terminal-nonpass-intent-v1` receipt freezes the selected kind,
+  selected-entry digest, original publisher-death/failure evidence, expected
+  canonical `nonpass.json` and `_NONPASS` bytes, and their digests. The close
+  contains no new Git check, random draw, timing measurement, source-admission
+  claim, or opposite outcome. It is a definitive consumed-attempt nonpass:
+  it can never satisfy resource admission, cannot license retry under the same
+  seed, and cannot coexist with visible success or failure.
+- **Restartable nonpass publication:** `nonpass.json` and `_NONPASS` are pure
+  functions of the visible nonpass intent and contain no successor-local time
+  or identity. After proving the encoded stage publisher dead, a successor
+  may remove only an exact incomplete suffix of the hidden nonpass stage,
+  rebuild the same bytes, fsync the children and stage, no-overwrite rename it,
+  and fsync `terminal/`. An uncertain rename is resolved by validating the
+  exact visible pair and fsyncing the parent. A valid complete hidden stage is
+  adoptable; invalid bytes select no other outcome and fail closed. The same
+  fixed 60-second terminal accounting charge applies, but it is not an
+  observed close-latency bound. This continuation is safe because it certifies
+  only non-admission of an already consumed attempt.
+- **Configuration and review gate:** The amended
+  `configs/g2_resource.toml` is exactly 9,799 ASCII bytes with SHA256
+  `3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29`,
+  194 parsed leaf-type rows, and type-tree SHA256
+  `e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3`.
+  It has no BOM or carriage return and ends in exactly one LF. The added
+  maximum nonpass-intent size is 131,072 bytes. Successful-rehearsal counts
+  remain seven resume-state rows per trace, 13 retained artifact kinds, 51
+  retained artifact rows, 45 canonical boundaries, 12 cleanup intents, 57
+  ordinary checkpoint intervals, one terminal accounting row, and 58 total
+  resource-accounting rows. Implementation remains forbidden until fresh
+  independent methods, systems, and schema reviews all pass this settled
+  A022--A026 package, followed by the locked local suite and hosted CI.
+- **Inference effect:** None. Amendment A026 removes timing-selection and
+  crash-state discretion from an engineering admission benchmark. It changes
+  no statistical estimator, population target, interval, scientific
+  threshold, trial count, or registered validation/research address.
+- **Access statement:** Amendment A026 was derived from source/document
+  inspection, deterministic byte/type calculations, and primary Darwin
+  process-lock documentation only. No A022 rehearsal, registered resource
+  seed `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.

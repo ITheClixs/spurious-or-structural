@@ -1,0 +1,234 @@
+schema_version = 2
+design_id = "S0004"
+gate = "G2"
+authority = "A022+A023+A024+A025+A026"
+entry_module = "xid.g2_resource_benchmark"
+registered_make_target = "g2-resource-benchmark"
+rehearsal_make_target = "g2-resource-rehearsal"
+base_config = "configs/g2.toml"
+base_config_sha256 = "f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc"
+population_targets = "configs/g2_population_targets.json"
+population_targets_sha256 = "f13adcff4259773485ca5952d23ae923d3c501c84d4edb102c1886460ada4a59"
+unknown_keys = "reject"
+
+[roots.registered]
+result = "results/g2_resource_benchmark"
+checkpoint = "data/g2_resource_benchmark/checkpoints"
+scratch = "data/g2_resource_benchmark/scratch"
+
+[roots.rehearsal]
+result = "results/g2_resource_rehearsal"
+checkpoint = "data/g2_resource_rehearsal/checkpoints"
+scratch = "data/g2_resource_rehearsal/scratch"
+
+[source]
+panel_paths = ["src/xid", "configs/g2.toml", "configs/g2_population_targets.json", "pyproject.toml", "uv.lock", ".python-version", "Makefile"]
+executable_paths = ["src/xid", "configs/g2.toml", "configs/g2_population_targets.json", "configs/g2_resource.toml", "pyproject.toml", "uv.lock", ".python-version", "Makefile"]
+authority_paths = ["src/xid", "configs/g2.toml", "configs/g2_population_targets.json", "configs/g2_resource.toml", "PREREGISTRATION.md", "docs/G2_COMPUTE_PLAN.md", "docs/derivations/GATE_G2_RESOURCE_ADMISSION.md", "docs/derivations/GATE_G2_RESOURCE_ARTIFACT_AUTHORITY.md", "docs/predictions/GATE_G2_RESOURCE.md", "pyproject.toml", "uv.lock", ".python-version", "Makefile"]
+panel_namespace = "xid-g2-source-snapshot-v1"
+executable_namespace = "xid-g2-resource-executable-source-snapshot-v1"
+authority_namespace = "xid-g2-resource-authority-source-snapshot-v1"
+namespace_suffix_rule = "append-one-lf-before-sha256-v1"
+
+[runtime]
+python_implementation = "cpython"
+python_version = "3.13.5"
+numpy_version = "2.5.1"
+system = "Darwin"
+machine = "arm64"
+byteorder = "little"
+single_thread = true
+
+[runtime.thread_env]
+BLIS_NUM_THREADS = "1"
+MKL_NUM_THREADS = "1"
+NUMEXPR_NUM_THREADS = "1"
+OMP_NUM_THREADS = "1"
+OPENBLAS_NUM_THREADS = "1"
+VECLIB_MAXIMUM_THREADS = "1"
+
+[addresses]
+config_schema_version = 3
+rng_key_schema_version = 2
+n_dates = 252
+cell_key = 0
+dgp_component_ids = [1, 2, 3, 4, 5]
+bootstrap_component_id = 6
+bootstrap_replicate_range = [0, 25]
+
+[addresses.rehearsal]
+seed = 1729
+panel_indices = [10000, 10001, 10002]
+
+[addresses.registered]
+seed = 2026071529
+first_panel_index = 0
+panel_rule = "contiguous-no-gap-no-reassignment"
+smooth_stream = "resource_smooth"
+smooth_phase_scenario = [10, 0]
+paper_stream = "resource_paper"
+paper_phase_scenario = [10, 1]
+bootstrap_phase_scenario = [40, 0]
+
+[addresses.call_schedule]
+cold_equal = [1260, 0, 25, 0, 0, 0, 0, 0, 0, 0, 5, 5, 25, 0, 0]
+validation = [1260, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 5, 25, 0, 0]
+research = [1260, 0, 25, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 25, 0]
+dgp_order = "date-major-component-ascending-v1"
+bootstrap_order = "replicate-ascending-v1"
+paper_weight_rule = "draw-at-first-positive-k13-persist-through-last-positive-k13-v1"
+
+[kernels]
+record_order = ["k1-default", "k2-default", "k3-default", "k4-default", "k5-default", "k6-default", "k7-default", "k9-default", "k10-default", "k8-default", "k11-default", "k12-default", "k13-recovery", "k13-research", "k14-default"]
+artifact_io_kernel_ids = [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14]
+measurability_kernel_ids = [3, 4, 5, 6, 7]
+measurability_minimum_ns = 100000000
+clock_resolution_enclosure_multiplier = 2
+cold_rate_numerator = 5
+cold_rate_denominator = 3
+projection_margin_numerator = 5
+projection_margin_denominator = 4
+first_epoch_positions = [0, 1]
+first_epoch_internal_cutoff = "post-k1-pre-k2-nondurable-cumulative-v1"
+first_epoch_registry_rule = "baseline-before-k1-retained-after-k1-baseline-after-k2-v1"
+canonical_boundary_next_positions = [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+canonical_boundaries_per_trace = 15
+rehearsal_trace_count = 3
+rehearsal_boundary_count = 45
+rehearsal_cleanup_intent_count = 12
+rehearsal_terminal_accounting_row_count = 1
+rehearsal_resource_accounting_row_count = 58
+
+[kernels.units]
+cold_equal = [252, 252, 25, 225, 225, 225, 4096, 1, 1, 1, 1, 1, 6048000, 53298000, 1]
+validation = [252, 252, 25, 225, 225, 225, 1, 1, 1, 1, 0, 1, 6048000, 0, 1]
+research = [252, 252, 25, 25, 25, 25, 1, 1, 1, 1, 1, 0, 0, 53298000, 1]
+
+[schedule]
+cold_trace_count = 1
+thermal_minimum_ns = 600000000000
+thermal_phase_order = ["validation", "research", "research", "validation"]
+warm_block_count = 3
+warm_block_minimum_ns = 200000000000
+warm_block_minimum_pairs = 4
+measurement_pair_order = [["validation", "research"], ["research", "validation"]]
+boundary_rule = "canonical-worker-ready-post-k1-k2-post-remaining-record-trace-measurement-plus-resume-worker-ready-copy-prefix-v1"
+recovery_thermal_rule = "between-rate-traces-reset-600s-before-next-warm-trace-recovery-cycle-restarts-v2"
+rate_trace_interruption_rule = "inside-any-rate-bearing-trace-select-terminal-failure-exclude-all-trace-rate-evidence-v1"
+rehearsal_success_rule = "retain-evidence-roots-no-post-result-cleanup-v1"
+reservation_resume_rule = "immutable-original-claim-contiguous-predecessor-ancestry-v1"
+telemetry_continuity_rule = "closed-segments-only-unknown-loss-limit-plus-one-v1"
+
+[terminal]
+accounting_method = "fixed-terminal-accounting-charge-v1"
+accounting_charge_ns = 60000000000
+success_path = "terminal/success"
+failure_path = "terminal/failure"
+success_stage = "terminal/.success.xid-g2-terminal-stage-v1"
+failure_stage = "terminal/.failure.xid-g2-terminal-stage-v1"
+nonpass_path = "terminal/nonpass"
+nonpass_stage = "terminal/.nonpass.xid-g2-terminal-stage-v1"
+nonpass_publication_rule = "immutable-terminal-entry-selection-successor-rebuildable-forensic-close-v1"
+publication_rule = "write-fsync-children-stage-no-overwrite-directory-rename-parent-fsync-v1"
+
+[process]
+initial_supervisor_identity = "pid-start-boot-v1"
+death_methods = ["wait4-reaped", "double-process-identity-absence", "boot-identity-changed"]
+launch_quiescence_kind = "darwin-fileglob-flock-exclusive-lease-v1"
+launch_quiescence_rule = "atomic-intent-directory-stable-inode-no-unlock-no-dup-no-pass-no-descendant-last-close-v1"
+launch_quiescence_successor_rule = "fresh-open-nofollow-fstat-same-inode-flock-ex-nb-plus-supervisor-death-v1"
+launch_quiescence_filename = "quiescence.lock"
+launch_quiescence_mode = 384
+
+[hard_stops]
+resource_expected_ns = 3600000000000
+resource_hard_ns = 7200000000000
+validation_expected_ns = 43200000000000
+validation_hard_ns = 86400000000000
+research_expected_ns = 10800000000000
+research_hard_ns = 21600000000000
+combined_expected_ns = 57600000000000
+combined_hard_ns = 115200000000000
+task_ns = 480000000000
+peak_rss_bytes = 3500000000
+checkpoint_tree_bytes = 2000000000
+checkpoint_margin_tree_bytes = 1600000000
+created_transient_bytes = 6000000000
+steady_total_bytes = 25000000000
+absolute_transient_bytes = 30000000000
+sampler_period_ns = 50000000
+maximum_sampler_gap_ns = 1000000000
+payload_bytes = 5242880
+checkpoint_work_ns = 480000000000
+boundary_publication_ns = 60000000000
+durable_marker_interval_ns = 540000000000
+attempt_bootstrap_ns = 480000000000
+maximum_worker_count = 64
+maximum_interruption_count = 63
+maximum_trace_count = 4096
+maximum_terminal_cleanup_rows = 512
+maximum_failure_resume_count = 641
+maximum_process_death_rows = 128
+maximum_canonical_path_bytes = 240
+maximum_cleanup_row_bytes = 1024
+maximum_process_death_row_bytes = 512
+maximum_worker_wait_row_bytes = 512
+maximum_failure_intent_nonrow_bytes = 131072
+maximum_failure_intent_envelope_bytes = 753664
+maximum_terminal_nonpass_intent_bytes = 131072
+unknown_loss_rss_upper_bytes = 3500000001
+unknown_loss_checkpoint_tree_upper_bytes = 2000000001
+unknown_loss_created_roots_upper_bytes = 6000000001
+unknown_loss_absolute_workspace_upper_bytes = 30000000001
+
+[artifacts]
+npy_format = "1.0"
+npy_prefix_bytes = 128
+dtype = "<f8"
+fortran_order = false
+manifest_cap_bytes = 1048576
+marker_cap_bytes = 16384
+root_receipt_cap_bytes = 1048576
+publication_envelope_shards = 50
+publication_envelope_elements_per_shard = 595000
+publication_envelope_numeric_bytes = 238000000
+rehearsal_artifact_kind_count = 13
+rehearsal_artifact_row_count = 51
+
+[artifacts.shapes]
+null_batch = [25, 3, 9]
+resume_base_panel = [252, 2016]
+resume_cell_x0ty = [252, 63, 30]
+resume_cell_yty_upper = [252, 465]
+resume_bootstrap_weights = [25, 252]
+resume_paper_bootstrap_weights = [25, 252]
+resume_candidate_focal_equal_validation = [25, 9]
+resume_candidate_focal_research = [25, 1]
+paper_full_date = [8460]
+paper_recovery_date = [960]
+paper_cache_recovery = [252, 960]
+paper_cache_research_shard = [63, 8460]
+paper_bootstrap_recovery = [25, 960]
+paper_bootstrap_research = [25, 8460]
+publication_envelope_shard = [595000]
+
+[artifacts.resume_lifecycle]
+create_after_record_positions = [0, 1, 2, 3, 4, 5]
+smooth_last_use_record_position = 9
+paper_weight_producer_rule = "first-positive-k13-position-v1"
+paper_weight_last_consumer_rule = "last-positive-k13-position-v1"
+paper_weight_role_order = ["cold_equal", "validation", "research"]
+paper_weight_producer_positions = [12, 12, 13]
+paper_weight_last_consumer_positions = [13, 12, 13]
+paper_weight_cleanup_positions = [13, 12, 13]
+cleanup_intent_record_positions = [9, 12, 13, 14]
+
+[replay]
+penalty_ns = 480000000000
+maximum_lost_work_ns = 480000000000
+maximum_marker_interval_ns = 540000000000
+powered_off_exclusion_ns = 0
+first_epoch_rule = "one-epoch-ordinal-full-penalty-per-record-v1"
+
+[registries]
+names = ["_RAW_BASE_REGISTRY", "_G2_DATE_REGISTRY", "_CONTRACT_DESIGN_REGISTRY", "_CONTRACT_BASE_DATE_REGISTRY", "_CONTRACT_CELL_DATE_REGISTRY", "_CONTRACT_BASE_PANEL_REGISTRY", "_CONTRACT_CELL_PANEL_REGISTRY", "_CONTRACT_AGGREGATE_REGISTRY", "_RESOURCE_ARTIFACT_REGISTRY"]

@@ -1996,3 +1996,288 @@ the choice, alternatives, and the evidence that would reopen it.
   a committed byte fails its recorded digest, later prose upgrades the result
   to a coefficient-truth claim, or A022/resource authority is inferred without
   its own derivation, prediction, and stop rules.
+
+## D0083 — Derive an operand-complete A022 before implementing the resource runner
+
+- **Date:** 2026-07-28
+- **Diagnosis:** The frozen fourteen-kernel work matrix is meaningful, but its
+  old one-unit benchmark bundle is not executable: one date cannot honestly
+  produce a 252-date base/cell artifact or paper cache, cheap operations may
+  lie below timer resolution, equal-context rates need not transfer to the
+  validation/research mixtures, and capability/artifact/resume/process/disk
+  semantics were incomplete. These are design defects, not evidence that the
+  M4 Air is inadequate. The diagnosis was written before method selection,
+  code, or registered resource access.
+- **Decision:** Append preregistration amendment A022 and freeze a complete
+  engineering admission experiment before implementation. Preserve the
+  fourteen kernels, full `W`, science, addresses, seeds, and budgets. Use
+  fixed operand-complete cold/equal blocks; three non-adaptive seed-1729
+  measurability rehearsals; contiguous registered panel claims from zero;
+  600-second thermalization; exactly three warm blocks; total/phase
+  stationarity and leave-one-block-out mixture transfer; slowest-context
+  integer projection; a separate anonymous-pipe `ResourceRngNamespace`;
+  byte-level artifact authority; PID/start plus `wait4` RSS evidence; and
+  crash-persistent three-root disk/cumulative-time accounting.
+- **Rejected:** Time private surrogate kernels; generate required operands
+  outside the clock; adapt powers-of-two after timing; choose panel gaps after
+  seeing registered durations; retain the old last-three rate as admission;
+  let interrupted epochs erase adverse evidence; rename existing
+  `base-panel`/`cell-panel` artifacts; or execute the resource seed before a
+  quantitative prediction seal. Each alternative creates discretion or omits
+  frozen production work.
+- **Hostile-review evidence:** Two independent pre-code reviews both failed
+  the first draft. They identified absent A022 preregistration authority,
+  non-unique panel allocation, undefined held-out normalization, adaptive
+  microbatch discretion, unnamed artifact schemas, erasable sampler gaps,
+  incomplete process/disk accounting, and descriptive provenance. The repair
+  makes panel claims contiguous, fixes `k7=4096`, removes all adaptive counts,
+  defines exact indexed transfer arithmetic, makes live accounting gaps
+  terminal, freezes source paths/resume clocks, and delegates bytes to
+  `GATE_G2_RESOURCE_ARTIFACT_AUTHORITY.md`.
+- **Residual risk:** Repeating one issued paper-date summary across a
+  benchmark-only cache does not reproduce 252-date heterogeneity or a
+  12-hour object-lifetime trajectory. A022 can therefore establish only
+  conditional machine/runtime admission. Validation and research retain
+  runtime reforecast and hard-stop authority.
+- **Reopen if:** A fixed test subblock is below 100 ms, an exact artifact
+  schema cannot fit the 5-MiB payload ceiling, hostile re-review fails, any
+  implementation introduces data-dependent workload/address selection, or a
+  registered resource/validation/research seed is accessed before the
+  prediction seal and explicit one-shot authorization.
+
+## D0084 — Keep A022 conditional and make every resource byte derivable
+
+- **Date:** 2026-07-29
+- **Diagnosis:** Fresh independent review found one methodological
+  overstatement and six persistence ambiguities. A022's phase traces are not
+  proportional to `W`; its same-phase held-out formula tests temporal
+  stability, not full-mixture transfer. Exact proportional scaling is
+  infeasible because unit kernel-14 work forces the full phase. Separately,
+  the design omitted new-wrapper registry accounting, one rehearsal source
+  identity, literal NPY headers, deterministic stage/debris bytes, retained
+  rehearsal inventory rows, and exact disk mode/allocation-unit encodings.
+- **Decision:** Append A023 without rewriting A022. Preserve every frozen
+  trace vector and address. Rename the active claim as conditional per-kernel
+  extrapolation, retain six same-phase temporal checks, and add 72
+  opposite-phase per-kernel/aggregate robustness checks over kernels
+  `1..10,14`. Count one ninth `_RESOURCE_ARTIFACT_REGISTRY`; bind all three
+  rehearsal source identities while requiring only executable equality across
+  stages; freeze a literal 118-byte NPY header, deterministic stage paths,
+  complete debris/final digests, full rehearsal inventory rows, and exact
+  no-follow disk/statvfs rows.
+- **Rejected:** Relabel same-phase temporal prediction as mixture transfer;
+  run a rounded five-percent workload trace that would consume roughly 60% of
+  each phase across the minimum warm blocks; reduce validation fits below the
+  mandatory 25-by-nine null-batch atom; or leave implementation to choose
+  equivalent encodings. The first overclaims evidence, the middle alternatives
+  violate budget/artifact contracts, and the last restores discretion.
+- **Residual risk:** Passing temporal and cross-context checks cannot validate
+  linear scaling to `W`, excluded kernels 11--13, heterogeneous 252-date cache
+  lifetime, or a future 12-hour thermal path. Assumption A026 remains explicitly
+  untested; validation and research reforecast/hard stops remain binding.
+- **Reopen if:** Any active document calls A022 a measured full-mixture
+  guarantee, a registry vector has other than nine positions, rehearsal omits
+  a source identity or full inventory rows, a byte can have two valid
+  encodings, hostile re-review fails, or any A022/registered seed runs before
+  the corrected package is accepted.
+
+Historical unqualified `A024` references in D0076--D0082 denote assumption
+A024, the trusted-origin assumption. `Amendment A024` denotes the independent
+preregistration restartability correction below.
+
+## D0085 — Make A022 restartable without preserving raw statistical state
+
+- **Date:** 2026-07-29
+- **Diagnosis:** Recovery review rejected the A023-corrected package before
+  implementation or rehearsal. A durable boundary after k1 could not supply
+  k2's required live raw/design/PCA operands, while k8 named k9/k10 artifact
+  parents before those artifacts existed. Further hostile review found
+  resettable trace/replay evidence, unchained supervisor loss, incomplete RNG
+  upper digests and accounting anchors, and destructive terminal-failure
+  cleanup before an outcome-selection journal.
+- **Decision:** Append amendment A024. Freeze receipt order
+  `k1,k2,k3,k4,k5,k6,k7,k9,k10,k8,k11,k12,k13-recovery,k13-research,k14`;
+  make k1+k2 one timed indivisible epoch with one non-durable internal
+  accounting cutoff; and persist only resume panels, weights, and focal
+  outputs. Recompute aggregates through the same ordinary/resume path. Journal
+  every last-use cleanup; publish 15 canonical boundary leaves plus four
+  cleanup intents per rehearsal trace; delete and bind uncommitted artifact
+  finals before replay; carry the full trace prefix through chained
+  interruptions; and charge one lost first-epoch ordinal fully to both
+  eventual records while counting physical elapsed once. Before destructive
+  terminal cleanup, publish an immutable failure intent whose resumable suffix
+  cannot reopen work or select a different outcome.
+- **Rejected:** Persist raw normals, `X0`, PCA, aggregates, or fit objects;
+  redraw RNG; retain a durable k1-only boundary; run k8 before k9/k10; treat an
+  uncommitted final as timed evidence; reset replay on a clean continuation; or
+  delete terminal artifacts before durably selecting failure. Each alternative
+  either breaks restartability, adds scientific state, or permits
+  interruption/outcome selection.
+- **Evidence:** The corrected config freezes 15 record positions, 45 rehearsal
+  boundary leaves, 12 cleanup intents, and 57 checkpoint intervals. Its current
+  exact ASCII bytes and parsed type tree reproduce the hashes recorded in the
+  artifact authority. The first hostile A024 pass failed nine concrete state
+  transitions; the draft now addresses each. No test-seed rehearsal,
+  registered resource namespace, validation/research stream, empirical data,
+  or holdout was accessed.
+- **Residual risk:** Resume I/O, deterministic reconstruction, cleanup journals,
+  terminal-failure closure, and added receipt validation may themselves fail
+  the resource budget. The repaired A024 package still requires two fresh
+  hostile passes, the locked local suite, and hosted CI; no rehearsal has run.
+- **Reopen if:** Any consumer bypasses the resume artifacts, an aggregate
+  crosses a boundary, a clean/chained interruption changes the pending replay
+  count incorrectly, a terminal-cleanup crash can change outcome, config bytes
+  drift without a new freeze, hostile review fails, or any registered stream is
+  accessed before the later quantitative seal and explicit authorization.
+
+## D0086 — Close A024's remaining state-machine branches with finite A025 authority
+
+- **Date:** 2026-07-29
+- **Diagnosis:** Three fresh independent hostile reviews attacked the
+  A024-corrected package before code and all failed it. Ordinary receipt stages
+  could be misclassified as debris; whole-leaf cleanup could not checkpoint a
+  child unlink; terminal cleanup lacked a final durable checkpoint and exact
+  clock; process-death bytes, reservation ancestry, and post-interruption
+  thermal state were underdetermined; lost-supervisor telemetry could be
+  erased; terminal evidence had no finite root-JSON liveness bound; the paper
+  bootstrap weights had no durable lifecycle; and terminal success had no
+  bounded interval.
+- **Decision:** Append amendment A025 without changing A022--A024's seeds,
+  addresses, record order, numerical kernels, work matrix, estimators,
+  thresholds, budgets, or conditional interpretation. Freeze exact successful
+  RNG call sequences; one role-resolved paper-bootstrap-weight artifact; seven
+  resume-state rows; idempotent ordinary receipt-stage adoption; entry-level
+  child-before-parent cleanup/debris prefixes; at least one contiguous
+  failure-resume checkpoint including an exact final cleanup receipt; exact
+  process-death nullability and ordering; immutable reservation-creator
+  ancestry; mandatory thermal requalification after interruption; fail-closed
+  unknown-loss telemetry; finite worker/interruption/trace/path/row envelopes;
+  category-contiguous failure prefixes; and one fixed terminal-success
+  accounting row whose visible-directory existence attests the later final
+  seal without claiming an end-to-end latency bound. The successful
+  three-panel rehearsal therefore retains exactly 13
+  artifact kinds and 51 artifact rows and contains 45 canonical boundaries,
+  12 cleanup intents, 57 capped ordinary checkpoint intervals, and one terminal
+  accounting row, for 58 resource-accounting rows total.
+- **Rejected:** Treat a valid receipt stage as disposable debris; record
+  cleanup only at whole-target granularity; allow a zero-checkpoint or
+  unbounded terminal suffix; infer current-worker equality by rewriting the
+  original reservation; preserve favorable telemetry across an unclosed
+  process segment; reuse pre-interruption thermal qualification; redraw paper
+  bootstrap weights; or let count/path growth widen a root receipt beyond 1
+  MiB. Each alternative restores crash-, identity-, evidence-, or
+  timing-selected discretion.
+- **Evidence:** The A025 authority freezes the seven-row, 13-kind,
+  51-artifact, and 58-resource-accounting-row counts. The amended config
+  recomputed at the A025 freeze to 9,061 bytes, SHA256
+  `1a196dc09b9fdee9b9df6389d44b43bf24f10cd07cfef0140a6696ebcb1ec9fe`,
+  184 type rows, and type-tree SHA256
+  `838f74d41bd4f553bd5c01dceebe279de0ed7fa998d88ba0cff510e470a40df6`;
+  fresh independent verification remains required and these values are not
+  acceptance evidence. D0085's 57-interval value is retained only as the
+  historical A024 boundary that A025 supersedes. A025 was derived from
+  source/document inspection and deterministic byte/count calculations only.
+  No implementation, test-seed rehearsal, registered resource command,
+  registered resource/validation/research seed, empirical data, evaluation
+  data, or holdout was accessed.
+- **Residual risk:** A025 is a response to failed reviews, not acceptance.
+  Receipt recovery, entry-level deletion, chained failure checkpoints,
+  telemetry closure, and finite evidence encoding may still be internally
+  inconsistent or exceed the resource budget. Fresh independent methods,
+  systems, and schema reviews, then the locked deterministic suite and hosted
+  CI, remain mandatory before test-seed implementation.
+- **Reopen if:** Any A025 byte/count differs across active documents, an
+  ordinary stage has more than one transition, cleanup progress can skip an
+  entry, a failure or success suffix can exceed its clock/size bound, a
+  reservation loses its original-claim ancestry, unknown-loss telemetry can
+  pass admission, a fresh hostile review fails, or implementation/rehearsal/
+  registered access occurs before the required reviews and design seal.
+
+## D0087 — Close A025's interruption and consumed-terminal dead ends with A026
+
+- **Date:** 2026-08-06
+- **Diagnosis:** Fresh independent A025 review produced one schema pass and two
+  blocking verdicts. Methods review found that interruption inside a
+  rate-bearing trace could alter thermal state while the resumed suffix still
+  entered admission. Systems review found a same-boot launch-only state and a
+  post-terminal-entry state that consumed the attempt while authorizing no
+  terminal close. These were deterministic design failures before code or RNG.
+- **Decision:** Append amendment A026 without changing any scientific address,
+  kernel, estimator, threshold, budget, artifact shape, or successful-
+  rehearsal count. An interruption inside a rate-bearing trace now selects
+  terminal failure and excludes the trace from every rate operand; only
+  between-trace recovery may continue after a fresh uninterrupted 600-second
+  thermal cycle. Each launch intent now atomically binds a stable inherited
+  Darwin `flock` lease; after supervisor death, fresh acquisition of the same
+  inode proves launch quiescence under a frozen no-unlock/no-dup/no-pass/no-
+  descendant discipline and selects pre-RNG failure. An uncertifiable exact
+  success/failure terminal-entry state now closes only through an immutable
+  lock-bearing nonpass intent and successor-rebuildable
+  `terminal/nonpass/{nonpass.json,_NONPASS}` with admission and retry both
+  false.
+- **Rejected:** Let a suspended timing trace complete; discard and replace an
+  interrupted trace; treat `flock` alone as child-death evidence; infer
+  quiescence from PID absence; let a successor certify the originally selected
+  success/failure; retry either terminal Git check; or leave a consumed exact
+  terminal-entry state without a durable outcome. These alternatives permit
+  timing selection, process ambiguity, outcome switching, or an unbounded
+  consumed state.
+- **Evidence:** Primary Darwin documentation and XNU source agree that
+  `fork`/`dup` references share the open-file-object lock, a separate
+  nonblocking exclusive acquisition fails while an incompatible holder
+  remains, and final close releases the lock. The amended config independently
+  recomputes to 9,799 ASCII bytes, SHA256
+  `3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29`,
+  194 leaf-type rows, and type-tree SHA256
+  `e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3`.
+  Successful rehearsal remains `3/45/12/57+1/58/13/51/7`. No implementation,
+  rehearsal, registered command, registered seed, external data, or holdout
+  was accessed.
+- **Residual risk:** The lease is valid only under exact descriptor discipline
+  and a local filesystem supporting Darwin `flock`; it proves quiescence, not
+  PID death. Nonpass publication needs exhaustive repeated-successor crash and
+  maximum-width fixtures. A026 is a response to failed review, not acceptance.
+- **Reopen if:** A live/unknown lease holder can be bypassed, the lease inode or
+  bytes can be substituted, any interrupted rate trace enters admission, a
+  terminal-entry failure can retry Git/RNG or publish success/failure, nonpass
+  bytes depend on successor-local state, config seals diverge, fresh review
+  fails, or implementation/rehearsal begins before all required passes.
+
+## D0088 — Accept A026 document authority after three independent review lanes
+
+- **Date:** 2026-08-06
+- **Decision:** Accept the settled A022--A026 derivation, preregistration,
+  prediction, compute-plan, state-machine, artifact-authority, and byte-schema
+  package as the sole document authority for later test-seed implementation.
+  This decision does not accept the executable resource gate and does not
+  authorize rehearsal or registered access.
+- **Evidence:** Fresh methods review passed the rule that every interrupted
+  rate-bearing trace selects terminal failure and contributes no admission
+  operand, including the fresh 600-second between-trace recovery cycle. Fresh
+  systems review passed the Darwin same-inode launch-quiescence lease and the
+  deterministic successor-rebuildable terminal-nonpass state machine without
+  RNG, capability, retry, or opposite-outcome leakage. Schema review initially
+  failed because the recorded type-tree hash omitted the canonical CJSON LF,
+  then failed one stale abbreviated prefix. After those clerical corrections,
+  the third independent check passed: 9,799 ASCII config bytes, SHA256
+  `3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29`,
+  194 leaf rows, 9,473 LF-terminated CJSON bytes, type-tree SHA256
+  `e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3`,
+  and no stale prior-seal residue. The post-acceptance locked deterministic gate
+  passed Ruff, format, strict mypy over 22 source files, all 269 tests, the
+  deterministic demo, and committed-result drift. No implementation,
+  rehearsal, registered command, registered seed, external data, or holdout
+  was accessed.
+- **Rejected:** Treat either failed schema check as a pass; change the CJSON
+  definition to fit the wrong digest; conceal the stale prefix; or infer that
+  document review licenses resource execution. Those alternatives would break
+  the byte authority or cross a still-failed execution gate.
+- **Residual risk:** Every accepted mechanism remains unimplemented. Descriptor
+  discipline, crash-total publication, finite evidence envelopes, exact
+  interval accounting, and successful-rehearsal counts require deterministic
+  fixtures and later seed-1729 execution before any quantitative resource
+  prediction can be sealed.
+- **Reopen if:** Implementation cannot realize the exact document state
+  machine, any authoritative byte or count drifts, a deterministic fixture
+  exposes an unclassified transition, or a review/test failure is softened
+  instead of recorded and repaired.
