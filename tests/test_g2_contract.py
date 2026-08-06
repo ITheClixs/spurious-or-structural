@@ -150,6 +150,42 @@ def test_paper_reconstruction_contract_projects_every_solver_threshold() -> None
     )
 
 
+def test_paper_reconstruction_contract_projects_cache_and_aggregation_rules() -> None:
+    contract = load_g2_contract(_root())
+    paper = contract.paper_reconstruction
+
+    assert paper.coefficient_aggregation == "equal_mean_within_date_then_equal_mean_across_dates"
+    assert paper.prediction_aggregation == "pooled_next_block_sse_and_sst"
+    assert paper.bootstrap_aggregation == (
+        "cached_date_level_operator_sse_sst_summaries_with_shared_date_weights"
+    )
+    assert paper.bootstrap_refit is False
+    assert paper.date_cache_matrices == (
+        "PI_1_direct",
+        "PI_I_direct",
+        "CI_1_direct",
+        "CI_I_direct",
+        "PI_CC_purged",
+        "CI_CC_purged",
+        "PI_CC_full_response",
+        "CI_CC_full_response",
+        "cc_mean_projection_p_perp",
+    )
+    assert paper.date_cache_losses == "six_specs_times_thirty_responses_times_sse_and_sst"
+    assert paper.reported_coefficient_maps == (
+        "first_eight_date_cache_matrices_all_7200_entries_with_model_restriction_zeros_explicit_"
+        "and_each_with_named_normal_and_basic_date_bootstrap_intervals"
+    )
+    assert paper.reported_oos_values == (
+        "six_specs_times_thirty_response_level_r_squared_180_each_with_named_normal_and_basic_"
+        "date_bootstrap_intervals"
+    )
+    assert paper.cache_only_fields == (
+        "cc_mean_projection_p_perp_and_360_sse_sst_components_are_internal_inputs_not_"
+        "separately_claimed_numbers"
+    )
+
+
 def test_paper_reconstruction_contract_rejects_value_and_representation_drift() -> None:
     contract = load_g2_contract(_root())
     paper = contract.paper_reconstruction
@@ -186,6 +222,17 @@ def test_paper_reconstruction_contract_rejects_value_and_representation_drift() 
                 paper,
                 specifications=cast(Any, list(paper.specifications)),
             ),
+        ),
+        replace(
+            contract,
+            paper_reconstruction=replace(
+                paper,
+                date_cache_matrices=cast(Any, list(paper.date_cache_matrices)),
+            ),
+        ),
+        replace(
+            contract,
+            paper_reconstruction=replace(paper, bootstrap_refit=cast(Any, 0)),
         ),
     )
 
