@@ -74,6 +74,10 @@ def test_lasso_ratio_selection_rejects_invalid_sse_before_selecting() -> None:
     with pytest.raises(ValueError, match="nonnegative"):
         select_lasso_ratio(negative, contract=contract)
 
+    overflowing = np.full((5, 40), np.finfo(np.float64).max, dtype=np.float64)
+    with pytest.raises(FloatingPointError, match="nonfinite|overflow"):
+        select_lasso_ratio(overflowing, contract=contract)
+
 
 def test_lasso_ratio_selection_revalidates_the_contract() -> None:
     contract = load_g2_contract(_root())
