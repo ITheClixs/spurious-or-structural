@@ -542,9 +542,10 @@ def solve_lasso_coordinate_descent(
     y_res: NDArray[np.float64],
     *,
     lambda_value: float,
+    initial_coefficients: NDArray[np.float64] | None = None,
     contract: G2Contract,
 ) -> LassoCoordinateDescentResult:
-    """Solve sealed paper LASSO from zero by ascending-coordinate sweeps."""
+    """Solve sealed paper LASSO from zero or a validated warm start."""
     validate_g2_contract(contract)
     x = _require_float64_array(x_res, name="x_res", ndim=2)
     y = _require_float64_array(y_res, name="y_res", ndim=1)
@@ -568,8 +569,22 @@ def solve_lasso_coordinate_descent(
             raise ValueError("active column norm must exceed the sealed post-FWL cutoff")
         denominators[column_index] = denominator
 
-    coefficients = np.zeros(x.shape[1], dtype=np.float64)
-    residual = np.asarray(y, dtype=np.float64, order="C").copy()
+    if initial_coefficients is None:
+        coefficients = np.zeros(x.shape[1], dtype=np.float64)
+        residual = np.asarray(y, dtype=np.float64, order="C").copy()
+    else:
+        initial = _require_float64_array(
+            initial_coefficients,
+            name="initial_coefficients",
+            ndim=1,
+        )
+        if initial.shape != (x.shape[1],):
+            raise ValueError("initial_coefficients shape must match the number of columns")
+        coefficients = np.asarray(initial, dtype=np.float64, order="C").copy()
+        coefficients[coefficients == 0.0] = np.float64(0.0)
+        residual = np.asarray(y - x @ coefficients, dtype=np.float64, order="C")
+        _assert_all_finite(coefficients, name="initial coefficients")
+        _assert_all_finite(residual, name="initial residual")
     penalty = np.float64(lambda_value)
     tolerance = np.float64(contract.paper_reconstruction.coordinate_descent_tolerance)
     kkt_tolerance = np.float64(contract.paper_reconstruction.kkt_tolerance)
