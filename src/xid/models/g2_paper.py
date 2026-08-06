@@ -105,6 +105,26 @@ class PaperOlsResult:
     rcond: float
 
 
+@dataclass(frozen=True, slots=True)
+class PaperFeatureTransform:
+    """Stored training-only PCA transforms for paper feature blocks."""
+
+    n_assets: int
+    n_levels: int
+    integrated_level_fits: tuple[PaperPcaFit, ...]
+    cross_section_fit: PaperPcaFit
+
+
+@dataclass(frozen=True, slots=True)
+class PaperFeatureBlock:
+    """Paper feature arrays derived from stored training-only transforms."""
+
+    best_level_flows: NDArray[np.float64]
+    integrated_flows: NDArray[np.float64]
+    cross_section_factor: NDArray[np.float64]
+    cross_section_residuals: NDArray[np.float64]
+
+
 def _readonly_c_float64(values: NDArray[np.float64]) -> NDArray[np.float64]:
     out = np.asarray(values, dtype=np.float64, order="C").copy()
     out.setflags(write=False)
@@ -138,6 +158,45 @@ def _require_float64_array(
 def _assert_all_finite(value: NDArray[np.float64] | np.float64, *, name: str) -> None:
     if not np.all(np.isfinite(value)):
         raise FloatingPointError(f"{name} produced nonfinite intermediate arithmetic")
+
+
+def _require_level_flows(
+    value: object,
+    *,
+    contract: G2Contract,
+    name: str,
+) -> NDArray[np.float64]:
+    level_flows = _require_float64_array(value, name=name, ndim=3)
+    expected_tail = (contract.n_assets, contract.n_levels)
+    if level_flows.shape[0] <= 0 or level_flows.shape[1:] != expected_tail:
+        raise ValueError(f"{name} shape must be positive rows by sealed assets and levels")
+    return level_flows
+
+
+def _validate_feature_transform(transform: PaperFeatureTransform, *, contract: G2Contract) -> None:
+    if type(transform) is not PaperFeatureTransform:
+        raise TypeError("transform must use exact PaperFeatureTransform")
+    if type(transform.n_assets) is not int or type(transform.n_levels) is not int:
+        raise TypeError("transform dimensions must use exact Python int")
+    if transform.n_assets != contract.n_assets or transform.n_levels != contract.n_levels:
+        raise ValueError("transform dimensions must match the sealed assets and levels")
+    if (
+        type(transform.integrated_level_fits) is not tuple
+        or len(transform.integrated_level_fits) != contract.n_assets
+        or any(type(fit) is not PaperPcaFit for fit in transform.integrated_level_fits)
+    ):
+        raise ValueError("transform integrated PCA fits must match sealed asset count")
+    if type(transform.cross_section_fit) is not PaperPcaFit:
+        raise ValueError("transform cross-sectional PCA fit has invalid representation")
+    for asset_index, fit in enumerate(transform.integrated_level_fits):
+        if fit.training_means.shape != (contract.n_levels,) or fit.loading.shape != (
+            contract.n_levels,
+        ):
+            raise ValueError(f"integrated PCA fit {asset_index} has invalid level dimensions")
+    if transform.cross_section_fit.training_means.shape != (
+        contract.n_assets,
+    ) or transform.cross_section_fit.loading.shape != (contract.n_assets,):
+        raise ValueError("cross-sectional PCA fit has invalid asset dimensions")
 
 
 def fit_paper_pca(
@@ -284,6 +343,65 @@ def fit_full_rank_ols(
         coefficients=_readonly_c_float64(coefficients),
         rank=rank_int,
         rcond=rcond,
+    )
+
+
+def fit_paper_feature_transform(
+    level_flows: NDArray[np.float64],
+    *,
+    contract: G2Contract,
+) -> PaperFeatureTransform:
+    """Fit all paper feature transforms from training level-flow rows."""
+    validate_g2_contract(contract)
+    flows = _require_level_flows(level_flows, contract=contract, name="level_flows")
+    best_index = contract.paper_reconstruction.best_level_index
+    best_level_flows = np.asarray(flows[:, :, best_index], dtype=np.float64, order="C")
+    _assert_all_finite(best_level_flows, name="best-level flow extraction")
+
+    integrated_fits = tuple(
+        fit_paper_pca(flows[:, asset_index, :], contract=contract)
+        for asset_index in range(contract.n_assets)
+    )
+    cross_fit = fit_paper_pca(best_level_flows, contract=contract)
+    return PaperFeatureTransform(
+        n_assets=contract.n_assets,
+        n_levels=contract.n_levels,
+        integrated_level_fits=integrated_fits,
+        cross_section_fit=cross_fit,
+    )
+
+
+def apply_paper_feature_transform(
+    transform: PaperFeatureTransform,
+    level_flows: NDArray[np.float64],
+    *,
+    contract: G2Contract,
+) -> PaperFeatureBlock:
+    """Apply stored paper feature transforms without refitting or recentering."""
+    validate_g2_contract(contract)
+    _validate_feature_transform(transform, contract=contract)
+    flows = _require_level_flows(level_flows, contract=contract, name="level_flows")
+    best_index = contract.paper_reconstruction.best_level_index
+    best_level_flows = np.asarray(flows[:, :, best_index], dtype=np.float64, order="C")
+    integrated_flows = np.empty((flows.shape[0], contract.n_assets), dtype=np.float64, order="C")
+    for asset_index, fit in enumerate(transform.integrated_level_fits):
+        integrated_flows[:, asset_index] = apply_integrated_level_pca(
+            fit,
+            flows[:, asset_index, :],
+            contract=contract,
+        )
+    cross_projection = apply_cross_sectional_pca(
+        transform.cross_section_fit,
+        best_level_flows,
+        contract=contract,
+    )
+    _assert_all_finite(best_level_flows, name="best-level flow extraction")
+    _assert_all_finite(integrated_flows, name="integrated flow features")
+    return PaperFeatureBlock(
+        best_level_flows=_readonly_c_float64(best_level_flows),
+        integrated_flows=_readonly_c_float64(integrated_flows),
+        cross_section_factor=cross_projection.scores,
+        cross_section_residuals=cross_projection.residuals,
     )
 
 
