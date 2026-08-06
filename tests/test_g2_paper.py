@@ -9,8 +9,15 @@ import pytest
 from xid.models.g2_paper import (
     LassoCoordinateDescentResult,
     LassoRatioSelection,
+    PaperCrossSectionProjection,
     PaperLassoProblem,
     PaperLinearCoefficients,
+    PaperOlsResult,
+    PaperPcaFit,
+    apply_cross_sectional_pca,
+    apply_integrated_level_pca,
+    fit_full_rank_ols,
+    fit_paper_pca,
     prepare_lasso_problem,
     reconstruct_lasso_coefficients,
     select_lasso_ratio,
@@ -398,3 +405,161 @@ def test_prepare_lasso_problem_fails_closed_and_allows_the_zero_path() -> None:
     )
     with pytest.raises(ValueError, match="sealed G2 contract"):
         prepare_lasso_problem(y, constants, factor=None, contract=altered)
+
+
+def _rank_one_pca_fixture() -> np.ndarray:
+    axis = np.asarray([-3.0, -1.0, 1.0, 3.0], dtype=np.float64)
+    return np.column_stack((-axis, 2.0 * axis))
+
+
+def test_paper_pca_fits_training_means_sign_and_l1_mapping() -> None:
+    contract = load_g2_contract(_root())
+    training = _rank_one_pca_fixture()
+    training_before = training.copy()
+
+    fit = fit_paper_pca(training, contract=contract)
+    training_scores = apply_integrated_level_pca(fit, training, contract=contract)
+    test_features = training[:2] + np.asarray([100.0, -7.0], dtype=np.float64)
+    test_scores = apply_integrated_level_pca(fit, test_features, contract=contract)
+
+    root_five = np.sqrt(np.float64(5.0))
+    assert type(fit) is PaperPcaFit
+    np.testing.assert_array_equal(fit.training_means, np.asarray([0.0, 0.0]))
+    np.testing.assert_allclose(
+        fit.loading,
+        np.asarray([-1.0, 2.0], dtype=np.float64) / root_five,
+        rtol=0.0,
+        atol=3e-16,
+    )
+    np.testing.assert_allclose(
+        training_scores,
+        (5.0 / 3.0) * np.asarray([-3.0, -1.0, 1.0, 3.0]),
+        rtol=0.0,
+        atol=2e-15,
+    )
+    np.testing.assert_allclose(
+        test_scores,
+        np.asarray([-43.0, -119.0 / 3.0]),
+        rtol=0.0,
+        atol=2e-14,
+    )
+    assert fit.covariance_trace == pytest.approx(25.0, rel=0.0, abs=1e-15)
+    assert fit.leading_eigenvalue == pytest.approx(25.0, rel=0.0, abs=1e-15)
+    assert fit.eigengap == pytest.approx(25.0, rel=0.0, abs=1e-15)
+    assert fit.loading_l1_norm == pytest.approx(3.0 / root_five, rel=0.0, abs=1e-15)
+    for values in (
+        fit.training_means,
+        fit.loading,
+        fit.orthogonal_projector,
+        training_scores,
+        test_scores,
+    ):
+        assert values.flags.c_contiguous
+        assert not values.flags.writeable
+    np.testing.assert_array_equal(training, training_before)
+
+
+def test_paper_pca_sign_tie_and_cross_sectional_projection() -> None:
+    contract = load_g2_contract(_root())
+    axis = np.asarray([3.0, 1.0, -1.0, -3.0], dtype=np.float64)
+    training = np.column_stack((axis, -axis))
+
+    fit = fit_paper_pca(training, contract=contract)
+    projection = apply_cross_sectional_pca(fit, training, contract=contract)
+
+    root_two = np.sqrt(np.float64(2.0))
+    assert type(projection) is PaperCrossSectionProjection
+    np.testing.assert_allclose(
+        fit.loading,
+        np.asarray([1.0, -1.0], dtype=np.float64) / root_two,
+        rtol=0.0,
+        atol=3e-16,
+    )
+    np.testing.assert_allclose(
+        fit.orthogonal_projector,
+        np.asarray([[0.5, 0.5], [0.5, 0.5]], dtype=np.float64),
+        rtol=0.0,
+        atol=3e-16,
+    )
+    np.testing.assert_allclose(projection.scores, axis * root_two, rtol=0.0, atol=2e-15)
+    np.testing.assert_allclose(projection.residuals, np.zeros_like(training), rtol=0.0, atol=2e-15)
+    assert projection.scores.flags.c_contiguous
+    assert projection.residuals.flags.c_contiguous
+    assert not projection.scores.flags.writeable
+    assert not projection.residuals.flags.writeable
+
+
+def test_paper_pca_fails_weak_or_invalid_training_problems() -> None:
+    contract = load_g2_contract(_root())
+    isotropic = np.asarray([[1, 0], [-1, 0], [0, 1], [0, -1]], dtype=np.float64)
+    with pytest.raises(ValueError, match="eigengap"):
+        fit_paper_pca(isotropic, contract=contract)
+    with pytest.raises(ValueError, match="trace"):
+        fit_paper_pca(np.zeros((4, 2), dtype=np.float64), contract=contract)
+
+    nonfinite = _rank_one_pca_fixture()
+    nonfinite[0, 0] = np.nan
+    with pytest.raises(ValueError, match="finite"):
+        fit_paper_pca(nonfinite, contract=contract)
+    with pytest.raises(TypeError, match="float64"):
+        fit_paper_pca(_rank_one_pca_fixture().astype(np.float32), contract=contract)
+
+    altered = replace(
+        contract,
+        paper_reconstruction=replace(
+            contract.paper_reconstruction,
+            pca_top_eigengap_min_trace_ratio=1e-9,
+        ),
+    )
+    with pytest.raises(ValueError, match="sealed G2 contract"):
+        fit_paper_pca(_rank_one_pca_fixture(), contract=altered)
+
+
+def test_full_rank_ols_uses_the_frozen_rcond(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    contract = load_g2_contract(_root())
+    design = np.asarray(
+        [[1.0, 0.0], [1.0, 1.0], [1.0, 2.0], [1.0, 3.0]],
+        dtype=np.float64,
+    )
+    response = np.asarray([2.0, 5.0, 8.0, 11.0], dtype=np.float64)
+    original_lstsq = np.linalg.lstsq
+    seen_rcond: list[float] = []
+
+    def recording_lstsq(
+        a: np.ndarray,
+        b: np.ndarray,
+        rcond: float,
+    ) -> tuple[np.ndarray, np.ndarray, np.int64, np.ndarray]:
+        seen_rcond.append(rcond)
+        return original_lstsq(a, b, rcond=rcond)
+
+    monkeypatch.setattr(np.linalg, "lstsq", recording_lstsq)
+    result = fit_full_rank_ols(design, response, contract=contract)
+
+    expected_rcond = float(np.finfo(np.float64).eps * max(design.shape))
+    assert type(result) is PaperOlsResult
+    assert seen_rcond == [expected_rcond]
+    assert result.rank == 2
+    assert result.rcond == expected_rcond
+    np.testing.assert_allclose(
+        result.coefficients,
+        np.asarray([2.0, 3.0]),
+        rtol=0.0,
+        atol=3e-15,
+    )
+    assert result.coefficients.flags.c_contiguous
+    assert not result.coefficients.flags.writeable
+
+
+def test_full_rank_ols_rejects_rank_loss_and_bad_inputs() -> None:
+    contract = load_g2_contract(_root())
+    rank_deficient = np.ones((3, 2), dtype=np.float64)
+    response = np.asarray([1.0, 2.0, 3.0], dtype=np.float64)
+    with pytest.raises(ValueError, match="rank"):
+        fit_full_rank_ols(rank_deficient, response, contract=contract)
+    with pytest.raises(ValueError, match="shape|rows"):
+        fit_full_rank_ols(rank_deficient, response[:2], contract=contract)
+    with pytest.raises(TypeError, match="float64"):
+        fit_full_rank_ols(rank_deficient.astype(np.float32), response, contract=contract)
