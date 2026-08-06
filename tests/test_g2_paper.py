@@ -9,6 +9,10 @@ import pytest
 from xid.models.g2_paper import (
     LassoCoordinateDescentResult,
     LassoRatioSelection,
+    PaperLassoProblem,
+    PaperLinearCoefficients,
+    prepare_lasso_problem,
+    reconstruct_lasso_coefficients,
     select_lasso_ratio,
     solve_lasso_coordinate_descent,
 )
@@ -186,3 +190,186 @@ def test_coordinate_descent_rejects_invalid_inputs_and_contract_drift() -> None:
             lambda_value=0.5,
             contract=altered,
         )
+
+
+def _factor_preprocessing_fixture() -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    y = np.asarray([1.0, 3.0, 5.0, 7.0], dtype=np.float64)
+    factor = np.asarray([-1.0, -1.0, 1.0, 1.0], dtype=np.float64)
+    penalized = np.asarray(
+        [[0.0, 1.0], [2.0, 3.0], [4.0, 1.0], [6.0, 3.0]],
+        dtype=np.float64,
+    )
+    return y, penalized, factor
+
+
+def test_prepare_lasso_problem_scales_before_factor_fwl() -> None:
+    contract = load_g2_contract(_root())
+    y, penalized, factor = _factor_preprocessing_fixture()
+    y_before = y.copy()
+    penalized_before = penalized.copy()
+    factor_before = factor.copy()
+
+    problem = prepare_lasso_problem(
+        y,
+        penalized,
+        factor=factor,
+        contract=contract,
+    )
+
+    root_five = np.sqrt(np.float64(5.0))
+    expected_x_res = np.asarray(
+        [
+            [-1.0 / root_five, -1.0],
+            [1.0 / root_five, 1.0],
+            [-1.0 / root_five, -1.0],
+            [1.0 / root_five, 1.0],
+        ],
+        dtype=np.float64,
+    )
+    assert type(problem) is PaperLassoProblem
+    assert problem.y_mean == 4.0
+    assert problem.factor_mean == 0.0
+    assert problem.factor_sum_squares == 4.0
+    assert problem.lambda_max == 1.0
+    np.testing.assert_array_equal(problem.x_means, np.asarray([3.0, 2.0]))
+    np.testing.assert_array_equal(problem.pre_fwl_rms, np.asarray([root_five, 1.0]))
+    np.testing.assert_array_equal(problem.active_columns, np.asarray([True, True]))
+    np.testing.assert_array_equal(problem.y_res, np.asarray([-1.0, 1.0, -1.0, 1.0]))
+    np.testing.assert_allclose(problem.x_res, expected_x_res, rtol=0.0, atol=1e-15)
+    for values in (
+        problem.x_means,
+        problem.pre_fwl_rms,
+        problem.active_columns,
+        problem.y_centered,
+        problem.x_centered,
+        problem.factor_centered,
+        problem.y_res,
+        problem.x_res,
+    ):
+        assert values is not None
+        assert values.flags.c_contiguous
+        assert not values.flags.writeable
+    np.testing.assert_array_equal(y, y_before)
+    np.testing.assert_array_equal(penalized, penalized_before)
+    np.testing.assert_array_equal(factor, factor_before)
+
+
+def test_reconstruct_lasso_coefficients_returns_original_units() -> None:
+    contract = load_g2_contract(_root())
+    y, penalized, factor = _factor_preprocessing_fixture()
+    problem = prepare_lasso_problem(
+        y,
+        penalized,
+        factor=factor,
+        contract=contract,
+    )
+
+    coefficients = reconstruct_lasso_coefficients(
+        problem,
+        np.asarray([np.sqrt(np.float64(5.0)), 2.0], dtype=np.float64),
+        contract=contract,
+    )
+
+    assert type(coefficients) is PaperLinearCoefficients
+    assert coefficients.intercept == -3.0
+    assert coefficients.factor_coefficient == 0.0
+    np.testing.assert_array_equal(
+        coefficients.penalized_coefficients,
+        np.asarray([1.0, 2.0]),
+    )
+    assert coefficients.penalized_coefficients.flags.c_contiguous
+    assert not coefficients.penalized_coefficients.flags.writeable
+
+
+def test_prepare_lasso_problem_drops_only_after_the_declared_stage() -> None:
+    contract = load_g2_contract(_root())
+    y = np.asarray([-1.0, 1.0, -1.0, 1.0], dtype=np.float64)
+    factor = np.asarray([-1.0, -1.0, 1.0, 1.0], dtype=np.float64)
+    penalized = np.asarray(
+        [[-1.0, -1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, 1.0]],
+        dtype=np.float64,
+    )
+
+    problem = prepare_lasso_problem(
+        y,
+        penalized,
+        factor=factor,
+        contract=contract,
+    )
+
+    np.testing.assert_array_equal(problem.pre_fwl_rms, np.asarray([1.0, 1.0]))
+    np.testing.assert_array_equal(problem.active_columns, np.asarray([False, True]))
+    np.testing.assert_array_equal(problem.x_res, penalized[:, 1:])
+    assert problem.lambda_max == 1.0
+
+
+def test_reconstruct_lasso_coefficients_without_a_factor() -> None:
+    contract = load_g2_contract(_root())
+    y = np.asarray([1.0, 3.0, 5.0, 7.0], dtype=np.float64)
+    penalized = np.asarray([[0.0], [2.0], [4.0], [6.0]], dtype=np.float64)
+    problem = prepare_lasso_problem(y, penalized, factor=None, contract=contract)
+
+    coefficients = reconstruct_lasso_coefficients(
+        problem,
+        np.asarray([np.sqrt(np.float64(5.0))], dtype=np.float64),
+        contract=contract,
+    )
+
+    assert coefficients.intercept == 1.0
+    assert coefficients.factor_coefficient is None
+    np.testing.assert_array_equal(coefficients.penalized_coefficients, np.asarray([1.0]))
+
+
+def test_prepare_lasso_problem_fails_closed_and_allows_the_zero_path() -> None:
+    contract = load_g2_contract(_root())
+    y = np.asarray([1.0, 2.0, 3.0, 4.0], dtype=np.float64)
+    constants = np.asarray(
+        [[2.0, -3.0], [2.0, -3.0], [2.0, -3.0], [2.0, -3.0]],
+        dtype=np.float64,
+    )
+
+    zero_problem = prepare_lasso_problem(y, constants, factor=None, contract=contract)
+    np.testing.assert_array_equal(zero_problem.pre_fwl_rms, np.asarray([0.0, 0.0]))
+    np.testing.assert_array_equal(zero_problem.active_columns, np.asarray([False, False]))
+    assert zero_problem.x_res.shape == (4, 0)
+    assert zero_problem.lambda_max == 0.0
+    zero_coefficients = reconstruct_lasso_coefficients(
+        zero_problem,
+        np.empty(0, dtype=np.float64),
+        contract=contract,
+    )
+    np.testing.assert_array_equal(
+        zero_coefficients.penalized_coefficients,
+        np.asarray([0.0, 0.0]),
+    )
+
+    with pytest.raises(ValueError, match="factor|variance|sum"):
+        prepare_lasso_problem(
+            y,
+            constants,
+            factor=np.ones(4, dtype=np.float64),
+            contract=contract,
+        )
+
+    nonfinite = constants.copy()
+    nonfinite[0, 0] = np.nan
+    with pytest.raises(ValueError, match="finite"):
+        prepare_lasso_problem(y, nonfinite, factor=None, contract=contract)
+
+    with pytest.raises(TypeError, match="float64"):
+        prepare_lasso_problem(
+            y,
+            constants.astype(np.float32),
+            factor=None,
+            contract=contract,
+        )
+
+    altered = replace(
+        contract,
+        paper_reconstruction=replace(
+            contract.paper_reconstruction,
+            post_fwl_zero_norm_multiplier=10.0,
+        ),
+    )
+    with pytest.raises(ValueError, match="sealed G2 contract"):
+        prepare_lasso_problem(y, constants, factor=None, contract=altered)
