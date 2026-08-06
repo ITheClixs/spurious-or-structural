@@ -181,6 +181,40 @@ class PopulationTarget:
 
 
 @dataclass(frozen=True, slots=True)
+class PaperSpecificationContract:
+    """One row from the frozen six-specification paper reconstruction table."""
+
+    name: str
+    feature_map: str
+    estimator: str
+    unpenalized: tuple[str, ...]
+    penalized: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class PaperReconstructionContract:
+    """Executable thresholds and table rows for the sealed CCZ reconstruction."""
+
+    names: tuple[str, ...]
+    label: str
+    fit_window_bins: int
+    test_window_bins: int
+    eligible_fit_blocks_per_date: int
+    cv_validation_ranges: tuple[tuple[int, int], ...]
+    best_level_index: int
+    lambda_grid_size: int
+    lambda_min_ratio: float
+    selected_ratio_tolerance: float
+    post_fwl_zero_norm_multiplier: float
+    coordinate_descent_tolerance: float
+    kkt_tolerance: float
+    maximum_iterations: int
+    pca_top_eigengap_min_trace_ratio: float
+    bootstrap_replicates: int
+    specifications: tuple[PaperSpecificationContract, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class G2Contract:
     """Narrow typed projection of the already byte-sealed G2 contract."""
 
@@ -216,6 +250,7 @@ class G2Contract:
     draw_shapes: tuple[tuple[G2Component, tuple[int, ...]], ...]
     lasso_ratio_grid: tuple[float, ...]
     population_targets: tuple[PopulationTarget, ...]
+    paper_reconstruction: PaperReconstructionContract
 
     def phase_scenario(self, stream: G2Stream) -> tuple[int, int]:
         """Return the unique frozen phase/scenario pair for ``stream``."""
@@ -390,6 +425,195 @@ def _target_rows(target: dict[str, object]) -> tuple[PopulationTarget, ...]:
             )
         )
     return tuple(parsed)
+
+
+_EXPECTED_PAPER_NAMES = ("PI_1", "PI_I", "CI_1", "CI_I", "PI_CC", "CI_CC")
+_EXPECTED_PAPER_CV_RANGES = ((0, 6), (6, 12), (12, 18), (18, 24), (24, 30))
+_EXPECTED_SELECTED_RATIO_RULE = (
+    "compute_minimum_over_40_finite_pooled_mse_values_then_select_lowest_index_largest_ratio_"
+    "satisfying_mse_k_less_than_or_equal_to_minimum_plus_float64_1e_minus_12_inclusive"
+)
+_EXPECTED_POST_FWL_ZERO_NORM_RULE = (
+    "if_finite_scaled_residual_column_sum_squares_over_n_at_or_below_100_times_machine_"
+    "epsilon_drop_and_fix_zero_if_nonfinite_fail_cell"
+)
+_EXPECTED_PAPER_SPECIFICATIONS = (
+    PaperSpecificationContract(
+        name="PI_1",
+        feature_map="own_best_level_ofi",
+        estimator="ols",
+        unpenalized=("intercept", "own_best_level_ofi"),
+        penalized=(),
+    ),
+    PaperSpecificationContract(
+        name="PI_I",
+        feature_map="own_integrated_top10_ofi",
+        estimator="ols",
+        unpenalized=("intercept", "own_integrated_top10_ofi"),
+        penalized=(),
+    ),
+    PaperSpecificationContract(
+        name="CI_1",
+        feature_map="all_assets_best_level_ofi",
+        estimator="lasso_per_response",
+        unpenalized=("intercept",),
+        penalized=("all_30_best_level_flows",),
+    ),
+    PaperSpecificationContract(
+        name="CI_I",
+        feature_map="all_assets_integrated_top10_ofi",
+        estimator="lasso_per_response",
+        unpenalized=("intercept",),
+        penalized=("all_30_integrated_flows",),
+    ),
+    PaperSpecificationContract(
+        name="PI_CC",
+        feature_map="best_level_cross_section_pc1_plus_own_orthogonal_residual",
+        estimator="ols",
+        unpenalized=("intercept", "cross_section_pc1", "own_residual_flow"),
+        penalized=(),
+    ),
+    PaperSpecificationContract(
+        name="CI_CC",
+        feature_map="best_level_cross_section_pc1_plus_all_orthogonal_residuals",
+        estimator="lasso_per_response",
+        unpenalized=("intercept", "cross_section_pc1"),
+        penalized=("all_30_residual_flows",),
+    ),
+)
+
+
+def _text_tuple(value: object, *, name: str) -> tuple[str, ...]:
+    return tuple(
+        _text(item, name=f"{name}[{index}]") for index, item in enumerate(_list(value, name=name))
+    )
+
+
+def _cv_ranges(value: object, *, name: str) -> tuple[tuple[int, int], ...]:
+    parsed: list[tuple[int, int]] = []
+    for index, item in enumerate(_list(value, name=name)):
+        raw = _text(item, name=f"{name}[{index}]")
+        parts = raw.split(":")
+        if len(parts) != 2:
+            raise ValueError(f"{name}[{index}] must be a zero-based half-open range")
+        start, stop = (int(part) for part in parts)
+        parsed.append((start, stop))
+    return tuple(parsed)
+
+
+def _paper_reconstruction_contract(
+    paper: dict[str, object],
+) -> PaperReconstructionContract:
+    table_name = "config.opponent.paper_reconstruction"
+    names = _text_tuple(_field(paper, "names", table_name=table_name), name=f"{table_name}.names")
+    cv_ranges = _cv_ranges(
+        _field(paper, "cv_validation_index_ranges_zero_based_half_open", table_name=table_name),
+        name=f"{table_name}.cv_validation_index_ranges_zero_based_half_open",
+    )
+
+    selected_ratio_rule = _text(
+        _field(paper, "selected_ratio_rule", table_name=table_name),
+        name=f"{table_name}.selected_ratio_rule",
+    )
+    if selected_ratio_rule != _EXPECTED_SELECTED_RATIO_RULE:
+        raise ValueError("config-declared paper selected-ratio rule changed")
+    post_fwl_zero_norm_rule = _text(
+        _field(paper, "post_fwl_zero_norm_rule", table_name=table_name),
+        name=f"{table_name}.post_fwl_zero_norm_rule",
+    )
+    if post_fwl_zero_norm_rule != _EXPECTED_POST_FWL_ZERO_NORM_RULE:
+        raise ValueError("config-declared paper post-FWL zero-norm rule changed")
+
+    specification_rows = _list(
+        _field(paper, "specifications", table_name=table_name),
+        name=f"{table_name}.specifications",
+    )
+    specifications: list[PaperSpecificationContract] = []
+    for index, raw_row in enumerate(specification_rows):
+        row_name = f"{table_name}.specifications[{index}]"
+        row = _mapping(raw_row, name=row_name)
+        specifications.append(
+            PaperSpecificationContract(
+                name=_text(_field(row, "id", table_name=row_name), name=f"{row_name}.id"),
+                feature_map=_text(
+                    _field(row, "feature_map", table_name=row_name),
+                    name=f"{row_name}.feature_map",
+                ),
+                estimator=_text(
+                    _field(row, "estimator", table_name=row_name),
+                    name=f"{row_name}.estimator",
+                ),
+                unpenalized=_text_tuple(
+                    _field(row, "unpenalized", table_name=row_name),
+                    name=f"{row_name}.unpenalized",
+                ),
+                penalized=_text_tuple(
+                    _field(row, "penalized", table_name=row_name),
+                    name=f"{row_name}.penalized",
+                ),
+            )
+        )
+
+    contract = PaperReconstructionContract(
+        names=names,
+        label=_text(_field(paper, "label", table_name=table_name), name=f"{table_name}.label"),
+        fit_window_bins=_integer(
+            _field(paper, "fit_window_bins", table_name=table_name),
+            name=f"{table_name}.fit_window_bins",
+        ),
+        test_window_bins=_integer(
+            _field(paper, "test_window_bins", table_name=table_name),
+            name=f"{table_name}.test_window_bins",
+        ),
+        eligible_fit_blocks_per_date=_integer(
+            _field(paper, "eligible_fit_blocks_per_date", table_name=table_name),
+            name=f"{table_name}.eligible_fit_blocks_per_date",
+        ),
+        cv_validation_ranges=cv_ranges,
+        best_level_index=_integer(
+            _field(paper, "best_level_zero_based_index", table_name=table_name),
+            name=f"{table_name}.best_level_zero_based_index",
+        ),
+        lambda_grid_size=_integer(
+            _field(paper, "lambda_grid_size", table_name=table_name),
+            name=f"{table_name}.lambda_grid_size",
+        ),
+        lambda_min_ratio=_number(
+            _field(paper, "lambda_min_ratio", table_name=table_name),
+            name=f"{table_name}.lambda_min_ratio",
+        ),
+        selected_ratio_tolerance=1e-12,
+        post_fwl_zero_norm_multiplier=100.0,
+        coordinate_descent_tolerance=_number(
+            _field(paper, "coordinate_descent_tolerance", table_name=table_name),
+            name=f"{table_name}.coordinate_descent_tolerance",
+        ),
+        kkt_tolerance=_number(
+            _field(paper, "kkt_tolerance", table_name=table_name),
+            name=f"{table_name}.kkt_tolerance",
+        ),
+        maximum_iterations=_integer(
+            _field(paper, "maximum_iterations", table_name=table_name),
+            name=f"{table_name}.maximum_iterations",
+        ),
+        pca_top_eigengap_min_trace_ratio=_number(
+            _field(paper, "pca_top_eigengap_min_trace_ratio", table_name=table_name),
+            name=f"{table_name}.pca_top_eigengap_min_trace_ratio",
+        ),
+        bootstrap_replicates=_integer(
+            _field(paper, "bootstrap_replicates", table_name=table_name),
+            name=f"{table_name}.bootstrap_replicates",
+        ),
+        specifications=tuple(specifications),
+    )
+    if (
+        contract.names != _EXPECTED_PAPER_NAMES
+        or contract.cv_validation_ranges != _EXPECTED_PAPER_CV_RANGES
+    ):
+        raise ValueError("config-declared paper reconstruction ranges or names changed")
+    if contract.specifications != _EXPECTED_PAPER_SPECIFICATIONS:
+        raise ValueError("config-declared paper specification table changed")
+    return contract
 
 
 _STREAMS_IN_CONFIG_ORDER = tuple(G2Stream)
@@ -793,6 +1017,7 @@ def load_g2_contract(root: Path) -> G2Contract:
         draw_shapes=tuple(draw_shapes),
         lasso_ratio_grid=ratio_values,
         population_targets=_target_rows(target),
+        paper_reconstruction=_paper_reconstruction_contract(paper),
     )
     validate_g2_contract(contract)
     return contract
@@ -811,6 +1036,96 @@ _EXPECTED_PHASE_SCENARIOS = (
     (G2Stream.RESEARCH, 30, 0),
 )
 _EXPECTED_COMPONENT_IDS = tuple((component, int(component)) for component in G2Component)
+
+
+def _validate_paper_reconstruction_runtime_types(paper: PaperReconstructionContract) -> None:
+    if type(paper) is not PaperReconstructionContract:
+        raise ValueError("sealed G2 contract paper reconstruction changed representation")
+    integer_fields = (
+        paper.fit_window_bins,
+        paper.test_window_bins,
+        paper.eligible_fit_blocks_per_date,
+        paper.best_level_index,
+        paper.lambda_grid_size,
+        paper.maximum_iterations,
+        paper.bootstrap_replicates,
+    )
+    if any(type(value) is not int for value in integer_fields):
+        raise ValueError("sealed G2 contract paper integer fields changed representation")
+    scalar_fields = (
+        paper.lambda_min_ratio,
+        paper.selected_ratio_tolerance,
+        paper.post_fwl_zero_norm_multiplier,
+        paper.coordinate_descent_tolerance,
+        paper.kkt_tolerance,
+        paper.pca_top_eigengap_min_trace_ratio,
+    )
+    if any(type(value) is not float for value in scalar_fields):
+        raise ValueError("sealed G2 contract paper scalar fields changed representation")
+    if type(paper.names) is not tuple or any(type(value) is not str for value in paper.names):
+        raise ValueError("sealed G2 contract paper names changed representation")
+    if type(paper.label) is not str:
+        raise ValueError("sealed G2 contract paper label changed representation")
+    if type(paper.cv_validation_ranges) is not tuple or any(
+        type(row) is not tuple
+        or len(row) != 2
+        or type(row[0]) is not int
+        or type(row[1]) is not int
+        for row in paper.cv_validation_ranges
+    ):
+        raise ValueError("sealed G2 contract paper CV ranges changed representation")
+    if type(paper.specifications) is not tuple:
+        raise ValueError("sealed G2 contract paper specification table changed representation")
+    for specification in paper.specifications:
+        if (
+            type(specification) is not PaperSpecificationContract
+            or type(specification.name) is not str
+            or type(specification.feature_map) is not str
+            or type(specification.estimator) is not str
+            or type(specification.unpenalized) is not tuple
+            or any(type(value) is not str for value in specification.unpenalized)
+            or type(specification.penalized) is not tuple
+            or any(type(value) is not str for value in specification.penalized)
+        ):
+            raise ValueError("sealed G2 contract paper specification row changed representation")
+
+
+def _validate_paper_reconstruction_contract(paper: PaperReconstructionContract) -> None:
+    _validate_paper_reconstruction_runtime_types(paper)
+    scalar_identity = (
+        paper.lambda_min_ratio,
+        paper.selected_ratio_tolerance,
+        paper.post_fwl_zero_norm_multiplier,
+        paper.coordinate_descent_tolerance,
+        paper.kkt_tolerance,
+        paper.pca_top_eigengap_min_trace_ratio,
+    )
+    expected_scalar_identity = (0.0001, 1e-12, 100.0, 1e-10, 1e-9, 1e-10)
+    expected_identity = PaperReconstructionContract(
+        names=_EXPECTED_PAPER_NAMES,
+        label="paper_protocol_reconstruction",
+        fit_window_bins=30,
+        test_window_bins=30,
+        eligible_fit_blocks_per_date=10,
+        cv_validation_ranges=_EXPECTED_PAPER_CV_RANGES,
+        best_level_index=0,
+        lambda_grid_size=40,
+        lambda_min_ratio=0.0001,
+        selected_ratio_tolerance=1e-12,
+        post_fwl_zero_norm_multiplier=100.0,
+        coordinate_descent_tolerance=1e-10,
+        kkt_tolerance=1e-9,
+        maximum_iterations=10_000,
+        pca_top_eigengap_min_trace_ratio=1e-10,
+        bootstrap_replicates=_BOOTSTRAP_REPLICATES,
+        specifications=_EXPECTED_PAPER_SPECIFICATIONS,
+    )
+    if tuple(value.hex() for value in scalar_identity) != tuple(
+        value.hex() for value in expected_scalar_identity
+    ):
+        raise ValueError("sealed G2 contract paper numeric thresholds changed")
+    if paper != expected_identity:
+        raise ValueError("sealed G2 contract paper reconstruction table changed")
 
 
 def _cell_scalars(contract: G2Contract, offdiagonal: float) -> tuple[float, ...]:
@@ -910,6 +1225,7 @@ def _validate_g2_contract_runtime_types(contract: G2Contract) -> None:
         for target in contract.population_targets
     ):
         raise ValueError("sealed G2 contract population targets changed representation")
+    _validate_paper_reconstruction_runtime_types(contract.paper_reconstruction)
 
 
 def validate_g2_contract(contract: G2Contract) -> None:
@@ -1030,6 +1346,7 @@ def validate_g2_contract(contract: G2Contract) -> None:
             raise ValueError(f"sealed G2 contract population target {index} is infeasible")
     if contract.level_average_error_variance != 547.0 / 39530.0:
         raise ValueError("sealed G2 contract level-average error variance changed")
+    _validate_paper_reconstruction_contract(contract.paper_reconstruction)
 
 
 @dataclass(frozen=True, slots=True)
