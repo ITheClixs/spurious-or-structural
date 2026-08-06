@@ -12,6 +12,8 @@ import pytest
 from xid.sim.g2 import (
     FROZEN_G2_SEALS,
     G2Seals,
+    PaperReconstructionContract,
+    PaperSpecificationContract,
     TestRngNamespace,
     float64_le_sha256,
     load_g2_contract,
@@ -79,6 +81,117 @@ def test_lasso_ratio_literals_are_exact_binary64_data() -> None:
     assert ratios[0] == 1.0
     assert ratios[-1] == 0.0001
     assert float64_le_sha256(contract.lasso_ratio_grid) == FROZEN_G2_SEALS.lasso_ratio_sha256
+
+
+def test_paper_reconstruction_contract_projects_every_solver_threshold() -> None:
+    contract = load_g2_contract(_root())
+    paper = contract.paper_reconstruction
+
+    assert type(paper) is PaperReconstructionContract
+    assert paper.names == ("PI_1", "PI_I", "CI_1", "CI_I", "PI_CC", "CI_CC")
+    assert paper.label == "paper_protocol_reconstruction"
+    assert paper.fit_window_bins == 30
+    assert paper.test_window_bins == 30
+    assert paper.eligible_fit_blocks_per_date == 10
+    assert paper.cv_validation_ranges == ((0, 6), (6, 12), (12, 18), (18, 24), (24, 30))
+    assert paper.best_level_index == 0
+    assert paper.lambda_grid_size == 40
+    assert paper.lambda_min_ratio == 0.0001
+    assert paper.selected_ratio_tolerance == 1e-12
+    assert paper.post_fwl_zero_norm_multiplier == 100.0
+    assert paper.coordinate_descent_tolerance == 1e-10
+    assert paper.kkt_tolerance == 1e-9
+    assert paper.maximum_iterations == 10_000
+    assert paper.pca_top_eigengap_min_trace_ratio == 1e-10
+    assert paper.bootstrap_replicates == 499
+    assert paper.specifications == (
+        PaperSpecificationContract(
+            name="PI_1",
+            feature_map="own_best_level_ofi",
+            estimator="ols",
+            unpenalized=("intercept", "own_best_level_ofi"),
+            penalized=(),
+        ),
+        PaperSpecificationContract(
+            name="PI_I",
+            feature_map="own_integrated_top10_ofi",
+            estimator="ols",
+            unpenalized=("intercept", "own_integrated_top10_ofi"),
+            penalized=(),
+        ),
+        PaperSpecificationContract(
+            name="CI_1",
+            feature_map="all_assets_best_level_ofi",
+            estimator="lasso_per_response",
+            unpenalized=("intercept",),
+            penalized=("all_30_best_level_flows",),
+        ),
+        PaperSpecificationContract(
+            name="CI_I",
+            feature_map="all_assets_integrated_top10_ofi",
+            estimator="lasso_per_response",
+            unpenalized=("intercept",),
+            penalized=("all_30_integrated_flows",),
+        ),
+        PaperSpecificationContract(
+            name="PI_CC",
+            feature_map="best_level_cross_section_pc1_plus_own_orthogonal_residual",
+            estimator="ols",
+            unpenalized=("intercept", "cross_section_pc1", "own_residual_flow"),
+            penalized=(),
+        ),
+        PaperSpecificationContract(
+            name="CI_CC",
+            feature_map="best_level_cross_section_pc1_plus_all_orthogonal_residuals",
+            estimator="lasso_per_response",
+            unpenalized=("intercept", "cross_section_pc1"),
+            penalized=("all_30_residual_flows",),
+        ),
+    )
+
+
+def test_paper_reconstruction_contract_rejects_value_and_representation_drift() -> None:
+    contract = load_g2_contract(_root())
+    paper = contract.paper_reconstruction
+    altered_contracts = (
+        replace(
+            contract,
+            paper_reconstruction=replace(paper, coordinate_descent_tolerance=1e-9),
+        ),
+        replace(
+            contract,
+            paper_reconstruction=replace(paper, selected_ratio_tolerance=-1e-12),
+        ),
+        replace(
+            contract,
+            paper_reconstruction=replace(paper, maximum_iterations=True),
+        ),
+        replace(
+            contract,
+            paper_reconstruction=replace(
+                paper,
+                cv_validation_ranges=cast(Any, list(paper.cv_validation_ranges)),
+            ),
+        ),
+        replace(
+            contract,
+            paper_reconstruction=replace(
+                paper,
+                specifications=paper.specifications[:-1],
+            ),
+        ),
+        replace(
+            contract,
+            paper_reconstruction=replace(
+                paper,
+                specifications=cast(Any, list(paper.specifications)),
+            ),
+        ),
+    )
+
+    for altered in altered_contracts:
+        with pytest.raises(ValueError, match="sealed G2 contract"):
+            validate_g2_contract(altered)
 
 
 def test_stale_or_mixed_g2_schema_is_non_executable() -> None:
