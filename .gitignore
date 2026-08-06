@@ -12,6 +12,7 @@ build/
 dist/
 *.egg-info/
 tmp/
+output/pdf/*.log
 
 data/*
 !data/.gitignore

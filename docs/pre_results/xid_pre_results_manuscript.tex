@@ -1,0 +1,1028 @@
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[letterpaper,top=0.72in,bottom=0.78in,left=0.68in,right=0.68in,columnsep=0.25in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{tikz}
+
+\definecolor{linkblue}{RGB}{20,65,125}
+\definecolor{chartgray}{RGB}{94,94,94}
+\definecolor{chartlight}{RGB}{188,188,188}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=linkblue,
+  citecolor=linkblue,
+  urlcolor=linkblue,
+  pdfauthor={Mehmet Demir Güven},
+  pdftitle={Spurious or Structural? Probability Limits and a Registered Falsification Design for Cross-Asset Price Impact},
+  pdfsubject={Preprint and pre-results research protocol},
+  pdfkeywords={cross-impact, order-flow imbalance, latent factors, simultaneity, preregistration}
+}
+
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0pt}
+\setlist[itemize]{leftmargin=1.25em,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=1.35em,itemsep=2pt,topsep=3pt}
+\captionsetup{font=small,labelfont=bf}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\operatorname{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\plim}{\operatorname{plim}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\I}{I}
+\newcommand{\bLambda}{\boldsymbol{\Lambda}}
+\newcommand{\bSigma}{\boldsymbol{\Sigma}}
+
+\begin{document}
+
+\twocolumn[
+\begin{@twocolumnfalse}
+\begin{center}
+{\LARGE\bfseries Spurious or Structural?\\[3pt]
+Probability Limits and a Registered Falsification Design\\
+for Cross-Asset Price Impact\par}
+\vspace{8pt}
+{\large Mehmet Demir G\"uven\par}
+\vspace{2pt}
+{\normalsize Department of Computer Science, ETH Z\"urich\par}
+\vspace{6pt}
+{\small \textsc{Preprint} \(\cdot\) Version 0.1 \(\cdot\) 6 August 2026
+\(\cdot\) \href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}\par}
+\end{center}
+
+\vspace{8pt}
+\begin{abstract}
+Cross-asset return-on-flow coefficients are tempting to read as entries of a
+structural price-impact matrix. In a simultaneous system, that reading can fail
+for two different reasons: latent common factors and same-bin feedback both
+create off-diagonal population coefficients when the matching structural
+entries are zero. We derive the probability limits of ordinary least squares
+and of least squares with a noisy factor proxy in an $N$-asset system. The
+decomposition shows which part of the discrepancy a noisy control can remove
+and which part it leaves behind. We then test the formulas in a preregistered
+known-truth experiment with $N=30$, $K=3$, and $T=10^7$. The sole frozen draw
+passed the maximum elementwise relative-discrepancy threshold of $10^{-3}$:
+the uncontrolled and proxy-controlled discrepancies were
+$5.6395\times10^{-4}$ and $5.1237\times10^{-4}$, and all 1,800 targets fell
+inside named 95\% family-wise Bonferroni intervals. This validates the algebra
+and implementation under the stated simulation law; it does not identify
+market impact. The paper closes by registering the next experiment: a
+source-constrained premise test with an observable integrated-order-flow
+opponent, two oracle-flow checks, six published-protocol reconstructions,
+whole-date bootstrap inference, and explicit size, power, and failure rules.
+That experiment is specified here, not reported.
+\end{abstract}
+
+\vspace{5pt}
+\begin{minipage}{0.965\textwidth}
+\small
+\textit{Research status.}
+This pre-results preprint reports the completed derivation and one
+preregistered known-truth simulation. It does not report the G2 premise test,
+market-data study, training sample, holdout, or economic evaluation. No
+registered G2 resource benchmark, validation panel, or research draw has run,
+and no external market data has been accessed.
+\end{minipage}
+
+\vspace{6pt}
+\noindent\textbf{Keywords:} cross-impact; order-flow imbalance; latent factors;
+simultaneity; measurement error; preregistration; bootstrap inference.
+
+\vspace{12pt}
+\end{@twocolumnfalse}
+]
+
+\section{Introduction}
+
+Suppose the return of asset $i$ covaries with the order flow of asset $j$.
+The association may reflect a direct causal channel from $j$'s flow to $i$'s
+price. It may instead reflect a market-wide order-flow component, a common
+information shock, contemporaneous price chasing, measurement error, or some
+combination of these mechanisms. A multivariate regression will assign a
+coefficient either way. The scientific problem is therefore not whether a
+cross coefficient can be estimated, but which structural object that
+coefficient targets.
+
+This distinction matters for both research and practice. Structural impact
+matrices enter execution-cost models, liquidity stress tests, and manipulation
+constraints. Reduced-form predictive coefficients can still be useful, but
+using them as structural primitives can misprice basket execution and convert
+commonality into an apparent transmission network. The theoretical market
+impact literature provides strong reasons to care about the form of
+cross-impact \cite{Kyle1985,SchneiderLillo2016}; the empirical literature shows
+both substantial commonality in returns and order flow and instability in
+cross coefficients \cite{HasbrouckSeppi2001,CapponiCont2020}.
+
+We study the boundary between these interpretations. The paper is organized
+around a simple principle: every claim must survive a known-truth or
+falsification gate before it can enter the empirical conclusion. Figure
+\ref{fig:logic} summarizes the logic.
+
+\begin{figure*}[t]
+\centering
+\small
+\textsc{Structural system}
+$\longrightarrow$
+\textsc{Regression target}
+$\longrightarrow$
+\textsc{Known-truth recovery}
+$\longrightarrow$
+\textsc{Premise test}
+$\longrightarrow$
+\textsc{Market identification}
+$\longrightarrow$
+\textsc{Sealed holdout}
+\caption{Claim flow and current evidence boundary. The diagram is a research
+control map, not an empirical result. The derivation and known-truth recovery
+are complete; the premise test is registered but unrun, and all later claims
+remain locked.}
+\label{fig:logic}
+\end{figure*}
+
+The first contribution is an exact probability-limit decomposition for a
+simultaneous multi-asset return-flow system. Ordinary least squares targets the
+structural impact matrix plus two terms: latent-factor confounding and
+same-bin simultaneity. A noisy factor control replaces factor variance with the
+variance remaining after linear projection on the proxy, but it does not in
+general eliminate either total bias or simultaneity.
+
+The second contribution is a verified known-truth recovery exercise. The
+derivation was frozen before simulation code and random-number access. A single
+registered $10^7$-observation draw at the intended $N=30$ dimension recovered
+both population matrices under a strict no-floor discrepancy statistic. This
+is evidence about the derivation and numerical implementation, not about market
+structure.
+
+The third contribution is a registered premise test that gives the confounding
+hypothesis a severe pre-empirical check. It asks whether confounding alone can
+create economically material off-diagonal error in a transparent one-factor
+model constrained by published one-minute commonality summaries. The
+observable estimator receives integrated top-ten order-flow imbalance (OFI),
+the correct factor direction, and an independent 95\%-reliable proxy. Two
+oracle-flow estimators remove measurement error and high-dimensional inversion
+as alternative explanations. A reconstruction of the published integrated
+cross-impact equation supplies an additional veto. The test does not infer the
+real market's structural tuple from aggregate source statistics.
+
+Table \ref{tab:status} makes the present manuscript boundary explicit. Only the
+first two rows contain completed evidence.
+
+\begin{table}[t]
+\centering
+\caption{Research status at the manuscript freeze.}
+\label{tab:status}
+\small
+\begin{tabular}{@{}p{0.13\columnwidth}p{0.18\columnwidth}p{0.55\columnwidth}@{}}
+\toprule
+Gate & Status & Licensed statement \\
+\midrule
+G0 & Passed & Reproducible software and compute-plan skeleton only. \\
+G1 & Passed & Derived regression targets recover in the frozen known-truth simulation. \\
+G2 & Open & Scientific design registered; no registered benchmark, validation, or research result. \\
+G3--G7 & Locked & No market-data, identification, training, holdout, or economic claim. \\
+G8 & Locked & Final-results paper remains locked; this preprint adds no downstream result. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Relation to the Literature}
+
+Linear impact originates as a theoretical and empirical language for how order
+flow moves prices \cite{Kyle1985,Hasbrouck1991}. At the limit order book,
+best-level OFI compresses additions, cancellations, and executions into a
+signed liquidity-pressure statistic; short-interval price changes have been
+shown to relate strongly to this quantity \cite{ContKukanovStoikov2014}.
+Multi-level OFI extends the statistic deeper into the book
+\cite{XuGouldHowison2019}. Cont, Cucuringu, and Zhang
+\cite{ContCucuringuZhang2023} use principal components to integrate levels and
+compare own-asset and cross-asset regressions in a one-minute forecasting
+protocol.
+
+Cross-sectional commonality complicates structural interpretation. Hasbrouck
+and Seppi \cite{HasbrouckSeppi2001} document common factors in prices and order
+flows. Benzaquen et al. \cite{BenzaquenEtAl2017} show how multivariate
+propagator models can encode cross-asset covariance and sector structure.
+Capponi and Cont \cite{CapponiCont2020} argue that a common OFI component can
+explain much of apparent contemporaneous cross-impact. These papers motivate
+the central ambiguity here: the same reduced-form covariance can be consistent
+with materially different structural stories.
+
+Our objective differs from ranking predictive models. We ask whether the
+coefficient map produced by a specified regression equals a structural impact
+matrix under explicit simultaneous equations. Factor methods can summarize a
+large predictor panel \cite{StockWatson2002}, and generated-factor inference
+has a mature asymptotic theory \cite{BaiNg2006}. Yet a predictive factor is not
+automatically a valid causal control, and one noisy proxy does not generically
+identify an unobserved confounder \cite{MiaoEtAl2018}. The theorem below makes
+that limitation algebraically visible in this setting.
+
+High-dimensional cross-flow specifications require regularization. LASSO has a
+well-known prediction and selection role \cite{Tibshirani1996}, including under
+structured time-series assumptions \cite{KockCallot2015,BabiiEtAl2022}. Our
+registered reconstruction uses LASSO as a frozen algorithmic component, not as
+a structural-identification theorem. Penalty grids, fold chronology, scaling,
+factor penalization, solver tolerances, and tie rules are fixed before any
+registered output is observed.
+
+Broad model searches can report noise as a winner
+\cite{White2000,Hansen2005,RomanoWolf2005}. This design limits that risk through
+preregistration and an intersection-union decision rule. The whole-date
+bootstrap preserves all within-date bins and assets; its validity is a gate
+condition, not something assumed from resampling alone.
+
+\section{Simultaneous System and Regression Targets}
+
+Let returns $r_t$, flows $q_t$, and idiosyncratic shocks $u_t,v_t$ lie in
+$\R^N$, with latent factors $f_t\in\R^K$. Consider
+\begin{align}
+r_t &= \Lambda q_t + \Gamma f_t + u_t, \label{eq:return}\\
+q_t &= B r_t + \Delta_f f_t + v_t. \label{eq:flow}
+\end{align}
+Here $\Lambda$ is the structural contemporaneous impact matrix and $B$ is
+same-bin return-to-flow feedback. All variables are centered. Assume finite
+second moments and a law of large numbers; mutual zero contemporaneous
+cross-covariances among $f_t,u_t,v_t$, and proxy noise; and nonsingularity of
+$I_N-B\Lambda$ and the relevant regressor covariance matrices. These are
+conditions for the stated probability limits, not empirical facts about an
+exchange.
+
+Define
+\begin{align}
+L &= I_N-B\Lambda, & H &= L^{-1}, & D &= B\Gamma+\Delta_f, \\
+P &= HD, & U &= HB, & V &= H.
+\end{align}
+Substitution gives the flow reduced form
+\begin{equation}
+q_t=P f_t+Uu_t+Vv_t. \label{eq:q-reduced}
+\end{equation}
+Let $\Sigma_f$, $\Sigma_u$, and $\Sigma_v$ denote the corresponding shock
+covariances. Then
+\begin{equation}
+\Sigma_{qq}=P\Sigma_fP^\top+U\Sigma_uU^\top+V\Sigma_vV^\top.
+\end{equation}
+
+\begin{theorem}[Pseudo-true cross-impact matrices]
+\label{thm:plim}
+Under the conditions above, the population coefficient in the regression of
+$r_t$ on $q_t$ is
+\begin{equation}
+\plim\widehat\Lambda_{\mathrm{OLS}}
+=\Lambda
++\Gamma\Sigma_fP^\top\Sigma_{qq}^{-1}
++\Sigma_uU^\top\Sigma_{qq}^{-1}. \label{eq:ols-plim}
+\end{equation}
+If the regression additionally controls for
+$h_t=f_t+\epsilon_t$, where $\epsilon_t$ is mutually uncorrelated with the
+system shocks, define
+\begin{equation}
+R_f=\Sigma_f-\Sigma_f(\Sigma_f+\Sigma_\epsilon)^{-1}\Sigma_f
+\end{equation}
+and
+\begin{equation}
+Q_h=PR_fP^\top+U\Sigma_uU^\top+V\Sigma_vV^\top.
+\end{equation}
+The coefficient on $q_t$ after controlling for $h_t$ is
+\begin{equation}
+\plim\widehat\Lambda_{q\mid h}
+=\Lambda
++\Gamma R_fP^\top Q_h^{-1}
++\Sigma_uU^\top Q_h^{-1}. \label{eq:proxy-plim}
+\end{equation}
+\end{theorem}
+
+Equation \eqref{eq:ols-plim} has two distinct sources of discrepancy from
+$\Lambda$. The first is latent-factor confounding. The second arises because
+the return shock $u_t$ enters flow through same-bin feedback $B$. In
+Eq. \eqref{eq:proxy-plim}, the proxy replaces $\Sigma_f$ by the residual
+factor variance $R_f$ after linear projection. It leaves the feedback channel
+available and changes the inverse covariance that weights both terms.
+
+\begin{corollary}[Perfect and useless controls]
+If $\Sigma_\epsilon=0$, then $R_f=0$ and factor confounding disappears, but the
+simultaneity term remains unless its numerator is zero. If proxy noise diverges
+in every direction, then $R_f\to\Sigma_f$ and the controlled coefficient
+converges to the uncontrolled coefficient.
+\end{corollary}
+
+\begin{corollary}[Spurious cross coefficients]
+Setting a structural entry $\Lambda_{ij}=0$ does not imply that the population
+regression coefficient at $(i,j)$ is zero. Either bias term in
+Eq. \eqref{eq:ols-plim} can be off-diagonal, including when all structural
+off-diagonals are zero.
+\end{corollary}
+
+\begin{corollary}[No-feedback benchmark]
+If $B=0$, the simultaneity term vanishes. A perfect factor proxy is then
+sufficient for recovery of $\Lambda$ under the stated covariance restrictions.
+\end{corollary}
+
+\begin{proposition}[Proxy precision is not elementwise bias monotonicity]
+\label{prop:proxy}
+Suppose $\Sigma_f$ and two proxy-noise covariance matrices are positive
+definite, with $\Sigma_{\epsilon,1}\preceq\Sigma_{\epsilon,2}$. The associated
+residual factor covariances satisfy $R_{f,1}\preceq R_{f,2}$. Nevertheless,
+the absolute value of each entry of
+$\plim\widehat\Lambda_{q\mid h}-\Lambda$ need not be ordered because $Q_h^{-1}$
+changes with proxy precision and reweights both bias components.
+\end{proposition}
+
+The proposition is a warning against scalar attenuation intuition. A better
+proxy removes residual factor variation in positive-semidefinite order, but a
+matrix coefficient is a ratio of covariance objects. Structural interpretation
+requires the full map.
+
+\section{Known-Truth Verification}
+
+The probability limits were evaluated along two algebraically independent
+population paths and then tested in a frozen simulation. The registered fixture
+used $N=30$ assets, $K=3$ factors, and $T=10{,}000{,}000$ independent Gaussian
+observations. The matrices were dense and deliberately nontrivial, with
+$\rho(B\Lambda)=0.4104$ and condition numbers approximately $348.1$ for the
+uncontrolled flow covariance and $92.4$ for the proxy-residualized flow
+covariance.
+
+The gate statistic was the maximum elementwise relative discrepancy across the
+uncontrolled and controlled coefficient matrices,
+\begin{equation}
+D_{\mathrm{gate}}=\max_{m\in\{\mathrm{OLS},\mathrm{proxy}\}}
+\max_{i,j}\frac{|\widehat A_{m,ij}-A^*_{m,ij}|}{|A^*_{m,ij}|},
+\end{equation}
+with no denominator floor, element exclusion, averaging substitute, or seed
+retry. Passage required $D_{\mathrm{gate}}<10^{-3}$.
+
+\begin{table}[t]
+\centering
+\caption{Completed G1 known-truth verification.}
+\label{tab:g1}
+\small
+\begin{tabular}{@{}p{0.54\columnwidth}>{\raggedleft\arraybackslash}p{0.37\columnwidth}@{}}
+\toprule
+Quantity & Verified value \\
+\midrule
+Assets / factors / observations & $30 / 3 / 10^7$ \\
+Frozen master seed & 2026071501 \\
+Reported coefficients & 1,800 \\
+OLS max relative discrepancy & $5.6394671\times10^{-4}$ \\
+Proxy-control max discrepancy & $5.1237142\times10^{-4}$ \\
+Gate threshold & $1.0\times10^{-3}$ \\
+Targets inside simultaneous intervals & 1,800 / 1,800 \\
+Interval method & Student-$t$, Bonferroni 95\% FWER \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure*}[t]
+\centering
+\begin{minipage}[t]{0.47\textwidth}
+\centering
+\textbf{(a) Completed G1 recovery margin}\par\smallskip
+\begin{tikzpicture}[font=\scriptsize]
+  \draw[->] (0,0) -- (5.15,0);
+  \foreach \x/\lab in {0/0,2.4/0.5,4.8/1.0} {
+    \draw (\x,0.05) -- (\x,-0.05);
+    \node[anchor=north] at (\x,-0.08) {\lab};
+  }
+  \node at (2.4,-0.52) {Maximum relative discrepancy ($\times 10^{-3}$)};
+  \fill[chartgray] (0,0.48) rectangle (2.707,0.82);
+  \fill[chartlight] (0,1.08) rectangle (2.459,1.42);
+  \node[anchor=east] at (-0.08,0.65) {OLS};
+  \node[anchor=east] at (-0.08,1.25) {Proxy};
+  \node[anchor=west] at (2.76,0.65) {$0.5639$};
+  \node[anchor=west] at (2.51,1.25) {$0.5124$};
+  \draw[dashed] (4.8,0.27) -- (4.8,1.65);
+  \node[anchor=south east] at (4.76,1.65) {gate $=1.0$};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\centering
+\textbf{(b) Closed-form G2 proxy sensitivity}\par\smallskip
+\begin{tikzpicture}[font=\scriptsize]
+  \draw[->] (0,0) -- (5.18,0);
+  \draw[->] (0,0) -- (0,3.35);
+  \foreach \x/\lab in {0/.80,2.5/.90,3.75/.95,5/1.00} {
+    \draw (\x,0.05) -- (\x,-0.05);
+    \node[anchor=north] at (\x,-0.08) {\lab};
+  }
+  \foreach \y/\lab in {0/0,0.64/100,1.6/250,3.2/500} {
+    \draw (0.05,\y) -- (-0.05,\y);
+    \node[anchor=east] at (-0.08,\y) {\lab};
+  }
+  \node at (2.5,-0.52) {Proxy reliability $R$};
+  \node[rotate=90] at (-0.67,1.68) {Relative off-diagonal error (\%)};
+  \draw[thick,black] plot coordinates {
+    (0,3.020) (1.25,2.726) (2.5,2.281) (3.125,1.961)
+    (3.75,1.532) (4.375,0.924) (4.75,0.422) (5,0)
+  };
+  \draw[thick,dashed,chartgray] plot coordinates {
+    (0,1.735) (1.25,1.566) (2.5,1.310) (3.125,1.126)
+    (3.75,0.880) (4.375,0.531) (4.75,0.242) (5,0)
+  };
+  \draw[densely dotted] (3.75,0) -- (3.75,3.25);
+  \fill[black] (3.75,1.532) circle (1.1pt);
+  \fill[chartgray] (3.75,0.880) circle (1.1pt);
+  \draw[thick,black] (0.25,3.06) -- (0.75,3.06);
+  \node[anchor=west] at (0.82,3.06) {$o=0.0029$};
+  \draw[thick,dashed,chartgray] (0.25,2.79) -- (0.75,2.79);
+  \node[anchor=west] at (0.82,2.79) {$o=0.0046$};
+\end{tikzpicture}
+\end{minipage}
+\caption{Two different kinds of quantitative evidence. Panel (a) reports the
+completed G1 gate statistic; both bars lie below the preregistered threshold.
+Panel (b) evaluates Eq. \eqref{eq:ohat} over proxy reliability for the two
+registered structural endpoints. The dotted line marks $R=0.95$. Panel (b) is
+an analytic pre-run prediction, not a stochastic G2 result or a market
+estimate.}
+\label{fig:quantitative-summary}
+\end{figure*}
+
+The sole frozen draw passed. Table \ref{tab:g1} reports the complete gate-level
+summary. All 1,800 target coefficients were inside the named 95\% family-wise
+classical homoskedastic Student-$t$ Bonferroni intervals. The Gaussian law makes
+that interval method appropriate for this controlled fixture; the method is not
+transported to dependent market data.
+
+This result establishes three narrow facts. First, the symbolic expressions
+and the primitive covariance implementation agree. Second, row-stacked
+software returns the transpose expected from the column-vector structural
+notation, and that orientation is handled correctly. Third, the streamed
+sufficient-statistic and publication paths recover the registered target at the
+intended dimension.
+
+It does not establish identification, empirical fit, causal timing, interval
+coverage under market dependence, or economic usefulness. The fixture's target
+coefficients are large and positive, so it does not resolve the near-zero,
+sign-sensitive problem that motivates the next gate. One draw also cannot
+estimate repeated-sampling coverage. The completed experiment is therefore a
+derivation and implementation validation, not a market result.
+
+\section{Registered Premise Test: Design, Not Result}
+
+The next gate asks whether the motivating confounding mechanism survives a
+severe conditional test before empirical data is opened. The question is
+existential rather than identificational:
+
+\begin{quote}
+Can confounding alone be materially large in a transparent model whose
+observable flow commonality and factor alignment match opened primary-source
+summaries, even when the estimator receives a favorable factor proxy?
+\end{quote}
+
+The test removes same-bin feedback by setting $B=0$. It therefore cannot pass
+because of price chasing. The primary estimator observes noisy integrated OFI,
+the correct factor direction, and an independent 95\%-reliable proxy. Oracle
+estimators observe true flow and include a symmetry-aware low-dimensional fit.
+A positive result would be conditional evidence for one source-compatible
+model class, not an estimate of the market's $\Lambda$.
+
+\subsection{Permutation-invariant source constraint}
+
+Let $N=30$ and $m=\mathbf 1_N/\sqrt N$. For leading flow- and return-correlation
+shares $s_q$ and $s_r$, define
+\begin{align}
+q_1 &= Ns_q, & q_0 &= \frac{N-q_1}{N-1}, \\
+r_1 &= Ns_r, & r_0 &= \frac{N-r_1}{N-1}.
+\end{align}
+The registered maximum-entropy one-spike convention is
+\begin{align}
+\Sigma_{qq} &= q_0I+(q_1-q_0)mm^\top, \\
+\Sigma_{rr} &= r_0I+(r_1-r_0)mm^\top. \label{eq:one-spike}
+\end{align}
+At the one-minute reference point,
+$(s_q,s_r,\rho)=(0.2827,0.32,0.8726)$. The implied pairwise flow correlation is
+$0.25797$, reproducing the reported 0.26 to its published precision
+\cite{CapponiCont2020}. The isotropic residual spectrum is a declared modeling
+choice because the source summary does not identify its orientation or lower
+eigenvalues.
+
+Set diagonal structural sensitivity $d=0.29$, off-diagonal sensitivity
+$o\in[0.0029,0.0046]$, and
+\begin{equation}
+\Lambda=(d-o)I+No\,mm^\top. \label{eq:homogeneous}
+\end{equation}
+These values are sensitivities, not one-minute structural estimates. The 1\%
+cross-to-own lower ratio is an economic-materiality floor; the upper ratio is
+motivated by a normalized homogeneous propagator estimate
+\cite{BenzaquenEtAl2017}.
+
+Let
+\begin{align}
+q &= h_qmf+v, & \Var(v)&=q_0I, \\
+r &= \Lambda q+\gamma mf+u,
+\end{align}
+where $\Var(f)=1$ and the common return-flow covariance fixes $\gamma$.
+The observable control is $z=f+e$ with reliability
+$R=\Var(f)/\Var(z)$. At the registered $R=0.95$, the estimator is not told the
+proxy-error variance and makes no reliability correction.
+
+\begin{proposition}[Off-diagonal proxy-control target]
+\label{prop:g2}
+In the homogeneous no-feedback model above, the population off-diagonal in the
+regression of $r$ on $(q,z)$ is
+\begin{equation}
+\widehat o_R=o+
+\frac{(1-R)(c_1-\lambda_1q_1)}
+{N\{q_0+(1-R)(q_1-q_0)\}}, \label{eq:ohat}
+\end{equation}
+where $\lambda_1=d+(N-1)o$ and $c_1=\rho\sqrt{r_1q_1}$. If
+$c_1-\lambda_1q_1>0$, the bias is positive for every $R<1$, vanishes at $R=1$,
+and the relative error decreases strictly with reliability. At the registered
+reference point, it also decreases with $o$, so the upper endpoint is least
+favorable over the structural interval.
+\end{proposition}
+
+Equation \eqref{eq:ohat} produces sealed pre-run population predictions. They
+are not stochastic G2 results and are not estimates of a real-market
+decomposition. Their role is to ensure that the finite-sample experiment cannot
+move the target after observing output.
+
+\subsection{Strongest-opponent estimators}
+
+Three smooth estimators must all pass at all 17 structural grid points:
+\begin{enumerate}
+\item \texttt{ORACLE\_Q\_PROXY95\_CONDITION\_RIDGE} receives all true flows and
+the noisy factor proxy.
+\item \texttt{ORACLE\_Q\_PROXY95\_HOMOGENEOUS\_OLS} is additionally told the
+true homogeneous symmetry and estimates only own-flow, sum-of-other-flow, and
+factor slopes.
+\item \texttt{INTEGRATED\_OFI\_PROXY95\_CONDITION\_RIDGE} observes only
+date-estimated, L1-normalized top-ten principal-component scores and the proxy.
+\end{enumerate}
+The first oracle removes OFI measurement error. The second removes both that
+error and the 30-dimensional covariance inversion. The third is the binding
+observable opponent. No post-draw selector can choose among them.
+
+The condition-ridge estimator partials out the unpenalized proxy from globally
+centered sufficient statistics. If $S$ is the residualized flow covariance,
+with extreme eigenvalues $s_{\max}$ and $s_{\min}$, the registered penalty is
+\begin{align}
+\lambda_{\mathrm{cond}}
+&=\max\left\{0,\frac{s_{\max}-10^4s_{\min}}{10^4-1}\right\}, \\
+\lambda_{\mathrm{floor}}
+&=10^{-6}\frac{\tr(S)}{N}, \\
+\lambda_{\mathrm{ridge}}
+&=\max\{\lambda_{\mathrm{cond}},\lambda_{\mathrm{floor}}\}.
+\end{align}
+The positive floor is fixed before the draw. Its population target is sealed,
+so shrinkage cannot be blamed or tuned after the result.
+
+\subsection{Published-protocol reconstruction}
+
+Cont, Cucuringu, and Zhang \cite{ContCucuringuZhang2023} publish integrated
+multi-level and cross-sectional-factor specifications separately. They do not
+publish one estimator combining integrated top-ten OFI with a cross-sectional
+factor control. We therefore do not attribute the strengthened observable
+opponent above to that paper. Instead, the six equations in Table
+\ref{tab:paper-specs} are reconstructed separately under frozen numerical
+choices. The label is \emph{protocol reconstruction}, not byte-exact author
+code.
+
+\begin{table*}[t]
+\centering
+\caption{Frozen six-specification reconstruction. Each date has eleven
+30-minute blocks; blocks 0--9 train and blocks 1--10 score. Every row fits 30
+separate response equations.}
+\label{tab:paper-specs}
+\small
+\begin{tabular}{@{}lllll@{}}
+\toprule
+ID & Feature map & Fit & Unpenalized & Penalized \\
+\midrule
+$PI_1$ & Own best-level OFI & Per-response OLS & Intercept, own flow & None \\
+$PI_I$ & Own integrated top-ten OFI & Per-response OLS & Intercept, own flow & None \\
+$CI_1$ & All best-level OFIs & Per-response LASSO & Intercept & All 30 flows \\
+$CI_I$ & All integrated top-ten OFIs & Per-response LASSO & Intercept & All 30 flows \\
+$PI_{CC}$ & Cross-sectional PC1 and own residual & Per-response OLS & All columns & None \\
+$CI_{CC}$ & Cross-sectional PC1 and all residuals & Per-response LASSO & Intercept, PC1 & All 30 residuals \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The $CI_I$ coefficient at the predeclared $(0,1)$ position is the binding
+published direct-flow veto because it is the only reconstructed equation with
+both integrated top-ten OFI and explicit off-diagonal coefficients. The other
+five specifications remain mandatory diagnostics but cannot rescue a failed
+veto.
+
+LASSO uses five contiguous six-bin validation folds and a common 40-point ratio
+grid. Every PCA, mean, scale, and residualization map is fit inside the
+corresponding training boundary. The selected ratio minimizes pooled
+validation sum of squared errors under a frozen lowest-index tie rule. Fold
+paths warm-start in descending penalty order, while every outer refit begins at
+zero. The factor is unpenalized where present. Original-unit coefficients and
+training-defined transforms score the next block. These details matter because
+the source paper does not disclose a unique scaling, fold, grid, tie, or solver
+implementation.
+
+For factor-residual models, a residual coefficient matrix is not relabeled as
+unrestricted $\Lambda$. If $W$ is the cross-sectional loading and
+$P_\perp=I-WW^\top$, the purged operators are compared with
+$\Lambda P_\perp$. Full response-equivalent maps are reported separately.
+Products are formed before block and date averaging.
+
+\subsection{Decision rule and validation license}
+
+For focal estimate $\widehat\Lambda_{01}$, truth $o$, and standard error from
+499 whole-date bootstrap replicates, passage requires
+\begin{equation}
+|\widehat\Lambda_{01}-o|-0.50|o|>3\,SE_{\mathrm{boot}}. \label{eq:gate}
+\end{equation}
+The materiality margin beyond 50\% error, not error relative to zero, must clear
+three standard errors. The same date weights are shared across candidates and
+the $CI_I$ veto. Reported intervals are a bootstrap-standard-error normal
+interval and a basic whole-date bootstrap interval with named quantile rules.
+
+Before the research draw can exist, 100 independent validation superpanels must
+license the exact final procedure. A null-grid superpanel evaluates 459 strict
+events and records whether any passes. The one-sided 95\% Clopper-Pearson upper
+bound on that family-union probability must be at most 5\%, which at $n=100$
+permits at most one union success. A power superpanel evaluates all 51 actual
+alternative components and records whether every component passes. The
+one-sided 95\% Wilson lower bound on that intersection probability must be at
+least 80\%, which requires at least 87 successes. This is a finite registered
+grid, not a continuum-uniform size proof.
+
+The expensive $CI_I$ branch receives a separate full-dimension,
+full-time recovery panel with confounding removed but the same collinear flow
+law. It must recover 30 diagonal truths and the focal off-diagonal truth inside
+31-component Bonferroni bootstrap-normal intervals, with every point error
+strictly below 50\%. One recovery panel is a no-strawman check, not a Monte
+Carlo size or power statement.
+
+\subsection{Outcome taxonomy fixed before results}
+
+The interpretation of each possible branch is fixed in advance:
+\begin{itemize}
+\item If all smooth candidates and $CI_I$ pass their licensed scopes, G2
+supports material confounding only in the registered source-matched model
+class.
+\item If any binding candidate fails, G2 does not pass. A nonbinding diagnostic
+cannot rescue it.
+\item If size, power, numerical, provenance, or resource admission fails, the
+research draw remains sealed. This is a design failure, not a market null.
+\item If the sole research draw misses after adequate validation, the finite
+demonstration fails. It does not logically prove the absence of population bias.
+\item A premise-killing null requires a separately preregistered sharp upper
+bound over the source-compatible class. A single negative fixture is
+insufficient.
+\end{itemize}
+
+\section{Reproducibility and Research Controls}
+
+The project makes reproducibility a condition for every stochastic claim. A
+run is licensed only after its derivation, quantitative prediction,
+configuration bytes, input-source hashes, random-number address map, interval
+method, failure rules, and compute budget are frozen. Registered streams are
+separated by phase and scenario. Resume
+boundaries store sufficient statistics and provenance rather than mutable
+generator state. Final artifacts are published success-last and are accepted
+only when their markers bind the payload hashes.
+
+The completed G1 experiment used 100 immutable shards of 100,000 observations.
+Each component stream was addressed by master seed, shard index, and component
+identifier. Aggregation reread every shard in index order and merged means and
+centered scatters with the between-shard correction. Replaying the completed
+run left the result artifacts byte-identical.
+
+Table \ref{tab:software-checks} records the fresh deterministic repository gate
+used for this version. These checks support software and artifact consistency;
+they are not additional scientific trials and do not license a G2 stream.
+
+\begin{table}[t]
+\centering
+\caption{Deterministic software verification on 6 August 2026.}
+\label{tab:software-checks}
+\small
+\begin{tabular}{@{}p{0.41\columnwidth}p{0.49\columnwidth}@{}}
+\toprule
+Check & Fresh result \\
+\midrule
+Ruff lint & Pass \\
+Ruff format & 26 files checked \\
+Strict mypy & Pass, 26 source files \\
+Pytest & 306 passed in 36.99 s \\
+Deterministic G0 demo & 64 rows; expected hashes reproduced \\
+Committed-result drift & Pass; no drift \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+G2 is more demanding because the final statistic combines date-level
+dependence, measured-flow construction, high-dimensional fits, and bootstrap
+aggregation. The registered implementation is consequently required to:
+\begin{itemize}
+\item preserve whole dates as the dependence unit;
+\item refit all training-defined transforms inside each fold and outer block;
+\item use one shared set of date weights across all binding candidates;
+\item fail rather than drop a nonfinite, singular, weak-PCA, or nonconvergent
+cell;
+\item checkpoint long work in bounded, hash-validated units; and
+\item remain below the stated memory, disk, download, and wall-clock limits.
+\end{itemize}
+These controls do not make an estimator scientifically valid. They make it
+possible to tell which estimator and random variable produced a future claim.
+
+\section{Path to the Empirical Study}
+
+The empirical phase is intentionally absent from this draft. Before any market
+claim, the remaining gates require:
+\begin{enumerate}
+\item a byte-level audit of exactly authorized external files, timestamps,
+coverage gaps, and point-in-time availability;
+\item a simulation identification proof based on the true-parameter Jacobian
+and its full singular spectrum;
+\item explicit numerical demonstrations of at least two failure modes of the
+naive estimator;
+\item train-only estimation with all attempted specifications logged and the
+holdout sealed;
+\item theoretical admissibility, dependence-robust inference, manipulation-cost
+accounting, and liquidation-regret evaluation; and
+\item a single holdout opening with no post-open tuning.
+\end{enumerate}
+No trading profitability, transaction-cost saving, patentability, or deployable
+execution rule follows from the present evidence. Those questions become
+scientifically meaningful only after identification and out-of-sample gates
+survive.
+
+\section{Limitations}
+
+The completed result is deliberately narrow. The G1 fixture is Gaussian,
+known-truth, and large-sample. Its zero contemporaneous shock
+cross-covariances are substantive assumptions. Its dense positive targets do
+not reproduce the small, sign-sensitive coefficients central to the empirical
+debate. The Bonferroni interval inclusion is one realization, not an estimated
+coverage probability.
+
+The G2 design also has sharp limits even if it eventually passes. Its one-spike
+residual spectrum is a declared maximum-entropy convention, not an identified
+feature of a market. The 95\% proxy reliability is favorable to the opponent
+but is not empirically estimated. The structural diagonal and cross-to-own
+interval are sensitivity inputs assembled from nonidentical studies and units.
+The AR(1) dependence parameter is a hostile stress value, not a calibration.
+The null-grid validation is finite. The conditional model class cannot stand in
+for every source-compatible latent decomposition.
+
+Finally, predictive performance and structural identification remain distinct.
+An estimator can forecast well while targeting the wrong impact matrix, and a
+structurally interpretable estimator can be economically useless after costs.
+Both questions must be evaluated, but neither can substitute for the other.
+
+\section{Conclusion}
+
+Off-diagonal return-on-flow coefficients do not identify structural
+cross-impact by notation alone. In a simultaneous multi-asset system, their
+probability limits contain separate latent-factor and feedback terms. A noisy
+factor control reduces the factor variation left after projection; it does not
+generally recover the structural matrix. A preregistered $N=30$, $K=3$,
+$T=10^7$ known-truth experiment recovered the derived matrices under its frozen
+criterion, establishing a sound algebraic and numerical starting point.
+
+The economically important claim remains unresolved. The next step is the
+registered premise test, which can reject the research program before market
+data is used. It specifies observable and oracle opponents, a
+published-protocol veto, named bootstrap inference, and explicit failure
+branches. Until those branches and the later empirical gates close, the
+conclusion is methodological:
+apparent cross-impact must be separated from structural impact by derivation,
+known-truth recovery, and adversarial falsification.
+
+\section*{Preprint License}
+
+Copyright \textcopyright\ 2026 Mehmet Demir G\"uven. This preprint, including
+its manuscript source and paper figures, is licensed under the
+\href{https://creativecommons.org/licenses/by/4.0/}{Creative Commons
+Attribution 4.0 International License}. The license applies to the scholarly
+article, not automatically to the repository's software, configurations, data,
+or result artifacts, whose terms must be assessed separately.
+
+\appendix
+
+\section{Proof of Theorem \ref{thm:plim}}
+
+From Eqs. \eqref{eq:return}--\eqref{eq:flow},
+\begin{equation}
+(I-B\Lambda)q_t=(B\Gamma+\Delta_f)f_t+Bu_t+v_t,
+\end{equation}
+which yields Eq. \eqref{eq:q-reduced}. Mutual zero cross-covariances imply
+\begin{align}
+\Cov(f_t,q_t)&=\Sigma_fP^\top, \\
+\Cov(u_t,q_t)&=\Sigma_uU^\top.
+\end{align}
+Using $r_t=\Lambda q_t+\Gamma f_t+u_t$,
+\begin{equation}
+\Sigma_{rq}=\Lambda\Sigma_{qq}
++\Gamma\Sigma_fP^\top+\Sigma_uU^\top.
+\end{equation}
+Right multiplication by $\Sigma_{qq}^{-1}$ proves
+Eq. \eqref{eq:ols-plim}.
+
+For the proxy-controlled regression, the linear-projection residual of $f_t$
+after controlling for $h_t=f_t+\epsilon_t$ is
+\begin{equation}
+f_t^\perp=f_t-\Sigma_f(\Sigma_f+\Sigma_\epsilon)^{-1}h_t,
+\end{equation}
+with variance $R_f$. Frisch-Waugh-Lovell residualization gives
+\begin{align}
+q_t^\perp &= Pf_t^\perp+Uu_t+Vv_t, \\
+r_t^\perp &= \Lambda q_t^\perp+\Gamma f_t^\perp+u_t.
+\end{align}
+Thus $\Var(q_t^\perp)=Q_h$ and
+\begin{equation}
+\Cov(r_t^\perp,q_t^\perp)
+=\Lambda Q_h+\Gamma R_fP^\top+\Sigma_uU^\top.
+\end{equation}
+Right multiplication by $Q_h^{-1}$ proves Eq. \eqref{eq:proxy-plim}.
+\hfill$\square$
+
+\section{Equivalent Primitive Forms}
+
+The reduced-form matrices can be eliminated. Define
+\begin{align}
+\Omega_q
+&=D\Sigma_fD^\top+B\Sigma_uB^\top+\Sigma_v, \\
+\Omega_{q\mid h}
+&=DR_fD^\top+B\Sigma_uB^\top+\Sigma_v.
+\end{align}
+Because $\Sigma_{qq}=H\Omega_qH^\top$ and
+$Q_h=H\Omega_{q\mid h}H^\top$, Theorem \ref{thm:plim} is equivalently
+\begin{align}
+\plim\widehat\Lambda_{\mathrm{OLS}}
+&=\Lambda+(\Gamma\Sigma_fD^\top+\Sigma_uB^\top)
+\Omega_q^{-1}(I-B\Lambda), \\
+\plim\widehat\Lambda_{q\mid h}
+&=\Lambda+(\Gamma R_fD^\top+\Sigma_uB^\top)
+\Omega_{q\mid h}^{-1}(I-B\Lambda).
+\end{align}
+These forms show that the decomposition is fully determined by structural
+primitives under the stated zero-cross-covariance assumptions.
+
+\section{Frozen Numerical Rules for the Six-Specification Path}
+
+This appendix records the numerical choices that make the protocol
+reconstruction reproducible. It does not report a reconstruction result.
+
+For each penalized response and training sample, the unpenalized intercept and,
+where applicable, factor are partialled out. Penalized columns are divided by
+their pre-residualization root-mean-square scale. The largest penalty is
+\begin{equation}
+\lambda_{\max}=\max_j\left|x_j^\top y/n\right|,
+\end{equation}
+and the path uses the 40 frozen ratios corresponding mathematically to
+$10^{-4k/39}$, $k=0,\ldots,39$. Runtime values are read from the literal sealed
+vector rather than regenerated from the formula.
+
+Coordinate descent updates, in ascending coordinate order,
+\begin{align}
+\rho_j&=x_j^\top(y-X\beta+x_j\beta_j)/n, \\
+\beta_j&=\frac{\operatorname{sign}(\rho_j)
+\max\{|\rho_j|-\lambda,0\}}{x_j^\top x_j/n}.
+\end{align}
+Convergence requires both a scaled maximum coefficient update at most
+$10^{-10}$ and maximum KKT violation at most $10^{-9}$, with 10,000 full sweeps
+as a hard failure. A selected outer model starts from zero even though fold
+paths use validated warm starts. OLS uses a full-rank least-squares solve with
+$rcond=\epsilon_{\mathrm{mach}}\max(\text{shape})$.
+
+Within-asset and cross-sectional principal components use training-column
+centering, covariance divisor $n$, a symmetric eigenvalue decomposition, the
+largest eigenpair, and a deterministic sign whose largest-absolute loading is
+positive. The top eigengap must exceed $10^{-10}$ times covariance trace.
+Validation and next-block features apply stored training means and loadings;
+they never refit on scored rows.
+
+\begingroup
+\small
+\setlength{\itemsep}{1pt plus 0.2pt minus 0.2pt}
+\setlength{\parskip}{0pt}
+\begin{thebibliography}{99}
+
+\bibitem{Kyle1985}
+A. S. Kyle.
+Continuous auctions and insider trading.
+\emph{Econometrica}, 53(6):1315--1335, 1985.
+\href{https://doi.org/10.2307/1913210}{doi:10.2307/1913210}.
+
+\bibitem{Hasbrouck1991}
+J. Hasbrouck.
+Measuring the information content of stock trades.
+\emph{Journal of Finance}, 46(1):179--207, 1991.
+\href{https://doi.org/10.1111/j.1540-6261.1991.tb03749.x}{doi:10.1111/j.1540-6261.1991.tb03749.x}.
+
+\bibitem{ContKukanovStoikov2014}
+R. Cont, A. Kukanov, and S. Stoikov.
+The price impact of order book events.
+\emph{Journal of Financial Econometrics}, 12(1):47--88, 2014.
+\href{https://doi.org/10.1093/jjfinec/nbt003}{doi:10.1093/jjfinec/nbt003}.
+
+\bibitem{XuGouldHowison2019}
+K. Xu, M. D. Gould, and S. D. Howison.
+Multi-level order-flow imbalance in a limit order book.
+arXiv:1907.06230v2, 2019.
+\href{https://doi.org/10.48550/arXiv.1907.06230}{doi:10.48550/arXiv.1907.06230}.
+
+\bibitem{HasbrouckSeppi2001}
+J. Hasbrouck and D. J. Seppi.
+Common factors in prices, order flows, and liquidity.
+\emph{Journal of Financial Economics}, 59(3):383--411, 2001.
+\href{https://doi.org/10.1016/S0304-405X(00)00091-X}{doi:10.1016/S0304-405X(00)00091-X}.
+
+\bibitem{BenzaquenEtAl2017}
+M. Benzaquen, I. Mastromatteo, Z. Eisler, and J.-P. Bouchaud.
+Dissecting cross-impact on stock markets.
+\emph{Journal of Statistical Mechanics: Theory and Experiment},
+2017(2):023406, 2017.
+\href{https://doi.org/10.1088/1742-5468/aa53f7}{doi:10.1088/1742-5468/aa53f7}.
+
+\bibitem{CapponiCont2020}
+F. Capponi and R. Cont.
+Multi-asset market impact and order flow commonality.
+SSRN working paper 3706390, 2020.
+\href{https://doi.org/10.2139/ssrn.3706390}{doi:10.2139/ssrn.3706390}.
+
+\bibitem{ContCucuringuZhang2023}
+R. Cont, M. Cucuringu, and C. Zhang.
+Cross-impact of order flow imbalance in equity markets.
+\emph{Quantitative Finance}, 23(10):1373--1393, 2023.
+\href{https://doi.org/10.1080/14697688.2023.2236159}{doi:10.1080/14697688.2023.2236159}.
+
+\bibitem{SchneiderLillo2016}
+M. Schneider and F. Lillo.
+Cross-impact and no-dynamic-arbitrage.
+arXiv:1612.07742, 2016.
+\url{https://arxiv.org/abs/1612.07742}.
+
+\bibitem{StockWatson2002}
+J. H. Stock and M. W. Watson.
+Macroeconomic forecasting using diffusion indexes.
+\emph{Journal of Business \& Economic Statistics}, 20(2):147--162, 2002.
+\href{https://doi.org/10.1198/073500102317351921}{doi:10.1198/073500102317351921}.
+
+\bibitem{BaiNg2006}
+J. Bai and S. Ng.
+Confidence intervals for diffusion index forecasts and inference for
+factor-augmented regressions.
+\emph{Econometrica}, 74(4):1133--1150, 2006.
+\href{https://doi.org/10.1111/j.1468-0262.2006.00696.x}{doi:10.1111/j.1468-0262.2006.00696.x}.
+
+\bibitem{MiaoEtAl2018}
+W. Miao, Z. Geng, and E. J. Tchetgen Tchetgen.
+Identifying causal effects with proxy variables of an unmeasured confounder.
+\emph{Biometrika}, 105(4):987--993, 2018.
+\href{https://doi.org/10.1093/biomet/asy038}{doi:10.1093/biomet/asy038}.
+
+\bibitem{Tibshirani1996}
+R. Tibshirani.
+Regression shrinkage and selection via the lasso.
+\emph{Journal of the Royal Statistical Society: Series B}, 58(1):267--288,
+1996.
+
+\bibitem{KockCallot2015}
+A. B. Kock and L. Callot.
+Oracle inequalities for high-dimensional vector autoregressions.
+\emph{Journal of Econometrics}, 186(2):325--344, 2015.
+\href{https://doi.org/10.1016/j.jeconom.2015.02.013}{doi:10.1016/j.jeconom.2015.02.013}.
+
+\bibitem{BabiiEtAl2022}
+A. Babii, E. Ghysels, and J. Striaukas.
+Machine learning time series regressions with an application to nowcasting.
+\emph{Journal of Business \& Economic Statistics}, 40(3):1094--1106, 2022.
+\href{https://doi.org/10.1080/07350015.2021.1899933}{doi:10.1080/07350015.2021.1899933}.
+
+\bibitem{White2000}
+H. White.
+A reality check for data snooping.
+\emph{Econometrica}, 68(5):1097--1126, 2000.
+\href{https://doi.org/10.1111/1468-0262.00152}{doi:10.1111/1468-0262.00152}.
+
+\bibitem{Hansen2005}
+P. R. Hansen.
+A test for superior predictive ability.
+\emph{Journal of Business \& Economic Statistics}, 23(4):365--380, 2005.
+\href{https://doi.org/10.1198/073500105000000063}{doi:10.1198/073500105000000063}.
+
+\bibitem{RomanoWolf2005}
+J. P. Romano and M. Wolf.
+Stepwise multiple testing as formalized data snooping.
+\emph{Econometrica}, 73(4):1237--1282, 2005.
+\href{https://doi.org/10.1111/j.1468-0262.2005.00615.x}{doi:10.1111/j.1468-0262.2005.00615.x}.
+
+\end{thebibliography}
+\endgroup
+
+\end{document}

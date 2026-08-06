@@ -997,3 +997,37 @@ suite, a resumable design commit with hosted verification, and then test-first
 implementation under the disjoint seed-1729 software namespace. The locked
 suite subsequently passed Ruff, format, strict mypy over 22 source files, all
 269 tests, the deterministic demo, and committed-result drift.
+
+## Eighteenth hostile verdict — typed paper semantics and pre-results surface pass within scope
+
+The next deterministic slice did not implement the resource gate. It projected
+only nine already sealed paper-cache and aggregation fields into the typed
+`PaperReconstructionContract`, including an exact-Boolean
+`bootstrap_refit=false` boundary. The focused RED failed on the first missing
+attribute. The repaired contract passed both focused tests, all 10 contract
+tests, and an independent authority review. The review found no paper matrix
+assembly, cache flattening, 8,460-field order, serializer, resource fixture,
+RNG, or registered execution path. Commit `916022bb2b76` is therefore a
+**PASS FOR SEMANTIC CONTRACT CAPABILITY ONLY**. C0016 remains executable-red.
+
+A separate publication audit reviewed the version-0.1 manuscript, paper-style
+README, figures, test table, author front matter, and license. Its first verdict
+rejected publication hygiene because the new 26-source/306-test verification
+had not yet been entered into the ledgers and the initial CC BY notice could
+overlap the repository's MIT documentation scope. The repair added C0017 and
+D0089--D0090, synchronized STATE and assumption A022, and restricted CC BY 4.0
+to the manuscript, its LaTeX source, and its original figures outside the MIT
+Software. The PDF is eight visually inspected pages, has author/title metadata,
+contains no colored entry-page box or orphaned float page, labels the proxy
+sensitivity chart as analytic pre-run output, and makes no G2, empirical,
+holdout, or economic result claim. The repaired independent audit **PASSED**
+and found no attribution trace.
+
+The fresh deterministic repository gate then passed Ruff, format checking over
+26 files, strict mypy over 26 source files, all 306 tests in 36.99 seconds, the
+64-row deterministic G0 demo with expected hashes, and committed-result drift.
+These checks are software evidence only. They do not measure A022 resources,
+open a stochastic trial, or unlock G8. The eighteenth verdict is therefore
+**PASS FOR PRE-RESULTS DISSEMINATION ONLY**. The final-results paper remains
+locked; resource/validation/research streams, external data, training, holdout,
+and economics remain untouched.

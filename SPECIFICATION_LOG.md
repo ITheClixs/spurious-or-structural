@@ -700,8 +700,8 @@ empirical model trials, but gate-level pipeline variants are recorded.
   value is a fixed charge, not an end-to-end close-time claim. Only then may a
   quantitative registered prediction be append-sealed
   and hostile-reviewed.
-- **Status:** current deterministic red; design registered, implementation not
-  started. The first two independent hostile design reviews failed eight
+- **Status:** current deterministic red; design registered, resource-path
+  implementation and rehearsal not started. The first two independent hostile design reviews failed eight
   material ambiguities. A fresh methodological review then rejected the
   repaired draft's full-mixture interpretation, and a fresh systems review
   found six byte-level blockers. A023 now makes projection conditional, retains
@@ -729,10 +729,11 @@ empirical model trials, but gate-level pipeline variants are recorded.
   both clerical corrections, an independent third recomputation passed 9,799
   bytes, the config hash, 194 rows, 9,473 CJSON bytes, and the corrected
   type-tree hash with no stale residue. Document authority is accepted, but the
-  executable gate remains red: implementation and rehearsal have not started.
-  The post-acceptance locked deterministic gate passed Ruff, format, strict
-  mypy over 22 source files, all 269 tests, deterministic demo regeneration,
-  and committed-result drift.
+  executable gate remains red: the resource capability/supervisor, complete
+  paper-cache path, and rehearsal do not exist. C0017 later projects sealed
+  cache/aggregation semantics without creating those paths. The latest locked
+  deterministic gate passed Ruff, format, strict mypy over 26 source files, all
+  306 tests, deterministic demo regeneration, and committed-result drift.
 - **Intervals:** eventual timings use the named
   `[max(1,D-2h),D+2h]` clock-resolution enclosure, warm-block min--max ranges,
   and exact rational upper projections; three serial warm blocks are never
@@ -743,3 +744,42 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Access:** registered resource seed `2026071529`, validation seed
   `2026071521`, research seed `2026071522`, empirical data, evaluation data,
   and holdout remain untouched.
+
+## C0017 — Typed paper-cache and aggregation contract projection
+
+- **Registered:** 2026-08-06 in the test-first contract slice committed as
+  `634d6133d232`, after A026 document acceptance and before implementation. The
+  RED test named the exact sealed fields and prohibited inference of an
+  8,460-field representation order.
+- **Scope:** project the existing `paper_reconstruction` semantics from
+  `configs/g2.toml` into `PaperReconstructionContract`: equal-block/date
+  coefficient aggregation, pooled OOS SSE/SST prediction aggregation, shared-
+  weight bootstrap aggregation with no LASSO refit, the nine paper-cache matrix
+  names, cached loss fields, 7,200 reported coefficient-map values, 180
+  reported OOS values, and the two cache-only loss components. Enforce exact
+  runtime types and sealed identity. Do not assemble a paper matrix, flatten a
+  cache, create a resource fixture, or access RNG.
+- **Prediction before implementation:** the focused contract test fails on the
+  missing `coefficient_aggregation` attribute. After the smallest semantic
+  projection, that test and the neighboring reconstruction contract test pass;
+  the full deterministic repository gate remains green. Any attempt to accept
+  integer `0` for `bootstrap_refit`, reorder a cache, or infer serialization
+  authority fails the slice.
+- **Status:** passed for typed semantic capability only. The initial focused
+  test failed exactly on the absent attribute. Commit `916022bb2b76` added the
+  nine fields, an exact-Boolean parser, runtime representation checks, and
+  sealed-identity validation. The two focused tests and all 10 G2 contract
+  tests passed. Ruff, format checking over 26 files, strict mypy over 26 source
+  files, all 306 tests in 36.99 seconds, the 64-row deterministic G0 demo with
+  expected hashes, and committed-result drift passed. Independent review found
+  no authority widening. Paper matrix assembly, cache serialization, 8,460-
+  vector order, resource fixtures, and registered execution remain absent.
+  The version-0.1 pre-results manuscript and README may report this only as
+  software verification, not as resource feasibility or a scientific result.
+- **Intervals:** not applicable; deterministic contract and software checks
+  only.
+- **Multiple-testing count:** zero. No new draw or coefficient-to-truth
+  comparison occurred.
+- **Access:** test seed 1729 was not needed. Registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  external market data, evaluation data, and holdout remain untouched.

@@ -28,18 +28,22 @@ hosted Linux parity at commit `5aca811`/run `30349473867`. The exact A019
 one-shot passed on its sole authorized seed-9191 attempt from source HEAD
 `a75ea69`; it is permanently consumed. Resource authority and every registered
 resource/validation/research realization remain absent. C0016/A022, A023, and
-amendments A024--A026 are now append-preregistered and deterministically
-red: A026 has fresh methods, systems, and schema passes, but its implementation,
-rehearsal evidence, and quantitative execution seal do not exist.
+amendments A024--A026 are now append-preregistered and deterministically red.
+A026 has fresh methods, systems, and schema passes. Typed projection of the
+sealed paper-cache and aggregation semantics is implemented and locally
+verified, but the resource capability/supervisor, complete paper-matrix and
+cache serialization paths, rehearsal evidence, and quantitative execution seal
+do not exist.
 
 ## Session objective
 
-Current session target: verify, commit, and host-verify the methods-, systems-,
-and schema-accepted append-only A026 document authority before beginning any
-test-seed implementation. A019 closeout is complete and permanently
-non-rerunnable. No resource rehearsal, registered resource/validation/research
-realization, or coefficient-to-truth comparison is permitted in this design
-slice.
+Current session target: continue A026 through the smallest licensed
+deterministic contract slice and expose the completed G1 plus pending G2 design
+in a publication-quality pre-results preprint. The preprint must remain outside
+the locked G8 final-results claim surface. A019 closeout is complete and
+permanently non-rerunnable. No resource rehearsal, registered
+resource/validation/research realization, external data, or new
+coefficient-to-truth comparison is permitted in this slice.
 
 ## Current evidence
 
@@ -447,21 +451,44 @@ slice.
   format, strict mypy over 22 source files, all 269 tests, the deterministic
   demo, and committed-result drift. It did not construct a registered
   namespace.
+- Commit `916022bb2b76` projects the nine already sealed paper-cache and
+  aggregation fields into the typed G2 reconstruction contract, including an
+  exact-Boolean `bootstrap_refit` boundary and sealed-identity validation. The
+  focused RED failed on the missing attribute; the repaired contract passed all
+  10 contract tests and an independent read-only review. No matrix flattening,
+  8,460-field ordering, serializer, cache fixture, or registered path was
+  inferred.
+- The post-contract deterministic gate passed Ruff, format checking over 26
+  files, strict mypy over 26 source files, all 306 tests in 36.99 seconds, the
+  64-row deterministic G0 demo with expected hashes, and committed-result
+  drift. This is software evidence only, not an A022 resource measurement or a
+  scientific trial.
+- A pre-results manuscript now records the G1 theorem and accepted numerical
+  evidence, the still-unrun G2 design, the gate boundary, software verification,
+  and a closed-form proxy-reliability sensitivity figure. It is explicitly a
+  version-0.1 preprint under CC BY 4.0 for the paper artifacts, not the locked
+  G8 final-results paper and not evidence of G2, empirical, holdout, or economic
+  passage.
 
 ## In flight
 
-1. Commit and host-verify this deterministic design slice before implementing
-   any resource path under test seeds.
-2. Implement the accepted authority test-first under the disjoint seed-1729
-   software namespace; do not start the A022 rehearsal or registered path.
+1. Commit the typed-contract and pre-results dissemination state with the four
+   ledgers and red-team boundary synchronized.
+2. Freeze the unresolved paper-cache representation order before implementing
+   any 8,460-field serializer; then continue the accepted authority test-first
+   under the disjoint seed-1729 software namespace. Do not start the A022
+   rehearsal or a registered path.
 
 ## Blockers
 
 - Registered G2 resource, validation, and research streams remain blocked. The
   estimator core has no authority to run them.
-- A022/A026 remain unimplemented and untested. The 0.65-second software smoke
-  and 18.91-second A019 recovery are not the frozen hashing-inclusive
-  cold/warm resource benchmark and cannot admit resource throughput or memory.
+- A022/A026 remain executable-red. Typed cache/aggregation semantics exist, but
+  the resource capability/supervisor, complete paper matrix assembly, 8,460-
+  field representation order, serializer, and test-seed rehearsal do not. The
+  0.65-second software smoke and 18.91-second A019 recovery are not the frozen
+  hashing-inclusive cold/warm resource benchmark and cannot admit resource
+  throughput or memory.
 - A019 passed and is permanently consumed, but it has no coefficient-truth,
   bias, power, premise, or resource-admission content.
 - The 150 MB/symbol-day and 50 compressed bytes/bin projections are untested;
@@ -492,8 +519,11 @@ append-preregistered, deterministically red; its active config seal is
 registered resource command, or registered seed.
 Registered resource/validation/research realizations and empirical tape remain
 untouched." A026 document authority has fresh methods, systems, and schema
-passes. Run the locked deterministic suite, then commit and host-verify the
-accepted document package before any test-seed implementation. Never retry
-A019 or touch a registered resource, validation,
-or research seed before A022's later quantitative prediction seal, clean
-hosted SHA, absent roots, and explicit one-shot human authorization.
+passes. Commit `916022bb2b76` implements typed cache/aggregation semantics only;
+the latest deterministic gate is 306 tests and does not admit resources. The
+version-0.1 pre-results manuscript is a dissemination artifact, not G2 or G8
+evidence. Next freeze and independently review the 8,460-field paper-cache
+representation order before any serializer or resource fixture. Never retry
+A019 or touch a registered resource, validation, or research seed before
+A022's later quantitative prediction seal, clean hosted SHA, absent roots, and
+explicit one-shot human authorization.

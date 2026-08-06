@@ -2281,3 +2281,60 @@ preregistration restartability correction below.
   machine, any authoritative byte or count drifts, a deterministic fixture
   exposes an unclassified transition, or a review/test failure is softened
   instead of recorded and repaired.
+
+## D0089 — Project sealed paper-cache semantics without inventing representation order
+
+- **Date:** 2026-08-06
+- **Decision:** Extend `PaperReconstructionContract` only with the nine
+  cache/aggregation fields already sealed in `configs/g2.toml`: coefficient,
+  prediction, and bootstrap aggregation; exact-Boolean bootstrap refit;
+  date-cache matrix and loss identities; reported coefficient and OOS counts;
+  and cache-only fields. Validate both runtime types and exact sealed identity.
+  This is semantic capability, not authority to assemble or serialize a paper
+  cache.
+- **Evidence:** The focused RED failed on the first missing contract attribute.
+  The implementation then passed the two focused tests, all 10 G2 contract
+  tests, Ruff, format, strict mypy, the full 306-test deterministic suite, the
+  G0 demo, result-drift checks, and an independent read-only audit. Commit
+  `916022bb2b76` records the implementation. No RNG, registered command,
+  external data, or holdout was accessed.
+- **Rejected:** Infer a flattening order, build a tiled resource fixture, or
+  treat cache field names as a byte representation. The authority seals the
+  meanings and counts but does not yet freeze the 8,460-field serialization
+  order.
+- **Residual risk:** Paper matrix assembly, per-date cache construction,
+  serialization, bootstrap reaggregation, and the resource supervisor remain
+  absent. A future representation choice could silently permute coefficients
+  unless it is derived, frozen, and independently reviewed first.
+- **Reopen if:** The projected values drift from the sealed config, a non-Boolean
+  value is accepted for `bootstrap_refit`, a serializer appears before an exact
+  order is authorized, or any registered stream is touched.
+
+## D0090 — Distribute only a pre-results paper while G8 remains locked
+
+- **Date:** 2026-08-06
+- **Decision:** Maintain a paper-style README and an eight-page version-0.1
+  preprint that report the G1 theorem and accepted known-truth result, then
+  distinguish the registered but unrun G2 design from every later empirical,
+  holdout, and economic claim. Identify Mehmet Demir Güven, Department of
+  Computer Science, ETH Zürich, in the front matter. License only the
+  manuscript, its LaTeX source, and original paper figures under CC BY 4.0;
+  leave the repository's MIT software scope unchanged.
+- **Evidence:** The compiled PDF contains the author and title metadata, renders
+  to eight inspected pages, has no colored front-page status box or orphaned
+  page, and contains one completed-evidence panel plus one explicitly analytic
+  pre-run sensitivity panel. Independent prose and claim audits found no
+  scientific overclaim or attribution trace after the ledger and license-scope
+  repairs. The manuscript and README name the 306-test software gate as
+  software evidence only.
+- **Rejected:** Present the draft as the G8 final-results paper; report an unrun
+  G2 quantity as evidence; claim market identification, performance, or
+  profitability; pad the paper to a page target; or place the README and
+  software under the preprint license.
+- **Residual risk:** The preprint has no arXiv identifier and G2 remains open.
+  A later arXiv license selection is irrevocable, and later venue requirements
+  may require a different submission style. No submission or external upload
+  is authorized by this decision.
+- **Reopen if:** A caption loses its evidence label, G2/G8 status changes, an
+  empirical or economic claim appears without a passed gate, the PDF artifact
+  is missing, or the paper-license scope conflicts with a later venue policy.
