@@ -496,6 +496,11 @@ def test_paper_pca_fails_weak_or_invalid_training_problems() -> None:
         fit_paper_pca(isotropic, contract=contract)
     with pytest.raises(ValueError, match="trace"):
         fit_paper_pca(np.zeros((4, 2), dtype=np.float64), contract=contract)
+    with pytest.raises(ValueError, match="columns|features|dimensions|eigen"):
+        fit_paper_pca(
+            np.asarray([[-1.0], [0.0], [1.0], [2.0]], dtype=np.float64),
+            contract=contract,
+        )
 
     nonfinite = _rank_one_pca_fixture()
     nonfinite[0, 0] = np.nan

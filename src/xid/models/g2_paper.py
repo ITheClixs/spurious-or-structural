@@ -75,6 +75,36 @@ class PaperLinearCoefficients:
     penalized_coefficients: NDArray[np.float64]
 
 
+@dataclass(frozen=True, slots=True)
+class PaperPcaFit:
+    """Training-mean PCA fit and diagnostics for paper feature maps."""
+
+    training_means: NDArray[np.float64]
+    loading: NDArray[np.float64]
+    orthogonal_projector: NDArray[np.float64]
+    covariance_trace: float
+    leading_eigenvalue: float
+    eigengap: float
+    loading_l1_norm: float
+
+
+@dataclass(frozen=True, slots=True)
+class PaperCrossSectionProjection:
+    """Cross-sectional PCA score and residual block."""
+
+    scores: NDArray[np.float64]
+    residuals: NDArray[np.float64]
+
+
+@dataclass(frozen=True, slots=True)
+class PaperOlsResult:
+    """Full-rank OLS coefficients and numerical rank metadata."""
+
+    coefficients: NDArray[np.float64]
+    rank: int
+    rcond: float
+
+
 def _readonly_c_float64(values: NDArray[np.float64]) -> NDArray[np.float64]:
     out = np.asarray(values, dtype=np.float64, order="C").copy()
     out.setflags(write=False)
@@ -108,6 +138,153 @@ def _require_float64_array(
 def _assert_all_finite(value: NDArray[np.float64] | np.float64, *, name: str) -> None:
     if not np.all(np.isfinite(value)):
         raise FloatingPointError(f"{name} produced nonfinite intermediate arithmetic")
+
+
+def fit_paper_pca(
+    training_values: NDArray[np.float64],
+    *,
+    contract: G2Contract,
+) -> PaperPcaFit:
+    """Fit the sealed paper PCA convention from training rows only."""
+    validate_g2_contract(contract)
+    values = _require_float64_array(training_values, name="training_values", ndim=2)
+    if values.shape[0] < 2 or values.shape[1] < 2:
+        raise ValueError("training_values must have at least two rows and feature columns")
+
+    row_count = np.float64(values.shape[0])
+    means = np.asarray(np.mean(values, axis=0), dtype=np.float64, order="C")
+    centered = np.asarray(values - means, dtype=np.float64, order="C")
+    covariance = np.asarray((centered.T @ centered) / row_count, dtype=np.float64, order="C")
+    _assert_all_finite(means, name="PCA training means")
+    _assert_all_finite(centered, name="PCA centering")
+    _assert_all_finite(covariance, name="PCA covariance")
+
+    trace = np.float64(np.trace(covariance))
+    if not np.isfinite(trace) or trace <= 0.0:
+        raise ValueError("PCA covariance trace must be positive and finite")
+    try:
+        eigenvalues, eigenvectors = np.linalg.eigh(covariance)
+    except np.linalg.LinAlgError as exc:
+        raise np.linalg.LinAlgError("PCA eigen decomposition failed") from exc
+    eigenvalues = np.asarray(eigenvalues, dtype=np.float64, order="C")
+    eigenvectors = np.asarray(eigenvectors, dtype=np.float64, order="C")
+    _assert_all_finite(eigenvalues, name="PCA eigenvalues")
+    _assert_all_finite(eigenvectors, name="PCA eigenvectors")
+    leading_eigenvalue = np.float64(eigenvalues[-1])
+    second_eigenvalue = np.float64(eigenvalues[-2])
+    loading = np.asarray(eigenvectors[:, -1], dtype=np.float64, order="C")
+    _assert_all_finite(leading_eigenvalue, name="PCA leading eigenpair")
+    _assert_all_finite(loading, name="PCA leading eigenpair")
+    if leading_eigenvalue <= 0.0:
+        raise ValueError("PCA leading eigenvalue must be positive and finite")
+
+    sign_index = int(np.argmax(np.abs(loading)))
+    if loading[sign_index] < 0.0:
+        loading = np.asarray(-loading, dtype=np.float64, order="C")
+    loading_l1 = np.float64(np.sum(np.abs(loading)))
+    _assert_all_finite(loading_l1, name="PCA loading L1 norm")
+    if loading_l1 <= 0.0:
+        raise ValueError("PCA loading L1 norm must be positive and finite")
+
+    eigengap = np.float64(leading_eigenvalue - second_eigenvalue)
+    gap_floor = np.float64(contract.paper_reconstruction.pca_top_eigengap_min_trace_ratio * trace)
+    if not np.isfinite(eigengap) or eigengap <= gap_floor:
+        raise ValueError("PCA eigengap must exceed the sealed trace-scaled threshold")
+
+    identity = np.eye(values.shape[1], dtype=np.float64)
+    projector = np.asarray(identity - np.outer(loading, loading), dtype=np.float64, order="C")
+    _assert_all_finite(projector, name="PCA orthogonal projector")
+
+    return PaperPcaFit(
+        training_means=_readonly_c_float64(means),
+        loading=_readonly_c_float64(loading),
+        orthogonal_projector=_readonly_c_float64(projector),
+        covariance_trace=float(trace),
+        leading_eigenvalue=float(leading_eigenvalue),
+        eigengap=float(eigengap),
+        loading_l1_norm=float(loading_l1),
+    )
+
+
+def apply_integrated_level_pca(
+    fit: PaperPcaFit,
+    values: NDArray[np.float64],
+    *,
+    contract: G2Contract,
+) -> NDArray[np.float64]:
+    """Apply a stored integrated-level PCA fit using its training means."""
+    validate_g2_contract(contract)
+    if type(fit) is not PaperPcaFit:
+        raise TypeError("fit must use exact PaperPcaFit")
+    array = _require_float64_array(values, name="values", ndim=2)
+    if array.shape[1] != fit.training_means.shape[0]:
+        raise ValueError("values shape must match the PCA loading width")
+    l1_norm = np.float64(fit.loading_l1_norm)
+    if not np.isfinite(l1_norm) or l1_norm <= 0.0:
+        raise ValueError("PCA loading L1 norm must be positive and finite")
+    centered = np.asarray(array - fit.training_means, dtype=np.float64, order="C")
+    scores = np.asarray((centered @ fit.loading) / l1_norm, dtype=np.float64, order="C")
+    _assert_all_finite(centered, name="PCA application centering")
+    _assert_all_finite(scores, name="integrated PCA scores")
+    return _readonly_c_float64(scores)
+
+
+def apply_cross_sectional_pca(
+    fit: PaperPcaFit,
+    values: NDArray[np.float64],
+    *,
+    contract: G2Contract,
+) -> PaperCrossSectionProjection:
+    """Apply a stored cross-sectional PCA fit using its training means."""
+    validate_g2_contract(contract)
+    if type(fit) is not PaperPcaFit:
+        raise TypeError("fit must use exact PaperPcaFit")
+    array = _require_float64_array(values, name="values", ndim=2)
+    if array.shape[1] != fit.training_means.shape[0]:
+        raise ValueError("values shape must match the PCA loading width")
+    centered = np.asarray(array - fit.training_means, dtype=np.float64, order="C")
+    scores = np.asarray(centered @ fit.loading, dtype=np.float64, order="C")
+    residuals = np.asarray(centered - np.outer(scores, fit.loading), dtype=np.float64, order="C")
+    _assert_all_finite(centered, name="cross-sectional PCA centering")
+    _assert_all_finite(scores, name="cross-sectional PCA scores")
+    _assert_all_finite(residuals, name="cross-sectional PCA residuals")
+    return PaperCrossSectionProjection(
+        scores=_readonly_c_float64(scores),
+        residuals=_readonly_c_float64(residuals),
+    )
+
+
+def fit_full_rank_ols(
+    design: NDArray[np.float64],
+    response: NDArray[np.float64],
+    *,
+    contract: G2Contract,
+) -> PaperOlsResult:
+    """Fit OLS through the sealed full-rank least-squares call."""
+    validate_g2_contract(contract)
+    x = _require_float64_array(design, name="design", ndim=2)
+    y = _require_float64_array(response, name="response", ndim=1)
+    if x.shape[0] != y.shape[0]:
+        raise ValueError("design and response must have matching rows")
+    if x.shape[0] == 0 or x.shape[1] == 0:
+        raise ValueError("design must have positive rows and columns")
+
+    rcond = float(np.finfo(np.float64).eps * max(x.shape))
+    try:
+        coefficients, _, rank, _ = np.linalg.lstsq(x, y, rcond=rcond)
+    except np.linalg.LinAlgError as exc:
+        raise np.linalg.LinAlgError("OLS least-squares solve failed") from exc
+    coefficients = np.asarray(coefficients, dtype=np.float64, order="C")
+    _assert_all_finite(coefficients, name="OLS coefficients")
+    rank_int = int(rank)
+    if rank_int != x.shape[1]:
+        raise ValueError("OLS design lost full column rank")
+
+    return PaperOlsResult(
+        coefficients=_readonly_c_float64(coefficients),
+        rank=rank_int,
+        rcond=rcond,
+    )
 
 
 def select_lasso_ratio(
