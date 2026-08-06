@@ -17,17 +17,12 @@ from xid.models.g2_resource import (
     parse_resource_config_bytes,
 )
 
-
 ROOT = Path(__file__).parents[1]
 CONFIG_PATH = ROOT / "configs/g2_resource.toml"
 EXPECTED_CONFIG_BYTES = 9_799
-EXPECTED_CONFIG_SHA256 = (
-    "3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29"
-)
+EXPECTED_CONFIG_SHA256 = "3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29"
 EXPECTED_TYPE_ROW_COUNT = 194
-EXPECTED_TYPE_TREE_SHA256 = (
-    "e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3"
-)
+EXPECTED_TYPE_TREE_SHA256 = "e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3"
 EXPECTED_CJSON_BYTES = 9_473
 
 
@@ -109,9 +104,7 @@ def test_resource_config_parser_exposes_the_typed_contract_literals() -> None:
     assert contract.terminal.nonpass_publication_rule == (
         "immutable-terminal-entry-selection-successor-rebuildable-forensic-close-v1"
     )
-    assert contract.process.launch_quiescence_kind == (
-        "darwin-fileglob-flock-exclusive-lease-v1"
-    )
+    assert contract.process.launch_quiescence_kind == ("darwin-fileglob-flock-exclusive-lease-v1")
     assert contract.process.launch_quiescence_filename == "quiescence.lock"
     assert contract.process.launch_quiescence_mode == 0o600
     assert contract.hard_stops.maximum_terminal_nonpass_intent_bytes == 131072
@@ -121,7 +114,7 @@ def test_resource_config_parser_exposes_the_typed_contract_literals() -> None:
     "bad_raw",
     [
         _raw_config() + b"\n",
-        _raw_config().replace(b'schema_version = 2\n', b'schema_version = 3\n', 1),
+        _raw_config().replace(b"schema_version = 2\n", b"schema_version = 3\n", 1),
         b"\xef\xbb\xbf" + _raw_config(),
         _raw_config().replace(b"\n", b"\r\n", 1),
     ],
@@ -139,7 +132,9 @@ def test_sealed_resource_config_rejects_byte_or_hash_drift(
         lambda obj: obj.__setitem__("unexpected", "reject-me"),
         lambda obj: obj.__delitem__("authority"),
         lambda obj: obj.__setitem__("schema_version", True),
-        lambda obj: obj["addresses"]["rehearsal"].__setitem__("panel_indices", [10000, 10002, 10001]),
+        lambda obj: obj["addresses"]["rehearsal"].__setitem__(
+            "panel_indices", [10000, 10002, 10001]
+        ),
         lambda obj: obj["process"].__setitem__("launch_quiescence_mode", "0600"),
         lambda obj: obj["schedule"].__setitem__("thermal_minimum_ns", 600000000000.0),
         lambda obj: obj["runtime"].__setitem__("single_thread", 1),
@@ -157,11 +152,14 @@ def test_resource_config_object_validation_rejects_schema_drift(
 
 def test_resource_config_type_tree_uses_the_corrected_a026_digest() -> None:
     contract = parse_resource_config_bytes(_raw_config())
-    cjson_payload = json.dumps(
-        ["xid-g2-resource-config-type-tree-v1", contract.type_rows],
-        ensure_ascii=True,
-        separators=(",", ":"),
-    ).encode("ascii") + b"\n"
+    cjson_payload = (
+        json.dumps(
+            ["xid-g2-resource-config-type-tree-v1", contract.type_rows],
+            ensure_ascii=True,
+            separators=(",", ":"),
+        ).encode("ascii")
+        + b"\n"
+    )
 
     assert len(contract.type_rows) == EXPECTED_TYPE_ROW_COUNT
     assert hashlib.sha256(cjson_payload).hexdigest() == EXPECTED_TYPE_TREE_SHA256
