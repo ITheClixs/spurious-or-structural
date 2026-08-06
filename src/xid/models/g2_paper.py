@@ -48,8 +48,41 @@ class LassoCoordinateDescentResult:
     maximum_kkt_violation: float
 
 
+@dataclass(frozen=True, slots=True)
+class PaperLassoProblem:
+    """Training-centered and residualized paper LASSO problem."""
+
+    y_mean: float
+    x_means: NDArray[np.float64]
+    pre_fwl_rms: NDArray[np.float64]
+    active_columns: NDArray[np.bool_]
+    y_centered: NDArray[np.float64]
+    x_centered: NDArray[np.float64]
+    factor_mean: float | None
+    factor_sum_squares: float | None
+    factor_centered: NDArray[np.float64] | None
+    y_res: NDArray[np.float64]
+    x_res: NDArray[np.float64]
+    lambda_max: float
+
+
+@dataclass(frozen=True, slots=True)
+class PaperLinearCoefficients:
+    """Original-unit coefficients reconstructed from a paper LASSO solve."""
+
+    intercept: float
+    factor_coefficient: float | None
+    penalized_coefficients: NDArray[np.float64]
+
+
 def _readonly_c_float64(values: NDArray[np.float64]) -> NDArray[np.float64]:
     out = np.asarray(values, dtype=np.float64, order="C").copy()
+    out.setflags(write=False)
+    return out
+
+
+def _readonly_c_bool(values: NDArray[np.bool_]) -> NDArray[np.bool_]:
+    out = np.asarray(values, dtype=np.bool_, order="C").copy()
     out.setflags(write=False)
     return out
 
@@ -70,6 +103,11 @@ def _require_float64_array(
     if not np.all(np.isfinite(array)):
         raise ValueError(f"{name} must contain only finite values")
     return array
+
+
+def _assert_all_finite(value: NDArray[np.float64] | np.float64, *, name: str) -> None:
+    if not np.all(np.isfinite(value)):
+        raise FloatingPointError(f"{name} produced nonfinite intermediate arithmetic")
 
 
 def select_lasso_ratio(
@@ -114,6 +152,182 @@ def select_lasso_ratio(
         selected_index=selected_index,
         selected_ratio=contract.lasso_ratio_grid[selected_index],
         pooled_mse=_readonly_c_float64(pooled),
+    )
+
+
+def prepare_lasso_problem(
+    y_values: NDArray[np.float64],
+    penalized_values: NDArray[np.float64],
+    *,
+    factor: NDArray[np.float64] | None,
+    contract: G2Contract,
+) -> PaperLassoProblem:
+    """Center, scale, optionally factor-residualize, and license active columns."""
+    validate_g2_contract(contract)
+    y = _require_float64_array(y_values, name="y_values", ndim=1)
+    x = _require_float64_array(penalized_values, name="penalized_values", ndim=2)
+    if y.shape[0] != x.shape[0]:
+        raise ValueError("y_values and penalized_values must have matching rows")
+    if y.shape[0] == 0:
+        raise ValueError("paper LASSO training arrays must have positive rows")
+
+    n_rows = np.float64(y.shape[0])
+    y_mean = np.float64(np.mean(y))
+    x_means = np.asarray(np.mean(x, axis=0), dtype=np.float64, order="C")
+    y_centered = np.asarray(y - y_mean, dtype=np.float64, order="C")
+    x_centered = np.asarray(x - x_means, dtype=np.float64, order="C")
+    _assert_all_finite(y_mean, name="y centering")
+    _assert_all_finite(x_means, name="x centering")
+    _assert_all_finite(y_centered, name="y centering")
+    _assert_all_finite(x_centered, name="x centering")
+
+    with np.errstate(over="ignore", invalid="ignore"):
+        pre_fwl_rms = np.asarray(
+            np.sqrt(np.sum(x_centered * x_centered, axis=0) / n_rows),
+            dtype=np.float64,
+            order="C",
+        )
+    _assert_all_finite(pre_fwl_rms, name="pre-FWL RMS")
+    pre_scale_active = pre_fwl_rms != 0.0
+    x_scaled = np.empty_like(x_centered)
+    x_scaled[:, pre_scale_active] = x_centered[:, pre_scale_active] / pre_fwl_rms[pre_scale_active]
+    x_scaled[:, ~pre_scale_active] = np.float64(0.0)
+    _assert_all_finite(x_scaled, name="pre-FWL scaling")
+
+    factor_mean: float | None = None
+    factor_sum_squares: float | None = None
+    factor_centered: NDArray[np.float64] | None = None
+    y_res = y_centered.copy()
+    x_res_all = x_scaled.copy()
+    if factor is not None:
+        factor_values = _require_float64_array(factor, name="factor", ndim=1)
+        if factor_values.shape[0] != y.shape[0]:
+            raise ValueError("factor must have matching rows")
+        factor_mean_value = np.float64(np.mean(factor_values))
+        centered_factor = np.asarray(factor_values - factor_mean_value, dtype=np.float64, order="C")
+        with np.errstate(over="ignore", invalid="ignore"):
+            factor_ss = np.float64(np.dot(centered_factor, centered_factor))
+        _assert_all_finite(factor_mean_value, name="factor centering")
+        _assert_all_finite(centered_factor, name="factor centering")
+        if not np.isfinite(factor_ss) or factor_ss <= 0.0:
+            raise ValueError("factor variance sum of squares must be positive and finite")
+        y_factor_slope = np.float64(np.dot(centered_factor, y_centered) / factor_ss)
+        y_res = np.asarray(
+            y_centered - y_factor_slope * centered_factor,
+            dtype=np.float64,
+            order="C",
+        )
+        active_scaled = x_scaled[:, pre_scale_active]
+        x_factor_slopes = np.asarray(
+            (centered_factor @ active_scaled) / factor_ss,
+            dtype=np.float64,
+            order="C",
+        )
+        x_res_all[:, pre_scale_active] = np.asarray(
+            active_scaled - np.outer(centered_factor, x_factor_slopes),
+            dtype=np.float64,
+            order="C",
+        )
+        _assert_all_finite(y_factor_slope, name="factor FWL")
+        _assert_all_finite(x_factor_slopes, name="factor FWL")
+        _assert_all_finite(y_res, name="factor FWL")
+        _assert_all_finite(x_res_all, name="factor FWL")
+        factor_mean = float(factor_mean_value)
+        factor_sum_squares = float(factor_ss)
+        factor_centered = _readonly_c_float64(centered_factor)
+
+    with np.errstate(over="ignore", invalid="ignore"):
+        post_fwl_squared_norm = np.asarray(
+            np.sum(x_res_all * x_res_all, axis=0) / n_rows,
+            dtype=np.float64,
+            order="C",
+        )
+    _assert_all_finite(post_fwl_squared_norm, name="post-FWL squared norm")
+    cutoff = np.float64(
+        contract.paper_reconstruction.post_fwl_zero_norm_multiplier * np.finfo(np.float64).eps
+    )
+    active_columns = np.asarray(pre_scale_active & (post_fwl_squared_norm > cutoff), dtype=np.bool_)
+    x_res = np.asarray(x_res_all[:, active_columns], dtype=np.float64, order="C")
+    _assert_all_finite(x_res, name="active post-FWL design")
+    if x_res.shape[1] == 0:
+        lambda_max = 0.0
+    else:
+        correlations = np.asarray((x_res.T @ y_res) / n_rows, dtype=np.float64, order="C")
+        _assert_all_finite(correlations, name="lambda_max")
+        lambda_max = float(np.max(np.abs(correlations)))
+        if not math.isfinite(lambda_max):
+            raise FloatingPointError("lambda_max produced nonfinite intermediate arithmetic")
+
+    return PaperLassoProblem(
+        y_mean=float(y_mean),
+        x_means=_readonly_c_float64(x_means),
+        pre_fwl_rms=_readonly_c_float64(pre_fwl_rms),
+        active_columns=_readonly_c_bool(active_columns),
+        y_centered=_readonly_c_float64(y_centered),
+        x_centered=_readonly_c_float64(x_centered),
+        factor_mean=factor_mean,
+        factor_sum_squares=factor_sum_squares,
+        factor_centered=factor_centered,
+        y_res=_readonly_c_float64(y_res),
+        x_res=_readonly_c_float64(x_res),
+        lambda_max=lambda_max,
+    )
+
+
+def reconstruct_lasso_coefficients(
+    problem: PaperLassoProblem,
+    active_coefficients: NDArray[np.float64],
+    *,
+    contract: G2Contract,
+) -> PaperLinearCoefficients:
+    """Map active scaled/FWL LASSO coefficients back to original linear units."""
+    validate_g2_contract(contract)
+    if type(problem) is not PaperLassoProblem:
+        raise TypeError("problem must use exact PaperLassoProblem")
+    coefficients = _require_float64_array(active_coefficients, name="active_coefficients", ndim=1)
+    active_count = int(np.count_nonzero(problem.active_columns))
+    if coefficients.shape != (active_count,):
+        raise ValueError("active_coefficients shape must match active columns")
+
+    penalized = np.zeros(problem.x_means.shape[0], dtype=np.float64)
+    if active_count:
+        penalized[problem.active_columns] = (
+            coefficients / problem.pre_fwl_rms[problem.active_columns]
+        )
+    _assert_all_finite(penalized, name="coefficient reconstruction")
+
+    factor_coefficient: float | None = None
+    if problem.factor_centered is not None:
+        if problem.factor_sum_squares is None or problem.factor_mean is None:
+            raise ValueError("problem factor metadata is incomplete")
+        factor_ss = np.float64(problem.factor_sum_squares)
+        if not np.isfinite(factor_ss) or factor_ss <= 0.0:
+            raise ValueError("problem factor variance sum of squares must be positive and finite")
+        residual_after_penalized = np.asarray(
+            problem.y_centered - problem.x_centered @ penalized,
+            dtype=np.float64,
+            order="C",
+        )
+        factor_value = np.float64(
+            np.dot(problem.factor_centered, residual_after_penalized) / factor_ss
+        )
+        _assert_all_finite(residual_after_penalized, name="factor coefficient reconstruction")
+        _assert_all_finite(factor_value, name="factor coefficient reconstruction")
+        if factor_value == 0.0:
+            factor_value = np.float64(0.0)
+        factor_coefficient = float(factor_value)
+
+    intercept = np.float64(problem.y_mean - np.dot(penalized, problem.x_means))
+    if factor_coefficient is not None:
+        if problem.factor_mean is None:
+            raise ValueError("problem factor metadata is incomplete")
+        intercept = np.float64(intercept - np.float64(factor_coefficient * problem.factor_mean))
+    _assert_all_finite(intercept, name="intercept reconstruction")
+
+    return PaperLinearCoefficients(
+        intercept=float(intercept),
+        factor_coefficient=factor_coefficient,
+        penalized_coefficients=_readonly_c_float64(penalized),
     )
 
 

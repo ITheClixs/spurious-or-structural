@@ -303,6 +303,31 @@ def test_prepare_lasso_problem_drops_only_after_the_declared_stage() -> None:
     assert problem.lambda_max == 1.0
 
 
+def test_post_fwl_cutoff_compares_the_squared_norm_to_100_eps() -> None:
+    contract = load_g2_contract(_root())
+    factor = np.asarray([-1.0, -1.0, 1.0, 1.0], dtype=np.float64)
+    orthogonal = np.asarray([-1.0, 1.0, -1.0, 1.0], dtype=np.float64)
+    cutoff = np.float64(
+        contract.paper_reconstruction.post_fwl_zero_norm_multiplier * np.finfo(np.float64).eps
+    )
+    below = np.sqrt(np.float64((cutoff / 2.0) / (1.0 - cutoff / 2.0)))
+    above = np.sqrt(np.float64((2.0 * cutoff) / (1.0 - 2.0 * cutoff)))
+    penalized = np.column_stack((factor + below * orthogonal, factor + above * orthogonal)).astype(
+        np.float64
+    )
+
+    problem = prepare_lasso_problem(
+        orthogonal,
+        penalized,
+        factor=factor,
+        contract=contract,
+    )
+
+    assert np.all(problem.pre_fwl_rms > 0.0)
+    np.testing.assert_array_equal(problem.active_columns, np.asarray([False, True]))
+    assert problem.x_res.shape == (4, 1)
+
+
 def test_reconstruct_lasso_coefficients_without_a_factor() -> None:
     contract = load_g2_contract(_root())
     y = np.asarray([1.0, 3.0, 5.0, 7.0], dtype=np.float64)
