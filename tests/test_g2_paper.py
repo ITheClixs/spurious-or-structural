@@ -10,13 +10,17 @@ from xid.models.g2_paper import (
     LassoCoordinateDescentResult,
     LassoRatioSelection,
     PaperCrossSectionProjection,
+    PaperFeatureBlock,
+    PaperFeatureTransform,
     PaperLassoProblem,
     PaperLinearCoefficients,
     PaperOlsResult,
     PaperPcaFit,
     apply_cross_sectional_pca,
     apply_integrated_level_pca,
+    apply_paper_feature_transform,
     fit_full_rank_ols,
+    fit_paper_feature_transform,
     fit_paper_pca,
     prepare_lasso_problem,
     reconstruct_lasso_coefficients,
@@ -626,3 +630,133 @@ def test_full_rank_ols_rejects_rank_loss_and_bad_inputs() -> None:
         fit_full_rank_ols(rank_deficient, response[:2], contract=contract)
     with pytest.raises(TypeError, match="float64"):
         fit_full_rank_ols(rank_deficient.astype(np.float32), response, contract=contract)
+
+
+def _paper_level_flow_fixture() -> np.ndarray:
+    row_axis = np.asarray([-3.0, -1.0, 1.0, 3.0], dtype=np.float64)[:, None, None]
+    asset_scale = np.arange(1.0, 31.0, dtype=np.float64)[None, :, None]
+    level_scale = np.arange(1.0, 11.0, dtype=np.float64)[None, None, :]
+    return np.asarray(row_axis * asset_scale * level_scale, dtype=np.float64, order="C")
+
+
+def test_paper_feature_transform_fits_all_training_only_pcas() -> None:
+    contract = load_g2_contract(_root())
+    training = _paper_level_flow_fixture()
+    training_before = training.copy()
+
+    transform = fit_paper_feature_transform(training, contract=contract)
+    block = apply_paper_feature_transform(transform, training, contract=contract)
+
+    row_axis = np.asarray([-3.0, -1.0, 1.0, 3.0], dtype=np.float64)
+    asset_scale = np.arange(1.0, 31.0, dtype=np.float64)
+    level_scale = np.arange(1.0, 11.0, dtype=np.float64)
+    expected_integrated = 7.0 * row_axis[:, None] * asset_scale[None, :]
+    cross_norm = np.sqrt(np.sum(asset_scale * asset_scale, dtype=np.float64))
+    expected_cross_factor = row_axis * cross_norm
+
+    assert type(transform) is PaperFeatureTransform
+    assert type(block) is PaperFeatureBlock
+    assert transform.n_assets == contract.n_assets
+    assert transform.n_levels == contract.n_levels
+    assert len(transform.integrated_level_fits) == contract.n_assets
+    np.testing.assert_allclose(
+        transform.integrated_level_fits[0].loading,
+        level_scale / np.sqrt(np.sum(level_scale * level_scale, dtype=np.float64)),
+        rtol=0.0,
+        atol=3e-16,
+    )
+    np.testing.assert_allclose(
+        transform.cross_section_fit.loading,
+        asset_scale / cross_norm,
+        rtol=0.0,
+        atol=3e-16,
+    )
+    np.testing.assert_array_equal(
+        block.best_level_flows,
+        training[:, :, contract.paper_reconstruction.best_level_index],
+    )
+    np.testing.assert_allclose(block.integrated_flows, expected_integrated, rtol=0.0, atol=2e-13)
+    np.testing.assert_allclose(
+        block.cross_section_factor,
+        expected_cross_factor,
+        rtol=0.0,
+        atol=2e-13,
+    )
+    np.testing.assert_allclose(
+        block.cross_section_residuals,
+        np.zeros((4, 30), dtype=np.float64),
+        rtol=0.0,
+        atol=2e-13,
+    )
+    for values in (
+        block.best_level_flows,
+        block.integrated_flows,
+        block.cross_section_factor,
+        block.cross_section_residuals,
+    ):
+        assert values.flags.c_contiguous
+        assert not values.flags.writeable
+    np.testing.assert_array_equal(training, training_before)
+
+
+def test_paper_feature_transform_applies_stored_training_means() -> None:
+    contract = load_g2_contract(_root())
+    training = _paper_level_flow_fixture()
+    transform = fit_paper_feature_transform(training, contract=contract)
+    level_shift = np.arange(1.0, 11.0, dtype=np.float64)[None, None, :]
+    evaluation = np.asarray(training[:2] + level_shift, dtype=np.float64, order="C")
+
+    block = apply_paper_feature_transform(transform, evaluation, contract=contract)
+
+    row_axis = np.asarray([-3.0, -1.0], dtype=np.float64)
+    asset_scale = np.arange(1.0, 31.0, dtype=np.float64)
+    cross_norm = np.sqrt(np.sum(asset_scale * asset_scale, dtype=np.float64))
+    expected_integrated = 7.0 * row_axis[:, None] * asset_scale[None, :] + 7.0
+    expected_best = row_axis[:, None] * asset_scale[None, :] + 1.0
+    expected_cross_factor = row_axis * cross_norm + np.sum(asset_scale) / cross_norm
+    expected_cross_residuals = expected_best - np.outer(
+        expected_cross_factor,
+        asset_scale / cross_norm,
+    )
+
+    np.testing.assert_array_equal(block.best_level_flows, expected_best)
+    np.testing.assert_allclose(block.integrated_flows, expected_integrated, rtol=0.0, atol=3e-13)
+    np.testing.assert_allclose(
+        block.cross_section_factor,
+        expected_cross_factor,
+        rtol=0.0,
+        atol=3e-13,
+    )
+    np.testing.assert_allclose(
+        block.cross_section_residuals,
+        expected_cross_residuals,
+        rtol=0.0,
+        atol=3e-13,
+    )
+
+
+def test_paper_feature_transform_rejects_shape_type_and_contract_drift() -> None:
+    contract = load_g2_contract(_root())
+    training = _paper_level_flow_fixture()
+
+    with pytest.raises(TypeError, match="float64"):
+        fit_paper_feature_transform(training.astype(np.float32), contract=contract)
+    with pytest.raises(ValueError, match="assets|levels|shape"):
+        fit_paper_feature_transform(training[:, :29], contract=contract)
+    with pytest.raises(ValueError, match="assets|levels|shape"):
+        fit_paper_feature_transform(training[:, :, :9], contract=contract)
+
+    nonfinite = training.copy()
+    nonfinite[0, 0, 0] = np.inf
+    with pytest.raises(ValueError, match="finite"):
+        fit_paper_feature_transform(nonfinite, contract=contract)
+
+    altered = replace(
+        contract,
+        paper_reconstruction=replace(
+            contract.paper_reconstruction,
+            best_level_index=1,
+        ),
+    )
+    with pytest.raises(ValueError, match="sealed G2 contract"):
+        fit_paper_feature_transform(training, contract=altered)
