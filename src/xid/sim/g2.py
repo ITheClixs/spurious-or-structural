@@ -211,6 +211,15 @@ class PaperReconstructionContract:
     maximum_iterations: int
     pca_top_eigengap_min_trace_ratio: float
     bootstrap_replicates: int
+    coefficient_aggregation: str
+    prediction_aggregation: str
+    bootstrap_aggregation: str
+    bootstrap_refit: bool
+    date_cache_matrices: tuple[str, ...]
+    date_cache_losses: str
+    reported_coefficient_maps: str
+    reported_oos_values: str
+    cache_only_fields: str
     specifications: tuple[PaperSpecificationContract, ...]
 
 
@@ -377,6 +386,12 @@ def _number(value: object, *, name: str) -> float:
 def _text(value: object, *, name: str) -> str:
     if not isinstance(value, str):
         raise TypeError(f"{name} must be text")
+    return value
+
+
+def _boolean(value: object, *, name: str) -> bool:
+    if type(value) is not bool:
+        raise TypeError(f"{name} must be a Python boolean")
     return value
 
 
@@ -603,6 +618,42 @@ def _paper_reconstruction_contract(
         bootstrap_replicates=_integer(
             _field(paper, "bootstrap_replicates", table_name=table_name),
             name=f"{table_name}.bootstrap_replicates",
+        ),
+        coefficient_aggregation=_text(
+            _field(paper, "coefficient_aggregation", table_name=table_name),
+            name=f"{table_name}.coefficient_aggregation",
+        ),
+        prediction_aggregation=_text(
+            _field(paper, "prediction_aggregation", table_name=table_name),
+            name=f"{table_name}.prediction_aggregation",
+        ),
+        bootstrap_aggregation=_text(
+            _field(paper, "bootstrap_aggregation", table_name=table_name),
+            name=f"{table_name}.bootstrap_aggregation",
+        ),
+        bootstrap_refit=_boolean(
+            _field(paper, "bootstrap_refit", table_name=table_name),
+            name=f"{table_name}.bootstrap_refit",
+        ),
+        date_cache_matrices=_text_tuple(
+            _field(paper, "date_cache_matrices", table_name=table_name),
+            name=f"{table_name}.date_cache_matrices",
+        ),
+        date_cache_losses=_text(
+            _field(paper, "date_cache_losses", table_name=table_name),
+            name=f"{table_name}.date_cache_losses",
+        ),
+        reported_coefficient_maps=_text(
+            _field(paper, "reported_coefficient_maps", table_name=table_name),
+            name=f"{table_name}.reported_coefficient_maps",
+        ),
+        reported_oos_values=_text(
+            _field(paper, "reported_oos_values", table_name=table_name),
+            name=f"{table_name}.reported_oos_values",
+        ),
+        cache_only_fields=_text(
+            _field(paper, "cache_only_fields", table_name=table_name),
+            name=f"{table_name}.cache_only_fields",
         ),
         specifications=tuple(specifications),
     )
@@ -1066,6 +1117,23 @@ def _validate_paper_reconstruction_runtime_types(paper: PaperReconstructionContr
         raise ValueError("sealed G2 contract paper names changed representation")
     if type(paper.label) is not str:
         raise ValueError("sealed G2 contract paper label changed representation")
+    text_fields = (
+        paper.coefficient_aggregation,
+        paper.prediction_aggregation,
+        paper.bootstrap_aggregation,
+        paper.date_cache_losses,
+        paper.reported_coefficient_maps,
+        paper.reported_oos_values,
+        paper.cache_only_fields,
+    )
+    if any(type(value) is not str for value in text_fields):
+        raise ValueError("sealed G2 contract paper cache text changed representation")
+    if type(paper.bootstrap_refit) is not bool:
+        raise ValueError("sealed G2 contract paper bootstrap-refit flag changed representation")
+    if type(paper.date_cache_matrices) is not tuple or any(
+        type(value) is not str for value in paper.date_cache_matrices
+    ):
+        raise ValueError("sealed G2 contract paper cache matrix table changed representation")
     if type(paper.cv_validation_ranges) is not tuple or any(
         type(row) is not tuple
         or len(row) != 2
@@ -1118,6 +1186,36 @@ def _validate_paper_reconstruction_contract(paper: PaperReconstructionContract) 
         maximum_iterations=10_000,
         pca_top_eigengap_min_trace_ratio=1e-10,
         bootstrap_replicates=_BOOTSTRAP_REPLICATES,
+        coefficient_aggregation="equal_mean_within_date_then_equal_mean_across_dates",
+        prediction_aggregation="pooled_next_block_sse_and_sst",
+        bootstrap_aggregation=(
+            "cached_date_level_operator_sse_sst_summaries_with_shared_date_weights"
+        ),
+        bootstrap_refit=False,
+        date_cache_matrices=(
+            "PI_1_direct",
+            "PI_I_direct",
+            "CI_1_direct",
+            "CI_I_direct",
+            "PI_CC_purged",
+            "CI_CC_purged",
+            "PI_CC_full_response",
+            "CI_CC_full_response",
+            "cc_mean_projection_p_perp",
+        ),
+        date_cache_losses="six_specs_times_thirty_responses_times_sse_and_sst",
+        reported_coefficient_maps=(
+            "first_eight_date_cache_matrices_all_7200_entries_with_model_restriction_zeros_"
+            "explicit_and_each_with_named_normal_and_basic_date_bootstrap_intervals"
+        ),
+        reported_oos_values=(
+            "six_specs_times_thirty_response_level_r_squared_180_each_with_named_normal_and_"
+            "basic_date_bootstrap_intervals"
+        ),
+        cache_only_fields=(
+            "cc_mean_projection_p_perp_and_360_sse_sst_components_are_internal_inputs_not_"
+            "separately_claimed_numbers"
+        ),
         specifications=_EXPECTED_PAPER_SPECIFICATIONS,
     )
     if tuple(value.hex() for value in scalar_identity) != tuple(
