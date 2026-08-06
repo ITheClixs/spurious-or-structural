@@ -199,6 +199,64 @@ def test_coordinate_descent_rejects_invalid_inputs_and_contract_drift() -> None:
         )
 
 
+def test_coordinate_descent_uses_a_validated_warm_start() -> None:
+    contract = load_g2_contract(_root())
+    x_res = np.asarray(
+        [[1.0, 0.0], [0.0, 2.0], [-1.0, 0.0], [0.0, -2.0]],
+        dtype=np.float64,
+    )
+    y_res = np.asarray([3.0, 4.0, -3.0, -4.0], dtype=np.float64)
+    cold = solve_lasso_coordinate_descent(
+        x_res,
+        y_res,
+        lambda_value=0.5,
+        contract=contract,
+    )
+    initial = cold.coefficients.copy()
+    initial_before = initial.copy()
+
+    warm = solve_lasso_coordinate_descent(
+        x_res,
+        y_res,
+        lambda_value=0.5,
+        initial_coefficients=initial,
+        contract=contract,
+    )
+
+    np.testing.assert_array_equal(warm.coefficients, cold.coefficients)
+    assert warm.sweeps == 1
+    assert warm.maximum_update == 0.0
+    assert warm.maximum_kkt_violation == 0.0
+    np.testing.assert_array_equal(initial, initial_before)
+
+    with pytest.raises(TypeError, match="float64"):
+        solve_lasso_coordinate_descent(
+            x_res,
+            y_res,
+            lambda_value=0.5,
+            initial_coefficients=initial.astype(np.float32),
+            contract=contract,
+        )
+    with pytest.raises(ValueError, match="shape|columns"):
+        solve_lasso_coordinate_descent(
+            x_res,
+            y_res,
+            lambda_value=0.5,
+            initial_coefficients=initial[:1],
+            contract=contract,
+        )
+    nonfinite = initial.copy()
+    nonfinite[0] = np.nan
+    with pytest.raises(ValueError, match="finite"):
+        solve_lasso_coordinate_descent(
+            x_res,
+            y_res,
+            lambda_value=0.5,
+            initial_coefficients=nonfinite,
+            contract=contract,
+        )
+
+
 def _factor_preprocessing_fixture() -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     y = np.asarray([1.0, 3.0, 5.0, 7.0], dtype=np.float64)
     factor = np.asarray([-1.0, -1.0, 1.0, 1.0], dtype=np.float64)
