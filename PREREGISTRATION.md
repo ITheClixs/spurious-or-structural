@@ -1804,3 +1804,67 @@ outcomes.
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
 
+
+## A028 — Confounding rank bound and partial identification before implementation
+
+- **Registered:** 2026-08-12, after the symbolic derivation in
+  `docs/derivations/CONFOUNDING_RANK_AND_PARTIAL_ID.md` and before any
+  identification module, rank diagnostic, exhibit generator, or manuscript
+  revision existed.
+- **Reason:** Theorem 1 proves that the population return-on-flow coefficient
+  differs from the structural impact matrix but bounds neither the size nor the
+  structure of that difference, and says nothing about recoverability. Without
+  a bound, the project's motivating claim stays rhetorical: a reader cannot
+  distinguish "the estimate may be contaminated" from "the estimate is
+  uninformative about the structural entry." A028 registers the missing
+  results before they are implemented so that neither the rank bound, the
+  identified set, nor the diagnostic can be tuned after seeing output.
+- **Research vector:** the confounding gap
+  `G = plim OLS - Lambda` satisfies `rank(G) <= K + rank(B)`. With `B = 0` and
+  diagonal `Lambda`, the population coefficient matrix lies in the
+  diagonal-plus-rank-`K` set. The structural matrix is therefore
+  set-identified, not point-identified, from second moments. In the registered
+  permutation-invariant one-spike geometry the gap is a single constant added
+  to every entry, and the structural off-diagonal has the closed-form
+  identified interval `[A_off - T/N, A_off + T/N]` with
+  `T^2 = (r_1 - q_1 a_1^2)(q_1 - q_0)/(q_1 q_0)`.
+- **Diagnostic vector:** `psi_K(A)` is the relative Frobenius distance from the
+  diagonal-plus-rank-`K` set, computed by alternating projection between exact
+  diagonal extraction and rank-`K` truncated SVD. Its population value is zero
+  under the pure-confounding null. A materially nonzero value is evidence for
+  structural cross-impact, which is the reverse polarity of the naive
+  off-diagonal-magnitude reading. Because alternating projection returns a
+  stationary point, the computed statistic is an upper bound on the true
+  distance and the test is conservative toward failing to reject.
+- **Predictions:** the six numbered predictions of Section 5 of the derivation
+  are frozen verbatim and are restated in
+  `docs/predictions/THEORY_EXTENSION.md`. They are deterministic algebraic
+  checks at test seed `1729`; no interval method applies and the
+  multiple-testing count is zero.
+- **Implementation license:** a pure-algebra identification module, a
+  deterministic rank diagnostic, a deterministic exhibit generator, and
+  manuscript and README revisions may be written test-first. Every new
+  statistic must fail closed on wrong dtype, wrong shape, nonfinite entries,
+  and out-of-range factor counts.
+- **Scope withheld:** no registered resource, validation, or research stream;
+  no random-number namespace beyond test seeds `1729`, `9191`, and `314159`;
+  no external market data; no new G2 estimator, kernel, threshold, or
+  bootstrap weight; no change to any sealed G2 digest; no change to the frozen
+  G1 result; and no claim that any exhibit estimates a real market's impact
+  matrix.
+- **Exhibit scope:** evaluations at published summary statistics already opened
+  in `docs/G2_SOURCE_AUDIT.md` are conditional analytic exhibits. Each carries
+  the label "conditional analytic exhibit at published summary statistics; not
+  an estimate of any market's impact matrix." Published dispersion figures are
+  not promoted to confidence intervals.
+- **Failure rule:** if any of the six predictions fails, the affected result
+  does not enter the manuscript. A failed prediction is diagnosed and logged in
+  `SPECIFICATION_LOG.md`; it is not repaired after seeing output and then
+  silently accepted. The one-spike convention is not retuned to improve
+  agreement with any published summary.
+- **Inference effect:** none on G2. A028 changes no scientific config byte,
+  estimator, target, interval, bootstrap weight, threshold, trial count, or
+  registered validation/research address. G2 remains open and executable-red.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.
