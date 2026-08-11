@@ -19,9 +19,14 @@ from numpy.typing import NDArray
 __all__ = (
     "confounding_gap",
     "gap_rank_bound",
+    "identification_scale",
     "numerical_rank",
+    "one_spike_covariance",
+    "one_spike_eigenvalues",
+    "one_spike_gap_per_entry",
     "plim_ols",
     "plim_proxy",
+    "sharp_offdiag_interval",
 )
 
 Matrix = NDArray[np.float64]
@@ -162,3 +167,74 @@ def numerical_rank(m: Matrix, rtol: float = 1e-10) -> int:
     if sv.size == 0 or sv[0] == 0.0:
         return 0
     return int((sv > sv[0] * rtol).sum())
+
+
+def one_spike_eigenvalues(n: int, share: float) -> tuple[float, float]:
+    """Return the ``(leading, residual)`` eigenvalues of a one-spike correlation.
+
+    ``share`` is the fraction of total variance explained by the leading
+    principal component, so the leading eigenvalue is ``n * share`` and the
+    remaining ``n - 1`` eigenvalues are equal by the maximum-entropy convention.
+    """
+    if not isinstance(n, int) or isinstance(n, bool):
+        raise ValueError("n: expected an int asset count")
+    if n < 2:
+        raise ValueError("n: expected at least two assets")
+    if not 0.0 < share < 1.0:
+        raise ValueError("share: expected a value strictly inside (0, 1)")
+    leading = n * share
+    residual = (n - leading) / (n - 1)
+    if residual <= 0.0:
+        raise ValueError("share: expected a residual spectrum that stays positive")
+    return leading, residual
+
+
+def one_spike_covariance(n: int, share: float) -> Matrix:
+    """Permutation-invariant one-spike correlation matrix with unit trace mean."""
+    leading, residual = one_spike_eigenvalues(n, share)
+    m = np.full(n, 1.0 / np.sqrt(n))
+    sigma: Matrix = residual * np.eye(n) + (leading - residual) * np.outer(m, m)
+    return sigma
+
+
+def one_spike_gap_per_entry(gamma: float, h_q: float, n: int, q1: float) -> float:
+    """Common entry of the rank-one confounding gap, Eq. (11) of the derivation."""
+    if n < 2:
+        raise ValueError("n: expected at least two assets")
+    if q1 <= 0.0:
+        raise ValueError("q1: expected a positive leading eigenvalue")
+    return float(gamma * h_q / (n * q1))
+
+
+def identification_scale(
+    n: int,
+    s_q: float,
+    s_r: float,
+    a_diag: float,
+    a_off: float,
+) -> float:
+    """Return ``T`` of Eq. (14): the sharp bound on the rescaled gap ``t``.
+
+    Raises ``ValueError`` when ``r_1 < q_1 a_1^2``, meaning no structural tuple
+    in the one-spike class reproduces the supplied second moments.
+    """
+    q1, q0 = one_spike_eigenvalues(n, s_q)
+    r1, _ = one_spike_eigenvalues(n, s_r)
+    a1 = a_diag + (n - 1) * a_off
+    numerator = r1 - q1 * a1**2
+    if numerator < 0.0:
+        raise ValueError("identification_scale: infeasible moments, r_1 is below q_1 a_1^2")
+    return float(np.sqrt(numerator * (q1 - q0) / (q1 * q0)))
+
+
+def sharp_offdiag_interval(
+    n: int,
+    s_q: float,
+    s_r: float,
+    a_diag: float,
+    a_off: float,
+) -> tuple[float, float]:
+    """Closed-form identified interval for the structural off-diagonal, Eq. (15)."""
+    scale = identification_scale(n, s_q, s_r, a_diag, a_off)
+    half_width = scale / n
+    return (a_off - half_width, a_off + half_width)
