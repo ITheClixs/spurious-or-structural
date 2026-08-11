@@ -446,3 +446,15 @@ These are falsifiable engineering predictions, not observations. No A026
 rehearsal or registered resource, validation, or research address has been
 accessed. Implementation remains blocked until fresh independent methods,
 systems, and schema reviews pass the settled A022--A026 authority.
+
+## A027 representation-order prediction
+
+A027 predicts that a unique, invertible semantic index map can be implemented
+without changing a scientific result or constructing RNG. The full date vector
+must contain nine row-major 30-by-30 operators followed by spec-major,
+response-major `(SSE,SST)` pairs; the compact `CI_I` recovery vector must map
+to full positions `2700:3600` and `8280:8340`, not to `0:960`. Literal
+asymmetric sentinels must detect every transpose, boundary shift, and loss-kind
+swap. The order manifest and updated resource config must reproduce the exact
+hashes registered in A027. Failure of any invariant leaves the resource gate
+closed. Passing them licenses no stochastic or empirical claim.

@@ -783,3 +783,64 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Access:** test seed 1729 was not needed. Registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   external market data, evaluation data, and holdout remain untouched.
+
+## C0018 — A027 paper-cache index and in-memory codec
+
+- **Registered:** 2026-08-06 after the append-only A027 representation
+  derivation and independent methods/schema passes, before changing the A026
+  parser seal, creating an order module, or running a focused test. The hostile
+  scope review remains failed until implementation, ledgers, and red-team
+  state agree.
+- **Scope:** update only the typed resource-config seal/order-table projection;
+  implement the exact research and recovery field/index bijections; and pack
+  and unpack already-computed, finite float64 matrices/loss arrays to owned,
+  C-contiguous, read-only in-memory vectors. No paper estimator, NPY writer,
+  path, artifact kind, fixture, bootstrap batch, resource root, Make target,
+  capability, random-number constructor, rehearsal, or registered path may be
+  added.
+- **Prediction before tests:** the first focused resource-contract test fails
+  with the existing A026 byte-count seal when it reads the 10,863-byte A027
+  config. A separate wished-for order test fails because
+  `xid.models.g2_paper_cache` does not exist. After the smallest implementation,
+  literal asymmetric sentinels recover exact indices `0`, `899`, `900`,
+  `2699`, `2700`, `3599`, `7199`, `7200`, `8099`, `8100`, `8279`, `8280`,
+  `8339`, and `8459`; quotient/remainder inverses round-trip every field;
+  `(sse,sst)` cannot swap; and recovery cannot pass as a research prefix.
+  Packed vectors must not share memory with sources, and unpacked arrays must
+  not share memory with their vector.
+- **Configuration prediction:** the resource config reproduces 10,863 ASCII
+  bytes and SHA256
+  `1a14fd68012819d5f901a97ddd9e9a58dd35886bdcc5d47728467f6417fc3cd3`;
+  its type tree reproduces 209 rows, 10,369 bytes, and SHA256
+  `81eed87be58bf04a897fdcf3dd39cf142944647824a9f97938d46f341803a2ff`;
+  and its 1,057-byte order manifest reproduces SHA256
+  `8810471ce6c0747af7cdda48299989303cd85a9c7def7c681f2a57f93348a083`.
+- **Observed RED:** the first resource-contract run failed exactly at the stale
+  A026 parser seal: four tests failed and eleven passed, with every failure
+  reporting `sealed resource config: byte count drift`. After the parser was
+  updated, all 15 resource-contract tests passed. The first order run then
+  failed all five wished-for tests because `xid.models.g2_paper_cache` did not
+  exist. After the index implementation, all five passed. The pack/unpack RED
+  preserved those five passes and failed the five new tests on the absent
+  payload/codec surface.
+- **Observed GREEN:** the final focused slice passed all 25 resource-contract
+  and cache-order tests in 0.15 seconds. Literal asymmetric sentinels matched
+  every preregistered boundary, the complete 8,460- and 960-field inverses were
+  bijective, recovery mapped to research positions `2700:3600` and
+  `8280:8340` rather than a prefix, and packed/unpacked arrays were exact
+  float64, owned, C-contiguous, read-only, finite, and non-aliasing. The
+  manifest reproduced 1,057 bytes and SHA256
+  `8810471ce6c0747af7cdda48299989303cd85a9c7def7c681f2a57f93348a083`.
+  The repository-wide deterministic gate passed Ruff, format checking over 28
+  files, strict mypy over 28 source files, all 317 tests in 37.07 seconds, the
+  64-row G0 demo with expected hashes, and committed-result drift.
+- **Status:** passed for A027 deterministic representation capability only.
+  No serializer, artifact, fixture, bootstrap batch, resource capability,
+  rehearsal, or registered execution path was implemented; C0016 resource
+  admission remains executable-red.
+- **Intervals:** not applicable; deterministic representation checks only.
+- **Multiple-testing count:** zero. No stochastic draw or coefficient-to-truth
+  comparison is part of this slice.
+- **Access:** test seed 1729 is not required. Registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  external market data, evaluation data, and holdout remain untouched.

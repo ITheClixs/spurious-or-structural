@@ -1,7 +1,7 @@
 schema_version = 2
 design_id = "S0004"
 gate = "G2"
-authority = "A022+A023+A024+A025+A026"
+authority = "A022+A023+A024+A025+A026+A027"
 entry_module = "xid.g2_resource_benchmark"
 registered_make_target = "g2-resource-benchmark"
 rehearsal_make_target = "g2-resource-rehearsal"
@@ -211,6 +211,23 @@ paper_cache_research_shard = [63, 8460]
 paper_bootstrap_recovery = [25, 960]
 paper_bootstrap_research = [25, 8460]
 publication_envelope_shard = [595000]
+
+[artifacts.paper_cache_order]
+namespace = "xid-g2-paper-cache-order-v1"
+matrix_order = ["PI_1_direct", "PI_I_direct", "CI_1_direct", "CI_I_direct", "PI_CC_purged", "CI_CC_purged", "PI_CC_full_response", "CI_CC_full_response", "cc_mean_projection_p_perp"]
+matrix_row_axis = "response_or_output_asset_index_ascending_zero_through_29"
+matrix_column_axis = "flow_or_input_asset_index_ascending_zero_through_29"
+matrix_value_order = "matrix_then_row_then_column"
+matrix_payload = "original_unit_slope_operator_only_no_intercept_or_factor_coefficient_except_p_perp_is_the_asset_space_operator"
+loss_spec_order = ["PI_1", "PI_I", "CI_1", "CI_I", "PI_CC", "CI_CC"]
+loss_response_axis = "response_asset_index_ascending_zero_through_29"
+loss_kind_order = ["sse", "sst"]
+loss_value_order = "spec_then_response_then_kind"
+research_layout = "nine_matrices_then_all_loss_pairs"
+recovery_layout = "ci_i_direct_matrix_then_ci_i_loss_pairs"
+recovery_relation = "distinct_compact_semantic_projection_not_research_prefix"
+research_field_count = 8460
+recovery_field_count = 960
 
 [artifacts.resume_lifecycle]
 create_after_record_positions = [0, 1, 2, 3, 4, 5]

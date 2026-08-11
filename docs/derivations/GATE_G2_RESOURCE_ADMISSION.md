@@ -2351,3 +2351,27 @@ authorized until fresh independent methods, systems, and schema reviews pass
 the settled A022--A026 package. Even a document pass licenses only test-seed
 implementation followed by deterministic tests and hosted CI; it does not
 license a registered seed.
+
+## 18. A027 representation-order precedence
+
+A027 supersedes A026 only for the active resource-config seal and for the
+previously undefined semantic meaning of paper-cache column `c`. It preserves
+all successful-rehearsal counts, kernels, work units, shapes, budgets,
+interruption rules, and scientific/RNG authority.
+
+The research order is nine declared 30-by-30 matrices with matrix, response/
+output row, and flow/input column as nested axes, followed by six declared
+specifications with response and `(SSE,SST)` as nested axes. The recovery order
+is the compact `CI_I` matrix followed by its 30 loss pairs and is not the first
+960 research fields. Exact formulas and inverses are frozen in Section 23 of
+`GATE_G2_RESOURCE_ARTIFACT_AUTHORITY.md` and in A027 of the preregistration.
+
+The active resource config is 10,863 ASCII bytes with SHA256
+`1a14fd68012819d5f901a97ddd9e9a58dd35886bdcc5d47728467f6417fc3cd3`,
+209 leaf-type rows, 10,369 type-tree bytes, and type-tree SHA256
+`81eed87be58bf04a897fdcf3dd39cf142944647824a9f97938d46f341803a2ff`.
+Its paper-cache order manifest has SHA256
+`8810471ce6c0747af7cdda48299989303cd85a9c7def7c681f2a57f93348a083`.
+Fresh review may license deterministic in-memory index/codec implementation
+only. Resource fixtures, rehearsal, registered commands, and registered seeds
+remain blocked.

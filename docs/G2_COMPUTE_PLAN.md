@@ -751,3 +751,23 @@ bytes, rather than to each artifact independently. A root-wide advisory
 reader/writer lease serializes cooperating access; every lock, prefix, stage,
 file, and rename mutation is conservatively reserved before it occurs and
 checked against actual logical and allocated usage immediately afterward.
+
+## A027 paper-cache coordinate plan
+
+The research date vector now has one exact coordinate system. Columns
+`0:8100` are the nine declared 30-by-30 matrices in declared order, each
+flattened as response/output row then flow/input column. Columns `8100:8460`
+are the six declared specifications, then response, then `(SSE,SST)`. The
+compact recovery vector places the `CI_I` matrix in `0:900` and its loss pairs
+in `900:960`; it is not a prefix of the research vector. Its full-vector
+projection selects `2700:3600` and `8280:8340`.
+
+This closes representation order only. It does not change the 8,460/960 work
+counts, cache shapes, bootstrap term counts, NPY envelope, or phase budget.
+The active A027 resource config is 10,863 bytes with SHA256
+`1a14fd68012819d5f901a97ddd9e9a58dd35886bdcc5d47728467f6417fc3cd3`;
+its 209-row type tree has SHA256
+`81eed87be58bf04a897fdcf3dd39cf142944647824a9f97938d46f341803a2ff`.
+Only deterministic in-memory order/codec tests are licensed after independent
+review. Artifact serialization, fixtures, rehearsal, and registered access
+remain blocked.

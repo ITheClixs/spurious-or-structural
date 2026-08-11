@@ -528,3 +528,32 @@ estimator, truth value, interval, threshold, scientific trial, or registered
 validation/research address. Implementation remains forbidden until fresh
 independent methods, systems, and schema reviews pass this settled package,
 followed by the locked local suite and hosted CI.
+
+## A027 deterministic representation prediction
+
+Before implementation, the repository has no paper-cache index or pack/unpack
+API. A focused test that requests the first, boundary, transposition-sensitive,
+loss-kind, and last fields of the 8,460-vector must therefore fail because the
+API is absent. After the smallest licensed implementation:
+
+- research indices follow `900*m + 30*i + j` for nine matrices and
+  `8100 + 60*s + 2*i + ell` for six response-level loss tables;
+- recovery indices follow `30*i + j` and `900 + 2*i + ell`, and recovery is
+  rejected as a research prefix;
+- asymmetric literal sentinels round-trip without row/column transpose or
+  SSE/SST reversal;
+- exact finite float64 shape/type checks fail closed, output vectors are
+  owned, C-contiguous, and read-only, and source mutation cannot change them;
+- the order manifest reproduces 1,057 canonical bytes and SHA256
+  `8810471ce6c0747af7cdda48299989303cd85a9c7def7c681f2a57f93348a083`;
+  and
+- the A027 resource config reproduces 10,863 ASCII bytes, SHA256
+  `1a14fd68012819d5f901a97ddd9e9a58dd35886bdcc5d47728467f6417fc3cd3`,
+  209 leaf rows, 10,369 type-tree bytes, and type-tree SHA256
+  `81eed87be58bf04a897fdcf3dd39cf142944647824a9f97938d46f341803a2ff`.
+
+Any different matrix/spec/kind order, a transposed coefficient, inclusion of
+an intercept or factor coefficient, a false 960-prefix assumption, or an NPY
+writer/resource fixture in this slice falsifies A027. These are deterministic
+engineering predictions, not resource-feasibility or scientific outcomes. No
+random-number constructor or data access is licensed.

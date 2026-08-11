@@ -1,4 +1,4 @@
-"""Sealed A026 resource configuration contract.
+"""Sealed A027 resource configuration contract.
 
 This module is deliberately side-effect light: it reads only the frozen
 resource TOML when asked to load the contract, rejects drift before any caller
@@ -17,11 +17,11 @@ from pathlib import Path
 from types import MappingProxyType
 from typing import Any, NoReturn, cast
 
-FROZEN_RESOURCE_CONFIG_BYTE_COUNT = 9_799
-FROZEN_RESOURCE_CONFIG_SHA256 = "3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29"
-FROZEN_RESOURCE_CONFIG_TYPE_ROW_COUNT = 194
+FROZEN_RESOURCE_CONFIG_BYTE_COUNT = 10_863
+FROZEN_RESOURCE_CONFIG_SHA256 = "1a14fd68012819d5f901a97ddd9e9a58dd35886bdcc5d47728467f6417fc3cd3"
+FROZEN_RESOURCE_CONFIG_TYPE_ROW_COUNT = 209
 FROZEN_RESOURCE_CONFIG_TYPE_TREE_SHA256 = (
-    "e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3"
+    "81eed87be58bf04a897fdcf3dd39cf142944647824a9f97938d46f341803a2ff"
 )
 _CONFIG_RELATIVE_PATH = Path("configs/g2_resource.toml")
 _TYPE_TREE_NAMESPACE = "xid-g2-resource-config-type-tree-v1"
@@ -37,7 +37,19 @@ _FROZEN_RESOURCE_CONFIG_JSON = (
     'smooth_phase_scenario":[10,0],"smooth_stream":"resource_smooth"},"rehearsal":{"panel_ind'
     'ices":[10000,10001,10002],"seed":1729},"rng_key_schema_version":2},"artifacts":{"dtype":'
     '"<f8","fortran_order":false,"manifest_cap_bytes":1048576,"marker_cap_bytes":16384,"npy_f'
-    'ormat":"1.0","npy_prefix_bytes":128,"publication_envelope_elements_per_shard":595000,"pu'
+    'ormat":"1.0","npy_prefix_bytes":128,"paper_cache_order":{"loss_kind_order":["sse","sst"]'
+    ',"loss_response_axis":"response_asset_index_ascending_zero_through_29","loss_spec_order":['
+    '"PI_1","PI_I","CI_1","CI_I","PI_CC","CI_CC"],"loss_value_order":"spec_then_response_then'
+    '_kind","matrix_column_axis":"flow_or_input_asset_index_ascending_zero_through_29","matrix_'
+    'order":["PI_1_direct","PI_I_direct","CI_1_direct","CI_I_direct","PI_CC_purged","CI_CC_pur'
+    'ged","PI_CC_full_response","CI_CC_full_response","cc_mean_projection_p_perp"],"matrix_pay'
+    'load":"original_unit_slope_operator_only_no_intercept_or_factor_coefficient_except_p_perp_'
+    'is_the_asset_space_operator","matrix_row_axis":"response_or_output_asset_index_ascending_z'
+    'ero_through_29","matrix_value_order":"matrix_then_row_then_column","namespace":"xid-g2-pap'
+    'er-cache-order-v1","recovery_field_count":960,"recovery_layout":"ci_i_direct_matrix_then_c'
+    'i_i_loss_pairs","recovery_relation":"distinct_compact_semantic_projection_not_research_pr'
+    'efix","research_field_count":8460,"research_layout":"nine_matrices_then_all_loss_pairs"},"p'
+    'ublication_envelope_elements_per_shard":595000,"pu'
     'blication_envelope_numeric_bytes":238000000,"publication_envelope_shards":50,"rehearsal_'
     'artifact_kind_count":13,"rehearsal_artifact_row_count":51,"resume_lifecycle":{"cleanup_i'
     'ntent_record_positions":[9,12,13,14],"create_after_record_positions":[0,1,2,3,4,5],"pape'
@@ -51,7 +63,7 @@ _FROZEN_RESOURCE_CONFIG_JSON = (
     'ate":[960],"publication_envelope_shard":[595000],"resume_base_panel":[252,2016],"resume_'
     'bootstrap_weights":[25,252],"resume_candidate_focal_equal_validation":[25,9],"resume_can'
     'didate_focal_research":[25,1],"resume_cell_x0ty":[252,63,30],"resume_cell_yty_upper":[25'
-    '2,465],"resume_paper_bootstrap_weights":[25,252]}},"authority":"A022+A023+A024+A025+A026'
+    '2,465],"resume_paper_bootstrap_weights":[25,252]}},"authority":"A022+A023+A024+A025+A026+A027'
     '","base_config":"configs/g2.toml","base_config_sha256":"f6291894462db2215ec9d94b2b936f5b'
     '969e47b61cdbbe50de7ae0782a83defc","design_id":"S0004","entry_module":"xid.g2_resource_be'
     'nchmark","gate":"G2","hard_stops":{"absolute_transient_bytes":30000000000,"attempt_boots'

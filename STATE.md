@@ -11,11 +11,11 @@ derived and independently audited. The sole frozen `N=30`, `K=3`, `T=10^7`
 run passed the strict preregistered discrepancy test without a seed retry. The
 complete evidence commit passed hosted CI.
 
-**G2 — Premise test / kill switch: open; the C0016/A026 document authority has
-passed fresh methods, systems, and schema review, while executable resource
-admission remains failed and the smooth estimator core is locally and hosted
-verified.** No registered resource benchmark, registered validation panel, or
-registered research draw has run.
+**G2 — Premise test / kill switch: open; the C0016/A026 resource document
+authority and A027 paper-cache representation authority have passed fresh
+review, while executable resource admission remains failed and the smooth
+estimator core is locally and hosted verified.** No registered resource
+benchmark, registered validation panel, or registered research draw has run.
 S0002 and S0003 were rejected before RNG access. S0004 makes the
 observable integrated-OFI proxy-control opponent and published `CI_I` protocol
 binding, is derived and hash-sealed, and has independent math, inference, and
@@ -28,21 +28,21 @@ hosted Linux parity at commit `5aca811`/run `30349473867`. The exact A019
 one-shot passed on its sole authorized seed-9191 attempt from source HEAD
 `a75ea69`; it is permanently consumed. Resource authority and every registered
 resource/validation/research realization remain absent. C0016/A022, A023, and
-amendments A024--A026 are now append-preregistered and deterministically red.
-A026 has fresh methods, systems, and schema passes. Typed projection of the
-sealed paper-cache and aggregation semantics is implemented and locally
-verified, but the resource capability/supervisor, complete paper-matrix and
-cache serialization paths, rehearsal evidence, and quantitative execution seal
-do not exist.
+amendments A024--A027 are append-preregistered; C0016 remains executable-red.
+A026 has fresh methods, systems, and schema passes. A027's exact 8,460-/960-
+field semantic order and no-RNG in-memory codec are implemented and locally
+verified, but the resource capability/supervisor, complete paper-matrix
+assembly, NPY serialization, cache fixtures, rehearsal evidence, and
+quantitative execution seal do not exist.
 
 ## Session objective
 
-Current session target: continue A026 through the smallest licensed
-deterministic contract slice and expose the completed G1 plus pending G2 design
-in a publication-quality pre-results preprint. The preprint must remain outside
-the locked G8 final-results claim surface. A019 closeout is complete and
-permanently non-rerunnable. No resource rehearsal, registered
-resource/validation/research realization, external data, or new
+Current session target: close A027's paper-cache representation ambiguity with
+the smallest licensed deterministic in-memory codec, synchronize the
+publication-quality pre-results preprint, and leave G2 execution closed. The
+preprint remains outside the locked G8 final-results claim surface. A019
+closeout is complete and permanently non-rerunnable. No resource rehearsal,
+registered resource/validation/research realization, external data, or new
 coefficient-to-truth comparison is permitted in this slice.
 
 ## Current evidence
@@ -430,7 +430,8 @@ coefficient-to-truth comparison is permitted in this slice.
   exact supervisor death plus fresh acquisition of the same inode can select
   pre-RNG failure. An uncertifiable exact success/failure terminal-entry state
   can close only through a lock-bearing, successor-rebuildable terminal
-  nonpass with admission and retry both false. The active config now seals at
+  nonpass with admission and retry both false. The A026 config at that freeze
+  sealed at
   9,799 bytes/
   `3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29`,
   194 type rows/type-tree
@@ -463,6 +464,32 @@ coefficient-to-truth comparison is permitted in this slice.
   64-row deterministic G0 demo with expected hashes, and committed-result
   drift. This is software evidence only, not an A022 resource measurement or a
   scientific trial.
+- Append-only A027 freezes the semantic-field-to-column bijection that A026
+  deliberately left unresolved. Research order is nine response/output-by-
+  flow/input matrices followed by six specification-major, response-major
+  `(sse,sst)` loss tables; recovery is the distinct compact `CI_I` projection,
+  not a research prefix. The active resource config seals at 10,863 ASCII
+  bytes/SHA256
+  `1a14fd68012819d5f901a97ddd9e9a58dd35886bdcc5d47728467f6417fc3cd3`,
+  209 type rows/10,369 CJSON bytes/type-tree SHA256
+  `81eed87be58bf04a897fdcf3dd39cf142944647824a9f97938d46f341803a2ff`,
+  and a 1,057-byte order manifest/SHA256
+  `8810471ce6c0747af7cdda48299989303cd85a9c7def7c681f2a57f93348a083`.
+  Independent methods and schema reviews passed before implementation.
+- C0018 recorded both RED failures before production changes: the stale A026
+  parser seal produced four failures and eleven passes, and the missing order
+  module produced five failures. The completed no-RNG field/index and in-memory
+  pack/unpack implementation passed all 25 focused resource/cache tests. Its
+  complete 8,460-/960-field inverse checks, asymmetric transpose sentinels,
+  recovery-projection boundaries, strict float64/shape/finite validation, and
+  read-only ownership/non-aliasing checks passed. The implementation exposes no
+  NPY writer, path, artifact, fixture, bootstrap, RNG, resource root, or
+  registered execution capability.
+- The A027 deterministic gate passed Ruff, format checking over 28 files,
+  strict mypy over 28 source files, all 317 tests in 37.07 seconds, the 64-row
+  deterministic G0 demo with expected hashes, and committed-result drift. This
+  is representation/software evidence only and does not measure A022 resources
+  or open a scientific trial.
 - A pre-results manuscript now records the G1 theorem and accepted numerical
   evidence, the still-unrun G2 design, the gate boundary, software verification,
   and a closed-form proxy-reliability sensitivity figure. It is explicitly a
@@ -472,20 +499,22 @@ coefficient-to-truth comparison is permitted in this slice.
 
 ## In flight
 
-1. Commit the typed-contract and pre-results dissemination state with the four
-   ledgers and red-team boundary synchronized.
-2. Freeze the unresolved paper-cache representation order before implementing
-   any 8,460-field serializer; then continue the accepted authority test-first
-   under the disjoint seed-1729 software namespace. Do not start the A022
-   rehearsal or a registered path.
+1. Derive and preregister the next missing boundary: construction of the nine
+   semantic paper matrices and six loss tables from already-computed paper
+   kernels, or a separately reviewed NPY artifact serializer. Do not infer
+   either capability from A027's in-memory codec.
+2. Keep cache fixtures, bootstrap batches, resource roots, Make targets,
+   rehearsal, and registered paths blocked until their exact authority and
+   deterministic RED tests exist.
 
 ## Blockers
 
 - Registered G2 resource, validation, and research streams remain blocked. The
   estimator core has no authority to run them.
-- A022/A026 remain executable-red. Typed cache/aggregation semantics exist, but
-  the resource capability/supervisor, complete paper matrix assembly, 8,460-
-  field representation order, serializer, and test-seed rehearsal do not. The
+- A022/A026 remain executable-red. Typed cache/aggregation semantics and the
+  exact A027 in-memory field order exist, but the resource
+  capability/supervisor, complete paper matrix assembly, NPY serializer, cache
+  fixture, and test-seed rehearsal do not. The
   0.65-second software smoke and 18.91-second A019 recovery are not the frozen
   hashing-inclusive cold/warm resource benchmark and cannot admit resource
   throughput or memory.
@@ -505,7 +534,7 @@ coefficient-to-truth comparison is permitted in this slice.
 
 ## Cold-resume next action
 
-Read the four ledgers, A022--A026 amendments, both A022 derivations,
+Read the four ledgers, A022--A027 amendments, both A022 derivations,
 prediction,
 `docs/redteam/GATE_G2_PRERUN.md`, and the G2 gate. Then state: "G1 is closed.
 S0002/S0003 were rejected before RNG. S0004 config `f6291894...` is sealed.
@@ -513,17 +542,20 @@ C0015/A019 passed once from source `a75ea69`: 18.907810209 seconds,
 178,864,128 bytes RSS, 9,183,232 allocated checkpoint bytes, exact
 before/after/fresh coefficient hashes, and zero fresh-process RNG draws.
 Attempt `18c70c20...` is permanently consumed; acceptance commit `9b8a45c`
-is hosted green at run `30386542464`. C0016/A022--A026 is
-append-preregistered, deterministically red; its active config seal is
-`9799/3408b35d.../194/e922c590...`, and it has run no rehearsal,
+is hosted green at run `30386542464`. C0016/A022--A027 is
+append-preregistered and executable-red; its active config seal is
+`10863/1a14fd68.../209/81eed87b...`, with the order-manifest seal
+`1057/8810471c...`, and it has run no rehearsal,
 registered resource command, or registered seed.
 Registered resource/validation/research realizations and empirical tape remain
-untouched." A026 document authority has fresh methods, systems, and schema
-passes. Commit `916022bb2b76` implements typed cache/aggregation semantics only;
-the latest deterministic gate is 306 tests and does not admit resources. The
-version-0.1 pre-results manuscript is a dissemination artifact, not G2 or G8
-evidence. Next freeze and independently review the 8,460-field paper-cache
-representation order before any serializer or resource fixture. Never retry
+untouched." A026 document authority and A027 representation authority have
+fresh independent passes. Commit `916022bb2b76` implements typed
+cache/aggregation semantics; C0018 adds only the exact in-memory field/index
+and pack/unpack codec. The latest deterministic gate is 317 tests and does not
+admit resources. The version-0.1 pre-results manuscript is a dissemination
+artifact, not G2 or G8 evidence. Next derive and independently review semantic
+paper-matrix assembly or a separate NPY serializer before either capability or
+any resource fixture exists. Never retry
 A019 or touch a registered resource, validation, or research seed before
 A022's later quantitative prediction seal, clean hosted SHA, absent roots, and
 explicit one-shot human authorization.

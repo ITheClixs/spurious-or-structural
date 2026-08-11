@@ -19,11 +19,15 @@ from xid.models.g2_resource import (
 
 ROOT = Path(__file__).parents[1]
 CONFIG_PATH = ROOT / "configs/g2_resource.toml"
-EXPECTED_CONFIG_BYTES = 9_799
-EXPECTED_CONFIG_SHA256 = "3408b35d27dc0b8415f18120357b822cf283f67ad463a4db8ff7b15235442f29"
-EXPECTED_TYPE_ROW_COUNT = 194
-EXPECTED_TYPE_TREE_SHA256 = "e922c59028670e70c9d45c37ef4a8101b984d30eff0bdea0ed32c514897ec6e3"
-EXPECTED_CJSON_BYTES = 9_473
+EXPECTED_CONFIG_BYTES = 10_863
+EXPECTED_CONFIG_SHA256 = "1a14fd68012819d5f901a97ddd9e9a58dd35886bdcc5d47728467f6417fc3cd3"
+EXPECTED_TYPE_ROW_COUNT = 209
+EXPECTED_TYPE_TREE_SHA256 = "81eed87be58bf04a897fdcf3dd39cf142944647824a9f97938d46f341803a2ff"
+EXPECTED_CJSON_BYTES = 10_369
+EXPECTED_PAPER_CACHE_ORDER_MANIFEST_BYTES = 1_057
+EXPECTED_PAPER_CACHE_ORDER_MANIFEST_SHA256 = (
+    "8810471ce6c0747af7cdda48299989303cd85a9c7def7c681f2a57f93348a083"
+)
 
 
 def _raw_config() -> bytes:
@@ -34,7 +38,7 @@ def _parsed_config_object() -> dict[str, Any]:
     return tomllib.loads(_raw_config().decode("ascii"))
 
 
-def test_resource_config_file_is_the_a026_byte_exact_contract() -> None:
+def test_resource_config_file_is_the_a027_byte_exact_contract() -> None:
     raw = _raw_config()
 
     assert len(raw) == EXPECTED_CONFIG_BYTES
@@ -63,7 +67,7 @@ def test_resource_config_parser_exposes_the_typed_contract_literals() -> None:
     assert contract.schema_version == 2
     assert contract.design_id == "S0004"
     assert contract.gate == "G2"
-    assert contract.authority == "A022+A023+A024+A025+A026"
+    assert contract.authority == "A022+A023+A024+A025+A026+A027"
     assert contract.unknown_keys == "reject"
     assert contract.entry_module == "xid.g2_resource_benchmark"
     assert contract.base_config == "configs/g2.toml"
@@ -110,6 +114,43 @@ def test_resource_config_parser_exposes_the_typed_contract_literals() -> None:
     assert contract.hard_stops.maximum_terminal_nonpass_intent_bytes == 131072
 
 
+def test_resource_config_exposes_the_a027_paper_cache_order_manifest() -> None:
+    contract = parse_resource_config_bytes(_raw_config())
+    order = contract.artifacts.paper_cache_order
+    manifest_bytes = (
+        json.dumps(
+            [
+                "xid-g2-paper-cache-order-manifest-v1",
+                _parsed_config_object()["artifacts"]["paper_cache_order"],
+            ],
+            sort_keys=True,
+            ensure_ascii=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("ascii")
+        + b"\n"
+    )
+
+    assert order.namespace == "xid-g2-paper-cache-order-v1"
+    assert order.matrix_order == (
+        "PI_1_direct",
+        "PI_I_direct",
+        "CI_1_direct",
+        "CI_I_direct",
+        "PI_CC_purged",
+        "CI_CC_purged",
+        "PI_CC_full_response",
+        "CI_CC_full_response",
+        "cc_mean_projection_p_perp",
+    )
+    assert order.loss_spec_order == ("PI_1", "PI_I", "CI_1", "CI_I", "PI_CC", "CI_CC")
+    assert order.loss_kind_order == ("sse", "sst")
+    assert order.research_field_count == 8_460
+    assert order.recovery_field_count == 960
+    assert len(manifest_bytes) == EXPECTED_PAPER_CACHE_ORDER_MANIFEST_BYTES
+    assert hashlib.sha256(manifest_bytes).hexdigest() == EXPECTED_PAPER_CACHE_ORDER_MANIFEST_SHA256
+
+
 @pytest.mark.parametrize(
     "bad_raw",
     [
@@ -150,7 +191,7 @@ def test_resource_config_object_validation_rejects_schema_drift(
         g2_resource._resource_config_from_object(parsed)
 
 
-def test_resource_config_type_tree_uses_the_corrected_a026_digest() -> None:
+def test_resource_config_type_tree_uses_the_a027_digest() -> None:
     contract = parse_resource_config_bytes(_raw_config())
     cjson_payload = (
         json.dumps(

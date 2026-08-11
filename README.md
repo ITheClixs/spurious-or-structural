@@ -6,6 +6,9 @@
 
 Department of Computer Science, ETH Zürich
 
+*Sole-author independent research. The affiliation identifies the author's
+student status only; ETH Zürich did not sponsor, fund, or endorse this work.*
+
 **Preprint · Version 0.1 · 6 August 2026 · [CC BY 4.0](LICENSE-PREPRINT.md)**
 
 [![CI](https://github.com/ITheClixs/spurious-or-structural/actions/workflows/ci.yml/badge.svg)](https://github.com/ITheClixs/spurious-or-structural/actions/workflows/ci.yml)
@@ -234,9 +237,9 @@ Carlo size or power claim.
 **Current status:** the contract, test-only random-number namespace, pure data-
 generating maps, smooth estimator core, checkpoint/recovery boundary, and
 several deterministic paper-reconstruction kernels are implemented and tested.
-The A022--A026 resource authority is documented, but its executable resource
-admission and rehearsal are not complete. Therefore no registered G2 stream is
-licensed.
+The A022--A027 resource authority is documented, including the deterministic
+paper-cache field order and in-memory codec, but executable resource admission
+and rehearsal are not complete. Therefore no registered G2 stream is licensed.
 
 ## 5. Gate Status
 
@@ -271,9 +274,9 @@ The fresh local deterministic gate used for preprint version 0.1 reported:
 | Check | Result |
 | --- | --- |
 | Ruff lint | Pass |
-| Ruff format | 26 files checked |
-| Strict mypy | Pass, 26 source files |
-| Pytest | 306 passed in 36.99 seconds |
+| Ruff format | 28 files checked |
+| Strict mypy | Pass, 28 source files |
+| Pytest | 317 passed in 37.07 seconds |
 | Deterministic G0 demo | 64 rows; expected hashes reproduced |
 | Committed-result drift | Pass; no drift |
 
@@ -302,6 +305,8 @@ recorded in the current gate ledger.
 | [GATE_G2_RESOURCE_ADMISSION.md](docs/derivations/GATE_G2_RESOURCE_ADMISSION.md) | Conditional resource-admission derivation |
 | [src/xid/models/g2_paper.py](src/xid/models/g2_paper.py) | Deterministic paper-reconstruction kernels |
 | [tests/test_g2_paper.py](tests/test_g2_paper.py) | Known-answer and fail-closed paper-kernel tests |
+| [src/xid/models/g2_paper_cache.py](src/xid/models/g2_paper_cache.py) | A027 no-RNG semantic field order and in-memory codec |
+| [tests/test_g2_paper_cache.py](tests/test_g2_paper_cache.py) | Bijection, orientation, immutability, and scope-boundary tests |
 | [data/manifest.json](data/manifest.json) | Zero-external-data manifest |
 
 ## 7. Limitations

@@ -7672,3 +7672,136 @@ schema hostile reviews all pass this A022--A026 document set. No rehearsal may
 run until the resulting implementation passes its deterministic local suite
 and hosted CI, and no registered seed may be constructed until the separately
 authorized public command satisfies every gate condition.
+
+## 23. A027 paper-cache representation order
+
+A027 closes one engineering ambiguity left open by A026: the map from a
+within-date semantic paper summary to field index `c`. It changes no model,
+estimator, asset order, coefficient target, loss definition, bootstrap rule,
+threshold, RNG address, artifact shape, work count, or budget. The
+`(8,460,)` research summary and `(960,)` recovery summary keep their existing
+shapes. A027 only makes their coordinates bijective and testable.
+
+The ordered research matrix tuple is
+
+```text
+M = (
+  PI_1_direct,
+  PI_I_direct,
+  CI_1_direct,
+  CI_I_direct,
+  PI_CC_purged,
+  CI_CC_purged,
+  PI_CC_full_response,
+  CI_CC_full_response,
+  cc_mean_projection_p_perp,
+).
+```
+
+For the first eight matrices, row `i` is response asset `i` and column `j` is
+the flow-coordinate asset `j` of the named original-unit slope operator. A
+direct map uses the original feature-flow coordinates of that specification;
+a purged CC map uses orthogonal-residual flow coordinates; and a full-response
+CC map uses original best-level flow coordinates after the factor and residual
+parts have been recombined. Intercepts and separately fitted factor
+coefficients are not matrix payloads. For
+`cc_mean_projection_p_perp`, row `i` is output residual coordinate `i` and
+column `j` is input best-level asset coordinate `j`. Every asset index is
+zero-based and follows the sealed 30-asset order.
+
+Matrices are ordered by `m`, then row, then column. For
+`m,i,j in {0,...,8} x {0,...,29} x {0,...,29}`,
+
+```text
+c_M(m,i,j) = 900 m + 30 i + j,
+research[c_M(m,i,j)] = M[m][i,j].
+```
+
+Thus matrix fields occupy columns `0,...,8099`. Within each matrix this is
+ordinary C-order flattening of the semantic row-by-column array; C-order of
+the final one-dimensional NPY file is not used as a substitute for this rule.
+
+The ordered loss-specification tuple and loss-kind tuple are
+
+```text
+S = (PI_1, PI_I, CI_1, CI_I, PI_CC, CI_CC),
+L = (sse, sst).
+```
+
+Each cached loss pair is the already sealed date-level next-block SSE and
+outer-training-mean SST for one response. Specs precede responses and SSE
+precedes SST. For `s in {0,...,5}`, `i in {0,...,29}`, and
+`ell in {0,1}`,
+
+```text
+c_L(s,i,ell) = 8100 + 60 s + 2 i + ell,
+research[c_L(s,i,ell)] = loss[S[s]][i][L[ell]].
+```
+
+Loss fields occupy columns `8100,...,8459`. The dimension identity is
+
+```text
+9 * 30 * 30 + 6 * 30 * 2 = 8100 + 360 = 8460.
+```
+
+The inverse research map is exact. If `0 <= c < 8100`, set
+`m = c // 900`, `r = c % 900`, `i = r // 30`, and `j = r % 30`. If
+`8100 <= c < 8460`, set `u = c - 8100`, `s = u // 60`,
+`v = u % 60`, `i = v // 2`, and `ell = v % 2`. No other research column is
+valid.
+
+The recovery summary is a distinct compact `CI_I` representation, not the
+first 960 research columns. Its forward map is
+
+```text
+c_RM(i,j)   = 30 i + j,
+recovery[c_RM(i,j)] = CI_I_direct[i,j],
+
+c_RL(i,ell) = 900 + 2 i + ell,
+recovery[c_RL(i,ell)] = loss[CI_I][i][L[ell]].
+```
+
+The inverse recovery map uses `i = c // 30`, `j = c % 30` for
+`0 <= c < 900`, and `u = c - 900`, `i = u // 2`, `ell = u % 2` for
+`900 <= c < 960`. Its dimension identity is
+`30 * 30 + 30 * 2 = 960`. As a semantic projection from a full research
+vector, recovery columns `0,...,899` select research columns `2700,...,3599`,
+and recovery columns `900,...,959` select research columns `8280,...,8339`.
+This projection identity is a cross-check, not permission to slice an
+unvalidated vector.
+
+The machine-readable table is
+`configs/g2_resource.toml:[artifacts.paper_cache_order]`. Its canonical
+manifest is the LF-terminated, ASCII canonical JSON encoding of
+
+```text
+["xid-g2-paper-cache-order-manifest-v1", <that parsed table>]
+```
+
+with recursively sorted object keys, no insignificant whitespace, and arrays
+kept in declared order. It is exactly 1,057 bytes with SHA256
+`8810471ce6c0747af7cdda48299989303cd85a9c7def7c681f2a57f93348a083`.
+The active A027 resource config is exactly 10,863 ASCII bytes with SHA256
+`1a14fd68012819d5f901a97ddd9e9a58dd35886bdcc5d47728467f6417fc3cd3`,
+209 leaf-type rows, 10,369 LF-terminated type-tree CJSON bytes, and type-tree
+SHA256
+`81eed87be58bf04a897fdcf3dd39cf142944647824a9f97938d46f341803a2ff`.
+The base scientific config remains byte-identical at
+`f6291894462db2215ec9d94b2b936f5b969e47b61cdbbe50de7ae0782a83defc`.
+
+After fresh independent review, A027 licenses only deterministic, no-RNG
+in-memory field/index and pack/unpack code under the test namespace. The code
+must require exact finite float64 arrays of the declared shapes, produce owned
+C-contiguous read-only vectors, preserve source arrays, round-trip every field,
+and reject wrong names, shapes, dtypes, variants, or order manifests. Before
+implementation, tests must fail on the absent order API and must use
+asymmetric literal sentinels that distinguish row/column transposition,
+matrix-boundary shifts, SSE/SST reversal, and the false recovery-prefix rule.
+
+A027 does not license an NPY writer, cache fixture, bootstrap batch, resource
+root, resource capability, rehearsal, registered command, or random-number
+constructor. Any serializer or fixture appearing before a later test-first
+slice remains unauthorized. No A022 rehearsal, registered resource seed
+`2026071529`, validation seed `2026071521`, research seed `2026071522`,
+external data, evaluation data, or holdout was accessed while deriving this
+order.

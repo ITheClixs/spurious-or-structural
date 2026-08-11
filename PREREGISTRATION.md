@@ -1750,3 +1750,57 @@ outcomes.
   process-lock documentation only. No A022 rehearsal, registered resource
   seed `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A027 — Exact paper-cache field order before serialization
+
+- **Registered:** 2026-08-06, after A026 document acceptance and before any
+  paper-cache index, codec, serializer, resource fixture, rehearsal, or
+  registered execution path existed.
+- **Reason:** A026 fixed the nine cached matrices, six-by-thirty SSE/SST pairs,
+  shapes, NPY envelope, and bootstrap operation over column `c`, but did not
+  define the bijection from semantic fields to `c`. Inferring that bijection
+  from tuple names or from one-dimensional C-order would allow an undetected
+  transpose or permutation.
+- **Research vector:** matrix order is
+  `(PI_1_direct, PI_I_direct, CI_1_direct, CI_I_direct, PI_CC_purged,
+  CI_CC_purged, PI_CC_full_response, CI_CC_full_response,
+  cc_mean_projection_p_perp)`. With row `i` and column `j` in ascending sealed
+  asset order, `c = 900*m + 30*i + j`. Rows are response/output assets;
+  columns are flow/input assets. The first eight payloads are original-unit
+  slope operators without intercepts or separate factor coefficients; the
+  ninth is the asset-space `P_perp` operator.
+- **Loss vector:** spec order is
+  `(PI_1, PI_I, CI_1, CI_I, PI_CC, CI_CC)`, response index is ascending, and
+  kind order is `(sse, sst)`. Its research index is
+  `c = 8100 + 60*s + 2*i + ell`. Therefore
+  `9*30*30 + 6*30*2 = 8460` exactly.
+- **Recovery vector:** recovery is a compact `CI_I` vector, not a research
+  prefix. Coefficients use `c = 30*i + j`; losses use
+  `c = 900 + 2*i + ell`, giving `30*30 + 30*2 = 960`. The corresponding full
+  research positions are `2700:3600` and `8280:8340`.
+- **Inverse map:** quotient/remainder by 900 and 30 recovers research matrix,
+  row, and column below 8100; quotient/remainder by 60 and 2 recovers loss
+  spec, response, and kind above 8100. Recovery uses the analogous 900/30 and
+  2 decompositions. Out-of-range indices are invalid.
+- **Machine authority:** the parsed
+  `artifacts.paper_cache_order` table has LF-terminated canonical-manifest
+  SHA256
+  `8810471ce6c0747af7cdda48299989303cd85a9c7def7c681f2a57f93348a083`.
+  The active config is 10,863 ASCII bytes with SHA256
+  `1a14fd68012819d5f901a97ddd9e9a58dd35886bdcc5d47728467f6417fc3cd3`,
+  209 leaf-type rows, and type-tree SHA256
+  `81eed87be58bf04a897fdcf3dd39cf142944647824a9f97938d46f341803a2ff`.
+- **Implementation license:** only after fresh independent methods and schema
+  review may a deterministic in-memory field/index and pack/unpack slice be
+  written test-first. It must reject transpose, permutation, SSE/SST reversal,
+  recovery/research confusion, nonfinite values, wrong dtype/shape/type, and
+  source aliasing. An NPY writer, resource fixture, bootstrap artifact,
+  resource capability, rehearsal, and every registered RNG path remain
+  prohibited.
+- **Inference effect:** none. A027 changes no scientific config byte,
+  estimator, target, interval, bootstrap weight, threshold, trial count, or
+  registered validation/research address.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.
+
