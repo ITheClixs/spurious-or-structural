@@ -46,3 +46,7 @@ all: check
 data features estimate falsify paper:
 	@echo "$@ is gate-locked; read STATE.md before running future research phases."
 	@exit 2
+
+exhibits:
+	uv run --locked python -m xid.exhibits --out docs/pre_results/generated
+	git diff --exit-code -- docs/pre_results/generated

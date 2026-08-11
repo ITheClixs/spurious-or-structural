@@ -33,3 +33,5 @@ results/*
 !results/g2_checkpoint_recovery/_SUCCESS
 !results/g2_checkpoint_recovery/failure.json
 !results/g2_checkpoint_recovery/_FAILURE
+
+!docs/pre_results/generated/

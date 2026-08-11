@@ -1,0 +1,292 @@
+{
+  "assets": 30,
+  "bounds_curve": [
+    {
+      "flow_share": 0.1,
+      "lower": -0.06470302689,
+      "observed": 0.01578747703,
+      "upper": 0.09627798096
+    },
+    {
+      "flow_share": 0.1125,
+      "lower": -0.06697572531,
+      "observed": 0.01543668485,
+      "upper": 0.09784909501
+    },
+    {
+      "flow_share": 0.125,
+      "lower": -0.06878903937,
+      "observed": 0.01509478372,
+      "upper": 0.09897860681
+    },
+    {
+      "flow_share": 0.1375,
+      "lower": -0.07027340085,
+      "observed": 0.01477043367,
+      "upper": 0.09981426819
+    },
+    {
+      "flow_share": 0.15,
+      "lower": -0.07151370079,
+      "observed": 0.01446642734,
+      "upper": 0.1004465555
+    },
+    {
+      "flow_share": 0.1625,
+      "lower": -0.07256777024,
+      "observed": 0.01418295938,
+      "upper": 0.100933689
+    },
+    {
+      "flow_share": 0.175,
+      "lower": -0.07347646952,
+      "observed": 0.01391909149,
+      "upper": 0.1013146525
+    },
+    {
+      "flow_share": 0.1875,
+      "lower": -0.07426954586,
+      "observed": 0.01367343548,
+      "upper": 0.1016164168
+    },
+    {
+      "flow_share": 0.2,
+      "lower": -0.07496920652,
+      "observed": 0.01344447718,
+      "upper": 0.1018581609
+    },
+    {
+      "flow_share": 0.2125,
+      "lower": -0.0755923891,
+      "observed": 0.01323072858,
+      "upper": 0.1020538463
+    },
+    {
+      "flow_share": 0.225,
+      "lower": -0.07615225408,
+      "observed": 0.01303079566,
+      "upper": 0.1022138454
+    },
+    {
+      "flow_share": 0.2375,
+      "lower": -0.07665919529,
+      "observed": 0.01284340413,
+      "upper": 0.1023460036
+    },
+    {
+      "flow_share": 0.25,
+      "lower": -0.07712154158,
+      "observed": 0.01266740442,
+      "upper": 0.1024563504
+    },
+    {
+      "flow_share": 0.2625,
+      "lower": -0.07754605478,
+      "observed": 0.01250176669,
+      "upper": 0.1025495882
+    },
+    {
+      "flow_share": 0.275,
+      "lower": -0.07793829036,
+      "observed": 0.01234557152,
+      "upper": 0.1026294334
+    },
+    {
+      "flow_share": 0.2875,
+      "lower": -0.07830286302,
+      "observed": 0.01219799903,
+      "upper": 0.1026988611
+    },
+    {
+      "flow_share": 0.3,
+      "lower": -0.0786436456,
+      "observed": 0.01205831802,
+      "upper": 0.1027602816
+    },
+    {
+      "flow_share": 0.3125,
+      "lower": -0.07896392002,
+      "observed": 0.01192587569,
+      "upper": 0.1028156714
+    },
+    {
+      "flow_share": 0.325,
+      "lower": -0.0792664935,
+      "observed": 0.01180008833,
+      "upper": 0.1028666702
+    },
+    {
+      "flow_share": 0.3375,
+      "lower": -0.07955378905,
+      "observed": 0.01168043301,
+      "upper": 0.1029146551
+    },
+    {
+      "flow_share": 0.35,
+      "lower": -0.07982791683,
+      "observed": 0.01156644026,
+      "upper": 0.1029607974
+    },
+    {
+      "flow_share": 0.3625,
+      "lower": -0.08009073099,
+      "observed": 0.01145768765,
+      "upper": 0.1030061063
+    },
+    {
+      "flow_share": 0.375,
+      "lower": -0.08034387548,
+      "observed": 0.01135379422,
+      "upper": 0.1030514639
+    },
+    {
+      "flow_share": 0.3875,
+      "lower": -0.08058882138,
+      "observed": 0.01125441561,
+      "upper": 0.1030976526
+    },
+    {
+      "flow_share": 0.4,
+      "lower": -0.0808268976,
+      "observed": 0.01115923982,
+      "upper": 0.1031453773
+    },
+    {
+      "flow_share": 0.4125,
+      "lower": -0.08105931653,
+      "observed": 0.01106798358,
+      "upper": 0.1031952837
+    },
+    {
+      "flow_share": 0.425,
+      "lower": -0.08128719561,
+      "observed": 0.01098038907,
+      "upper": 0.1032479737
+    },
+    {
+      "flow_share": 0.4375,
+      "lower": -0.08151157585,
+      "observed": 0.01089622117,
+      "upper": 0.1033040182
+    },
+    {
+      "flow_share": 0.45,
+      "lower": -0.08173343786,
+      "observed": 0.01081526502,
+      "upper": 0.1033639679
+    }
+  ],
+  "diagonal_sensitivity": 0.29,
+  "factors": 3,
+  "flow_share": 0.2827,
+  "gap_rank_under_diagonal_truth": 3,
+  "gap_ranks": [
+    {
+      "bound": 3,
+      "observed_rank": 3,
+      "rank_b": 0
+    },
+    {
+      "bound": 4,
+      "observed_rank": 4,
+      "rank_b": 1
+    },
+    {
+      "bound": 5,
+      "observed_rank": 5,
+      "rank_b": 2
+    },
+    {
+      "bound": 33,
+      "observed_rank": 30,
+      "rank_b": 30
+    }
+  ],
+  "own_impact_max": 0.3952712629,
+  "own_impact_min": 0.2061484059,
+  "psi_by_factor_count": [
+    {
+      "k": 1,
+      "psi": 0.6396312102
+    },
+    {
+      "k": 2,
+      "psi": 0.3748434626
+    },
+    {
+      "k": 3,
+      "psi": 0.03909868631
+    },
+    {
+      "k": 4,
+      "psi": 0.03766612117
+    },
+    {
+      "k": 6,
+      "psi": 0.03276644296
+    },
+    {
+      "k": 10,
+      "psi": 0.02498804432
+    }
+  ],
+  "psi_curve": [
+    {
+      "epsilon": 0.0,
+      "psi": 1.759954843e-15
+    },
+    {
+      "epsilon": 0.01,
+      "psi": 0.003915312523
+    },
+    {
+      "epsilon": 0.02,
+      "psi": 0.007830023456
+    },
+    {
+      "epsilon": 0.05,
+      "psi": 0.01956826134
+    },
+    {
+      "epsilon": 0.1,
+      "psi": 0.03909868631
+    },
+    {
+      "epsilon": 0.15,
+      "psi": 0.05856304262
+    },
+    {
+      "epsilon": 0.2,
+      "psi": 0.07793358954
+    },
+    {
+      "epsilon": 0.3,
+      "psi": 0.1162858754
+    }
+  ],
+  "psi_null": 1.759954843e-15,
+  "published_pairwise_correlation": 0.2579655172,
+  "return_share": 0.32,
+  "scope": "conditional analytic exhibit at published summary statistics; not an estimate of any market's impact matrix",
+  "sharp_intervals": [
+    {
+      "contains_zero": true,
+      "halfwidth": 0.0943062177,
+      "halfwidth_over_observed": 8.935847925,
+      "lower": -0.08375252224,
+      "observed_offdiagonal": 0.01055369546,
+      "truth": 0.0029,
+      "upper": 0.1048599132
+    },
+    {
+      "contains_zero": true,
+      "halfwidth": 0.09041957316,
+      "halfwidth_over_observed": 7.378963631,
+      "lower": -0.0781658777,
+      "observed_offdiagonal": 0.01225369546,
+      "truth": 0.0046,
+      "upper": 0.1026732686
+    }
+  ],
+  "spurious_offdiag_max": 0.2207424367
+}
