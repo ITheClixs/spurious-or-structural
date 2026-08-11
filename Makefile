@@ -50,3 +50,9 @@ data features estimate falsify paper:
 exhibits:
 	uv run --locked python -m xid.exhibits --out docs/pre_results/generated
 	git diff --exit-code -- docs/pre_results/generated
+
+paper:
+	cd docs/pre_results && tectonic -X compile xid_pre_results_manuscript.tex --outdir ../../output/pdf
+
+arxiv:
+	bash scripts/build_paper.sh

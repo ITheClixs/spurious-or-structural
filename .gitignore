@@ -37,3 +37,6 @@ results/*
 !docs/pre_results/generated/
 
 docs/plans/
+output/arxiv/
+output/arxiv_build/
+output/arxiv.tar.gz
