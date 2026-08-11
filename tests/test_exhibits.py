@@ -114,3 +114,32 @@ def test_figure_fragments_define_the_macros_the_manuscript_inputs() -> None:
         assert macro in bounds, macro
     for macro in ("\\FigPsiCurve", "\\FigPsiByFactorCount"):
         assert macro in diagnostic, macro
+
+
+def test_published_control_shift_block_records_the_source_figures() -> None:
+    block = _payload()["published_control_shift"]
+    assert block["cross_mean_before"] == 0.032
+    assert block["cross_mean_after"] == -0.039
+    assert abs(block["cross_mean_shift"] - (-0.071)) < 1e-12
+    assert block["cross_sd_before"] == 0.06
+    assert block["cross_sd_after"] == 0.06
+
+
+def test_rank_one_predicts_the_observed_dispersion_invariance() -> None:
+    """A constant shift moves the mean and leaves the cross-sectional SD fixed."""
+    block = _payload()["published_control_shift"]
+    assert block["predicted_sd_change"] == 0.0
+    assert abs(block["cross_sd_change"]) <= block["reporting_precision"]
+    assert block["sd_invariance_consistent"] is True
+
+
+def test_negative_fraction_check_is_reported_even_though_it_disagrees() -> None:
+    """The weaker shape check under-predicts; the paper must say so."""
+    block = _payload()["published_control_shift"]
+    assert "negative_fraction_after_reported" in block
+    assert "negative_fraction_after_predicted_normal" in block
+    assert block["negative_fraction_shape_consistent"] is False
+
+
+def test_published_block_carries_the_scope_disclaimer() -> None:
+    assert "not an estimate of any market" in _payload()["published_control_shift"]["scope"]

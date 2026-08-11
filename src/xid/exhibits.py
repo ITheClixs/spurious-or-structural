@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -52,6 +53,21 @@ SCOPE = (
     "conditional analytic exhibit at published summary statistics; "
     "not an estimate of any market's impact matrix"
 )
+
+# Capponi and Cont (2020), pp. 10-11 and 17-19, as recorded in
+# docs/G2_SOURCE_AUDIT.md. Reported to two decimal places.
+CC_CROSS_MEAN_BEFORE = 0.032
+CC_CROSS_MEAN_AFTER = -0.039
+CC_CROSS_SD_BEFORE = 0.06
+CC_CROSS_SD_AFTER = 0.06
+CC_OWN_MEAN_BEFORE = 2.64
+CC_OWN_MEAN_AFTER = 2.57
+CC_OWN_SD_BEFORE = 0.78
+CC_OWN_SD_AFTER = 0.77
+CC_NEGATIVE_FRACTION_BEFORE = 0.2309
+CC_NEGATIVE_FRACTION_AFTER = 0.8446
+CC_REPORTING_PRECISION = 0.01
+SHAPE_AGREEMENT_TOLERANCE = 0.05
 
 
 def _round(value: float) -> float:
@@ -200,9 +216,66 @@ def build_exhibits() -> dict[str, Any]:
             / N_ASSETS
         ),
     }
+    payload["published_control_shift"] = _published_control_shift()
     payload.update(_diagonal_truth_headline())
     payload.update(_psi_exhibits())
     return payload
+
+
+def _standard_normal_cdf(z: float) -> float:
+    return 0.5 * (1.0 + math.erf(z / math.sqrt(2.0)))
+
+
+def _published_control_shift() -> dict[str, Any]:
+    """Check the rank-one constant-shift signature against published summaries.
+
+    Eq. (11) makes a single factor control shift every cross-coefficient by one
+    common constant. The mean must therefore move while the cross-sectional
+    dispersion and the distribution shape stay fixed. Both implications are
+    checked separately because they can disagree, and a disagreement is
+    informative rather than something to suppress.
+    """
+    mean_shift = CC_CROSS_MEAN_AFTER - CC_CROSS_MEAN_BEFORE
+    sd_change = CC_CROSS_SD_AFTER - CC_CROSS_SD_BEFORE
+    own_sd_change = CC_OWN_SD_AFTER - CC_OWN_SD_BEFORE
+
+    # Under an exactly constant shift the shape is preserved, so the post-control
+    # negative fraction equals the pre-control mass below the shift magnitude.
+    predicted_negative_after = _standard_normal_cdf(
+        (-mean_shift - CC_CROSS_MEAN_BEFORE) / CC_CROSS_SD_BEFORE
+    )
+    shape_gap = abs(predicted_negative_after - CC_NEGATIVE_FRACTION_AFTER)
+
+    return {
+        "source": "Capponi and Cont (2020), pp. 10-11 and 17-19",
+        "cross_mean_before": CC_CROSS_MEAN_BEFORE,
+        "cross_mean_after": CC_CROSS_MEAN_AFTER,
+        "cross_mean_shift": _round(mean_shift),
+        "cross_sd_before": CC_CROSS_SD_BEFORE,
+        "cross_sd_after": CC_CROSS_SD_AFTER,
+        "cross_sd_change": _round(sd_change),
+        "own_mean_before": CC_OWN_MEAN_BEFORE,
+        "own_mean_after": CC_OWN_MEAN_AFTER,
+        "own_sd_before": CC_OWN_SD_BEFORE,
+        "own_sd_after": CC_OWN_SD_AFTER,
+        "own_sd_change": _round(own_sd_change),
+        "reporting_precision": CC_REPORTING_PRECISION,
+        "predicted_sd_change": 0.0,
+        "sd_invariance_consistent": bool(abs(sd_change) <= CC_REPORTING_PRECISION),
+        "negative_fraction_before_reported": CC_NEGATIVE_FRACTION_BEFORE,
+        "negative_fraction_after_reported": CC_NEGATIVE_FRACTION_AFTER,
+        "negative_fraction_after_predicted_normal": _round(predicted_negative_after),
+        "negative_fraction_shape_gap": _round(shape_gap),
+        "shape_agreement_tolerance": SHAPE_AGREEMENT_TOLERANCE,
+        "negative_fraction_shape_consistent": bool(shape_gap <= SHAPE_AGREEMENT_TOLERANCE),
+        "shape_check_caveat": (
+            "the shape implication is evaluated under a Gaussian approximation to "
+            "an empirically skewed cross-sectional distribution, so a gap indicates "
+            "loading heterogeneity beyond one common factor rather than a failure "
+            "of the rank bound itself"
+        ),
+        "scope": SCOPE,
+    }
 
 
 def _coordinates(pairs: list[tuple[float, float]]) -> str:
