@@ -1,125 +1,87 @@
 # Spurious or Structural?
 
-## Probability Limits and a Registered Falsification Design for Cross-Asset Price Impact
+## Low-Rank Confounding and Partial Identification of Cross-Asset Price Impact
 
-**Mehmet Demir Güven**
+**Mehmet Demir Güven †**
 
 Department of Computer Science, ETH Zürich
 
-*Sole-author independent research. The affiliation identifies the author's
-student status only; ETH Zürich did not sponsor, fund, or endorse this work.*
+> † Independent research. ETH Zürich did not fund, sponsor, approve, or endorse
+> this work. The affiliation records the author's status as a student only, and
+> the views expressed are the author's alone.
 
-**Preprint · Version 0.1 · 6 August 2026 · [CC BY 4.0](LICENSE-PREPRINT.md)**
+**Preprint · Version 0.2 · 12 August 2026 · [CC BY 4.0](LICENSE-PREPRINT.md)**
 
 [![CI](https://github.com/ITheClixs/spurious-or-structural/actions/workflows/ci.yml/badge.svg)](https://github.com/ITheClixs/spurious-or-structural/actions/workflows/ci.yml)
 
-> **Evidence status — 6 August 2026.** This repository currently supports a
-> pre-results manuscript. G0 and G1 have passed. G2 is open: the scientific
-> design and document authority are registered, but executable resource
-> admission is incomplete. No registered G2 resource benchmark, validation
-> panel, research draw, external market data, training sample, holdout, or
-> economic evaluation has been accessed.
+> **Evidence status — 12 August 2026.** G0 and G1 have passed. G2 is open: the
+> scientific design and document authority are registered, but executable
+> resource admission is incomplete. No registered G2 resource benchmark,
+> validation panel, research draw, external market data, training sample,
+> holdout, or economic evaluation has been accessed.
 
-The current preprint is available as a
-[PDF](output/pdf/xid_pre_results_manuscript.pdf), with
-[LaTeX source](docs/pre_results/xid_pre_results_manuscript.tex) and a scoped
-[license notice](LICENSE-PREPRINT.md).
+Current preprint: [PDF](output/pdf/xid_pre_results_manuscript.pdf) ·
+[LaTeX source](docs/pre_results/xid_pre_results_manuscript.tex) ·
+[license notice](LICENSE-PREPRINT.md)
 
 ## Abstract
 
-Cross-asset return-on-flow regressions are often interpreted as estimates of a
-structural price-impact matrix. That interpretation is not automatic. Latent
-common factors and same-bin feedback can generate off-diagonal population
-coefficients even when the corresponding structural entries are zero. This
-project derives the probability limits of ordinary least squares and of least
-squares with a noisy factor proxy in a simultaneous multi-asset system. The
-decomposition separates latent-factor confounding from simultaneity and states
-precisely what a noisy control can and cannot remove.
+Cross-asset return-on-flow coefficients are routinely read as entries of a
+structural price-impact matrix. That reading is not merely noisy; it is
+generically unidentified, and this project characterises exactly how.
 
-The formulas were evaluated in a preregistered known-truth experiment with
-30 assets, three factors, and ten million observations. The sole frozen draw
-passed a strict maximum elementwise relative-discrepancy threshold of
-\(10^{-3}\): the uncontrolled and proxy-controlled discrepancies were
-\(5.6395\times10^{-4}\) and \(5.1237\times10^{-4}\), respectively. All 1,800
-targets lay inside named 95% family-wise Bonferroni intervals. This verifies the
-algebra and numerical implementation under the stated simulation law; it does
-not identify real-market impact.
+In a simultaneous \(N\)-asset system with \(K\) latent factors and same-bin
+feedback \(B\), the gap between the population regression coefficient and the
+structural impact matrix has rank at most \(K+\operatorname{rank}(B)\). When
+the structural matrix is diagonal and feedback is absent, the entire estimated
+cross-impact matrix is confined to the diagonal-plus-rank-\(K\) set, yet its
+off-diagonal entries can be as large as genuine own-impact. Because the gap is
+a free low-rank object, the structural matrix is set-identified rather than
+point-identified from second moments. In the permutation-invariant one-spike
+geometry the sharp identified interval is available in closed form, and at
+published one-minute commonality statistics it contains zero. The rank
+restriction is nonetheless refutable, which yields a scale-free diagnostic
+whose rejection supports genuine cross-impact — the reverse of the usual
+reading.
 
-G2 is a registered, source-constrained premise test that must pass before market
-data is used. It combines an observable integrated-order-flow opponent, two
-oracle-flow no-strawman checks, six frozen published-protocol reconstructions,
-whole-date bootstrap inference, and explicit size, power, resource, and failure
-rules. Its stochastic and empirical outcomes are not reported because the
-relevant gates are not open.
+The derivations are verified in a preregistered known-truth experiment with
+\(N=30\), \(K=3\), and \(T=10^7\). The empirical premise test is registered
+here but not reported.
 
-**Keywords:** cross-impact; order-flow imbalance; latent factors;
-simultaneity; measurement error; preregistration; bootstrap inference.
+**Keywords:** cross-impact; order-flow imbalance; latent factors; partial
+identification; low-rank structure; preregistration.
 
-## 1. Research Question
+## 1. The Motivating Puzzle
 
-Suppose the return of asset \(i\) covaries with the contemporaneous order flow
-of asset \(j\). The association may represent a direct causal channel from
-\(j\)'s flow to \(i\)'s price. It may instead reflect a common information
-factor, market-wide liquidity demand, contemporaneous price chasing,
-measurement error, or a combination of these mechanisms.
+Capponi and Cont regress one-minute returns on the order-flow imbalance of
+every stock in a large cross-section and report a mean cross-asset coefficient
+of **+0.032**, with **23.09%** of coefficients negative. Adding a single
+cross-sectional principal-component control moves the mean to **−0.039** and
+the negative share to **84.46%**.
 
-The scientific question is therefore not whether a cross coefficient can be
-estimated, but which structural object that coefficient targets. This matters
-in practice because structural impact matrices enter execution-cost models,
-liquidity stress tests, and manipulation constraints. A reduced-form predictor
-may still forecast well while being unsuitable as a structural primitive.
+One control flips the sign of average estimated cross-impact. Either the
+uncontrolled regression was contaminated and the controlled one reveals the
+truth, or the control absorbed real impact. This project's answer is that
+**neither reading is identified**, and it makes that precise.
 
-The project is organized around a falsifiable claim sequence:
-
-```text
-structural system
-    -> population regression target
-    -> known-truth recovery
-    -> premise stress test
-    -> market identification
-    -> sealed holdout and economics
-```
-
-A failure at any arrow stops downstream interpretation rather than being
-rewritten as a positive result.
+Structural impact matrices enter execution-cost models, liquidity stress tests,
+and manipulation constraints, so the ambiguity is not academic.
 
 ## 2. Simultaneous System
 
-Let returns \(r_t\), flows \(q_t\), and idiosyncratic shocks \(u_t,v_t\) lie in
+Let returns \(r_t\), flows \(q_t\), and shocks \(u_t,v_t\) lie in
 \(\mathbb{R}^N\), with latent factors \(f_t\in\mathbb{R}^K\):
 
 \[
-\begin{aligned}
-r_t &= \Lambda q_t + \Gamma f_t + u_t, \\
-q_t &= B r_t + \Delta_f f_t + v_t.
-\end{aligned}
+r_t = \Lambda q_t + \Gamma f_t + u_t,
+\qquad
+q_t = B r_t + \Delta_f f_t + v_t.
 \]
 
-Here \(\Lambda\) is the structural contemporaneous impact matrix and \(B\) is
-same-bin return-to-flow feedback. Define
-
-\[
-L=I_N-B\Lambda,\qquad H=L^{-1},\qquad
-P=H(B\Gamma+\Delta_f),\qquad U=HB,\qquad V=H.
-\]
-
-The reduced form for flow is
-
-\[
-q_t=P f_t+Uu_t+Vv_t,
-\]
-
-with covariance
-
-\[
-\Sigma_{qq}=P\Sigma_fP^\top+U\Sigma_uU^\top+V\Sigma_vV^\top.
-\]
+With \(L=I_N-B\Lambda\), \(H=L^{-1}\), \(P=H(B\Gamma+\Delta_f)\), \(U=HB\), and
+\(V=H\), the flow reduced form is \(q_t=Pf_t+Uu_t+Vv_t\).
 
 ### Theorem 1 — Pseudo-true cross-impact matrices
-
-Under the finite-moment, zero-contemporaneous-cross-covariance, law-of-large-
-numbers, and nonsingularity conditions stated in the manuscript, the population
-coefficient from regressing \(r_t\) on \(q_t\) is
 
 \[
 \operatorname{plim}\widehat\Lambda_{\mathrm{OLS}}
@@ -127,48 +89,113 @@ coefficient from regressing \(r_t\) on \(q_t\) is
 +\Sigma_uU^\top\Sigma_{qq}^{-1}.
 \]
 
-If the regression controls for \(h_t=f_t+\varepsilon_t\), define the residual
-factor covariance
+Controlling for \(h_t=f_t+\varepsilon_t\) replaces \(\Sigma_f\) with the
+residual factor covariance
+\(R_f=\Sigma_f-\Sigma_f(\Sigma_f+\Sigma_\varepsilon)^{-1}\Sigma_f\) and
+\(\Sigma_{qq}\) with \(Q_h=PR_fP^\top+U\Sigma_uU^\top+V\Sigma_vV^\top\).
+
+Write \(G:=\operatorname{plim}\widehat\Lambda_{\mathrm{OLS}}-\Lambda\) for the
+**confounding gap**. Everything below concerns its structure.
+
+## 3. The Confounding Gap Is Low Rank
+
+### Theorem 2 — Rank of the confounding gap
 
 \[
-R_f=\Sigma_f-\Sigma_f(\Sigma_f+\Sigma_\varepsilon)^{-1}\Sigma_f
+\operatorname{rank}(G)\;\le\;K+\operatorname{rank}(B).
 \]
 
-and
+The factor channel passes through a \(K\)-dimensional bottleneck and the
+feedback channel through the column space of \(B\); rank is subadditive. The
+bound is attained generically.
+
+| \(\operatorname{rank}(B)\) | Observed \(\operatorname{rank}(G)\) | Bound |
+| ---: | ---: | ---: |
+| 0 | 3 | 3 |
+| 1 | 4 | 4 |
+| 2 | 5 | 5 |
+| 30 | 30 | 33 |
+
+### Corollary — Spurious cross-impact is confined, but not small
+
+If \(\Lambda\) is diagonal and \(B=0\), the population coefficient matrix lies
+in \(\mathcal{D}_K=\{D+R : D \text{ diagonal},\ \operatorname{rank}(R)\le K\}\).
+
+This bounds the *shape*, not the *size*. At the registered fixture a strictly
+diagonal truth induces spurious off-diagonals reaching **0.2207** against
+genuine own-impact spanning **0.2061** to **0.3953**. Confounding does not
+perturb a cross-impact matrix; it manufactures one of realistic magnitude out
+of nothing.
+
+### Proposition 3 — The structural matrix is set-identified
+
+With \(B=0\), \(\Sigma_f=I_K\), and \(W=\Sigma_{qq}^{-1}\Delta_f\), any
+\(\Lambda = A - \Gamma W^\top\) satisfying the positive-semidefiniteness
+constraints reproduces the observed second moments exactly. Cross-impact is a
+**partial identification** problem; a factor control moves the estimate *along*
+the confounding directions rather than out of the identified set.
+
+### Proposition 4 — Sharp interval in the one-spike geometry
+
+In the registered permutation-invariant geometry the gap collapses to a single
+constant added to *every* entry, and
 
 \[
-Q_h=PR_fP^\top+U\Sigma_uU^\top+V\Sigma_vV^\top.
+\Lambda_{\mathrm{off}}\in
+\left[A_{\mathrm{off}}-\tfrac{T}{N},\; A_{\mathrm{off}}+\tfrac{T}{N}\right],
+\qquad
+T^2=\frac{(r_1-q_1a_1^2)(q_1-q_0)}{q_1q_0}.
 \]
 
-Then
+At the source-matched calibration (\(N=30\), \(s_q=0.2827\), \(s_r=0.32\),
+\(d=0.29\)):
+
+| \(o\) | \(A_{\mathrm{off}}\) | Half-width | Identified interval | Contains 0 |
+| ---: | ---: | ---: | :--- | :--- |
+| 0.0029 | 0.010554 | 0.094306 | \([-0.083753,\ 0.104860]\) | yes |
+| 0.0046 | 0.012254 | 0.090420 | \([-0.078166,\ 0.102673]\) | yes |
+
+The identified half-width is **7.4 to 8.9 times** the observed coefficient it
+is meant to pin down. Under the stated conventions the structural off-diagonal
+is **not identified even in sign**.
+
+A bisection over the exact positive-semidefiniteness frontier reproduces the
+closed form to relative error below \(10^{-10}\).
+
+### Definition — A refutable diagnostic
 
 \[
-\operatorname{plim}\widehat\Lambda_{q\mid h}
-=\Lambda+\Gamma R_fP^\top Q_h^{-1}
-+\Sigma_uU^\top Q_h^{-1}.
+\psi_K(\widehat A)=
+\frac{\min_{D,\ \operatorname{rank}(R)\le K}\|\widehat A-D-R\|_F}
+     {\|\widehat A-\operatorname{diag}(\widehat A)\|_F}.
 \]
 
-The result has two immediate implications.
+Its population value is zero under pure confounding, so a materially nonzero
+\(\psi_K\) is evidence **for** genuine structural cross-impact. This inverts
+the conventional reading: off-diagonal magnitude carries no information, only
+departure from \(\mathcal{D}_K\) does.
 
-1. A more precise factor proxy reduces residual factor variation in positive-
-   semidefinite order, but individual coefficient biases need not decrease
-   monotonically because the inverse regressor covariance changes at the same
-   time.
-2. A zero structural entry \(\Lambda_{ij}=0\) does not imply a zero population
-   regression coefficient. Latent-factor and feedback terms can both be
-   off-diagonal.
+Two caveats are stated up front. \(\psi_K=0\) does not prove diagonality — the
+test refutes, it does not confirm. And \(\psi_K\) depends on the assumed factor
+count, so a sweep is mandatory:
 
-The complete derivation and proof are in
-[GATE_G1_PROBABILITY_LIMITS.md](docs/derivations/GATE_G1_PROBABILITY_LIMITS.md)
-and the manuscript appendix.
+| Assumed \(K\) | 1 | 2 | **3** | 4 | 6 | 10 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| \(\psi_K\) | 0.6396 | 0.3748 | **0.0391** | 0.0377 | 0.0328 | 0.0250 |
 
-## 3. Completed Known-Truth Verification
+The elbow at the true \(K=3\) is a practical way to read the factor count off
+the coefficient matrix itself.
+
+The full derivation and proofs are in
+[CONFOUNDING_RANK_AND_PARTIAL_ID.md](docs/derivations/CONFOUNDING_RANK_AND_PARTIAL_ID.md),
+registered before implementation as amendment A028.
+
+## 4. Completed Known-Truth Verification
 
 The G1 derivation was frozen before simulation code and random-number access.
-The accepted experiment used one master draw split into 100 immutable shards.
-Each shard held 100,000 observations and published only mergeable sufficient
-statistics. The complete run therefore contained \(T=10^7\) observations for
-\(N=30\) assets and \(K=3\) factors.
+One master draw was split into 100 immutable shards of 100,000 observations
+each, publishing only mergeable sufficient statistics, for \(T=10^7\)
+observations at \(N=30\) and \(K=3\).
 
 | Quantity | Verified value |
 | --- | ---: |
@@ -180,68 +207,64 @@ statistics. The complete run therefore contained \(T=10^7\) observations for
 | Targets inside simultaneous intervals | 1,800 / 1,800 |
 | Interval method | Student-t, Bonferroni 95% FWER |
 
-The immediate replay reused all validated checkpoints and reproduced the
-summary, estimates, and success marker byte for byte. G1 is closed; the frozen
-draw must not be rerun or replaced.
+Replay reused all validated checkpoints and reproduced the summary, estimates,
+and success marker byte for byte. G1 is closed; the frozen draw must not be
+rerun.
 
-Accepted evidence is stored in [results/g1](results/g1), with the exact design,
-predictions, and audit trail in:
+## 5. Confronting Published Evidence
 
-- [G1 prediction](docs/predictions/GATE_G1.md)
-- [G1 derivation](docs/derivations/GATE_G1_PROBABILITY_LIMITS.md)
-- [G1 red-team memo](docs/redteam/GATE_G1.md)
+Because the one-spike gap is a constant added to every entry, a single factor
+control should shift every cross-coefficient by the same amount. Two
+implications follow, and they **disagree**.
 
-## 4. Registered G2 Premise Test
+**Dispersion invariance holds.** The reported mean cross coefficient moves from
+0.032 to −0.039, a shift of −0.071, while the cross-sectional standard
+deviation stays at 0.06 and the own-coefficient standard deviation moves only
+from 0.78 to 0.77. Both are at or within reported precision. This check is
+unit-free.
 
-The next gate asks a deliberately narrower question before empirical data is
+**The shape implication fails.** Under an exactly constant shift the
+post-control negative fraction should equal the pre-control mass below the
+shift magnitude, which a Gaussian approximation puts at 0.7422 against a
+reported 0.8446 — a gap of 0.1024, exceeding the declared 0.05 tolerance.
+
+The failure is reported rather than removed; the registered protocol forbids
+retuning the one-spike convention to close it. It points at loading
+heterogeneity beyond one common factor and does not bear on Theorem 2, which
+is an inequality in \(K\).
+
+Both are **conditional analytic exhibits at published summary statistics, not
+estimates of any market's impact matrix.**
+
+## 6. Registered Premise Test
+
+The next gate asks a deliberately narrow question before empirical data is
 opened:
 
 > Can confounding alone produce economically material off-diagonal coefficient
 > error in a transparent model constrained by opened primary-source summaries,
-> even when the estimator receives a favorable factor proxy?
+> even when the estimator receives a favourable factor proxy?
 
-The registered system sets \(B=0\) so that same-bin feedback cannot explain a
-positive result. It retains \(N=30\), uses one permutation-invariant factor,
-sets proxy reliability to 0.95, and evaluates 17 frozen homogeneous structural
-off-diagonal values from 0.0029 through 0.0046.
-
-Three smooth estimators are binding at every grid point:
-
-1. an observable integrated-top-ten-OFI proxy-control condition-ridge
-   estimator;
-2. an oracle-flow condition-ridge estimator; and
-3. an oracle-flow homogeneous three-slope OLS estimator.
-
-The published-protocol reconstruction fits six specifications—\(PI_1\),
-\(PI_I\), \(CI_1\), \(CI_I\), \(PI_{CC}\), and \(CI_{CC}\)—with training-only
-feature construction and five contiguous validation folds. \(CI_I\) is the
-binding published-protocol veto because it combines integrated top-ten OFI
-with explicit off-diagonal coefficients. The remaining specifications are
-mandatory diagnostics and cannot rescue a failed binding event.
-
-For focal estimate \(\widehat\Lambda_{01}\), truth \(o\), and whole-date
-bootstrap standard error \(SE_{\mathrm{boot}}\), passage requires
+The registered system sets \(B=0\) so same-bin feedback cannot explain a
+positive result, retains \(N=30\), uses one permutation-invariant factor, sets
+proxy reliability to 0.95, and evaluates 17 frozen structural off-diagonal
+values from 0.0029 to 0.0046. Three smooth estimators bind at every grid point;
+a six-specification published-protocol reconstruction supplies a separate veto.
+Passage requires
 
 \[
-\left|\widehat\Lambda_{01}-o\right|-0.50|o|
->3SE_{\mathrm{boot}}.
+\left|\widehat\Lambda_{01}-o\right|-0.50|o|>3\,SE_{\mathrm{boot}}
 \]
 
-The registered inference uses 499 shared whole-date bootstrap weight vectors.
-The smooth-estimator license additionally requires a 100-superpanel finite null
-grid with at most one family-union success and a 100-superpanel power panel with
-at least 87 all-event successes. The published \(CI_I\) branch has a separate
-full-dimension recovery panel; it is a no-strawman recovery check, not a Monte
-Carlo size or power claim.
+with 499 shared whole-date bootstrap replicates, after 100 validation
+superpanels license the exact procedure.
 
-**Current status:** the contract, test-only random-number namespace, pure data-
-generating maps, smooth estimator core, checkpoint/recovery boundary, and
-several deterministic paper-reconstruction kernels are implemented and tested.
-The A022--A027 resource authority is documented, including the deterministic
-paper-cache field order and in-memory codec, but executable resource admission
-and rehearsal are not complete. Therefore no registered G2 stream is licensed.
+**Current status:** contract, test-only RNG namespace, pure DGP maps, smooth
+estimator core, checkpoint/recovery boundary, deterministic paper kernels, and
+the A027 paper-cache codec are implemented and tested. Executable resource
+admission and rehearsal are incomplete, so no registered G2 stream is licensed.
 
-## 5. Gate Status
+## 7. Gate Status
 
 | Gate | Status | Licensed statement |
 | --- | --- | --- |
@@ -249,136 +272,121 @@ and rehearsal are not complete. Therefore no registered G2 stream is licensed.
 | G1 — derivation and known-truth recovery | Passed | Derived population targets recovered under the frozen simulation law |
 | G2 — premise test / kill switch | Open | Design authority and deterministic software evidence only; no G2 result |
 | G3–G7 — data, identification, estimation, validation, holdout | Locked | No market-data, predictive, causal, trading, or economic claim |
-| G8 — final-results paper and release | Locked | This pre-results preprint adds no downstream result or submission-facing empirical claim |
+| G8 — final-results paper and release | Locked | This pre-results preprint adds no downstream result |
 
-The authoritative live state is [STATE.md](STATE.md). Amendments and rejected
+Authoritative live state: [STATE.md](STATE.md). Amendments and rejected
 specifications remain visible in [PREREGISTRATION.md](PREREGISTRATION.md),
 [DECISIONS.md](DECISIONS.md), [ASSUMPTIONS.md](ASSUMPTIONS.md), and
-[SPECIFICATION_LOG.md](SPECIFICATION_LOG.md).
+[SPECIFICATION_LOG.md](SPECIFICATION_LOG.md). Working standards are in
+[RESEARCH_PROTOCOL.md](RESEARCH_PROTOCOL.md).
 
-## 6. Reproducibility
-
-Install the locked environment and run the deterministic repository gate:
+## 8. Reproducibility
 
 ```bash
 uv sync --locked --extra dev
-make check
+make check        # lint, format, strict types, tests, smoke, drift
+make exhibits     # regenerate every manuscript number; fails on drift
+make paper        # build the preprint PDF
 ```
 
-`make check` performs linting, formatting verification, strict type checking,
-the deterministic/test-seed suite, the G0 software smoke, and committed-result
-drift checks. It does not open a registered G2 stream.
-
-The fresh local deterministic gate used for preprint version 0.1 reported:
+Fresh local gate for preprint version 0.2:
 
 | Check | Result |
 | --- | --- |
 | Ruff lint | Pass |
-| Ruff format | 28 files checked |
-| Strict mypy | Pass, 28 source files |
-| Pytest | 317 passed in 37.07 seconds |
+| Ruff format | 34 files checked |
+| Strict mypy | Pass, 34 source files |
+| Pytest | 371 passed in 36.82 seconds |
 | Deterministic G0 demo | 64 rows; expected hashes reproduced |
 | Committed-result drift | Pass; no drift |
 
-These are software and artifact-consistency checks, not additional scientific
-trials and not a license to run a registered G2 stream.
+These are software and artifact-consistency checks, not scientific trials, and
+they do not license a registered G2 stream. **Every quantitative value in the
+manuscript is regenerated by `make exhibits`; none is transcribed by hand.**
 
-The deterministic smoke path alone is:
-
-```bash
-make demo
-```
-
-The consumed G1 command and every registered G2 command are intentionally not
-replay instructions. Do not run `make mc`, `make g1-benchmark`, or any G2
-resource, validation, or research entry point without the exact authority
-recorded in the current gate ledger.
+Do not run `make mc`, `make g1-benchmark`, or any G2 resource, validation, or
+research entry point without the exact authority recorded in the current gate
+ledger.
 
 ### Evidence map
 
 | Artifact | Role |
 | --- | --- |
-| [configs/g1.toml](configs/g1.toml) | Frozen G1 design |
-| [results/g1/summary.json](results/g1/summary.json) | Accepted G1 gate statistic and interval summary |
+| [CONFOUNDING_RANK_AND_PARTIAL_ID.md](docs/derivations/CONFOUNDING_RANK_AND_PARTIAL_ID.md) | Rank bound, identified set, sharp interval, diagnostic |
+| [THEORY_EXTENSION.md](docs/predictions/THEORY_EXTENSION.md) | Six predictions frozen before implementation |
+| [identification.py](src/xid/models/identification.py) | Probability limits, confounding gap, one-spike bounds |
+| [rank_diagnostic.py](src/xid/models/rank_diagnostic.py) | The \(\psi_K\) statistic |
+| [exhibits.py](src/xid/exhibits.py) | Deterministic generator for every manuscript number |
+| [generated/exhibits.json](docs/pre_results/generated/exhibits.json) | Committed exhibit values |
+| [GATE_G1_PROBABILITY_LIMITS.md](docs/derivations/GATE_G1_PROBABILITY_LIMITS.md) | Theorem 1 derivation |
+| [results/g1/summary.json](results/g1/summary.json) | Accepted G1 gate statistic |
 | [configs/g2.toml](configs/g2.toml) | Hash-sealed S0004 scientific contract |
-| [GATE_G2_PREMISE.md](docs/derivations/GATE_G2_PREMISE.md) | G2 estimands, algorithms, and decision rules |
-| [GATE_G2_RESOURCE_ADMISSION.md](docs/derivations/GATE_G2_RESOURCE_ADMISSION.md) | Conditional resource-admission derivation |
-| [src/xid/models/g2_paper.py](src/xid/models/g2_paper.py) | Deterministic paper-reconstruction kernels |
-| [tests/test_g2_paper.py](tests/test_g2_paper.py) | Known-answer and fail-closed paper-kernel tests |
-| [src/xid/models/g2_paper_cache.py](src/xid/models/g2_paper_cache.py) | A027 no-RNG semantic field order and in-memory codec |
-| [tests/test_g2_paper_cache.py](tests/test_g2_paper_cache.py) | Bijection, orientation, immutability, and scope-boundary tests |
+| [GATE_G2_PREMISE.md](docs/derivations/GATE_G2_PREMISE.md) | G2 estimands, algorithms, decision rules |
+| [G2_SOURCE_AUDIT.md](docs/G2_SOURCE_AUDIT.md) | Primary-source audit of published statistics |
 | [data/manifest.json](data/manifest.json) | Zero-external-data manifest |
 
-## 7. Limitations
+## 9. Limitations
 
-The completed evidence is deliberately narrow.
-
-- G1 is Gaussian, known-truth, and large-sample. Its dense positive coefficients
-  do not reproduce the small, sign-sensitive off-diagonals central to the
-  empirical question.
-- One frozen realization verifies recovery under its stated law; it is not an
-  estimate of repeated-sampling coverage.
-- The G2 one-spike residual spectrum is a declared maximum-entropy convention,
-  not an identified feature of an exchange.
-- The 95% proxy reliability, structural-sensitivity interval, and dependence
-  stress are registered sensitivity inputs assembled from nonidentical sources
-  and units.
-- Resource admission remains conditional. Tiled cache fixtures cannot establish
-  heterogeneous 252-date lifetime, full-mixture scaling, or future thermal
-  behavior.
+- Theorem 2 is an inequality, so a high observed rank is uninformative if \(K\)
+  is misspecified, and the gap's rank is not separately observable from that of
+  a genuinely low-rank \(\Lambda\).
+- Proposition 3 assumes \(B=0\); with feedback the identified set is larger,
+  not smaller, so the sign non-identification result is conservative in that
+  direction only.
+- The closed-form interval is conditional on the one-spike and
+  isotropic-residual conventions, which are declared maximum-entropy choices
+  and not identified features of any exchange.
+- \(\psi_K\) is an upper bound from a stationary point of an alternating
+  projection, has no derived sampling distribution here, and cannot confirm
+  diagonality.
+- The G1 fixture is Gaussian, known-truth, and large-sample; its dense positive
+  targets do not reproduce the small, sign-sensitive off-diagonals central to
+  the empirical question.
+- The published-evidence exercise uses summary statistics carrying no
+  inferential intervals, so it supports consistency statements only.
 - Predictive performance, structural identification, market impact, execution
-  savings, transaction costs, capacity, and profitability are unresolved.
+  savings, transaction costs, capacity, and profitability are unresolved. The
+  present evidence supports no trading rule, deployment claim, or return claim.
 
-The present evidence does not support a trading rule, deployment claim, or
-return claim. Those questions become meaningful only after the identification,
-dependence-robust inference, cost, and sealed holdout gates survive.
+## 10. Selected References
 
-## 8. Selected References
+The manuscript carries 45 references. The most directly relevant:
 
-1. Kyle, A. S. (1985). Continuous auctions and insider trading.
-   *Econometrica*, 53(6), 1315–1335.
-   [doi:10.2307/1913210](https://doi.org/10.2307/1913210)
-2. Hasbrouck, J. (1991). Measuring the information content of stock trades.
-   *Journal of Finance*, 46(1), 179–207.
-   [doi:10.1111/j.1540-6261.1991.tb03749.x](https://doi.org/10.1111/j.1540-6261.1991.tb03749.x)
-3. Hasbrouck, J., & Seppi, D. J. (2001). Common factors in prices, order flows,
+1. Kyle, A. S. (1985). Continuous auctions and insider trading. *Econometrica*,
+   53(6), 1315–1335.
+2. Hasbrouck, J., & Seppi, D. J. (2001). Common factors in prices, order flows,
    and liquidity. *Journal of Financial Economics*, 59(3), 383–411.
-   [doi:10.1016/S0304-405X(00)00091-X](https://doi.org/10.1016/S0304-405X(00)00091-X)
-4. Cont, R., Kukanov, A., & Stoikov, S. (2014). The price impact of order book
+3. Cont, R., Kukanov, A., & Stoikov, S. (2014). The price impact of order book
    events. *Journal of Financial Econometrics*, 12(1), 47–88.
-   [doi:10.1093/jjfinec/nbt003](https://doi.org/10.1093/jjfinec/nbt003)
-5. Benzaquen, M., Mastromatteo, I., Eisler, Z., & Bouchaud, J.-P. (2017).
-   Dissecting cross-impact on stock markets. *Journal of Statistical Mechanics:
-   Theory and Experiment*, 2017(2), 023406.
-   [doi:10.1088/1742-5468/aa53f7](https://doi.org/10.1088/1742-5468/aa53f7)
-6. Capponi, F., & Cont, R. (2020). Multi-asset market impact and order flow
-   commonality. SSRN Working Paper 3706390.
-   [doi:10.2139/ssrn.3706390](https://doi.org/10.2139/ssrn.3706390)
-7. Cont, R., Cucuringu, M., & Zhang, C. (2023). Cross-impact of order flow
+4. Benzaquen, M., Mastromatteo, I., Eisler, Z., & Bouchaud, J.-P. (2017).
+   Dissecting cross-impact on stock markets. *JSTAT*, 2017(2), 023406.
+5. Capponi, F., & Cont, R. (2020). Multi-asset market impact and order flow
+   commonality. SSRN 3706390.
+6. Cont, R., Cucuringu, M., & Zhang, C. (2023). Cross-impact of order flow
    imbalance in equity markets. *Quantitative Finance*, 23(10), 1373–1393.
-   [doi:10.1080/14697688.2023.2236159](https://doi.org/10.1080/14697688.2023.2236159)
-8. White, H. (2000). A reality check for data snooping. *Econometrica*, 68(5),
-   1097–1126.
-   [doi:10.1111/1468-0262.00152](https://doi.org/10.1111/1468-0262.00152)
-9. Hansen, P. R. (2005). A test for superior predictive ability. *Journal of
-   Business & Economic Statistics*, 23(4), 365–380.
-   [doi:10.1198/073500105000000063](https://doi.org/10.1198/073500105000000063)
+7. Manski, C. F., & Tamer, E. (2002). Inference on regressions with interval
+   data on a regressor or outcome. *Econometrica*, 70(2), 519–546.
+8. Chandrasekaran, V., Parrilo, P. A., & Willsky, A. S. (2012). Latent variable
+   graphical model selection via convex optimization. *Annals of Statistics*,
+   40(4), 1935–1967.
+9. Miao, W., Geng, Z., & Tchetgen Tchetgen, E. J. (2018). Identifying causal
+   effects with proxy variables of an unmeasured confounder. *Biometrika*,
+   105(4), 987–993.
 
-## 9. License and Citation
+Full bibliography: [references.bib](docs/pre_results/references.bib).
 
-Copyright © 2026 Mehmet Demir Güven. The preprint manuscript, manuscript source,
-and original paper figures are licensed under
-[CC BY 4.0](LICENSE-PREPRINT.md). Those identified paper artifacts are outside
-the “Software” covered by the repository's MIT license. The MIT license
-continues to govern the software and its associated documentation; the scoped
-preprint notice grants no additional rights in the README, configurations,
-data, checkpoints, or result artifacts.
+## 11. License and Citation
 
-No arXiv identifier exists yet. Until one is assigned, cite this version as:
+Copyright © 2026 Mehmet Demir Güven. The preprint manuscript, its source, and
+its original figures are licensed under [CC BY 4.0](LICENSE-PREPRINT.md), and
+are outside the "Software" covered by the repository's MIT license. The MIT
+license governs the software and its associated documentation.
 
-> Mehmet Demir Güven (2026). “Spurious or Structural? Probability Limits and a
-> Registered Falsification Design for Cross-Asset Price Impact.” Preprint,
-> version 0.1, 6 August 2026.
+No arXiv identifier exists yet. Until one is assigned, cite as:
+
+> Mehmet Demir Güven (2026). "Spurious or Structural? Low-Rank Confounding and
+> Partial Identification of Cross-Asset Price Impact." Preprint, version 0.2,
+> 12 August 2026.
 
 For a reproducible reference to the repository state, include the commit hash
 and access date.
