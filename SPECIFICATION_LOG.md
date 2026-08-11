@@ -844,3 +844,72 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Access:** test seed 1729 is not required. Registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   external market data, evaluation data, and holdout remain untouched.
+
+## C0019 — A028 confounding rank bound, partial identification, and diagnostic
+
+- **Registered:** 2026-08-12 after the append-only A028 derivation in
+  `docs/derivations/CONFOUNDING_RANK_AND_PARTIAL_ID.md` and the six frozen
+  predictions in `docs/predictions/THEORY_EXTENSION.md`, and before any
+  identification module, rank diagnostic, exhibit generator, figure, or
+  manuscript revision existed.
+- **Scope:** prove and implement the rank bound on the confounding gap, the
+  identified-set characterisation, the closed-form one-spike interval, and the
+  diagonal-plus-rank-`K` departure statistic; generate every manuscript number
+  deterministically; and revise the preprint and README. No paper estimator,
+  registered stream, RNG namespace, market data, G2 kernel, threshold, or
+  sealed digest change was permitted.
+- **Prediction before tests:** the numerical rank of the gap equals `3`, `4`,
+  `5`, `30` at `rank(B)` of `0`, `1`, `2`, `30`, each within `K + rank(B)`; a
+  diagonal truth gives an exactly rank-3 gap with nonzero off-diagonals and
+  `psi_3 < 1e-8`; `psi_3` increases strictly over the frozen perturbation grid;
+  the closed-form identification scale agrees with a bisection over the exact
+  positive-semidefiniteness frontier to below `1e-10`; `psi_3` is permutation
+  invariant below `1e-12`; and the one-spike gap is entrywise constant below
+  `1e-12`.
+- **Observed RED:** the first identification run failed collection with
+  `ModuleNotFoundError: No module named 'xid.models.identification'`. The
+  one-spike extension then failed with
+  `ImportError: cannot import name 'identification_scale'`. The diagnostic run
+  failed with
+  `ModuleNotFoundError: No module named 'xid.models.rank_diagnostic'`. The
+  exhibit run failed all 11 tests on the absent generated directory, and the
+  published-summary slice failed 4 tests on the absent
+  `published_control_shift` block.
+- **Observed GREEN:** all six predictions hold. Gap ranks are `3`, `4`, `5`,
+  `30` against bounds `3`, `4`, `5`, `33`. A strictly diagonal truth yields a
+  rank-3 gap whose largest off-diagonal is `0.2207424367` against realised
+  own-impact spanning `0.2061484059` to `0.3952712629`. `psi_3` at exact
+  structure is `1.759954843e-15` and is strictly increasing over the grid.
+  The closed-form scale matches bisection to `9.8e-16` relative. The one-spike
+  gap is constant across all 900 entries. Sharp intervals are
+  `[-0.08375252224, 0.1048599132]` at `o = 0.0029` and
+  `[-0.0781658777, 0.1026732686]` at `o = 0.0046`; both contain zero and the
+  half-width is `8.94` and `7.38` times the observed off-diagonal.
+- **Published-summary exhibit, split outcome:** the dispersion implication is
+  consistent, with a reported mean cross-coefficient shift of `-0.071` against
+  an unchanged cross-sectional standard deviation of `0.06` and an
+  own-coefficient standard deviation moving only from `0.78` to `0.77`. The
+  distribution-shape implication fails: the predicted post-control negative
+  fraction is `0.7421538892` against a reported `0.8446`, a gap of
+  `0.1024461108` exceeding the declared `0.05` tolerance. Under the registered
+  failure rule the one-spike convention was not retuned; the disagreement is
+  reported in the manuscript, the README, and the red-team memo.
+- **Status:** passed for deterministic identification theory, representation,
+  and dissemination only. No serializer, artifact, fixture, bootstrap batch,
+  resource capability, rehearsal, or registered execution path was implemented;
+  C0016 resource admission remains executable-red.
+- **Intervals:** not applicable. Every reported quantity is a deterministic
+  algebraic identity or an exact evaluation of one, and is labelled as such
+  rather than given a fabricated interval. Published dispersion figures were
+  not promoted to confidence intervals.
+- **Multiple-testing count:** zero. No stochastic draw and no
+  coefficient-to-truth comparison is part of this slice.
+- **Strongest unresolved objection:** `psi_K` depends on an assumed factor
+  count and has no derived finite-sample null distribution, so it is a
+  population restriction with a descriptive sample analogue rather than a
+  hypothesis test. Recorded in `docs/redteam/THEORY_EXTENSION.md`.
+- **Access:** test seeds `1729` and `9191` only. Registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  external market data, evaluation data, and holdout remain untouched. Sealed
+  digests `f6291894...` for `configs/g2.toml` and `1a14fd68...` for
+  `configs/g2_resource.toml` were verified unchanged.

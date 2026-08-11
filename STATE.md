@@ -1,6 +1,6 @@
 # Research state
 
-Last updated: 2026-08-06
+Last updated: 2026-08-12
 
 ## Current gate
 
@@ -33,17 +33,21 @@ A026 has fresh methods, systems, and schema passes. A027's exact 8,460-/960-
 field semantic order and no-RNG in-memory codec are implemented and locally
 verified, but the resource capability/supervisor, complete paper-matrix
 assembly, NPY serialization, cache fixtures, rehearsal evidence, and
-quantitative execution seal do not exist.
+quantitative execution seal do not exist. A028 adds the confounding rank
+bound, the identified-set characterization, the closed-form one-spike
+interval, and the diagonal-plus-rank-K departure statistic. These are
+derivation and deterministic software evidence only and change no G2 authority,
+digest, or gate status.
 
 ## Session objective
 
-Current session target: close A027's paper-cache representation ambiguity with
-the smallest licensed deterministic in-memory codec, synchronize the
-publication-quality pre-results preprint, and leave G2 execution closed. The
-preprint remains outside the locked G8 final-results claim surface. A019
-closeout is complete and permanently non-rerunnable. No resource rehearsal,
-registered resource/validation/research realization, external data, or new
-coefficient-to-truth comparison is permitted in this slice.
+Current session target: derive, register, implement, and verify the A028
+confounding rank bound and its partial-identification consequences; generate
+every manuscript number from deterministic committed code; and bring the
+pre-results preprint and README to arXiv submission readiness. The preprint
+remains outside the locked G8 final-results claim surface. No resource
+rehearsal, registered resource/validation/research realization, external data,
+or new coefficient-to-truth comparison is permitted in this slice.
 
 ## Current evidence
 
@@ -497,15 +501,66 @@ coefficient-to-truth comparison is permitted in this slice.
   G8 final-results paper and not evidence of G2, empirical, holdout, or economic
   passage.
 
+- Append-only A028 registers the confounding rank bound before implementation.
+  The gap `plim OLS - Lambda` has rank at most `K + rank(B)`, so a diagonal
+  structural matrix with no same-bin feedback confines the entire estimated
+  cross-impact matrix to the diagonal-plus-rank-K set. Observed gap ranks are
+  3, 4, 5, and 30 against bounds 3, 4, 5, and 33.
+- Low rank does not mean small. A strictly diagonal truth induces spurious
+  off-diagonal coefficients reaching `0.2207424367` against realized
+  own-impact spanning `0.2061484059` to `0.3952712629`.
+- The structural matrix is set-identified rather than point-identified from
+  second moments. In the permutation-invariant one-spike geometry the gap is a
+  single constant added to every entry, verified constant across all 900
+  entries below `1e-12`, and the sharp identified interval is closed form. At
+  the source-matched calibration it is `[-0.08375252224, 0.1048599132]` at
+  `o = 0.0029` and `[-0.0781658777, 0.1026732686]` at `o = 0.0046`. Both
+  contain zero, so the structural off-diagonal is not identified even in sign
+  under the declared conventions. A bisection over the exact
+  positive-semidefiniteness frontier reproduces the closed form to `9.8e-16`
+  relative.
+- The `psi_K` departure statistic is zero at exact structure
+  (`1.759954843e-15`), strictly increasing over the frozen perturbation grid,
+  permutation invariant below `1e-12`, and scale free. Its factor-count sweep
+  runs `0.6396`, `0.3748`, `0.0391`, `0.0377`, `0.0328`, `0.0250` at
+  `K = 1, 2, 3, 4, 6, 10`, with an elbow at the true count.
+- The published-summary exhibit split. The dispersion implication is
+  consistent: a reported mean cross-coefficient shift of `-0.071` against an
+  unchanged cross-sectional standard deviation of `0.06`. The
+  distribution-shape implication failed, predicting a post-control negative
+  fraction of `0.7421538892` against a reported `0.8446`. The registered
+  failure rule was honored: the one-spike convention was not retuned and the
+  disagreement is reported.
+- `python -m xid.exhibits` regenerates every manuscript number byte
+  identically, and `make exhibits` fails on drift. No value in the preprint is
+  transcribed by hand.
+- The A028 deterministic gate passed Ruff, format checking over 34 files,
+  strict mypy over 34 source files, all 371 tests in 36.82 seconds, the 64-row
+  G0 demo with expected hashes, and committed-result drift.
+- Version 0.2 of the preprint builds to 9 pages with the preprint mark on every
+  page, a dagger affiliation disclaimer on page 1, zero undefined references,
+  and 45 bibliography entries. A clean extraction of `output/arxiv.tar.gz`
+  compiles standalone.
+- The strongest unresolved A028 objection is that `psi_K` depends on an assumed
+  factor count and has no derived finite-sample null distribution, so it is a
+  population restriction with a descriptive sample analogue rather than a
+  hypothesis test. Recorded in `docs/redteam/THEORY_EXTENSION.md`.
+
 ## In flight
 
-1. Derive and preregister the next missing boundary: construction of the nine
+1. Submit the version-0.2 preprint to arXiv under `q-fin.TR` with `q-fin.ST`
+   and `econ.EM` cross-lists, following `docs/ARXIV_SUBMISSION.md`. Confirm
+   endorsement status before the upload attempt.
+2. Derive and preregister the next missing boundary: construction of the nine
    semantic paper matrices and six loss tables from already-computed paper
    kernels, or a separately reviewed NPY artifact serializer. Do not infer
    either capability from A027's in-memory codec.
-2. Keep cache fixtures, bootstrap batches, resource roots, Make targets,
+3. Keep cache fixtures, bootstrap batches, resource roots, Make targets,
    rehearsal, and registered paths blocked until their exact authority and
    deterministic RED tests exist.
+4. If `psi_K` is ever to be applied empirically, first register a design
+   deriving its finite-sample null distribution with a factor-count selection
+   rule fixed in advance.
 
 ## Blockers
 
@@ -534,28 +589,28 @@ coefficient-to-truth comparison is permitted in this slice.
 
 ## Cold-resume next action
 
-Read the four ledgers, A022--A027 amendments, both A022 derivations,
-prediction,
-`docs/redteam/GATE_G2_PRERUN.md`, and the G2 gate. Then state: "G1 is closed.
+Read the four ledgers, A022--A028 amendments, the A028 derivation, both A022
+derivations, prediction, `docs/redteam/GATE_G2_PRERUN.md`,
+`docs/redteam/THEORY_EXTENSION.md`, and the G2 gate. Then state: "G1 is closed.
 S0002/S0003 were rejected before RNG. S0004 config `f6291894...` is sealed.
 C0015/A019 passed once from source `a75ea69`: 18.907810209 seconds,
 178,864,128 bytes RSS, 9,183,232 allocated checkpoint bytes, exact
 before/after/fresh coefficient hashes, and zero fresh-process RNG draws.
-Attempt `18c70c20...` is permanently consumed; acceptance commit `9b8a45c`
-is hosted green at run `30386542464`. C0016/A022--A027 is
+Attempt `18c70c20...` is permanently consumed. C0016/A022--A027 is
 append-preregistered and executable-red; its active config seal is
 `10863/1a14fd68.../209/81eed87b...`, with the order-manifest seal
-`1057/8810471c...`, and it has run no rehearsal,
-registered resource command, or registered seed.
-Registered resource/validation/research realizations and empirical tape remain
-untouched." A026 document authority and A027 representation authority have
-fresh independent passes. Commit `916022bb2b76` implements typed
-cache/aggregation semantics; C0018 adds only the exact in-memory field/index
-and pack/unpack codec. The latest deterministic gate is 317 tests and does not
-admit resources. The version-0.1 pre-results manuscript is a dissemination
-artifact, not G2 or G8 evidence. Next derive and independently review semantic
-paper-matrix assembly or a separate NPY serializer before either capability or
-any resource fixture exists. Never retry
-A019 or touch a registered resource, validation, or research seed before
-A022's later quantitative prediction seal, clean hosted SHA, absent roots, and
-explicit one-shot human authorization.
+`1057/8810471c...`, and it has run no rehearsal, registered resource command,
+or registered seed. C0019/A028 adds the rank bound, partial identification,
+and the `psi_K` statistic as derivation and deterministic software evidence
+only. Registered resource/validation/research realizations and empirical tape
+remain untouched."
+
+The latest deterministic gate is 371 tests over 34 source files and does not
+admit resources. Version 0.2 of the pre-results preprint is a dissemination
+artifact, not G2 or G8 evidence; it is submission-ready per
+`docs/ARXIV_SUBMISSION.md` but carries no empirical claim. Next either submit
+that preprint or derive and independently review semantic paper-matrix
+assembly or a separate NPY serializer before either capability or any resource
+fixture exists. Never retry A019 or touch a registered resource, validation, or
+research seed before A022's later quantitative prediction seal, clean hosted
+SHA, absent roots, and explicit one-shot human authorization.
