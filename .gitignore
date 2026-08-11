@@ -35,3 +35,5 @@ results/*
 !results/g2_checkpoint_recovery/_FAILURE
 
 !docs/pre_results/generated/
+
+docs/plans/
