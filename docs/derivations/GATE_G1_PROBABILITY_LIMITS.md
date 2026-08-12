@@ -35,14 +35,14 @@ linear projection on the noisy proxy; it does not remove simultaneity.
   estimand rather than a unique OLS coefficient.
 
 The requested primitive-only expressions are impossible without the stated
-zero cross-covariances. If, for example, $\operatorname{Cov}(u,v)\ne0$, its
+zero cross-covariances. If, for example, $\mathrm{Cov}(u,v)\ne0$, its
 value enters both the reduced-form flow covariance and the bias.
 
 For column-vector structural notation, define the population regression matrix
 $A$ by
 
 $$
-A=\arg\min_C \operatorname E\|r_t-Cq_t\|_2^2.
+A=\arg\min_C \mathrm{E}\lVert r_t-Cq_t\rVert_2^2.
 $$
 
 Then $A=\Sigma_{rq}\Sigma_{qq}^{-1}$. With row-stacked software matrices,
@@ -85,9 +85,9 @@ $$
 $$
 
 $$
-\operatorname{Cov}(f_t,q_t)=\Sigma_fP^\top,
+\mathrm{Cov}(f_t,q_t)=\Sigma_fP^\top,
 \qquad
-\operatorname{Cov}(u_t,q_t)=\Sigma_uU^\top.
+\mathrm{Cov}(u_t,q_t)=\Sigma_uU^\top.
 $$
 
 Only nonsingularity of $L$ is required for this algebra. The stronger
@@ -102,7 +102,7 @@ Using the structural return equation,
 $$
 \begin{aligned}
 \Sigma_{rq}
-&=\operatorname{Cov}(\Lambda q_t+\Gamma f_t+u_t,q_t)\\
+&=\mathrm{Cov}(\Lambda q_t+\Gamma f_t+u_t,q_t)\\
 &=\Lambda\Sigma_{qq}+\Gamma\Sigma_fP^\top+\Sigma_uU^\top.
 \end{aligned}
 $$
@@ -111,7 +111,7 @@ Therefore
 
 $$
 \boxed{
-\operatorname{plim}\widehat\Lambda_{\mathrm{OLS}}
+\mathrm{plim}\,\widehat\Lambda_{\mathrm{OLS}}
 =\Lambda
 +\underbrace{\Gamma\Sigma_fP^\top\Sigma_{qq}^{-1}}_{
   \text{latent-factor confounding}}
@@ -133,7 +133,7 @@ Since $\Sigma_{qq}=H\Omega_qH^\top$, cancellation of $H^\top$ yields
 
 $$
 \boxed{
-\operatorname{plim}\widehat\Lambda_{\mathrm{OLS}}
+\mathrm{plim}\,\widehat\Lambda_{\mathrm{OLS}}
 =\Lambda+
 (\Gamma\Sigma_fD^\top+\Sigma_uB^\top)
 \Omega_q^{-1}(I_N-B\Lambda).
@@ -151,7 +151,7 @@ Let
 $$
 h_t=\widehat f_t=f_t+\epsilon_t,
 \qquad
-S_h=\operatorname{Var}(h_t)=\Sigma_f+\Sigma_\epsilon.
+S_h=\mathrm{Var}(h_t)=\Sigma_f+\Sigma_\epsilon.
 $$
 
 The linear-projection residual of the true factor after controlling for $h_t$
@@ -166,7 +166,7 @@ with covariance
 $$
 \boxed{
 R_f
-=\operatorname{Var}(f_t^\perp)
+=\mathrm{Var}(f_t^\perp)
 =\Sigma_f-\Sigma_f(\Sigma_f+\Sigma_\epsilon)^{-1}\Sigma_f.
 }
 $$
@@ -180,7 +180,7 @@ Frisch--Waugh--Lovell residualization gives
 
 $$
 q_t^\perp
-=q_t-\operatorname{Cov}(q_t,h_t)S_h^{-1}h_t
+=q_t-\mathrm{Cov}(q_t,h_t)S_h^{-1}h_t
 =P f_t^\perp+Uu_t+Vv_t
 $$
 
@@ -188,7 +188,7 @@ and hence
 
 $$
 Q_h
-=\operatorname{Var}(q_t^\perp)
+=\mathrm{Var}(q_t^\perp)
 =P R_fP^\top+U\Sigma_uU^\top+V\Sigma_vV^\top.
 $$
 
@@ -203,7 +203,7 @@ $[q_t,h_t]$ is therefore
 
 $$
 \boxed{
-\operatorname{plim}\widehat\Lambda_{q\mid h}
+\mathrm{plim}\,\widehat\Lambda_{q\mid h}
 =\Lambda
 +\underbrace{\Gamma R_fP^\top Q_h^{-1}}_{
   \text{unabsorbed factor confounding}}
@@ -223,7 +223,7 @@ Because $Q_h=H\Omega_{q\mid h}H^\top$, the primitive-only version is
 
 $$
 \boxed{
-\operatorname{plim}\widehat\Lambda_{q\mid h}
+\mathrm{plim}\,\widehat\Lambda_{q\mid h}
 =\Lambda+
 (\Gamma R_fD^\top+\Sigma_uB^\top)
 \Omega_{q\mid h}^{-1}(I_N-B\Lambda).
@@ -244,7 +244,7 @@ These are algebraic directional predictions, not fitted observations.
 3. **No feedback:** if $B=0$, then $H=V=I_N$, $U=0$, and
 
    $$
-   \operatorname{plim}\widehat\Lambda_{q\mid h}
+   \mathrm{plim}\,\widehat\Lambda_{q\mid h}
    =\Lambda+\Gamma R_f\Delta_f^\top
    (\Delta_fR_f\Delta_f^\top+\Sigma_v)^{-1}.
    $$
@@ -259,7 +259,7 @@ These are algebraic directional predictions, not fitted observations.
    $r=\lambda q+u$, $q=br+v$,
 
    $$
-   \operatorname{plim}\widehat\lambda
+   \mathrm{plim}\,\widehat\lambda
    =\frac{\lambda\sigma_v^2+b\sigma_u^2}
           {b^2\sigma_u^2+\sigma_v^2}.
    $$

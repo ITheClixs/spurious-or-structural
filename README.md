@@ -32,7 +32,7 @@ generically unidentified, and this project characterises exactly how.
 
 In a simultaneous $N$-asset system with $K$ latent factors and same-bin
 feedback $B$, the gap between the population regression coefficient and the
-structural impact matrix has rank at most $K+\operatorname{rank}(B)$. When
+structural impact matrix has rank at most $K+\mathrm{rank}(B)$. When
 the structural matrix is diagonal and feedback is absent, the entire estimated
 cross-impact matrix is confined to the diagonal-plus-rank-$K$ set, yet its
 off-diagonal entries can be as large as genuine own-impact. Because the gap is
@@ -88,7 +88,7 @@ $V=H$, the flow reduced form is $q_t=Pf_t+Uu_t+Vv_t$.
 ### Theorem 1 — Pseudo-true cross-impact matrices
 
 $$
-\operatorname{plim}\widehat\Lambda_{\mathrm{OLS}}
+\mathrm{plim}\,\widehat\Lambda_{\mathrm{OLS}}
 =\Lambda+\Gamma\Sigma_fP^\top\Sigma_{qq}^{-1}
 +\Sigma_uU^\top\Sigma_{qq}^{-1}.
 $$
@@ -98,7 +98,7 @@ residual factor covariance
 $R_f=\Sigma_f-\Sigma_f(\Sigma_f+\Sigma_\varepsilon)^{-1}\Sigma_f$ and
 $\Sigma_{qq}$ with $Q_h=PR_fP^\top+U\Sigma_uU^\top+V\Sigma_vV^\top$.
 
-Write $G:=\operatorname{plim}\widehat\Lambda_{\mathrm{OLS}}-\Lambda$ for the
+Write $G:=\mathrm{plim}\,\widehat\Lambda_{\mathrm{OLS}}-\Lambda$ for the
 **confounding gap**. Everything below concerns its structure.
 
 ## 3. The Confounding Gap Is Low Rank
@@ -106,14 +106,14 @@ Write $G:=\operatorname{plim}\widehat\Lambda_{\mathrm{OLS}}-\Lambda$ for the
 ### Theorem 2 — Rank of the confounding gap
 
 $$
-\operatorname{rank}(G)\;\le\;K+\operatorname{rank}(B).
+\mathrm{rank}(G)\;\le\;K+\mathrm{rank}(B).
 $$
 
 The factor channel passes through a $K$-dimensional bottleneck and the
 feedback channel through the column space of $B$; rank is subadditive. The
 bound is attained generically.
 
-| $\operatorname{rank}(B)$ | Observed $\operatorname{rank}(G)$ | Bound |
+| $\mathrm{rank}(B)$ | Observed $\mathrm{rank}(G)$ | Bound |
 | ---: | ---: | ---: |
 | 0 | 3 | 3 |
 | 1 | 4 | 4 |
@@ -123,7 +123,7 @@ bound is attained generically.
 ### Corollary — Spurious cross-impact is confined, but not small
 
 If $\Lambda$ is diagonal and $B=0$, the population coefficient matrix lies
-in $\mathcal{D}_K=\{D+R : D \text{ diagonal},\ \operatorname{rank}(R)\le K\}$.
+in $\mathcal{D}_K=\{D+R : D \text{ diagonal},\ \mathrm{rank}(R)\le K\}$.
 
 This bounds the *shape*, not the *size*. At the registered fixture a strictly
 diagonal truth induces spurious off-diagonals reaching **0.2207** against
@@ -170,8 +170,8 @@ closed form to relative error below $10^{-10}$.
 
 $$
 \psi_K(\widehat A)=
-\frac{\min_{D,\ \operatorname{rank}(R)\le K}\lVert \widehat A-D-R \rVert_F}
-     {\lVert \widehat A-\operatorname{diag}(\widehat A) \rVert_F}.
+\frac{\min_{D,\ \mathrm{rank}(R)\le K}\lVert \widehat A-D-R \rVert_F}
+     {\lVert \widehat A-\mathrm{diag}(\widehat A) \rVert_F}.
 $$
 
 Its population value is zero under pure confounding, so a materially nonzero
@@ -202,7 +202,7 @@ $C(x,M)=x^\top M x$ to execute trade $x$.
 ### Theorem 6 — The cost error is low rank
 
 $C(x,A)-C(x,\Lambda)=x^\top G x$, so by Theorem 2 the error vanishes on a
-subspace of dimension at least $N-K-\operatorname{rank}(B)$. **At most
+subspace of dimension at least $N-K-\mathrm{rank}(B)$. **At most
 $K$ of the $N$ trade directions are mispriced**, however large the spurious
 entries. In the fixture the immune subspace has dimension **27** and a trade
 drawn from it has cost error $5.2\times10^{-17}$.
