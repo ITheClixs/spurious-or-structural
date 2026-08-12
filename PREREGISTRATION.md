@@ -1975,3 +1975,60 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A031 — Semantic paper-matrix assembly before implementation
+
+- **Registered:** 2026-08-12, after the derivation in
+  `docs/derivations/GATE_G2_PAPER_ASSEMBLY.md` and before any assembly driver,
+  synthetic panel fixture, or date cache existed.
+- **Reason:** the paper kernels and the A027 cache codec both exist, and the
+  protocol, block schedule, and fold rules are binding, but the composition
+  from kernels to the nine matrices was never stated. It is the only undefined
+  step between an issued date panel and a `PaperResearchDateCache`, and it is a
+  step where an error is invisible: a purged operator written into a
+  full-response slot, or coefficients written one response row off, yields a
+  cache that is finite, correctly shaped, correctly hashed, and wrong.
+- **Composition vector:** assembly iterates outer blocks `0..9` ascending, then
+  the sealed specification order
+  `(PI_1, PI_I, CI_1, CI_I, PI_CC, CI_CC)`, then responses `0..29` ascending.
+  Each block yields an original-unit operator per specification, and the ten
+  operators are averaged equally within the date per
+  `GATE_G2_PREMISE.md` line 553.
+- **Placement vector:** the four direct specifications write their block-mean
+  operators to the four direct slots, with exact `0.0` off-diagonals for the
+  two own-flow specifications. The cross-sectional specifications write the
+  residual-flow operator to the purged slots and
+  `C_purged P_perp + b W^T`, formed per block and averaged afterwards, to the
+  full-response slots. The ninth matrix is the block-mean `P_perp`, cached as
+  the projection rather than the loading because the loading is sign-ambiguous
+  and averaging loadings would cancel.
+- **Loss vector:** `sse` accumulates squared next-block residuals and `sst`
+  accumulates squared deviations from the **outer-training** response mean,
+  summed across the ten scored blocks in ascending order, in
+  specification-major, response-major `(sse, sst)` order.
+- **Predictions:** the eight numbered predictions of Section 6 of the
+  derivation are frozen verbatim and restated in
+  `docs/predictions/PAPER_ASSEMBLY.md`. They are deterministic checks on a
+  synthetic panel at test seed `1729`; no interval method applies and the
+  multiple-testing count is zero.
+- **Implementation license:** a pure composition driver over already-issued
+  panels, a synthetic panel fixture for verification, and its tests may be
+  written test-first. The driver must fail the date on a nonfinite value, a
+  nonconvergent solve, a weak eigengap, a rank-deficient design, an empty
+  scored block, or an exactly zero `sst`. No cell may be dropped, averaged
+  over, or filled.
+- **Scope withheld:** no NPY serializer, resource fixture, bootstrap batch,
+  resource capability, Make target, rehearsal, registered stream, registered
+  seed, or market data. No estimator, kernel, threshold, or sealed digest may
+  change.
+- **Failure rule:** a failing prediction is diagnosed and logged in
+  `SPECIFICATION_LOG.md`, not repaired after seeing output and then silently
+  accepted. In particular, predictions 6 and 8 exist to show that the placement
+  and averaging-order contracts are load-bearing; if a permutation or a
+  reordering leaves the packed vector unchanged, the contract is vacuous and
+  must be re-derived rather than declared satisfied.
+- **Inference effect:** none. G2 remains open and executable-red, and no
+  registered resource, validation, or research stream is licensed.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.

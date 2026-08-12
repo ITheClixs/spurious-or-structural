@@ -77,15 +77,29 @@ original units.
 
 ## 3. Coefficient placement, the step that was undefined
 
-Let `C_spec` be the `30 x 30` matrix whose row `i` holds the original-unit
-flow coefficients of response `i` under a specification, with column `j` the
-coefficient on asset `j`'s flow. Rows are responses and columns are flows,
-matching A027's stated orientation.
+Let `C_spec^(b)` be the `30 x 30` matrix whose row `i` holds the original-unit
+flow coefficients of response `i` under a specification fitted on outer block
+`b`, with column `j` the coefficient on asset `j`'s flow. Rows are responses and
+columns are flows, matching A027's stated orientation.
+
+`GATE_G2_PREMISE.md` line 553 requires that coefficient operators are averaged
+equally across the ten blocks within a date. Every cached matrix below is
+therefore the equal-weight block mean
+
+```
+C_spec = (1/10) * sum over b in 0..9 of C_spec^(b),                    (A)
+```
+
+and the average is taken **after** each block's operator is fully formed in
+original units, never by averaging intermediate scaled or residualised
+quantities. For the cross-sectional specifications the product forming the
+full-response operator is likewise taken per block and averaged afterwards, per
+the same clause.
 
 **Direct specifications.** `PI_1`, `PI_I`, `CI_1`, and `CI_I` write directly:
 
 ```
-PI_1_direct  <- C_{PI_1}
+PI_1_direct  <- C_{PI_1}     (block mean, Eq. A)
 PI_I_direct  <- C_{PI_I}
 CI_1_direct  <- C_{CI_1}
 CI_I_direct  <- C_{CI_I}
@@ -121,8 +135,10 @@ P_perp   = I_30 - W W^T
   ```
 
   where `b` is the 30-vector of estimated PC1 coefficients, one per response.
-  The product is formed **before** any block or date averaging, per
-  `GATE_G2_PREMISE.md`.
+  The product is formed per block, **before** any averaging, and the ten
+  resulting operators are then averaged by Eq. (A). Forming the product from
+  already-averaged factors would be a different and wrong quantity, because the
+  loading changes between blocks.
 
 - **Projection.** `cc_mean_projection_p_perp` holds `P_perp` itself, averaged
   across the ten outer blocks of the date after each block's `W` is computed
@@ -184,6 +200,9 @@ Frozen before implementation. All are deterministic checks at test seed
 7. An `sst` computed from the scored-block mean instead of the training-block
    mean differs from the contract value on the synthetic panel, confirming the
    two are distinguishable and the correct one is used.
+8. Averaging the ten block operators before forming the cross-sectional product
+   gives a different `PI_CC_full_response` than forming the product per block
+   and averaging afterwards, confirming Eq. (A) ordering is load-bearing.
 
 ## 7. What this derivation does not claim
 
