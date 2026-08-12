@@ -22,16 +22,53 @@ def test_generated_artifacts_are_committed() -> None:
         assert (GENERATED / name).is_file(), name
 
 
+def _generate(into: Path) -> None:
+    subprocess.run(
+        [sys.executable, "-m", "xid.exhibits", "--out", str(into)],
+        check=True,
+        cwd=ROOT,
+    )
+
+
 def test_exhibits_regenerate_byte_identically(tmp_path: Path) -> None:
-    """Every manuscript number must come back identical from committed code."""
-    for _ in range(2):
-        subprocess.run(
-            [sys.executable, "-m", "xid.exhibits", "--out", str(tmp_path)],
-            check=True,
-            cwd=ROOT,
-        )
+    """The generator is deterministic: two runs agree byte for byte."""
+    first, second = tmp_path / "a", tmp_path / "b"
+    _generate(first)
+    _generate(second)
     for name in ARTIFACTS:
-        assert (tmp_path / name).read_bytes() == (GENERATED / name).read_bytes(), name
+        assert (first / name).read_bytes() == (second / name).read_bytes(), name
+
+
+def _walk(node: Any, path: str = "") -> list[tuple[str, float]]:
+    if isinstance(node, bool):
+        return []
+    if isinstance(node, int | float):
+        return [(path, float(node))]
+    if isinstance(node, dict):
+        return [kv for k, v in node.items() for kv in _walk(v, f"{path}.{k}")]
+    if isinstance(node, list):
+        return [kv for i, v in enumerate(node) for kv in _walk(v, f"{path}[{i}]")]
+    return []
+
+
+def test_committed_exhibits_match_regeneration_within_tolerance(
+    tmp_path: Path,
+) -> None:
+    """Committed values must survive a rebuild on any supported platform.
+
+    Byte identity is not portable, because LAPACK builds differ in the last
+    bits of an eigen- or singular-value decomposition. Numerical agreement is
+    the property that actually protects the manuscript, so it is asserted
+    separately and with a declared tolerance.
+    """
+    _generate(tmp_path)
+    fresh = dict(_walk(json.loads((tmp_path / "exhibits.json").read_text())))
+    committed = dict(_walk(json.loads((GENERATED / "exhibits.json").read_text())))
+    assert fresh.keys() == committed.keys()
+    for key, want in committed.items():
+        got = fresh[key]
+        scale = max(abs(want), 1.0)
+        assert abs(got - want) / scale < 1e-8, f"{key}: {got} vs {want}"
 
 
 def test_exhibit_keys_are_complete() -> None:
@@ -86,13 +123,16 @@ def test_identified_halfwidth_dwarfs_the_observed_coefficient() -> None:
 def test_psi_curve_is_strictly_increasing_from_a_numerical_zero() -> None:
     curve = _payload()["psi_curve"]
     assert curve[0]["epsilon"] == 0.0
-    assert curve[0]["psi"] < 1e-12
+    assert curve[0]["psi"] == 0.0
     values = [row["psi"] for row in curve]
     assert all(a < b for a, b in pairwise(values)), values
 
 
-def test_psi_null_is_numerically_zero() -> None:
-    assert _payload()["psi_null"] < 1e-12
+def test_psi_null_is_reported_as_an_exact_analytic_zero() -> None:
+    """Proposition 5 makes this exactly zero; noise below the floor is clamped."""
+    payload = _payload()
+    assert payload["psi_null"] == 0.0
+    assert payload["numerical_zero_floor"] == 1e-12
 
 
 def test_psi_by_factor_count_has_an_elbow_at_the_true_factor_count() -> None:

@@ -296,7 +296,7 @@ Fresh local gate for preprint version 0.2:
 | Ruff lint | Pass |
 | Ruff format | 34 files checked |
 | Strict mypy | Pass, 34 source files |
-| Pytest | 371 passed in 36.82 seconds |
+| Pytest | 372 passed |
 | Deterministic G0 demo | 64 rows; expected hashes reproduced |
 | Committed-result drift | Pass; no drift |
 

@@ -202,6 +202,7 @@
       "rank_b": 30
     }
   ],
+  "numerical_zero_floor": 1e-12,
   "own_impact_max": 0.3952712629,
   "own_impact_min": 0.2061484059,
   "psi_by_factor_count": [
@@ -233,7 +234,7 @@
   "psi_curve": [
     {
       "epsilon": 0.0,
-      "psi": 1.759954843e-15
+      "psi": 0.0
     },
     {
       "epsilon": 0.01,
@@ -264,7 +265,7 @@
       "psi": 0.1162858754
     }
   ],
-  "psi_null": 1.759954843e-15,
+  "psi_null": 0.0,
   "published_control_shift": {
     "cross_mean_after": -0.039,
     "cross_mean_before": 0.032,

@@ -49,6 +49,11 @@ FACTOR_COUNT_GRID = (1, 2, 3, 4, 6, 10)
 FLOW_SHARE_GRID = tuple(round(0.10 + 0.0125 * i, 4) for i in range(29))
 FEEDBACK_ARMS = (0, 1, 2, 30)
 
+# Quantities that are analytically zero still return floating-point noise of
+# order 1e-15, and that noise is not portable across LAPACK builds. Reporting
+# ten significant digits of it would be reporting the platform, not the result.
+NUMERICAL_ZERO = 1e-12
+
 SCOPE = (
     "conditional analytic exhibit at published summary statistics; "
     "not an estimate of any market's impact matrix"
@@ -71,8 +76,16 @@ SHAPE_AGREEMENT_TOLERANCE = 0.05
 
 
 def _round(value: float) -> float:
-    """Round to ten significant digits so the JSON is platform-stable."""
-    return float(format(float(value), ".10g"))
+    """Round to ten significant digits, collapsing analytic zeros to exactly zero.
+
+    Ten digits is far above the drift of every stable quantity here, but a
+    value whose true magnitude is zero carries no stable digits at all, so it
+    is clamped rather than serialised as noise.
+    """
+    scalar = float(value)
+    if abs(scalar) < NUMERICAL_ZERO:
+        return 0.0
+    return float(format(scalar, ".10g"))
 
 
 def _fixture(rank_b: int) -> tuple[Matrix, ...]:
@@ -200,6 +213,7 @@ def build_exhibits() -> dict[str, Any]:
     """Assemble the complete exhibit payload."""
     payload: dict[str, Any] = {
         "scope": SCOPE,
+        "numerical_zero_floor": NUMERICAL_ZERO,
         "assets": N_ASSETS,
         "factors": N_FACTORS,
         "flow_share": FLOW_SHARE,
