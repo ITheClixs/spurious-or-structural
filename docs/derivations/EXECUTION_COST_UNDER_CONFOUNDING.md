@@ -79,18 +79,26 @@ confounded impact matrix. The magnitude of the spurious off-diagonals is
 irrelevant to this count: a dense contaminated matrix still misprices only a
 `K`-dimensional set of directions when `B = 0`.
 
-**Numerical confirmation.** At test seed `1729` with `N = 30`, `K = 3`,
-`B = 0`, and a strictly diagonal structural truth, the realised relative cost
-errors are:
+**Numerical confirmation.** In the general fixture at test seed `1729` with
+`N = 30`, `K = 3`, `B = 0`, and a strictly diagonal structural truth, with
+trades drawn from a dedicated seed-`9191` generator:
 
 | Trade | True cost | Cost error | Relative |
 | :--- | ---: | ---: | ---: |
-| Equal-weight index | 0.292259 | −0.024600 | **−8.4174%** |
-| Random unit vector | 0.312812 | −0.002019 | −0.6454% |
-| Confound-neutral | 0.274959 | −2.802e-16 | **−0.0000%** |
+| Equal-weight index | 0.292259 | −2.867451e-02 | −9.8113% |
+| Random unit vector | 0.299901 | −2.928861e-02 | −9.7661% |
+| Confound-neutral | 0.299208 | **+5.204170e-17** | **+0.0000%** |
 
 The confound-neutral trade is exact to machine precision, and the numerically
 determined null space of `G` has dimension `N − K = 27`.
+
+Note that the equal-weight index trade is **not** special in this fixture. The
+loadings `Γ` and `Δ_f` are generic normal draws, so `m` has no privileged
+relationship to the confounding subspace and bears roughly the same error as a
+random trade. The index direction becomes the worst case only in the one-spike
+geometry of Section 2, where `m` **is** the confounding direction. The general
+statement of Theorem 6 is about the existence and dimension of the immune
+subspace, not about which named basket is safe.
 
 ## 2. Factor exposure is the whole story
 
@@ -119,8 +127,18 @@ index-like baskets bears the entire error. The relevant question for a
 practitioner is therefore not "is my cross-impact matrix identified" but "does
 my trade load on the confounding direction".
 
-**Verification.** `xᵀGx / (mᵀx)²` is constant across trades to below `1e-12`,
-and the ratio equals `Ng` exactly.
+**Verification.** At the registered calibration `Ng = 0.2296108639`, and the
+ratio `xᵀGx / (mᵀx)²` reproduces it exactly across trades. The realised errors
+are:
+
+| Trade | True cost | Cost error | Relative | `1ᵀx` |
+| :--- | ---: | ---: | ---: | ---: |
+| Equal-weight index `m` | 0.423400 | +2.296109e-01 | **+54.2302%** | +5.4772 |
+| Random unit vector | 0.295007 | +1.598430e-02 | +5.4183% | +1.4451 |
+| Dollar-neutral pair | 0.285400 | **+0.000000e+00** | **+0.0000%** | +0.0000 |
+
+An index basket is mispriced by more than half its true cost, while a
+dollar-neutral pair is mispriced by exactly nothing.
 
 ## 3. What the identified set implies for cost
 

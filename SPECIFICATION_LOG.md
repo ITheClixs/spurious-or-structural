@@ -913,3 +913,31 @@ empirical model trials, but gate-level pipeline variants are recorded.
   external market data, evaluation data, and holdout remain untouched. Sealed
   digests `f6291894...` for `configs/g2.toml` and `1a14fd68...` for
   `configs/g2_resource.toml` were verified unchanged.
+
+## C0020 — A029 execution cost under low-rank confounding
+
+- **Registered:** 2026-08-12 after the A029 derivation in
+  `docs/derivations/EXECUTION_COST_UNDER_CONFOUNDING.md` and the five frozen
+  predictions in `docs/predictions/EXECUTION_COST.md`, and before any execution
+  module, robust scheduler, exhibit, figure, or manuscript section existed.
+- **Scope:** derive and implement the rank-`K` cost error and its immune
+  subspace, the one-spike exposure law, the identified cost interval, and the
+  closed-form minimax-cost schedule. No dynamic schedule, decay kernel,
+  risk-aversion term, registered stream, market data, or sealed-digest change
+  is permitted.
+- **Pre-implementation correction to Prediction 2.** The first registration of
+  Prediction 2 was defective and was corrected before any implementation
+  existed. Two faults: it did not pin the generator used to draw the trade
+  vectors, so its percentages were not reproducible; and it placed the
+  index-versus-neutral contrast in the general fixture, where `Gamma` and
+  `Delta_f` are generic normal draws and the equal-weight direction has no
+  privileged relationship to the confounding subspace. That contrast belongs to
+  the one-spike geometry, where `m` is the confounding direction. The trade
+  generator is now pinned to seed `9191` in the order random-unit then
+  confound-neutral, and the corrected values are recorded separately for the
+  general fixture (`-9.8113%`, `-9.7661%`, `+0.0000%`) and for the one-spike
+  geometry (`+54.2302%`, `+5.4183%`, `+0.0000%`). Predictions 1, 3, 4, and 5
+  were verified unaffected and stand as first registered. No result was
+  retrofitted to a number already published, and no fixture, target, or
+  calibration was re-drawn to recover the original percentages.
+- **Status:** registration and correction complete; implementation pending.

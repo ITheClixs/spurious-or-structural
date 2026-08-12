@@ -42,13 +42,36 @@ The relative cost error of the confound-neutral trade is below `1e-12`, and the
 numerically determined null space of `G` at relative tolerance `1e-10` has
 dimension exactly `N - K = 27`.
 
-**Prediction 2 — the headline cost errors.** Relative cost errors are:
+**Prediction 2 — the headline cost errors.**
+
+*Amended 2026-08-12, before implementation.* The original registration was
+defective in two ways and is corrected here rather than retrofitted later. It
+did not pin the generator used to draw the trades, so its percentages were not
+reproducible; and it placed the index-versus-neutral contrast in the general
+fixture, where the loadings are generic normal draws and the equal-weight
+direction has no privileged relationship to the confounding subspace. That
+contrast belongs to the one-spike geometry, where `m` is the confounding
+direction. The correction is logged in `SPECIFICATION_LOG.md`. Predictions 1,
+3, 4, and 5 are unaffected and stand as first registered.
+
+Trades are drawn from a dedicated generator at seed `9191`, in the order
+random-unit then confound-neutral.
+
+In the **general fixture**, relative cost errors are:
 
 | Trade | Predicted relative cost error |
 | :--- | ---: |
-| Equal-weight index | `-8.4174%` |
-| Frozen random unit | `-0.6454%` |
-| Confound-neutral | `-0.0000%` |
+| Equal-weight index | `-9.8113%` |
+| Frozen random unit | `-9.7661%` |
+| Confound-neutral | `+0.0000%`, absolute below `1e-15` |
+
+In the **one-spike geometry**, where `m` is the confounding direction:
+
+| Trade | Predicted relative cost error |
+| :--- | ---: |
+| Equal-weight index `m` | `+54.2302%` |
+| Frozen random unit | `+5.4183%` |
+| Dollar-neutral pair | `+0.0000%`, exactly |
 
 each to four decimal places.
 
