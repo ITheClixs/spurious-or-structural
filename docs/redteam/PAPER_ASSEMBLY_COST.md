@@ -98,3 +98,72 @@ Measurement only. No registered resource seed `2026071529`, validation seed
 `2026071521`, research seed `2026071522`, rehearsal, market data, or holdout was
 accessed. The benchmark used test seed `1729` on a synthetic panel and produced
 no coefficient-to-truth comparison.
+
+---
+
+# Addendum — a rejected optimisation and a protocol defect
+
+Recorded 2026-08-12, same session, after attempting the throughput repair.
+
+## 1. The vectorised solver was tried and is rejected
+
+Responses within a block share the design matrix and the column denominators
+and differ only in the response vector and in `lambda_max`, so a coordinate
+descent batched across the thirty responses replaces thirty tiny NumPy calls
+per coordinate with one. That is the natural repair, and it fails on both of
+its acceptance criteria.
+
+**It is not bit-identical.** Batching turns each per-response `np.dot` into a
+column of a matrix product, and BLAS reduces a GEMV differently from a DOT.
+Measured maximum absolute coefficient differences against the sealed scalar
+solver were `2.220e-16`, `7.216e-16`, and `2.734e-15` at ratio indices 0, 10,
+and 20. The differences are tiny, and that is beside the point: the sealed
+numerics define the estimator, so a solver that does not reproduce them
+exactly is a different estimator and would require re-registration rather than
+adoption.
+
+**It is not fast enough either.** Observed speedups were `33.7x` at ratio index
+0 but `5.2x` and `5.0x` at indices 10 and 20, because a batched sweep must keep
+iterating until the *slowest* response in the batch converges, so total work is
+set by the worst response rather than by the sum. Against the `48x` required to
+reach the expected envelope, a `5x` repair does not close the gap even if the
+exactness problem were solved.
+
+**Not adopted.** The batched solver is not added to the codebase.
+
+## 2. A protocol defect: the mandated outer refit does not converge
+
+`GATE_G2_PREMISE.md` line 493 requires that fold paths warm-start in descending
+penalty order while **every outer refit begins at zero**. Convergence from zero
+degrades sharply as the penalty shrinks, on the registered fold geometry of 24
+training rows against 30 penalized columns:
+
+| Ratio index | Penalty | From zero | Warm-started |
+| ---: | ---: | ---: | ---: |
+| 0 | 1.000e+00 | 1 sweep | 1 |
+| 10 | 9.427e-02 | 203 | 177 |
+| 20 | 8.886e-03 | 625 | 549 |
+| 25 | 2.728e-03 | 1,905 | 1,577 |
+| 30 | 8.377e-04 | 3,641 | 1,436 |
+| 35 | 2.572e-04 | 8,706 | 1,326 |
+| **39** | **1.000e-04** | **fails at the 10,000 cap** | **1,171** |
+
+The warm-started path converges at every ratio. The from-zero path fails at the
+smallest sealed ratio, with a final maximum update of `4.56e-08` against a
+`1e-10` tolerance and a KKT violation of `4.47e-08` against `1e-9`.
+
+**Consequence.** If cross-validation selects a penalty at or near the bottom of
+the sealed forty-ratio grid, the mandated outer refit from zero raises rather
+than returning, and by the A031 fail-closed rule that fails the date. This is
+not an implementation bug: the from-zero requirement is explicit in the
+registered protocol, and the solver is behaving as specified.
+
+The defect was invisible in the earlier forty-ratio benchmark because that
+benchmark warm-started throughout, which is the fold path rather than the outer
+path. Only the outer refit is affected.
+
+**Required decision.** Either the sweep cap is raised, which worsens the
+already-failing cost projection, or the outer refit is permitted to warm-start,
+which changes the registered estimator and needs an amendment, or the ratio grid
+is truncated above the failing region, which is also an amendment. None of the
+three is an implementation choice, and none is made here.
