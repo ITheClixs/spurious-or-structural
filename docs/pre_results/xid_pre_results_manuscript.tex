@@ -79,6 +79,7 @@
 
 \input{generated/fig_bounds}
 \input{generated/fig_diagnostic}
+\input{generated/fig_psi_study}
 
 \begin{document}
 
@@ -107,27 +108,30 @@ of Cross-Asset Price Impact\par}
 \vspace{4pt}
 \normalsize
 Cross-asset return-on-flow coefficients are routinely read as entries of a
-structural price-impact matrix. We show that reading is not merely noisy but
-generically unidentified, and we characterise exactly how. In a simultaneous
-$N$-asset system with $K$ latent factors and same-bin feedback $B$, the gap
-between the population regression coefficient and the structural impact matrix
-has rank at most $K+\rank(B)$. The consequences are sharp. When the structural
-matrix is diagonal and feedback is absent, the entire estimated cross-impact
-matrix is confined to the diagonal-plus-rank-$K$ set, yet its off-diagonal
-entries can be as large as genuine own-impact: in our fixture a strictly
-diagonal truth induces spurious cross terms of $0.221$ against own terms
-spanning $0.206$ to $0.395$. Because the gap is a free low-rank object, the
-structural matrix is set-identified rather than point-identified from second
-moments. In the permutation-invariant one-spike geometry we obtain the sharp
-identified interval in closed form; evaluated at published one-minute
-commonality statistics it runs from $-0.078$ to $0.103$ around an observed
-coefficient of $0.012$, so the structural off-diagonal is not identified even
-in sign. The rank restriction is nonetheless refutable, and we define a
-scale-free diagnostic measuring distance from the diagonal-plus-rank-$K$ set
-whose rejection supports genuine cross-impact, the reverse of the usual
-reading. We verify the derivation in a preregistered known-truth experiment
-with $N=30$, $K=3$, $T=10^{7}$, and register, without reporting, a
-falsification protocol for the empirical stage.
+structural price-impact matrix. We show that reading is generically
+unidentified, characterise exactly how, and quantify what the failure costs. In
+a simultaneous $N$-asset system with $K$ latent factors and same-bin feedback
+$B$, the gap between the population regression coefficient and the structural
+impact matrix has rank at most $K+\rank(B)$. When the structural matrix is
+diagonal and feedback is absent, the entire estimated cross-impact matrix is
+confined to the diagonal-plus-rank-$K$ set, yet its off-diagonal entries can be
+as large as genuine own-impact: a strictly diagonal truth induces spurious
+cross terms of $0.221$ against own terms spanning $0.206$ to $0.395$. The
+structural matrix is therefore set-identified rather than point-identified, and
+at published one-minute commonality statistics the sharp identified interval
+for the off-diagonal runs from $-0.078$ to $0.103$ around an observed $0.012$,
+so it is not identified even in sign. The same rank structure makes the
+consequence tractable. The execution-cost error is a rank-$K$ quadratic form,
+so it vanishes on at least $N-K$ trade directions: an equal-weight index basket
+is mispriced by $54\%$ of its true cost while a dollar-neutral basket is
+mispriced by exactly nothing, and a dollar-neutral trade has a point-identified
+execution cost even though the matrix behind it does not. Finally the
+restriction is refutable. We give a scale-free departure statistic whose
+rejection supports genuine cross-impact, with a bootstrap null that controls
+size above roughly $5N^2$ observations and is reported as invalid below. We
+verify the theory in a preregistered known-truth experiment with $N=30$, $K=3$,
+$T=10^{7}$, and register, without reporting, a falsification protocol for the
+empirical stage.
 \end{minipage}
 \end{center}
 
@@ -200,6 +204,17 @@ the sharp identified interval in closed form. Evaluated at published
 one-minute commonality statistics, that interval is $[-0.0782, 0.1027]$ around
 an observed off-diagonal of $0.0123$: the identified half-width is $7.4$ times
 the coefficient it is meant to pin down, and it contains zero.
+
+\paragraph{The failure has a price, and a hedge.}
+Because the cost error is the quadratic form of a rank-$K$ matrix, it vanishes
+on at least $N-K$ of the $N$ trade directions. Which directions are unsafe is
+determined by the confounding loadings: in the one-spike geometry an
+equal-weight index basket is mispriced by $54.23\%$ of its true cost and a
+dollar-neutral basket by exactly nothing. A dollar-neutral trade therefore has
+a point-identified execution cost even though the impact matrix producing it is
+not identified at all. For a desk that must take factor exposure we give the
+closed-form schedule minimising worst-case cost over the identified set, along
+with the cases in which robustness provably buys nothing.
 
 \paragraph{The restriction is refutable.}
 Low rank is a testable restriction, not just a caution.
@@ -875,6 +890,47 @@ degrees-of-freedom factor $\sqrt{N^2/(N^2-201)}=1.1347$ drives realised size to
 exactly zero at every sample size and removes all power, because the bias is in
 the centre of the null distribution and not its scale. A centre correction such
 as a double bootstrap would require its own design and is not attempted.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.95\columnwidth, height=4.1cm,
+  title={\small (a) Realised size against sample size},
+  xlabel={Observations $T$}, ylabel={Rejection rate},
+  xmode=log, log basis x=10,
+  xlabel style={font=\small}, ylabel style={font=\small},
+  tick label style={font=\scriptsize},
+  grid=major, grid style={line width=0.2pt,draw=chartlight!45},
+  axis lines=left,
+]
+\addplot[thick,black,mark=*,mark size=1.1pt] coordinates {\FigPsiSize};
+\addplot[densely dashed,chartgray,domain=400:6000,samples=2] {0.05};
+\end{axis}
+\end{tikzpicture}
+
+\vspace{4pt}
+
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.95\columnwidth, height=4.1cm,
+  title={\small (b) Power at $T=5000$},
+  xlabel={Perturbation size $\varepsilon$}, ylabel={Rejection rate},
+  xlabel style={font=\small}, ylabel style={font=\small},
+  tick label style={font=\scriptsize},
+  grid=major, grid style={line width=0.2pt,draw=chartlight!45},
+  axis lines=left,
+]
+\addplot[thick,chartgray,mark=square*,mark size=1.1pt] coordinates {\FigPsiPower};
+\end{axis}
+\end{tikzpicture}
+\caption{The departure test is valid only for large samples. Panel~(a): realised
+size against the nominal $5\%$ dashed line; the test over-rejects severely
+below roughly $T=5N^2$ and is accurate at $T=5000$. Panel~(b): power against a
+dense off-diagonal perturbation at $T=5000$. Monte Carlo standard errors
+$0.018$ and $0.022$.}
+\label{fig:psistudy}
+\end{figure}
 
 \section{Known-Truth Verification}
 \label{sec:verify}

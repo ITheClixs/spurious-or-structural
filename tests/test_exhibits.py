@@ -9,7 +9,12 @@ from typing import Any
 
 ROOT = Path(__file__).parents[1]
 GENERATED = ROOT / "docs" / "pre_results" / "generated"
-ARTIFACTS = ("exhibits.json", "fig_bounds.tex", "fig_diagnostic.tex")
+ARTIFACTS = (
+    "exhibits.json",
+    "fig_bounds.tex",
+    "fig_diagnostic.tex",
+    "fig_psi_study.tex",
+)
 
 
 def _payload() -> dict[str, Any]:
@@ -32,7 +37,12 @@ def _generate(into: Path) -> None:
 
 def test_exhibits_regenerate_byte_identically(tmp_path: Path) -> None:
     """The generator is deterministic: two runs agree byte for byte."""
+    import shutil
+
     first, second = tmp_path / "a", tmp_path / "b"
+    for target in (first, second):
+        target.mkdir(parents=True, exist_ok=True)
+        shutil.copy(GENERATED / "psi_study.json", target / "psi_study.json")
     _generate(first)
     _generate(second)
     for name in ARTIFACTS:
@@ -154,6 +164,9 @@ def test_figure_fragments_define_the_macros_the_manuscript_inputs() -> None:
         assert macro in bounds, macro
     for macro in ("\\FigPsiCurve", "\\FigPsiByFactorCount"):
         assert macro in diagnostic, macro
+    study_fig = (GENERATED / "fig_psi_study.tex").read_text()
+    for macro in ("\\FigPsiSize", "\\FigPsiPower"):
+        assert macro in study_fig, macro
 
 
 def test_published_control_shift_block_records_the_source_figures() -> None:

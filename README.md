@@ -10,7 +10,7 @@ Department of Computer Science, ETH Zürich
 > this work. The affiliation records the author's status as a student only, and
 > the views expressed are the author's alone.
 
-**Preprint · Version 0.2 · 12 August 2026 · [CC BY 4.0](LICENSE-PREPRINT.md)**
+**Preprint · Version 0.3 · 12 August 2026 · [CC BY 4.0](LICENSE-PREPRINT.md)**
 
 [![CI](https://github.com/ITheClixs/spurious-or-structural/actions/workflows/ci.yml/badge.svg)](https://github.com/ITheClixs/spurious-or-structural/actions/workflows/ci.yml)
 
@@ -39,10 +39,14 @@ off-diagonal entries can be as large as genuine own-impact. Because the gap is
 a free low-rank object, the structural matrix is set-identified rather than
 point-identified from second moments. In the permutation-invariant one-spike
 geometry the sharp identified interval is available in closed form, and at
-published one-minute commonality statistics it contains zero. The rank
-restriction is nonetheless refutable, which yields a scale-free diagnostic
-whose rejection supports genuine cross-impact — the reverse of the usual
-reading.
+published one-minute commonality statistics it contains zero. The same rank structure makes the consequence tractable: the execution-cost
+error is a rank-\(K\) quadratic form, so it vanishes on at least \(N-K\) trade
+directions. An equal-weight index basket is mispriced by 54% of its true cost
+while a dollar-neutral basket is mispriced by exactly nothing, and a
+dollar-neutral trade has a point-identified execution cost even though the
+matrix behind it does not. Finally the restriction is refutable: a scale-free
+departure statistic, with a bootstrap null that controls size above roughly
+\(5N^2\) observations and is reported as invalid below.
 
 The derivations are verified in a preregistered known-truth experiment with
 \(N=30\), \(K=3\), and \(T=10^7\). The empirical premise test is registered
@@ -190,7 +194,74 @@ The full derivation and proofs are in
 [CONFOUNDING_RANK_AND_PARTIAL_ID.md](docs/derivations/CONFOUNDING_RANK_AND_PARTIAL_ID.md),
 registered before implementation as amendment A028.
 
-## 4. Completed Known-Truth Verification
+## 4. What the Failure Costs
+
+Identification failure only matters if it changes a decision. A desk pays
+\(C(x,M)=x^\top M x\) to execute trade \(x\).
+
+### Theorem 6 — The cost error is low rank
+
+\(C(x,A)-C(x,\Lambda)=x^\top G x\), so by Theorem 2 the error vanishes on a
+subspace of dimension at least \(N-K-\operatorname{rank}(B)\). **At most
+\(K\) of the \(N\) trade directions are mispriced**, however large the spurious
+entries. In the fixture the immune subspace has dimension **27** and a trade
+drawn from it has cost error \(5.2\times10^{-17}\).
+
+In the one-spike geometry the error is exactly \(g(\mathbf 1^\top x)^2\):
+
+| Trade | True cost | Error | Relative |
+| :--- | ---: | ---: | ---: |
+| Equal-weight index | 0.4234 | +0.2296 | **+54.23%** |
+| Random unit vector | 0.2950 | +0.0160 | +5.42% |
+| Dollar-neutral pair | 0.2854 | 0 | **0.00%** |
+
+### Corollary — Cost can be identified where the matrix is not
+
+The identified cost interval has half-width \((T/N)(\mathbf 1^\top x)^2\), so a
+dollar-neutral trade has a **degenerate** interval. Its execution cost is
+point-identified even though the impact matrix is set-identified with an
+interval containing zero. An unidentified parameter need not mean an
+unidentified cost.
+
+### Minimax-cost execution
+
+For a desk that must take exposure, the schedule minimising worst-case cost
+subject to \(c^\top x=q\) is \(x^*(\pi)=\tfrac12\lambda M(\pi)^{-1}c\) with
+\(M(\pi)=A_s+\pi\mathbf 1\mathbf 1^\top\) at \(\pi=T/N\). It matches a
+20,000-point grid search exactly.
+
+| Target | Worst-case improvement | Exposure naive → robust |
+| :--- | ---: | :--- |
+| Index-like | 0.00% | +1.000 → +1.000 |
+| Neutral | 0.00% | 0.000 → 0.000 |
+| General | **3.11%** | −0.0663 → **−0.0130** |
+
+Robustness buys nothing when the constraint already pins factor exposure. Both
+degenerate cases were predicted before implementation.
+
+## 5. Is the Restriction Refutable? A Test
+
+\(\psi_K\) needs a critical value to be usable. A parametric plug-in bootstrap
+supplies one, with the factor count chosen by a rule fixed before use.
+
+| \(T\) | \(T/N^2\) | Realised size (nominal 0.05) |
+| ---: | ---: | ---: |
+| 500 | 0.56 | 0.267 |
+| 1,000 | 1.11 | 0.127 |
+| 2,000 | 2.22 | 0.100 |
+| **5,000** | **5.56** | **0.040** |
+
+Power at \(T=5000\): 0.070, 0.270, **0.870**, 1.000 against perturbations of
+0.05, 0.10, 0.20, 0.40.
+
+**The test is valid only above roughly \(T=5N^2\)** and over-rejects severely
+below. The cause is diagnosed: the plug-in null is refitted to the noisy
+estimate, so the bootstrap centres too low. A degrees-of-freedom variance
+inflation was tried and **fails completely** — it drives size to exactly zero
+and removes all power, because the bias is in the centre of the null
+distribution, not its scale. It is registered as not adopted.
+
+## 6. Completed Known-Truth Verification
 
 The G1 derivation was frozen before simulation code and random-number access.
 One master draw was split into 100 immutable shards of 100,000 observations
@@ -211,7 +282,7 @@ Replay reused all validated checkpoints and reproduced the summary, estimates,
 and success marker byte for byte. G1 is closed; the frozen draw must not be
 rerun.
 
-## 5. Confronting Published Evidence
+## 7. Confronting Published Evidence
 
 Because the one-spike gap is a constant added to every entry, a single factor
 control should shift every cross-coefficient by the same amount. Two
@@ -236,7 +307,7 @@ is an inequality in \(K\).
 Both are **conditional analytic exhibits at published summary statistics, not
 estimates of any market's impact matrix.**
 
-## 6. Registered Premise Test
+## 8. Registered Premise Test
 
 The next gate asks a deliberately narrow question before empirical data is
 opened:
@@ -264,7 +335,7 @@ estimator core, checkpoint/recovery boundary, deterministic paper kernels, and
 the A027 paper-cache codec are implemented and tested. Executable resource
 admission and rehearsal are incomplete, so no registered G2 stream is licensed.
 
-## 7. Gate Status
+## 9. Gate Status
 
 | Gate | Status | Licensed statement |
 | --- | --- | --- |
@@ -280,7 +351,7 @@ specifications remain visible in [PREREGISTRATION.md](PREREGISTRATION.md),
 [SPECIFICATION_LOG.md](SPECIFICATION_LOG.md). Working standards are in
 [RESEARCH_PROTOCOL.md](RESEARCH_PROTOCOL.md).
 
-## 8. Reproducibility
+## 10. Reproducibility
 
 ```bash
 uv sync --locked --extra dev
@@ -289,14 +360,14 @@ make exhibits     # regenerate every manuscript number; fails on drift
 make paper        # build the preprint PDF
 ```
 
-Fresh local gate for preprint version 0.2:
+Fresh local gate for preprint version 0.3:
 
 | Check | Result |
 | --- | --- |
 | Ruff lint | Pass |
-| Ruff format | 34 files checked |
-| Strict mypy | Pass, 34 source files |
-| Pytest | 372 passed |
+| Ruff format | 38 files checked |
+| Strict mypy | Pass, 38 source files |
+| Pytest | 410 passed |
 | Deterministic G0 demo | 64 rows; expected hashes reproduced |
 | Committed-result drift | Pass; no drift |
 
@@ -315,7 +386,11 @@ ledger.
 | [CONFOUNDING_RANK_AND_PARTIAL_ID.md](docs/derivations/CONFOUNDING_RANK_AND_PARTIAL_ID.md) | Rank bound, identified set, sharp interval, diagnostic |
 | [THEORY_EXTENSION.md](docs/predictions/THEORY_EXTENSION.md) | Six predictions frozen before implementation |
 | [identification.py](src/xid/models/identification.py) | Probability limits, confounding gap, one-spike bounds |
-| [rank_diagnostic.py](src/xid/models/rank_diagnostic.py) | The \(\psi_K\) statistic |
+| [rank_diagnostic.py](src/xid/models/rank_diagnostic.py) | The \(\psi_K\) statistic and its bootstrap test |
+| [execution.py](src/xid/models/execution.py) | Cost error, immune subspace, cost interval, minimax schedule |
+| [EXECUTION_COST_UNDER_CONFOUNDING.md](docs/derivations/EXECUTION_COST_UNDER_CONFOUNDING.md) | A029 execution derivation |
+| [PSI_NULL_DISTRIBUTION.md](docs/derivations/PSI_NULL_DISTRIBUTION.md) | A030 null distribution and size study |
+| [generated/psi_study.json](docs/pre_results/generated/psi_study.json) | Committed confirmatory size and power study |
 | [exhibits.py](src/xid/exhibits.py) | Deterministic generator for every manuscript number |
 | [generated/exhibits.json](docs/pre_results/generated/exhibits.json) | Committed exhibit values |
 | [GATE_G1_PROBABILITY_LIMITS.md](docs/derivations/GATE_G1_PROBABILITY_LIMITS.md) | Theorem 1 derivation |
@@ -325,7 +400,7 @@ ledger.
 | [G2_SOURCE_AUDIT.md](docs/G2_SOURCE_AUDIT.md) | Primary-source audit of published statistics |
 | [data/manifest.json](data/manifest.json) | Zero-external-data manifest |
 
-## 9. Limitations
+## 11. Limitations
 
 - Theorem 2 is an inequality, so a high observed rank is uninformative if \(K\)
   is misspecified, and the gap's rank is not separately observable from that of
@@ -337,8 +412,12 @@ ledger.
   isotropic-residual conventions, which are declared maximum-entropy choices
   and not identified features of any exchange.
 - \(\psi_K\) is an upper bound from a stationary point of an alternating
-  projection, has no derived sampling distribution here, and cannot confirm
-  diagonality.
+  projection and cannot confirm diagonality. Its bootstrap test is valid only
+  above roughly \(T=5N^2\), and its size and power were established on a
+  single Gaussian, homoskedastic, serially independent fixture that market data
+  violates. The factor count is assumed, not estimated with a validated rule.
+- The execution results use a static one-period impact model with no decay
+  kernel, risk aversion, or timing risk, and support no profitability claim.
 - The G1 fixture is Gaussian, known-truth, and large-sample; its dense positive
   targets do not reproduce the small, sign-sensitive off-diagonals central to
   the empirical question.
@@ -348,7 +427,7 @@ ledger.
   savings, transaction costs, capacity, and profitability are unresolved. The
   present evidence supports no trading rule, deployment claim, or return claim.
 
-## 10. Selected References
+## 12. Selected References
 
 The manuscript carries 45 references. The most directly relevant:
 
@@ -375,7 +454,7 @@ The manuscript carries 45 references. The most directly relevant:
 
 Full bibliography: [references.bib](docs/pre_results/references.bib).
 
-## 11. License and Citation
+## 13. License and Citation
 
 Copyright © 2026 Mehmet Demir Güven. The preprint manuscript, its source, and
 its original figures are licensed under [CC BY 4.0](LICENSE-PREPRINT.md), and
@@ -385,7 +464,7 @@ license governs the software and its associated documentation.
 No arXiv identifier exists yet. Until one is assigned, cite as:
 
 > Mehmet Demir Güven (2026). "Spurious or Structural? Low-Rank Confounding and
-> Partial Identification of Cross-Asset Price Impact." Preprint, version 0.2,
+> Partial Identification of Cross-Asset Price Impact." Preprint, version 0.3,
 > 12 August 2026.
 
 For a reproducible reference to the repository state, include the commit hash

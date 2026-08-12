@@ -26,7 +26,7 @@ If TeX Live is not installed locally, `tectonic -X compile
 xid_pre_results_manuscript.tex --outdir out` is an acceptable substitute; note
 that it exercises XeTeX rather than the pdfLaTeX path arXiv uses.
 
-Last verified standalone build: **9 pages, 0 undefined references,
+Last verified standalone build: **11 pages, 0 undefined references,
 bibliography present, `Preprint. Under review.` on every page, dagger footnote
 and affiliation disclaimer on page 1.**
 
@@ -41,6 +41,7 @@ The tarball contains exactly:
 | `references.bib` | Source bibliography, so local verification builds reproduce the same result |
 | `generated/fig_bounds.tex` | Figure coordinates, generated |
 | `generated/fig_diagnostic.tex` | Figure coordinates, generated |
+| `generated/fig_psi_study.tex` | Size and power figure coordinates, generated |
 
 No `.aux`, `.log`, `.out`, `.synctex.gz`, or `.pdf` ships. All figures are
 inline TikZ/pgfplots, so there are no external image files.
@@ -90,7 +91,7 @@ in the metadata field.
 **Comments**
 
 ```
-9 pages, 2 figures. Pre-results preprint: reports derivations and a
+11 pages, 4 figures. Pre-results preprint: reports derivations and a
 preregistered known-truth simulation; the empirical premise test is registered
 but not reported. Code, preregistration, and ledgers at
 https://github.com/ITheClixs/spurious-or-structural
@@ -146,10 +147,17 @@ three years**.
 
 - A clean named theorem with a short proof. Reviewers and citers can restate
   `rank(G) ≤ K + rank(B)` in one line.
-- A **reusable diagnostic**. Tools get cited more than critiques, because
-  applying `ψ_K` gives a later paper something concrete to do.
+- A **usable test, not just a statistic.** `ψ_K` now ships with a bootstrap
+  null, a factor-count rule fixed in advance, and a stated validity range.
+  Methods that can be applied get cited; statistics without critical values do
+  not.
+- **An execution result with a memorable form.** "Only `K` of `N` trade
+  directions are mispriced", "an index basket is wrong by 54% and a
+  dollar-neutral basket by exactly zero", and "cost can be identified where the
+  matrix is not" are quotable, and they reach the optimal-execution literature,
+  which is considerably larger than the cross-impact niche.
 - A **partial-identification framing** that reaches econometricians as well as
-  microstructure researchers, roughly doubling the plausible citing pool.
+  microstructure researchers.
 - Direct, checkable engagement with the most-cited recent paper in the niche,
   using its own published numbers.
 - Fully public code where every reported number regenerates with one command.
@@ -170,9 +178,17 @@ three years**.
 
 | Scenario | Three-year citations |
 | --- | --- |
-| Current pre-results form, no follow-up | **3–10** |
-| Premise test closes, empirical gate opens, resubmitted with results | **15–40** |
-| The `ψ_K` diagnostic is adopted by another group | 40+, but this is not the base case |
+| Current pre-results form, no follow-up | **5–15** |
+| Premise test closes, empirical gate opens, resubmitted with results | **20–50** |
+| The `ψ_K` test or the immune-subspace result is adopted by another group | 50+, not the base case |
+
+**Revised upward from an earlier 3–10 / 15–40.** The reason is specific rather
+than optimistic: the paper stopped being only a critique. It now contains a
+test a reader can run, with a validity range, and an execution consequence with
+a closed-form schedule. Papers that hand over an instrument accumulate
+citations from people who use it, which a pure identification critique does
+not. The revision is roughly a factor of one and a half, not an order of
+magnitude, because the largest discount is unchanged.
 
 The middle row is the one worth working toward, and it depends on finishing G2
 and G3 rather than on anything further that can be done to the manuscript.

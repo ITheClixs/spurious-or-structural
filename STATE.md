@@ -632,8 +632,8 @@ and the `psi_K` statistic as derivation and deterministic software evidence
 only. Registered resource/validation/research realizations and empirical tape
 remain untouched."
 
-The latest deterministic gate is 371 tests over 34 source files and does not
-admit resources. Version 0.2 of the pre-results preprint is a dissemination
+The latest deterministic gate is 410 tests over 38 source files and does not
+admit resources. Version 0.3 of the pre-results preprint is a dissemination
 artifact, not G2 or G8 evidence; it is submission-ready per
 `docs/ARXIV_SUBMISSION.md` but carries no empirical claim. Next either submit
 that preprint or derive and independently review semantic paper-matrix
