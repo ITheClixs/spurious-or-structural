@@ -984,3 +984,51 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Multiple-testing count:** zero.
 - **Access:** test seeds `1729`, `9191`, and `314159` only. Registered seeds,
   external market data, evaluation data, and holdout remain untouched.
+
+## C0021 — A030 finite-sample null distribution for the departure statistic
+
+- **Registered:** 2026-08-12 after the derivation in
+  `docs/derivations/PSI_NULL_DISTRIBUTION.md`, with its exploratory pilot
+  explicitly disclosed, and before any bootstrap implementation or confirmatory
+  run existed.
+- **Scope:** supply a sampling distribution for `psi_K` so the diagnostic
+  becomes a test, fix a factor-count rule before use, and report realised size
+  and power. No dependent bootstrap, heteroskedastic model, registered stream,
+  or market data.
+- **Pilot disclosure:** size and power tables were first produced at seeds
+  `1729` and `9191` before registration and were labelled exploratory. The
+  confirmatory run used the fresh sampling seed `314159` fixed in the
+  registration.
+- **Observed RED:** the first study run failed with
+  `ModuleNotFoundError: No module named 'xid.psi_study'`; the first artifact
+  check failed on the absent `psi_study.json`.
+- **Observed GREEN:** all five registered predictions hold at the confirmatory
+  seed. Realised size at nominal 5% is `0.267`, `0.127`, `0.100`, and `0.040`
+  at `T` of 500, 1,000, 2,000, and 5,000, with Monte Carlo standard error
+  `0.0178`. Power at `T = 5000` is `0.070`, `0.270`, `0.870`, and `1.000`
+  against Frobenius perturbations of `0.05`, `0.10`, `0.20`, and `0.40`, with
+  standard error `0.0218`. The null manifold has dimension `201` against `900`
+  free parameters.
+- **Registered negative result, confirmed:** the degrees-of-freedom variance
+  inflation of `1.134704` produces realised size of exactly `0.000` at every
+  sample size, removing all power. It remains **not adopted**. The plug-in bias
+  lies in the centre of the null distribution rather than its scale, so a scale
+  correction cannot reach it.
+- **Usage bound:** the test is usable only above roughly `T = 5 N^2`. Below
+  that it over-rejects severely, and the manuscript states the bound rather
+  than implying general validity.
+- **Effect on the standing objection:** objection 2 of
+  `docs/redteam/THEORY_EXTENSION.md` is now partially resolved. `psi_K` is a
+  test rather than a descriptive statistic, but only for large samples and only
+  under a Gaussian, homoskedastic, serially independent sampling model. The
+  factor count remains assumed, and the selection rule was validated on one
+  fixture where the true count was known.
+- **Status:** passed. C0016 resource admission remains executable-red and G2
+  remains open.
+- **Intervals:** rejection rates are Monte Carlo proportions reported with
+  binomial standard errors at `M = 150` and `M = 100`; that is the named
+  interval method. All other quantities are deterministic.
+- **Multiple-testing count:** zero. No coefficient-to-truth comparison and no
+  registered stochastic draw is part of this slice.
+- **Access:** test seeds `1729`, `9191`, and `314159` only. Registered seeds,
+  external market data, evaluation data, and holdout remain untouched.

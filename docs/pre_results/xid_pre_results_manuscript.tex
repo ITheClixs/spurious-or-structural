@@ -817,6 +817,65 @@ structure of the error does not depend on the schedule, so the immune-subspace
 conclusion is expected to survive in a multi-period quadratic-cost model, but
 that extension is not proved here.
 
+\subsection{A finite-sample null distribution}
+\label{sec:psinull}
+
+Proposition \ref{prop:psizero} is a population statement, which leaves
+``materially nonzero'' undefined. We close that gap with a parametric plug-in
+bootstrap: refit the null projection $\widehat A_0$ from the estimate, redraw
+the estimation error from the ordinary-least-squares sampling law
+$\sqrt T(\widehat A_{i\cdot}-A_{i\cdot})\to_d N(0,\sigma_i^2\Sigma_{qq}^{-1})$,
+and take the upper $1-\alpha$ quantile of $\psi_K(\widehat A_0+E^*)$ as the
+critical value. The factor count is selected by an eigenvalue-ratio rule fixed
+before use, so it cannot be chosen after seeing a rejection.
+
+The null manifold has dimension $N+K(2N-K)=201$ against $N^2=900$ free
+parameters, so the restriction has codimension $699$. Since $\psi_K(\widehat A)
+= O_p(T^{-1/2})$ under $H_0$, the test is consistent against any fixed
+alternative outside $\mathcal D_K$.
+
+Table \ref{tab:size} reports a confirmatory study at a seed fixed after the
+design was registered. \textbf{The test controls size only for large samples.}
+
+\begin{table}[t]
+\centering
+\caption{Realised size at nominal $5\%$ and power at $T=5000$, $N=30$, $K=3$,
+$B=199$. Monte Carlo standard errors $0.018$ and $0.022$.}
+\label{tab:size}
+\small
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+$T$ & $T/N^2$ & Plug-in size & Inflated \\
+\midrule
+500 & 0.56 & 0.267 & 0.000 \\
+1{,}000 & 1.11 & 0.127 & 0.000 \\
+2{,}000 & 2.22 & 0.100 & 0.000 \\
+5{,}000 & 5.56 & \textbf{0.040} & 0.000 \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Power at $T=5000$ against perturbation size $\varepsilon$}}\\
+\multicolumn{2}{@{}l}{$\varepsilon=0.05$} & \multicolumn{2}{r}{0.070} \\
+\multicolumn{2}{@{}l}{$\varepsilon=0.10$} & \multicolumn{2}{r}{0.270} \\
+\multicolumn{2}{@{}l}{$\varepsilon=0.20$} & \multicolumn{2}{r}{\textbf{0.870}} \\
+\multicolumn{2}{@{}l}{$\varepsilon=0.40$} & \multicolumn{2}{r}{1.000} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At $T=5000$, roughly $5N^2$ observations, realised size is $0.040$ against
+nominal $0.05$ and power against a Frobenius-$0.20$ alternative is $0.870$.
+Below that the test over-rejects badly, reaching $0.267$ at $T=500$. We state
+the usable range rather than implying general validity: at $N=30$ the test
+should not be used below about $T=5N^2$.
+
+The cause is diagnosed rather than left open. The plug-in null is refitted to
+the noisy estimate, so the low-rank fit absorbs part of the estimation error
+and the bootstrap statistics are centred too low. We report a failed remedy
+alongside the working method: inflating the bootstrap error scale by the
+degrees-of-freedom factor $\sqrt{N^2/(N^2-201)}=1.1347$ drives realised size to
+exactly zero at every sample size and removes all power, because the bias is in
+the centre of the null distribution and not its scale. A centre correction such
+as a double bootstrap would require its own design and is not attempted.
+
 \section{Known-Truth Verification}
 \label{sec:verify}
 

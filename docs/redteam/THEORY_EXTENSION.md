@@ -57,13 +57,23 @@ elbow is visible when `K` is genuinely unknown or when factor strength is
 heterogeneous. **Any empirical application of `psi_K` is currently
 underdetermined for this reason.**
 
-**2. There is no sampling distribution for `psi_K`.** Proposition 5 is a
-population statement. The manuscript reports no finite-sample null distribution,
-no critical value, and no power analysis against a stated alternative. The
-phrase "materially nonzero" is not operationalised. Deriving that distribution
-requires its own registered design and is not attempted here. As shipped,
-`psi_K` is a descriptive statistic with a known population value, not a
-hypothesis test.
+**2. There is no sampling distribution for `psi_K`.** **Resolved by A030,
+partially.** A parametric plug-in bootstrap now supplies a critical value, and
+a confirmatory study at a fresh seed found realised size `0.040` against a
+nominal `0.05` at `T = 5000`, with power `0.870` against a Frobenius-`0.20`
+alternative. `psi_K` is therefore a test, not merely a descriptive statistic.
+
+What remains unresolved is the small-sample behaviour, and it is severe. At
+`T = 500` the realised size is `0.267`, more than five times nominal, and it is
+still `0.100` at `T = 2000`. The test is usable only above roughly
+`T = 5 N^2`. The cause is diagnosed: the plug-in null is refitted to the noisy
+estimate, so the low-rank fit absorbs part of the estimation error and the
+bootstrap statistics are centred too low. The obvious remedy, inflating the
+bootstrap error scale by the degrees-of-freedom factor `1.1347`, was tried and
+**fails completely**, driving realised size to exactly zero at every sample
+size and removing all power, because the bias is in the centre of the null
+distribution rather than its scale. A centre correction such as a double
+bootstrap would need its own registered design.
 
 **3. The sharp interval inherits the one-spike convention entirely.**
 Proposition 4 is exact given the permutation-invariant one-spike geometry and
@@ -103,13 +113,22 @@ observationally indistinguishable from confounding. Both directions are stated
 in the manuscript, but together they mean the theorem constrains interpretation
 more than it enables inference.
 
-## What would resolve the main objection
+## The main objection after A030
 
-A registered design deriving the finite-sample null distribution of `psi_K`
-under the pure-confounding model, with a factor-count selection rule fixed in
-advance and power evaluated against a stated structural alternative. Until that
-exists, `psi_K` should be presented as a population restriction with a
-descriptive sample analogue, which is how the current manuscript presents it.
+Objection 1 stands unchanged: the factor count is still assumed. A030 fixes a
+selection rule in advance, the Ahn-Horenstein eigenvalue ratio on the
+off-diagonal part, and that rule recovers the true count on the fixture. But no
+study here establishes that it recovers the count when factor strength is
+heterogeneous or when the true count is genuinely unknown, and the size and
+power results are all conditional on the rule having selected correctly.
+
+**Strongest unresolved objection, restated.** The test is valid only for large
+samples relative to the parameter count, and both the validity threshold and
+the factor-count rule were established on a single Gaussian, homoskedastic,
+serially independent fixture. Market data violates every one of those
+conditions. A dependent bootstrap and a heterogeneous-loading study are
+required before `psi_K` can be applied empirically, and neither is attempted
+here.
 
 ## Gate impact
 

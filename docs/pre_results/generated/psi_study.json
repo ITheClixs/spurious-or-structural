@@ -1,0 +1,61 @@
+{
+  "alpha": 0.05,
+  "assets": 30,
+  "bootstrap_draws": 199,
+  "confirmatory_seed": 314159,
+  "factors": 3,
+  "free_parameters": 900,
+  "manifold_dimension": 201,
+  "power": [
+    {
+      "epsilon": 0.05,
+      "power": 0.07
+    },
+    {
+      "epsilon": 0.1,
+      "power": 0.27
+    },
+    {
+      "epsilon": 0.2,
+      "power": 0.87
+    },
+    {
+      "epsilon": 0.4,
+      "power": 1.0
+    }
+  ],
+  "power_monte_carlo_standard_error": 0.021794,
+  "power_replicates": 100,
+  "power_sample_size": 5000,
+  "scope": "Monte Carlo rejection rates under a homoskedastic, serially independent, correctly specified sampling model; not a claim about market data",
+  "size": [
+    {
+      "inflated_size": 0.0,
+      "observations_per_parameter": 0.5556,
+      "plug_in_size": 0.26666666666666666,
+      "sample_size": 500
+    },
+    {
+      "inflated_size": 0.0,
+      "observations_per_parameter": 1.1111,
+      "plug_in_size": 0.12666666666666668,
+      "sample_size": 1000
+    },
+    {
+      "inflated_size": 0.0,
+      "observations_per_parameter": 2.2222,
+      "plug_in_size": 0.1,
+      "sample_size": 2000
+    },
+    {
+      "inflated_size": 0.0,
+      "observations_per_parameter": 5.5556,
+      "plug_in_size": 0.04,
+      "sample_size": 5000
+    }
+  ],
+  "size_monte_carlo_standard_error": 0.017795,
+  "size_replicates": 150,
+  "variance_inflation_adopted": false,
+  "variance_inflation_factor": 1.134704
+}

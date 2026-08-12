@@ -546,6 +546,33 @@ or new coefficient-to-truth comparison is permitted in this slice.
   population restriction with a descriptive sample analogue rather than a
   hypothesis test. Recorded in `docs/redteam/THEORY_EXTENSION.md`.
 
+- A029 carries the rank bound into execution. The cost error is the quadratic
+  form of a rank-`K + rank(B)` matrix, so it vanishes on a trade subspace of
+  dimension at least `N - K - rank(B)`; the fixture's immune subspace has
+  dimension exactly 27 with cost error `5.204170e-17` on it. In the one-spike
+  geometry the error is exactly proportional to squared factor exposure, giving
+  `+54.2302%` on an equal-weight index basket and exactly zero on a
+  dollar-neutral pair. The identified cost interval is degenerate for
+  dollar-neutral trades, so execution cost can be point-identified where the
+  impact matrix is not. The minimax-cost schedule matches a 20,000-point grid
+  search and improves worst-case cost by `0.0000%`, `0.0000%`, and `3.1095%`
+  on the index-like, neutral, and general targets.
+- A030 gives `psi_K` a sampling distribution. A parametric plug-in bootstrap at
+  the confirmatory seed `314159` produced realised size `0.267`, `0.127`,
+  `0.100`, and `0.040` at `T` of 500, 1,000, 2,000, and 5,000 against nominal
+  `0.05`, and power `0.070`, `0.270`, `0.870`, `1.000` at `T = 5000`. All five
+  registered predictions hold. The statistic is therefore a test above roughly
+  `T = 5 N^2` and is severely oversized below, which the manuscript states as a
+  usage bound. The registered degrees-of-freedom variance inflation is
+  confirmed as not adopted: it drives size to exactly zero and removes all
+  power.
+- Two registered predictions failed during this work and were logged rather
+  than quietly repaired: an execution-cost prediction whose fixture was
+  under-specified and whose index-versus-neutral contrast had been placed in
+  the wrong geometry, corrected before implementation; and an exposure-law
+  tolerance set absolutely against one platform, which hosted Linux rejected
+  and which was restated in relative terms.
+
 ## In flight
 
 1. Submit the version-0.2 preprint to arXiv under `q-fin.TR` with `q-fin.ST`
