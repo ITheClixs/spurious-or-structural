@@ -30,26 +30,26 @@ Cross-asset return-on-flow coefficients are routinely read as entries of a
 structural price-impact matrix. That reading is not merely noisy; it is
 generically unidentified, and this project characterises exactly how.
 
-In a simultaneous \(N\)-asset system with \(K\) latent factors and same-bin
-feedback \(B\), the gap between the population regression coefficient and the
-structural impact matrix has rank at most \(K+\operatorname{rank}(B)\). When
+In a simultaneous $N$-asset system with $K$ latent factors and same-bin
+feedback $B$, the gap between the population regression coefficient and the
+structural impact matrix has rank at most $K+\operatorname{rank}(B)$. When
 the structural matrix is diagonal and feedback is absent, the entire estimated
-cross-impact matrix is confined to the diagonal-plus-rank-\(K\) set, yet its
+cross-impact matrix is confined to the diagonal-plus-rank-$K$ set, yet its
 off-diagonal entries can be as large as genuine own-impact. Because the gap is
 a free low-rank object, the structural matrix is set-identified rather than
 point-identified from second moments. In the permutation-invariant one-spike
 geometry the sharp identified interval is available in closed form, and at
 published one-minute commonality statistics it contains zero. The same rank structure makes the consequence tractable: the execution-cost
-error is a rank-\(K\) quadratic form, so it vanishes on at least \(N-K\) trade
+error is a rank-$K$ quadratic form, so it vanishes on at least $N-K$ trade
 directions. An equal-weight index basket is mispriced by 54% of its true cost
 while a dollar-neutral basket is mispriced by exactly nothing, and a
 dollar-neutral trade has a point-identified execution cost even though the
 matrix behind it does not. Finally the restriction is refutable: a scale-free
 departure statistic, with a bootstrap null that controls size above roughly
-\(5N^2\) observations and is reported as invalid below.
+$5N^2$ observations and is reported as invalid below.
 
 The derivations are verified in a preregistered known-truth experiment with
-\(N=30\), \(K=3\), and \(T=10^7\). The empirical premise test is registered
+$N=30$, $K=3$, and $T=10^7$. The empirical premise test is registered
 here but not reported.
 
 **Keywords:** cross-impact; order-flow imbalance; latent factors; partial
@@ -73,47 +73,47 @@ and manipulation constraints, so the ambiguity is not academic.
 
 ## 2. Simultaneous System
 
-Let returns \(r_t\), flows \(q_t\), and shocks \(u_t,v_t\) lie in
-\(\mathbb{R}^N\), with latent factors \(f_t\in\mathbb{R}^K\):
+Let returns $r_t$, flows $q_t$, and shocks $u_t,v_t$ lie in
+$\mathbb{R}^N$, with latent factors $f_t\in\mathbb{R}^K$:
 
-\[
+$$
 r_t = \Lambda q_t + \Gamma f_t + u_t,
 \qquad
 q_t = B r_t + \Delta_f f_t + v_t.
-\]
+$$
 
-With \(L=I_N-B\Lambda\), \(H=L^{-1}\), \(P=H(B\Gamma+\Delta_f)\), \(U=HB\), and
-\(V=H\), the flow reduced form is \(q_t=Pf_t+Uu_t+Vv_t\).
+With $L=I_N-B\Lambda$, $H=L^{-1}$, $P=H(B\Gamma+\Delta_f)$, $U=HB$, and
+$V=H$, the flow reduced form is $q_t=Pf_t+Uu_t+Vv_t$.
 
 ### Theorem 1 — Pseudo-true cross-impact matrices
 
-\[
+$$
 \operatorname{plim}\widehat\Lambda_{\mathrm{OLS}}
 =\Lambda+\Gamma\Sigma_fP^\top\Sigma_{qq}^{-1}
 +\Sigma_uU^\top\Sigma_{qq}^{-1}.
-\]
+$$
 
-Controlling for \(h_t=f_t+\varepsilon_t\) replaces \(\Sigma_f\) with the
+Controlling for $h_t=f_t+\varepsilon_t$ replaces $\Sigma_f$ with the
 residual factor covariance
-\(R_f=\Sigma_f-\Sigma_f(\Sigma_f+\Sigma_\varepsilon)^{-1}\Sigma_f\) and
-\(\Sigma_{qq}\) with \(Q_h=PR_fP^\top+U\Sigma_uU^\top+V\Sigma_vV^\top\).
+$R_f=\Sigma_f-\Sigma_f(\Sigma_f+\Sigma_\varepsilon)^{-1}\Sigma_f$ and
+$\Sigma_{qq}$ with $Q_h=PR_fP^\top+U\Sigma_uU^\top+V\Sigma_vV^\top$.
 
-Write \(G:=\operatorname{plim}\widehat\Lambda_{\mathrm{OLS}}-\Lambda\) for the
+Write $G:=\operatorname{plim}\widehat\Lambda_{\mathrm{OLS}}-\Lambda$ for the
 **confounding gap**. Everything below concerns its structure.
 
 ## 3. The Confounding Gap Is Low Rank
 
 ### Theorem 2 — Rank of the confounding gap
 
-\[
+$$
 \operatorname{rank}(G)\;\le\;K+\operatorname{rank}(B).
-\]
+$$
 
-The factor channel passes through a \(K\)-dimensional bottleneck and the
-feedback channel through the column space of \(B\); rank is subadditive. The
+The factor channel passes through a $K$-dimensional bottleneck and the
+feedback channel through the column space of $B$; rank is subadditive. The
 bound is attained generically.
 
-| \(\operatorname{rank}(B)\) | Observed \(\operatorname{rank}(G)\) | Bound |
+| $\operatorname{rank}(B)$ | Observed $\operatorname{rank}(G)$ | Bound |
 | ---: | ---: | ---: |
 | 0 | 3 | 3 |
 | 1 | 4 | 4 |
@@ -122,8 +122,8 @@ bound is attained generically.
 
 ### Corollary — Spurious cross-impact is confined, but not small
 
-If \(\Lambda\) is diagonal and \(B=0\), the population coefficient matrix lies
-in \(\mathcal{D}_K=\{D+R : D \text{ diagonal},\ \operatorname{rank}(R)\le K\}\).
+If $\Lambda$ is diagonal and $B=0$, the population coefficient matrix lies
+in $\mathcal{D}_K=\{D+R : D \text{ diagonal},\ \operatorname{rank}(R)\le K\}$.
 
 This bounds the *shape*, not the *size*. At the registered fixture a strictly
 diagonal truth induces spurious off-diagonals reaching **0.2207** against
@@ -133,8 +133,8 @@ of nothing.
 
 ### Proposition 3 — The structural matrix is set-identified
 
-With \(B=0\), \(\Sigma_f=I_K\), and \(W=\Sigma_{qq}^{-1}\Delta_f\), any
-\(\Lambda = A - \Gamma W^\top\) satisfying the positive-semidefiniteness
+With $B=0$, $\Sigma_f=I_K$, and $W=\Sigma_{qq}^{-1}\Delta_f$, any
+$\Lambda = A - \Gamma W^\top$ satisfying the positive-semidefiniteness
 constraints reproduces the observed second moments exactly. Cross-impact is a
 **partial identification** problem; a factor control moves the estimate *along*
 the confounding directions rather than out of the identified set.
@@ -144,50 +144,50 @@ the confounding directions rather than out of the identified set.
 In the registered permutation-invariant geometry the gap collapses to a single
 constant added to *every* entry, and
 
-\[
+$$
 \Lambda_{\mathrm{off}}\in
 \left[A_{\mathrm{off}}-\tfrac{T}{N},\; A_{\mathrm{off}}+\tfrac{T}{N}\right],
 \qquad
 T^2=\frac{(r_1-q_1a_1^2)(q_1-q_0)}{q_1q_0}.
-\]
+$$
 
-At the source-matched calibration (\(N=30\), \(s_q=0.2827\), \(s_r=0.32\),
-\(d=0.29\)):
+At the source-matched calibration ($N=30$, $s_q=0.2827$, $s_r=0.32$,
+$d=0.29$):
 
-| \(o\) | \(A_{\mathrm{off}}\) | Half-width | Identified interval | Contains 0 |
+| $o$ | $A_{\mathrm{off}}$ | Half-width | Identified interval | Contains 0 |
 | ---: | ---: | ---: | :--- | :--- |
-| 0.0029 | 0.010554 | 0.094306 | \([-0.083753,\ 0.104860]\) | yes |
-| 0.0046 | 0.012254 | 0.090420 | \([-0.078166,\ 0.102673]\) | yes |
+| 0.0029 | 0.010554 | 0.094306 | $[-0.083753,\ 0.104860]$ | yes |
+| 0.0046 | 0.012254 | 0.090420 | $[-0.078166,\ 0.102673]$ | yes |
 
 The identified half-width is **7.4 to 8.9 times** the observed coefficient it
 is meant to pin down. Under the stated conventions the structural off-diagonal
 is **not identified even in sign**.
 
 A bisection over the exact positive-semidefiniteness frontier reproduces the
-closed form to relative error below \(10^{-10}\).
+closed form to relative error below $10^{-10}$.
 
 ### Definition — A refutable diagnostic
 
-\[
+$$
 \psi_K(\widehat A)=
-\frac{\min_{D,\ \operatorname{rank}(R)\le K}\|\widehat A-D-R\|_F}
-     {\|\widehat A-\operatorname{diag}(\widehat A)\|_F}.
-\]
+\frac{\min_{D,\ \operatorname{rank}(R)\le K}\lVert \widehat A-D-R \rVert_F}
+     {\lVert \widehat A-\operatorname{diag}(\widehat A) \rVert_F}.
+$$
 
 Its population value is zero under pure confounding, so a materially nonzero
-\(\psi_K\) is evidence **for** genuine structural cross-impact. This inverts
+$\psi_K$ is evidence **for** genuine structural cross-impact. This inverts
 the conventional reading: off-diagonal magnitude carries no information, only
-departure from \(\mathcal{D}_K\) does.
+departure from $\mathcal{D}_K$ does.
 
-Two caveats are stated up front. \(\psi_K=0\) does not prove diagonality — the
-test refutes, it does not confirm. And \(\psi_K\) depends on the assumed factor
+Two caveats are stated up front. $\psi_K=0$ does not prove diagonality — the
+test refutes, it does not confirm. And $\psi_K$ depends on the assumed factor
 count, so a sweep is mandatory:
 
-| Assumed \(K\) | 1 | 2 | **3** | 4 | 6 | 10 |
+| Assumed $K$ | 1 | 2 | **3** | 4 | 6 | 10 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| \(\psi_K\) | 0.6396 | 0.3748 | **0.0391** | 0.0377 | 0.0328 | 0.0250 |
+| $\psi_K$ | 0.6396 | 0.3748 | **0.0391** | 0.0377 | 0.0328 | 0.0250 |
 
-The elbow at the true \(K=3\) is a practical way to read the factor count off
+The elbow at the true $K=3$ is a practical way to read the factor count off
 the coefficient matrix itself.
 
 The full derivation and proofs are in
@@ -197,17 +197,17 @@ registered before implementation as amendment A028.
 ## 4. What the Failure Costs
 
 Identification failure only matters if it changes a decision. A desk pays
-\(C(x,M)=x^\top M x\) to execute trade \(x\).
+$C(x,M)=x^\top M x$ to execute trade $x$.
 
 ### Theorem 6 — The cost error is low rank
 
-\(C(x,A)-C(x,\Lambda)=x^\top G x\), so by Theorem 2 the error vanishes on a
-subspace of dimension at least \(N-K-\operatorname{rank}(B)\). **At most
-\(K\) of the \(N\) trade directions are mispriced**, however large the spurious
+$C(x,A)-C(x,\Lambda)=x^\top G x$, so by Theorem 2 the error vanishes on a
+subspace of dimension at least $N-K-\operatorname{rank}(B)$. **At most
+$K$ of the $N$ trade directions are mispriced**, however large the spurious
 entries. In the fixture the immune subspace has dimension **27** and a trade
-drawn from it has cost error \(5.2\times10^{-17}\).
+drawn from it has cost error $5.2\times10^{-17}$.
 
-In the one-spike geometry the error is exactly \(g(\mathbf 1^\top x)^2\):
+In the one-spike geometry the error is exactly $g(\mathbf 1^\top x)^2$:
 
 | Trade | True cost | Error | Relative |
 | :--- | ---: | ---: | ---: |
@@ -217,7 +217,7 @@ In the one-spike geometry the error is exactly \(g(\mathbf 1^\top x)^2\):
 
 ### Corollary — Cost can be identified where the matrix is not
 
-The identified cost interval has half-width \((T/N)(\mathbf 1^\top x)^2\), so a
+The identified cost interval has half-width $(T/N)(\mathbf 1^\top x)^2$, so a
 dollar-neutral trade has a **degenerate** interval. Its execution cost is
 point-identified even though the impact matrix is set-identified with an
 interval containing zero. An unidentified parameter need not mean an
@@ -226,8 +226,8 @@ unidentified cost.
 ### Minimax-cost execution
 
 For a desk that must take exposure, the schedule minimising worst-case cost
-subject to \(c^\top x=q\) is \(x^*(\pi)=\tfrac12\lambda M(\pi)^{-1}c\) with
-\(M(\pi)=A_s+\pi\mathbf 1\mathbf 1^\top\) at \(\pi=T/N\). It matches a
+subject to $c^\top x=q$ is $x^*(\pi)=\tfrac12\lambda M(\pi)^{-1}c$ with
+$M(\pi)=A_s+\pi\mathbf 1\mathbf 1^\top$ at $\pi=T/N$. It matches a
 20,000-point grid search exactly.
 
 | Target | Worst-case improvement | Exposure naive → robust |
@@ -241,20 +241,20 @@ degenerate cases were predicted before implementation.
 
 ## 5. Is the Restriction Refutable? A Test
 
-\(\psi_K\) needs a critical value to be usable. A parametric plug-in bootstrap
+$\psi_K$ needs a critical value to be usable. A parametric plug-in bootstrap
 supplies one, with the factor count chosen by a rule fixed before use.
 
-| \(T\) | \(T/N^2\) | Realised size (nominal 0.05) |
+| $T$ | $T/N^2$ | Realised size (nominal 0.05) |
 | ---: | ---: | ---: |
 | 500 | 0.56 | 0.267 |
 | 1,000 | 1.11 | 0.127 |
 | 2,000 | 2.22 | 0.100 |
 | **5,000** | **5.56** | **0.040** |
 
-Power at \(T=5000\): 0.070, 0.270, **0.870**, 1.000 against perturbations of
+Power at $T=5000$: 0.070, 0.270, **0.870**, 1.000 against perturbations of
 0.05, 0.10, 0.20, 0.40.
 
-**The test is valid only above roughly \(T=5N^2\)** and over-rejects severely
+**The test is valid only above roughly $T=5N^2$** and over-rejects severely
 below. The cause is diagnosed: the plug-in null is refitted to the noisy
 estimate, so the bootstrap centres too low. A degrees-of-freedom variance
 inflation was tried and **fails completely** — it drives size to exactly zero
@@ -265,8 +265,8 @@ distribution, not its scale. It is registered as not adopted.
 
 The G1 derivation was frozen before simulation code and random-number access.
 One master draw was split into 100 immutable shards of 100,000 observations
-each, publishing only mergeable sufficient statistics, for \(T=10^7\)
-observations at \(N=30\) and \(K=3\).
+each, publishing only mergeable sufficient statistics, for $T=10^7$
+observations at $N=30$ and $K=3$.
 
 | Quantity | Verified value |
 | --- | ---: |
@@ -302,7 +302,7 @@ reported 0.8446 — a gap of 0.1024, exceeding the declared 0.05 tolerance.
 The failure is reported rather than removed; the registered protocol forbids
 retuning the one-spike convention to close it. It points at loading
 heterogeneity beyond one common factor and does not bear on Theorem 2, which
-is an inequality in \(K\).
+is an inequality in $K$.
 
 Both are **conditional analytic exhibits at published summary statistics, not
 estimates of any market's impact matrix.**
@@ -316,16 +316,16 @@ opened:
 > error in a transparent model constrained by opened primary-source summaries,
 > even when the estimator receives a favourable factor proxy?
 
-The registered system sets \(B=0\) so same-bin feedback cannot explain a
-positive result, retains \(N=30\), uses one permutation-invariant factor, sets
+The registered system sets $B=0$ so same-bin feedback cannot explain a
+positive result, retains $N=30$, uses one permutation-invariant factor, sets
 proxy reliability to 0.95, and evaluates 17 frozen structural off-diagonal
 values from 0.0029 to 0.0046. Three smooth estimators bind at every grid point;
 a six-specification published-protocol reconstruction supplies a separate veto.
 Passage requires
 
-\[
+$$
 \left|\widehat\Lambda_{01}-o\right|-0.50|o|>3\,SE_{\mathrm{boot}}
-\]
+$$
 
 with 499 shared whole-date bootstrap replicates, after 100 validation
 superpanels license the exact procedure.
@@ -386,7 +386,7 @@ ledger.
 | [CONFOUNDING_RANK_AND_PARTIAL_ID.md](docs/derivations/CONFOUNDING_RANK_AND_PARTIAL_ID.md) | Rank bound, identified set, sharp interval, diagnostic |
 | [THEORY_EXTENSION.md](docs/predictions/THEORY_EXTENSION.md) | Six predictions frozen before implementation |
 | [identification.py](src/xid/models/identification.py) | Probability limits, confounding gap, one-spike bounds |
-| [rank_diagnostic.py](src/xid/models/rank_diagnostic.py) | The \(\psi_K\) statistic and its bootstrap test |
+| [rank_diagnostic.py](src/xid/models/rank_diagnostic.py) | The $\psi_K$ statistic and its bootstrap test |
 | [execution.py](src/xid/models/execution.py) | Cost error, immune subspace, cost interval, minimax schedule |
 | [EXECUTION_COST_UNDER_CONFOUNDING.md](docs/derivations/EXECUTION_COST_UNDER_CONFOUNDING.md) | A029 execution derivation |
 | [PSI_NULL_DISTRIBUTION.md](docs/derivations/PSI_NULL_DISTRIBUTION.md) | A030 null distribution and size study |
@@ -402,18 +402,18 @@ ledger.
 
 ## 11. Limitations
 
-- Theorem 2 is an inequality, so a high observed rank is uninformative if \(K\)
+- Theorem 2 is an inequality, so a high observed rank is uninformative if $K$
   is misspecified, and the gap's rank is not separately observable from that of
-  a genuinely low-rank \(\Lambda\).
-- Proposition 3 assumes \(B=0\); with feedback the identified set is larger,
+  a genuinely low-rank $\Lambda$.
+- Proposition 3 assumes $B=0$; with feedback the identified set is larger,
   not smaller, so the sign non-identification result is conservative in that
   direction only.
 - The closed-form interval is conditional on the one-spike and
   isotropic-residual conventions, which are declared maximum-entropy choices
   and not identified features of any exchange.
-- \(\psi_K\) is an upper bound from a stationary point of an alternating
+- $\psi_K$ is an upper bound from a stationary point of an alternating
   projection and cannot confirm diagonality. Its bootstrap test is valid only
-  above roughly \(T=5N^2\), and its size and power were established on a
+  above roughly $T=5N^2$, and its size and power were established on a
   single Gaussian, homoskedastic, serially independent fixture that market data
   violates. The factor count is assumed, not estimated with a validated rule.
 - The execution results use a static one-period impact model with no decay

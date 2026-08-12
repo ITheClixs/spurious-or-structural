@@ -9,68 +9,68 @@ covariances, not fitted or simulated results.
 
 The experiment asks whether a streamed finite sample from the stated
 simultaneous system converges to both derived population regression matrices.
-For analytic targets \(A^*\) (uncontrolled OLS) and \(C^*\) (OLS controlling
-for \(\widehat f=f+\epsilon\)), define
+For analytic targets $A^*$ (uncontrolled OLS) and $C^*$ (OLS controlling
+for $\widehat f=f+\epsilon$), define
 
-\[
+$$
 D_{\mathrm{OLS}}=\max_{ij}
 \frac{|\widehat A_{ij}-A^*_{ij}|}{|A^*_{ij}|},
 \qquad
 D_{\mathrm{proxy}}=\max_{ij}
 \frac{|\widehat C_{ij}-C^*_{ij}|}{|C^*_{ij}|},
-\]
+$$
 
-\[
+$$
 D_{\mathrm{gate}}=\max(D_{\mathrm{OLS}},D_{\mathrm{proxy}}).
-\]
+$$
 
 G1 passes this numerical criterion if and only if
-\(D_{\mathrm{gate}}<10^{-3}\). There is no denominator floor, element
+$D_{\mathrm{gate}}<10^{-3}$. There is no denominator floor, element
 exclusion, seed retry, or average-error substitute. Any such change is a new
 simulation specification and must be logged before it runs.
 
 ## Frozen data-generating process
 
-`configs/g1.toml` is authoritative. It sets \(N=30\), \(K=3\), and
-\(T=10{,}000{,}000\) IID observations. Indices below are one-based. Design
+`configs/g1.toml` is authoritative. It sets $N=30$, $K=3$, and
+$T=10{,}000{,}000$ IID observations. Indices below are one-based. Design
 constants are fixed inputs and therefore have no sampling interval.
 
-\[
+$$
 \Lambda_{ij}=0.75+0.08\frac{i}{31}+0.06\frac{j}{31}
 +0.02\mathbf 1\{i=j\},
-\]
+$$
 
-\[
+$$
 B_{ij}=0.00012+0.00004\frac{i}{31}+0.00003\frac{j}{31}
 +0.012\mathbf 1\{i=j\},
-\]
+$$
 
-\[
+$$
 \Gamma_{ik}=0.30+0.06\sin(ik/7)+0.02k,
-\]
+$$
 
-\[
+$$
 (\Delta_f)_{ik}=0.45+0.08\cos(i(k+1)/9)+0.03k.
-\]
+$$
 
 The four shocks are mutually independent, centered Gaussian vectors. The two
 factor covariance matrices are written explicitly in the config. The
 idiosyncratic covariances are Toeplitz:
 
-\[
+$$
 (\Sigma_u)_{ij}=0.05(0.25)^{|i-j|},
 \qquad
 (\Sigma_v)_{ij}=0.30(0.15)^{|i-j|}.
-\]
+$$
 
 This fixture is intentionally the declared operating dimension, not a scalar
 or toy matrix. Its deterministic diagnostics are
 
-- \(\rho(B\Lambda)=0.4104240454\);
-- \(\kappa_2(I-B\Lambda)=1.6961688362\);
-- \(\kappa_2(\Sigma_{qq})=348.0879052636\);
-- \(\kappa_2(\Sigma_{qq\mid\widehat f})=92.4159904675\); and
-- \(\kappa_2(\Sigma_{[q,\widehat f]})=353.1305179714\).
+- $\rho(B\Lambda)=0.4104240454$;
+- $\kappa_2(I-B\Lambda)=1.6961688362$;
+- $\kappa_2(\Sigma_{qq})=348.0879052636$;
+- $\kappa_2(\Sigma_{qq\mid\widehat f})=92.4159904675$; and
+- $\kappa_2(\Sigma_{[q,\widehat f]})=353.1305179714$.
 
 These are analytic fixture properties, not uncertain estimates. The
 conditioning is deliberate: a validator that works only for nearly orthogonal
@@ -78,9 +78,9 @@ flow is not a useful check of this problem.
 
 ## Quantitative predictions fixed before simulation
 
-The uncontrolled target spans \([0.7724315313,0.9138344678]\), and the
-proxy-controlled target spans \([0.7719001593,0.9201821590]\). The smallest
-absolute target among all 1,800 coefficients is \(0.7719001593\), so the hard
+The uncontrolled target spans $[0.7724315313,0.9138344678]$, and the
+proxy-controlled target spans $[0.7719001593,0.9201821590]$. The smallest
+absolute target among all 1,800 coefficients is $0.7719001593$, so the hard
 relative-error statistic is not stabilized by an arbitrary epsilon.
 
 The exact target matrices are frozen by canonical JSON hashes. Each element is
@@ -96,8 +96,8 @@ compact separators, and no trailing newline is hashed:
 
 Two algebraically independent evaluations—the reduced-form covariance path and
 the primitive-only bias formulas—agree to maximum absolute discrepancies of
-\(1.72\times10^{-13}\) for uncontrolled OLS and
-\(4.45\times10^{-16}\) for proxy-controlled OLS. Those calculations predict
+$1.72\times10^{-13}$ for uncontrolled OLS and
+$4.45\times10^{-16}$ for proxy-controlled OLS. Those calculations predict
 that the implementation must reject the following mutations:
 
 | Mutation | Maximum relative target error, uncontrolled | Maximum relative target error, proxy-controlled |
@@ -112,8 +112,8 @@ intervals are not applicable. Every mutation is separated from the gate
 tolerance before a random number is drawn.
 
 Under the Gaussian fixture, the largest analytic coefficient standard error at
-\(T=10^7\), divided by its absolute target, is predicted to be
-\(1.7930730\times10^{-4}\). Thus the gate boundary is 5.577 worst-case
+$T=10^7$, divided by its absolute target, is predicted to be
+$1.7930730\times10^{-4}$. Thus the gate boundary is 5.577 worst-case
 standard errors from the target. This is a power calculation for the numerical
 recovery check, not evidence that the formulas have passed.
 
@@ -150,17 +150,17 @@ forecast and stop cleanly if the eight-hour bound would be crossed.
 Both regressions include an intercept through globally centered sufficient
 statistics. Because the frozen DGP is jointly Gaussian, each population linear
 projection residual is independent of its regressors. The named interval method
-is therefore the classical homoskedastic Student-\(t\) interval, Bonferroni
+is therefore the classical homoskedastic Student-$t$ interval, Bonferroni
 adjusted to 95% family-wise coverage across all 1,800 reported coefficients.
 Proxy-regression variances use the full `[q, fhat]` design inverse before the
 `q` block is extracted.
 
 The predicted Bonferroni critical value is approximately 4.191, giving a
 worst-case relative half-width of approximately
-\(7.515\times10^{-4}\). The exact critical value, every coefficient interval,
+$7.515\times10^{-4}$. The exact critical value, every coefficient interval,
 and signed relative-error interval will be generated from the locked run.
 Target inclusion in the simultaneous intervals is a secondary integrity check;
-it does not replace the hard \(10^{-3}\) discrepancy criterion.
+it does not replace the hard $10^{-3}$ discrepancy criterion.
 
 ## Failure interpretation fixed before the run
 
@@ -168,7 +168,7 @@ it does not replace the hard \(10^{-3}\) discrepancy criterion.
   fixture implementation drifted from this preregistration.
 - A structural-equation residual above floating-point tolerance stops the shard
   and means the reduced-form generator is wrong.
-- A gate discrepancy at or above \(10^{-3}\) is G1 attempt 1 failed. The seed,
+- A gate discrepancy at or above $10^{-3}$ is G1 attempt 1 failed. The seed,
   sample size, target, and tolerance remain frozen while the mismatch is
   diagnosed.
 - A runtime or RSS stop is a compute-design failure and is recorded in
