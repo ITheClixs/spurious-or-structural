@@ -1032,3 +1032,40 @@ empirical model trials, but gate-level pipeline variants are recorded.
   registered stochastic draw is part of this slice.
 - **Access:** test seeds `1729`, `9191`, and `314159` only. Registered seeds,
   external market data, evaluation data, and holdout remain untouched.
+
+## C0022 — A031 paper-matrix assembly, implemented and cost-blocked
+
+- **Registered:** 2026-08-12 after the A031 derivation and predictions, before
+  any assembly driver existed.
+- **Observed RED:** the first run failed with
+  `ModuleNotFoundError: No module named 'xid.models.g2_assembly'`, then with
+  `ValueError: y_values must have 1 dimensions` from passing a two-dimensional
+  fold response into the LASSO preparation kernel.
+- **Observed GREEN, partial:** the driver is implemented and the fail-closed
+  boundary is verified. Non-float64 panels, wrong bin counts, and nonfinite
+  returns are all rejected, and the sealed specification order is asserted.
+  Four tests pass.
+- **NOT VERIFIED:** the eight registered A031 predictions are **not** confirmed.
+  They require a complete date assembly, which costs about 4.2 hours at the
+  sealed solver numerics, so they are implemented but skipped behind
+  `XID_RUN_SLOW_ASSEMBLY`. **A031 must not be recorded as passed.**
+- **Blocking measurement:** a warm-started 40-ratio LASSO path over realistic
+  structured features takes `3.356` seconds, with per-solve median `45.2` ms
+  and maximum `259.4` ms. The solver is healthy: median `413` sweeps against a
+  `10,000` cap, and zero of forty solves reach the cap. Applying the median to
+  the registered `60,782,400` LASSO solutions gives `763` hours, which is `48x`
+  the 16-hour expected envelope and `24x` the 32-hour hard envelope. Fitting the
+  expected envelope requires `948` microseconds per solve against `45,200`
+  measured. Recorded in `docs/redteam/PAPER_ASSEMBLY_COST.md`.
+- **Consequence:** the A022 quantitative prediction seal must not be written
+  against this implementation, because the projection it would record is known
+  wrong by more than an order of magnitude. G2 stays executable-red for a
+  reason that is now quantitative rather than procedural.
+- **Status:** implementation complete, verification blocked on throughput. Not
+  a pass.
+- **Intervals:** timing figures are single-machine medians over forty solves and
+  carry no inferential interval; they are reported as measurements, not
+  estimates.
+- **Multiple-testing count:** zero.
+- **Access:** test seed `1729` only. Registered seeds, market data, evaluation
+  data, and holdout remain untouched.
