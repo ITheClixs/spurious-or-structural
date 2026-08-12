@@ -262,6 +262,22 @@ def test_minimax_schedule_rejects_infeasible_target() -> None:
         minimax_cost_schedule(a_sym, np.zeros(N), 1.0, penalty)
 
 
+def test_minimax_schedule_rejects_an_indefinite_cost_matrix() -> None:
+    """Proposition 8 assumes a_sym is PSD; an indefinite input is a saddle."""
+    _, penalty = _scheduling_setup()
+    indefinite = np.diag(np.linspace(-1.0, 1.0, N))
+    with pytest.raises(ValueError, match="positive semidefinite"):
+        minimax_cost_schedule(indefinite, np.ones(N), 1.0, penalty)
+
+
+def test_minimax_schedule_accepts_the_registered_calibration() -> None:
+    """The registered A_s is PSD, so the new gate must not fire on it."""
+    a_sym, penalty = _scheduling_setup()
+    assert float(np.linalg.eigvalsh(a_sym).min()) > 0.0
+    schedule = minimax_cost_schedule(a_sym, np.ones(N), 1.0, penalty)
+    assert np.isfinite(schedule).all()
+
+
 def test_minimax_schedule_rejects_negative_penalty() -> None:
     a_sym, _ = _scheduling_setup()
     with pytest.raises(ValueError, match="penalty"):

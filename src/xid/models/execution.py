@@ -109,9 +109,11 @@ def cost_interval(
 ) -> tuple[float, float]:
     """Sharp identified interval for execution cost, Proposition 7.
 
-    The half-width is ``(T/N)(1'x)^2``, so a dollar-neutral trade has a
-    degenerate interval: its cost is point-identified even though the impact
-    matrix is not.
+    The half-width is ``(T/N)(1'x)^2``, so in this one-spike geometry a
+    dollar-neutral trade has a degenerate interval and its cost is
+    point-identified even though the impact matrix is not. That equivalence is
+    specific to this geometry: in general the immune condition is membership of
+    ``confounding_null_space``, not ``1'x = 0``.
     """
     _check_vector("x", x, n)
     half_width = identification_scale(n, s_q, s_r, a_diag, a_off) / n
@@ -150,6 +152,15 @@ def minimax_cost_schedule(
         raise ValueError("q: expected a finite target level")
     if penalty < 0.0:
         raise ValueError("penalty: expected a nonnegative robustness penalty")
+    # Proposition 8's convexity holds only when a_sym is positive semidefinite.
+    # Without this check an indefinite input returns a stationary point that is
+    # a saddle rather than a minimum, silently and with no other symptom.
+    smallest = float(np.linalg.eigvalsh((a_sym + a_sym.T) / 2.0).min())
+    if smallest < -1e-10 * max(1.0, float(np.abs(a_sym).max())):
+        raise ValueError(
+            "a_sym: expected positive semidefinite cost matrix for a convex "
+            f"objective, smallest eigenvalue {smallest}"
+        )
     ones = np.ones(n, dtype=np.float64)
     m = a_sym + penalty * np.outer(ones, ones)
     inverse = np.linalg.inv(m)

@@ -773,14 +773,20 @@ most useful consequence in the paper:
 
 \begin{corollary}[Cost can be identified where the matrix is not]
 \label{cor:pointid}
-A dollar-neutral trade has a degenerate cost interval. Its execution cost is
-point-identified even though the impact matrix producing it is set-identified
-with an interval containing zero.
+\emph{In the one-spike geometry}, a dollar-neutral trade has a degenerate cost
+interval. Its execution cost is point-identified even though the impact matrix
+producing it is set-identified with an interval containing zero.
 \end{corollary}
 
-An unidentified parameter does not imply an unidentified cost. A desk that
-restricts itself to factor-neutral execution is exposed to none of the
-identification problem this paper describes.
+An unidentified parameter does not imply an unidentified cost. The scope
+qualifier is essential and easy to lose: dollar-neutrality delivers immunity
+only because the one-spike confounding direction \emph{is} the equal-weight
+direction. In a general geometry the two come apart. At our fixture with
+generic loadings, a trade with $\mathbf 1^\top x=0$ to machine precision still
+carries a cost error of $-18.24\%$ of its true cost, because it is not
+orthogonal to the confounding subspace. The condition that actually confers
+immunity is Theorem \ref{thm:cost}'s, membership of the null space of $G$; the
+one-spike geometry merely makes that null space easy to name.
 
 For a desk that must take factor exposure, worst-case cost is
 $\widehat C(x)=x^\top A_sx+\tfrac{T}{N}(\mathbf 1^\top x)^2$, convex whenever

@@ -217,11 +217,18 @@ In the one-spike geometry the error is exactly $g(\mathbf 1^\top x)^2$:
 
 ### Corollary — Cost can be identified where the matrix is not
 
-The identified cost interval has half-width $(T/N)(\mathbf 1^\top x)^2$, so a
-dollar-neutral trade has a **degenerate** interval. Its execution cost is
-point-identified even though the impact matrix is set-identified with an
-interval containing zero. An unidentified parameter need not mean an
-unidentified cost.
+**In the one-spike geometry**, the identified cost interval has half-width
+$(T/N)(\mathbf 1^\top x)^2$, so a dollar-neutral trade has a **degenerate**
+interval. Its execution cost is point-identified even though the impact matrix
+is set-identified with an interval containing zero. An unidentified parameter
+need not mean an unidentified cost.
+
+The qualifier matters. Dollar-neutrality confers immunity only because the
+one-spike confounding direction *is* the equal-weight direction. In a general
+geometry a trade with $\mathbf 1^\top x=0$ to machine precision still carries
+a **−18.24%** cost error at our fixture. The condition that actually confers
+immunity is membership of the null space of $G$ (Theorem 6); one-spike merely
+makes that null space easy to name.
 
 ### Minimax-cost execution
 

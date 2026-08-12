@@ -59,12 +59,16 @@ and since `rank(G) ≤ K + rank(B)` by Theorem 2, the error vanishes on the
 subspace
 
 ```
-𝓝 = { x ∈ R^N : Gᵀx = 0 and Gx = 0 },                              (3)
+𝓝 = null(G) = { x ∈ R^N : Gx = 0 },                                (3)
 ```
 
-whose dimension is at least `N − 2(K + rank(B))`, and at least
-`N − (K + rank(B))` when `G` is symmetric or when only the quadratic form is
-required to vanish.
+whose dimension is at least `N − K − rank(B)`.
+
+An earlier draft defined `𝓝` as the two-sided set `{x : Gx = 0 and Gᵀx = 0}`
+and reported the weaker bound `N − 2(K + rank(B))`. That was unnecessarily
+strict: `Gx = 0` alone gives `xᵀGx = 0`, so the one-sided null space is exactly
+the right object and the stronger bound is the correct one. The manuscript
+always stated the stronger bound; only this document was imprecise.
 
 *Proof.* Equation (2) is immediate from bilinearity of Eq. (1). Writing
 `G = ΓΣ_f Pᵀ Σ_qq^{-1} + Σ_u Uᵀ Σ_qq^{-1}` and factoring as in Theorem 2, every
