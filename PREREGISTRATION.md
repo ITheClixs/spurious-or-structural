@@ -1868,3 +1868,59 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A029 — Execution-cost consequences of low-rank confounding before implementation
+
+- **Registered:** 2026-08-12, after the symbolic derivation in
+  `docs/derivations/EXECUTION_COST_UNDER_CONFOUNDING.md` and before any
+  execution module, robust scheduler, exhibit, figure, or manuscript section
+  existed.
+- **Reason:** A028 established that the structural impact matrix is
+  set-identified. That is a statement about estimation and leaves the
+  practically decisive question unanswered: a desk does not consume the matrix,
+  it consumes the cost of a trade computed through the matrix. Without the
+  present results a reader cannot tell whether the identification failure costs
+  anything, and the project would be asserting a problem it had not sized.
+- **Research vector:** the cost error `C(x,A) - C(x,Lambda) = x' G x` is the
+  quadratic form of a matrix of rank at most `K + rank(B)`, so it vanishes on a
+  trade subspace of dimension at least `N - K - rank(B)`. In the
+  permutation-invariant one-spike geometry `G = g 1 1'` and the error is
+  exactly `g (1'x)^2`, proportional to squared factor exposure, maximal for an
+  equal-weight index basket and identically zero for every dollar-neutral
+  basket. The identified set induces the sharp cost interval
+  `C(x,A) +/- (T/N)(1'x)^2`, which is degenerate for dollar-neutral trades, so
+  execution cost can be point-identified where the impact matrix is not.
+- **Scheduling vector:** minimising worst-case cost under a linear target
+  constraint `c'x = q` gives `x*(pi) = (lambda/2) M(pi)^{-1} c` with
+  `M(pi) = A_s + pi 1 1'` at `pi = T/N`, whose factor exposure is weakly
+  smaller than the naive schedule's. Robustness is strictly worthless whenever
+  the constraint pins the factor exposure, which covers a fixed total-quantity
+  constraint, an index-like target, and any target whose unconstrained optimum
+  is already neutral. Those degenerate cases are registered as part of the
+  claim rather than omitted.
+- **Predictions:** the five numbered predictions of Section 5 of the derivation
+  are frozen verbatim and restated in `docs/predictions/EXECUTION_COST.md`.
+  They are deterministic algebraic checks at test seed `1729`; no interval
+  method applies and the multiple-testing count is zero.
+- **Implementation license:** a pure-algebra execution-cost module, a
+  closed-form robust scheduler validated against a dense grid search,
+  deterministic exhibits, figures, and manuscript and README sections may be
+  written test-first. Every statistic must fail closed on wrong dtype, wrong
+  shape, nonfinite entries, and infeasible constraints.
+- **Scope withheld:** no dynamic execution schedule, transient-impact or decay
+  kernel, risk-aversion term, or timing-risk model; no registered resource,
+  validation, or research stream; no random-number namespace beyond test seeds
+  `1729`, `9191`, and `314159`; no external market data; no change to any
+  sealed G2 digest; and no claim about trading profitability, transaction-cost
+  savings, capacity, or deployment.
+- **Failure rule:** if any of the five predictions fails, the affected result
+  does not enter the manuscript. A failed prediction is diagnosed and logged in
+  `SPECIFICATION_LOG.md`; it is not repaired after seeing output and then
+  silently accepted. If the closed-form schedule disagrees with the grid
+  search, the derivation is corrected rather than the tolerance relaxed.
+- **Inference effect:** none on G2. A029 changes no scientific config byte,
+  estimator, target, interval, bootstrap weight, threshold, trial count, or
+  registered validation/research address. G2 remains open and executable-red.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.
