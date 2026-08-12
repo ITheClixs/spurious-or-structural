@@ -20,6 +20,14 @@ from typing import Any
 import numpy as np
 from numpy.typing import NDArray
 
+from xid.models.execution import (
+    confounding_null_space,
+    cost_error,
+    factor_exposure,
+    impact_cost,
+    minimax_cost_schedule,
+    worst_case_cost,
+)
 from xid.models.identification import (
     confounding_gap,
     gap_rank_bound,
@@ -28,6 +36,7 @@ from xid.models.identification import (
     one_spike_gap_per_entry,
     sharp_offdiag_interval,
 )
+from xid.models.identification import sharp_offdiag_interval as _sharp
 from xid.models.rank_diagnostic import psi_k
 
 Matrix = NDArray[np.float64]
@@ -231,6 +240,7 @@ def build_exhibits() -> dict[str, Any]:
         ),
     }
     payload["published_control_shift"] = _published_control_shift()
+    payload["execution"] = _execution_exhibits()
     payload.update(_diagonal_truth_headline())
     payload.update(_psi_exhibits())
     return payload
@@ -289,6 +299,104 @@ def _published_control_shift() -> dict[str, Any]:
             "of the rank bound itself"
         ),
         "scope": SCOPE,
+    }
+
+
+def _execution_exhibits() -> dict[str, Any]:
+    """A029: which trade directions a confounded matrix misprices."""
+    _, _, gam, df, sf, su, sv = _fixture(0)
+    truth_rng = np.random.default_rng(FIXTURE_SEED)
+    truth = np.diag(truth_rng.uniform(0.2, 0.4, N_ASSETS))
+    gap = confounding_gap(truth, np.zeros((N_ASSETS, N_ASSETS)), gam, df, sf, su, sv)
+
+    trade_rng = np.random.default_rng(PERTURBATION_SEED)
+    index = np.full(N_ASSETS, 1.0 / np.sqrt(N_ASSETS))
+    random_trade = trade_rng.normal(size=N_ASSETS)
+    random_trade /= np.linalg.norm(random_trade)
+    basis = confounding_null_space(gap)
+    neutral = basis @ (basis.T @ trade_rng.normal(size=N_ASSETS))
+    neutral /= np.linalg.norm(neutral)
+
+    general = [
+        {
+            "trade": name,
+            "true_cost": _round(impact_cost(x, truth)),
+            "cost_error": _round(cost_error(x, gap)),
+            "relative_percent": _round(100.0 * cost_error(x, gap) / impact_cost(x, truth)),
+        }
+        for name, x in (
+            ("index", index),
+            ("random", random_trade),
+            ("confound_neutral", neutral),
+        )
+    ]
+
+    q1, q0 = one_spike_eigenvalues(N_ASSETS, FLOW_SHARE)
+    h_q = float(np.sqrt(q1 - q0))
+    g = one_spike_gap_per_entry(FACTOR_LOADING, h_q, N_ASSETS, q1)
+    o = STRUCTURAL_ENDPOINTS[-1]
+    m = np.full(N_ASSETS, 1.0 / np.sqrt(N_ASSETS))
+    spike_truth = (DIAGONAL_SENSITIVITY - o) * np.eye(N_ASSETS) + N_ASSETS * o * np.outer(m, m)
+    spike_gap = g * np.ones((N_ASSETS, N_ASSETS))
+    pair = np.zeros(N_ASSETS)
+    pair[0], pair[1] = 1.0 / np.sqrt(2.0), -1.0 / np.sqrt(2.0)
+    spike_rng = np.random.default_rng(PERTURBATION_SEED)
+    spike_random = spike_rng.normal(size=N_ASSETS)
+    spike_random /= np.linalg.norm(spike_random)
+    one_spike = [
+        {
+            "trade": name,
+            "true_cost": _round(impact_cost(x, spike_truth)),
+            "cost_error": _round(cost_error(x, spike_gap)),
+            "relative_percent": _round(
+                100.0 * cost_error(x, spike_gap) / impact_cost(x, spike_truth)
+            ),
+            "factor_exposure": _round(factor_exposure(x)),
+        }
+        for name, x in (
+            ("index", m),
+            ("random", spike_random),
+            ("dollar_neutral_pair", pair),
+        )
+    ]
+
+    a_diag, a_off = DIAGONAL_SENSITIVITY + g, o + g
+    lower, upper = _sharp(N_ASSETS, FLOW_SHARE, RETURN_SHARE, a_diag, a_off)
+    penalty = (upper - lower) / 2.0
+    a = (a_diag - a_off) * np.eye(N_ASSETS) + a_off * np.ones((N_ASSETS, N_ASSETS))
+    a_sym = np.asarray((a + a.T) / 2.0, dtype=np.float64)
+    target_rng = np.random.default_rng(FIXTURE_SEED)
+    neutral_target = np.zeros(N_ASSETS)
+    neutral_target[0], neutral_target[1] = 1.0, -1.0
+    targets = {
+        "index_like": np.ones(N_ASSETS),
+        "neutral": neutral_target,
+        "general": target_rng.normal(size=N_ASSETS),
+    }
+    schedules = []
+    for name, c in targets.items():
+        naive = minimax_cost_schedule(a_sym, c, 1.0, 0.0)
+        robust = minimax_cost_schedule(a_sym, c, 1.0, penalty)
+        naive_wc = worst_case_cost(naive, a_sym, penalty)
+        robust_wc = worst_case_cost(robust, a_sym, penalty)
+        schedules.append(
+            {
+                "target": name,
+                "naive_worst_case": _round(naive_wc),
+                "robust_worst_case": _round(robust_wc),
+                "improvement_percent": _round(100.0 * (naive_wc - robust_wc) / naive_wc),
+                "naive_exposure": _round(factor_exposure(naive)),
+                "robust_exposure": _round(factor_exposure(robust)),
+            }
+        )
+
+    return {
+        "immune_subspace_dimension": int(basis.shape[1]),
+        "cost_error_general_fixture": general,
+        "cost_error_one_spike": one_spike,
+        "exposure_law_constant": _round(N_ASSETS * g),
+        "robust_schedule_penalty": _round(penalty),
+        "robust_schedules": schedules,
     }
 
 

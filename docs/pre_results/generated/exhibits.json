@@ -177,6 +177,80 @@
     }
   ],
   "diagonal_sensitivity": 0.29,
+  "execution": {
+    "cost_error_general_fixture": [
+      {
+        "cost_error": -0.02867451021,
+        "relative_percent": -9.811334694,
+        "trade": "index",
+        "true_cost": 0.2922590157
+      },
+      {
+        "cost_error": -0.02928861248,
+        "relative_percent": -9.766108551,
+        "trade": "random",
+        "true_cost": 0.2999005421
+      },
+      {
+        "cost_error": 0.0,
+        "relative_percent": 0.0,
+        "trade": "confound_neutral",
+        "true_cost": 0.2992078315
+      }
+    ],
+    "cost_error_one_spike": [
+      {
+        "cost_error": 0.2296108639,
+        "factor_exposure": 5.477225575,
+        "relative_percent": 54.23024655,
+        "trade": "index",
+        "true_cost": 0.4234
+      },
+      {
+        "cost_error": 0.01598429829,
+        "factor_exposure": 1.445144249,
+        "relative_percent": 5.418280704,
+        "trade": "random",
+        "true_cost": 0.2950068327
+      },
+      {
+        "cost_error": 0.0,
+        "factor_exposure": 0.0,
+        "relative_percent": 0.0,
+        "trade": "dollar_neutral_pair",
+        "true_cost": 0.2854
+      }
+    ],
+    "exposure_law_constant": 0.2296108639,
+    "immune_subspace_dimension": 27,
+    "robust_schedule_penalty": 0.09041957316,
+    "robust_schedules": [
+      {
+        "improvement_percent": 0.0,
+        "naive_exposure": 1.0,
+        "naive_worst_case": 0.112186602,
+        "robust_exposure": 1.0,
+        "robust_worst_case": 0.112186602,
+        "target": "index_like"
+      },
+      {
+        "improvement_percent": 0.0,
+        "naive_exposure": 0.0,
+        "naive_worst_case": 0.1427,
+        "robust_exposure": 0.0,
+        "robust_worst_case": 0.1427,
+        "target": "neutral"
+      },
+      {
+        "improvement_percent": 3.109478214,
+        "naive_exposure": -0.0662563395,
+        "naive_worst_case": 0.01026900719,
+        "robust_exposure": -0.01295647745,
+        "robust_worst_case": 0.009949694644,
+        "target": "general"
+      }
+    ]
+  },
   "factors": 3,
   "flow_share": 0.2827,
   "gap_rank_under_diagonal_truth": 3,

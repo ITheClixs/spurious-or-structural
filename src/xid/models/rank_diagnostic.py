@@ -14,10 +14,19 @@ generator, reads no configuration, and touches no registered stream.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 import numpy as np
 from numpy.typing import NDArray
 
-__all__ = ("decompose", "psi_k")
+__all__ = (
+    "PsiTestResult",
+    "decompose",
+    "null_projection",
+    "psi_k",
+    "psi_test",
+    "select_factor_count",
+)
 
 Matrix = NDArray[np.float64]
 
@@ -98,3 +107,102 @@ def psi_k(
         return 0.0
     diagonal_part, low_rank = decompose(a, k, iters, tol)
     return float(np.linalg.norm(a - diagonal_part - low_rank) / scale)
+
+
+@dataclass(frozen=True)
+class PsiTestResult:
+    """Outcome of the A030 low-rank departure test."""
+
+    statistic: float
+    critical_value: float
+    reject: bool
+    factor_count: int
+    replicates: int
+    alpha: float
+    method: str
+
+
+def null_projection(a: Matrix, k: int) -> Matrix:
+    """Project ``a`` onto the diagonal-plus-rank-``k`` set."""
+    diagonal_part, low_rank = decompose(a, k)
+    projected: Matrix = diagonal_part + low_rank
+    return projected
+
+
+def select_factor_count(a: Matrix, k_max: int = 10) -> int:
+    """Ahn-Horenstein eigenvalue-ratio rule on the off-diagonal part.
+
+    Registered before use by A030 so that the factor count cannot be chosen
+    after observing a rejection.
+    """
+    n = _validate(a, 0, 1, 0.0)
+    if k_max < 1 or k_max >= n:
+        raise ValueError(f"k_max: expected 1 <= k_max < {n}, got {k_max}")
+    singular = np.linalg.svd(a - np.diag(np.diag(a)), compute_uv=False)
+    floor = max(float(singular[0]) * 1e-14, 1e-300)
+    ratios = [float(singular[i]) / max(float(singular[i + 1]), floor) for i in range(k_max)]
+    return int(np.argmax(ratios)) + 1
+
+
+def _sampling_draw(
+    rng: np.random.Generator,
+    chol: Matrix,
+    sample_size: int,
+    scale: float,
+) -> Matrix:
+    n = chol.shape[0]
+    draw: Matrix = (scale / np.sqrt(sample_size)) * (rng.normal(size=(n, n)) @ chol.T)
+    return draw
+
+
+def psi_test(
+    a: Matrix,
+    k: int,
+    regressor_covariance: Matrix,
+    sample_size: int,
+    rng: np.random.Generator,
+    replicates: int = 199,
+    alpha: float = 0.05,
+    error_scale: float = 1.0,
+) -> PsiTestResult:
+    """Parametric plug-in bootstrap test of the diagonal-plus-rank-``k`` null.
+
+    Rejection is evidence **against** pure confounding and therefore for genuine
+    structural cross-impact. The test is not valid at small samples; see
+    ``docs/derivations/PSI_NULL_DISTRIBUTION.md`` for the size study and the
+    stated minimum sample size.
+    """
+    n = _validate(a, k, DEFAULT_ITERATIONS, DEFAULT_TOLERANCE)
+    if regressor_covariance.shape != (n, n):
+        raise ValueError("regressor_covariance: expected shape matching a")
+    if sample_size < 1:
+        raise ValueError("sample_size: expected a positive sample size")
+    if replicates < 1:
+        raise ValueError("replicates: expected at least one replicate")
+    if not 0.0 < alpha < 1.0:
+        raise ValueError("alpha: expected a level strictly inside (0, 1)")
+    if error_scale <= 0.0:
+        raise ValueError("error_scale: expected a positive scale")
+
+    chol = np.linalg.cholesky(np.linalg.inv(regressor_covariance))
+    projected = null_projection(a, k)
+    draws = np.array(
+        [
+            psi_k(projected + _sampling_draw(rng, chol, sample_size, error_scale), k)
+            for _ in range(replicates)
+        ]
+    )
+    critical = float(np.quantile(draws, 1.0 - alpha))
+    statistic = psi_k(a, k)
+    return PsiTestResult(
+        statistic=statistic,
+        critical_value=critical,
+        reject=bool(statistic > critical),
+        factor_count=k,
+        replicates=replicates,
+        alpha=alpha,
+        method=(
+            "parametric plug-in bootstrap on the diagonal-plus-rank-K null, "
+            "ordinary-least-squares sampling law, upper empirical quantile"
+        ),
+    )

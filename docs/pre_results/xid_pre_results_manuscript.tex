@@ -673,6 +673,150 @@ elbow at the true value $K=3$. Deterministic evaluations at test seed $1729$.}
 \label{fig:diagnostic}
 \end{figure}
 
+\section{What It Costs to Be Wrong}
+\label{sec:cost}
+
+Identification failure is only interesting if it costs something. A desk does
+not consume the impact matrix; it consumes the cost of a trade computed through
+it. Let a desk execute $x\in\R^N$ and pay expected impact cost
+$C(x,M)=x^\top Mx$.
+
+\begin{theorem}[Rank of the cost error]
+\label{thm:cost}
+For any trade $x$, $C(x,A)-C(x,\Lambda)=x^\top Gx$. Since
+$\rank(G)\le K+\rank(B)$ by Theorem \ref{thm:rank}, the error vanishes
+identically on a subspace of trade space of dimension at least
+$N-K-\rank(B)$.
+\end{theorem}
+
+\begin{corollary}[Most trade directions are safe]
+\label{cor:safe}
+At most $K+\rank(B)$ of the $N$ directions in trade space are mispriced. The
+magnitude of the spurious off-diagonals is irrelevant to this count.
+\end{corollary}
+
+This is the practical content of the rank bound. A dense, badly contaminated
+cross-impact matrix still misprices only a $K$-dimensional set of trades. In
+our fixture with $N=30$, $K=3$, $B=0$ the immune subspace has dimension
+exactly $27$, and a trade drawn from it has cost error $5.2\times10^{-17}$.
+
+Which $K$ directions are unsafe depends on the geometry. In a fixture with
+generic loadings the equal-weight basket is not special and bears about the
+same error as a random trade, $-9.81\%$ against $-9.77\%$. In the
+permutation-invariant one-spike geometry, where the confounding direction
+\emph{is} the equal-weight direction, Eq.~\eqref{eq:constgap} gives
+\begin{equation}
+C(x,A)-C(x,\Lambda)=g\,(\mathbf 1^\top x)^2,
+\label{eq:exposurelaw}
+\end{equation}
+so the error is exactly proportional to the squared factor exposure of the
+trade. Table \ref{tab:cost} reports the consequence.
+
+\begin{table}[t]
+\centering
+\caption{Cost error in the one-spike geometry, where the confounding direction
+is the equal-weight direction. A conditional analytic exhibit, not a market
+estimate.}
+\label{tab:cost}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Trade & True cost & Error & Relative \\
+\midrule
+Equal-weight index & 0.4234 & $+0.2296$ & $\mathbf{+54.23\%}$ \\
+Random unit vector & 0.2950 & $+0.0160$ & $+5.42\%$ \\
+Dollar-neutral pair & 0.2854 & $0$ & $\mathbf{0.00\%}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+An index basket is mispriced by more than half its true cost. A dollar-neutral
+pair is mispriced by exactly nothing. The operative question for a practitioner
+is therefore not whether the cross-impact matrix is identified, but whether the
+trade loads on the confounding direction.
+
+\section{Executing Under Partial Identification}
+\label{sec:robust}
+
+Proposition \ref{prop:idset} says the desk cannot learn $\Lambda$. It can still
+bound what a trade costs.
+
+\begin{proposition}[Identified cost interval]
+\label{prop:costint}
+In the one-spike geometry every admissible structural matrix has the form
+$\Lambda=A-(t/N)\mathbf 1\mathbf 1^\top$ with $|t|\le T$, so
+\begin{equation}
+C(x,\Lambda)\in\left[\,C(x,A)-\tfrac{T}{N}(\mathbf 1^\top x)^2,\;
+C(x,A)+\tfrac{T}{N}(\mathbf 1^\top x)^2\,\right],
+\label{eq:costint}
+\end{equation}
+and the interval is sharp.
+\end{proposition}
+
+The half-width is again governed entirely by factor exposure, which yields the
+most useful consequence in the paper:
+
+\begin{corollary}[Cost can be identified where the matrix is not]
+\label{cor:pointid}
+A dollar-neutral trade has a degenerate cost interval. Its execution cost is
+point-identified even though the impact matrix producing it is set-identified
+with an interval containing zero.
+\end{corollary}
+
+An unidentified parameter does not imply an unidentified cost. A desk that
+restricts itself to factor-neutral execution is exposed to none of the
+identification problem this paper describes.
+
+For a desk that must take factor exposure, worst-case cost is
+$\widehat C(x)=x^\top A_sx+\tfrac{T}{N}(\mathbf 1^\top x)^2$, convex whenever
+$A_s\succeq0$. Minimising it subject to a target $c^\top x=q$ gives
+
+\begin{proposition}[Minimax-cost schedule]
+\label{prop:minimax}
+$x^*(\pi)=\tfrac12\lambda M(\pi)^{-1}c$ with $M(\pi)=A_s+\pi\mathbf
+1\mathbf 1^\top$ and $\lambda=2q/(c^\top M(\pi)^{-1}c)$, evaluated at
+$\pi=T/N$. Its factor exposure is weakly smaller than the naive schedule's.
+\end{proposition}
+
+\begin{corollary}[When robustness is worthless]
+\label{cor:degenerate}
+If the constraint pins the factor exposure, $x^*(\pi)=x^*(0)$ for every $\pi$.
+This covers a fixed total-quantity constraint $\mathbf 1^\top x=Q$, an
+index-like target $c\propto\mathbf 1$, and any target whose unconstrained
+optimum is already neutral.
+\end{corollary}
+
+Corollary \ref{cor:degenerate} is stated because a desk needs to know when not
+to bother. Table \ref{tab:robust} confirms it: robustness earns its keep
+precisely when the desk retains discretion over factor exposure, and there it
+cuts exposure by roughly eighty percent. The closed form matches a
+20{,}000-point grid search over feasible schedules exactly.
+
+\begin{table}[t]
+\centering
+\caption{Minimax-cost schedule against the naive schedule. Both degenerate
+cases were predicted before implementation.}
+\label{tab:robust}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Target & Improvement & \multicolumn{2}{c}{Exposure $\mathbf 1^\top x$} \\
+\cmidrule(l){3-4}
+ & & naive & robust \\
+\midrule
+Index-like, $c=\mathbf 1$ & $0.00\%$ & $+1.000$ & $+1.000$ \\
+Neutral, $\mathbf 1^\top c=0$ & $0.00\%$ & $0.000$ & $0.000$ \\
+General & $\mathbf{3.11\%}$ & $-0.0663$ & $\mathbf{-0.0130}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This is a static one-period impact model. It carries no decay kernel, risk
+aversion, or timing risk, and supports no profitability claim. The rank
+structure of the error does not depend on the schedule, so the immune-subspace
+conclusion is expected to survive in a multi-period quadratic-cost model, but
+that extension is not proved here.
+
 \section{Known-Truth Verification}
 \label{sec:verify}
 
