@@ -1,4 +1,15 @@
-# Resource finding — the registered paper workload is far over budget
+# Resource finding — the paper workload needs a machine this one is not
+
+> **CORRECTION, same day.** The first version of this memo concluded that the
+> registered workload was 48x over budget and that the plan was infeasible.
+> **That conclusion was wrong.** It divided the workload by a single core
+> without checking the sealed configuration, which registers
+> `maximum_worker_count = 64`. At the registered worker count the workload fits
+> the registered envelope. The corrected analysis is in the section
+> "Corrected: the envelope is a provisioning requirement" below, and the
+> original single-core arithmetic is retained beneath it because it is still
+> the correct per-core price. The error was mine and it inverted the headline
+> finding.
 
 Recorded 2026-08-12 during the A031 assembly implementation, before any
 rehearsal or registered run. This is a measurement, not an estimate, and it
@@ -27,7 +38,31 @@ KKT tolerance `1e-9`, maximum `10,000` sweeps.
 median converges in 413 sweeps. This is the normal cost of the registered
 numerics, not a pathological case that a better fixture would remove.
 
-## What it implies for the registered workload
+## Corrected: the envelope is a provisioning requirement
+
+The sealed resource configuration registers `maximum_worker_count = 64` and
+`single_thread = true` with every BLAS thread variable pinned to one. The design
+therefore parallelises across processes, not within them, and the workload must
+be divided by the worker count rather than run on one core.
+
+| Workers | Wall time | Against the envelopes |
+| ---: | ---: | :--- |
+| 1 | 763 h | — |
+| 16 | 47.7 h | exceeds the 32 h hard stop |
+| 32 | 23.8 h | fits the 32 h hard stop |
+| **48** | **15.9 h** | **fits the 16 h expected cap** |
+| 64 | 11.9 h | fits comfortably |
+
+**The registered design is feasible within the registered envelope.** It
+requires about 24 cores to fit the hard stop and about 48 to fit the expected
+cap, against a registered maximum of 64 workers.
+
+**It is not feasible on the development machine**, which has 10 cores and would
+take about 76 hours, well past the hard stop. That is a provisioning
+requirement, not a design defect and not an amendment. G2 execution needs a
+host with at least 48 cores.
+
+## Single-core price, which is what was actually measured
 
 `docs/G2_COMPUTE_PLAN.md` enumerates the solution counts but never prices a
 solution. Applying the measured median:
@@ -62,18 +97,20 @@ rehearsal was launched against an infeasible plan.
 
 ## What this does and does not establish
 
-**Establishes:** the current pure-Python coordinate-descent implementation
-cannot execute the registered workload within the registered envelope, by a
-factor of roughly 24 against the hard stop.
+**Establishes:** the per-core price is 45.2 ms per solve, so the registered
+workload needs roughly 24 cores to fit the hard stop and 48 to fit the expected
+cap. The development machine has 10 and cannot host the run.
 
-**Does not establish:** that the *design* is infeasible. The gap is an
-implementation-throughput gap, and several routes remain open, none of which
-this memo endorses or costs:
+**Does not establish:** that the design or the budget needs amending. Neither
+does. The following routes were considered and are recorded only so the
+reasoning is not repeated:
 
-1. A compiled or vectorised coordinate descent. A 24-to-48-fold speedup is
-   plausible for this kernel, which is the range required, but it must be
-   measured rather than assumed, and it must reproduce the sealed numerics
-   exactly or it is a different estimator.
+1. A compiled or vectorised coordinate descent. Measured and bounded: 92% of
+   the per-solve cost is removable Python and NumPy wrapping, but `np.dot`
+   defines the reduction order and costs 3.5 ms of the 45.2 ms, so the maximum
+   speedup that stays bit-identical while keeping `np.dot` as a Python call is
+   **13x**. That is short of 24x and was not needed once the worker count was
+   accounted for.
 2. Solving the 40-ratio path as a single vectorised sweep across ratios rather
    than 40 sequential calls, preserving the warm-start order.
 3. Reducing the registered workload, which would be a scientific amendment and
