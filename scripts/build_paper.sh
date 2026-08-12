@@ -45,8 +45,24 @@ mkdir -p "$PKG_DIR/generated"
 cp "$SRC_DIR/$STEM.tex"                  "$PKG_DIR/"
 cp "$BUILD_DIR/$STEM.bbl"                "$PKG_DIR/"
 cp "$SRC_DIR/references.bib"             "$PKG_DIR/"
-cp "$SRC_DIR/generated/fig_bounds.tex"   "$PKG_DIR/generated/"
-cp "$SRC_DIR/generated/fig_diagnostic.tex" "$PKG_DIR/generated/"
+# Copy every generated fragment rather than a hardcoded list: a new figure
+# added to the manuscript must not be able to go missing from the tarball.
+shopt -s nullglob
+fragments=("$SRC_DIR"/generated/*.tex)
+(( ${#fragments[@]} > 0 )) || {
+  echo "error: no generated .tex fragments found" >&2
+  exit 1
+}
+cp "${fragments[@]}" "$PKG_DIR/generated/"
+
+# Every \input{generated/...} in the manuscript must now resolve inside PKG_DIR.
+while read -r name; do
+  [[ -f "$PKG_DIR/generated/$name.tex" ]] || {
+    echo "error: manuscript inputs generated/$name.tex but it is not packaged" >&2
+    exit 1
+  }
+done < <(grep -oE '\\input\{generated/[^}]+\}' "$SRC_DIR/$STEM.tex" \
+         | sed 's|.*generated/||; s|}$||')
 
 # The .bbl is what arXiv actually uses, since it does not run BibTeX. The .bib
 # travels alongside it so that a local verification build, which does run
