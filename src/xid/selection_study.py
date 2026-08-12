@@ -45,6 +45,8 @@ FIXTURE_SEED = 1729
 SAMPLED_BLOCKS = (0, 4, 9)
 SAMPLED_SPECS = ("CI_1", "CI_I", "CI_CC")
 FAILING_REGION_THRESHOLD = 39
+# Cont, Cucuringu and Zhang report a 89.06% first within-asset level component.
+WITHIN_ASSET_LEVEL_SHARE = 0.8906
 
 SCOPE = "deterministic measurement on a synthetic panel at test seed 1729; not a market claim"
 
@@ -62,16 +64,42 @@ class CellResult:
 
 
 def synthetic_panel(root: Path) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
-    """Build the same synthetic issued panel the assembly tests use."""
+    """Build a panel calibrated to the registered and published commonality.
+
+    An earlier version used arbitrary mixing weights and produced a
+    cross-asset PC1 share of 0.69 and an integrated-flow PC1 share of 0.96,
+    against a registered flow share of 0.2827. That panel was effectively
+    rank-one and its LASSO paths failed to converge for reasons that belonged
+    to the fixture rather than to the design, so any failure rate measured on
+    it would have been meaningless.
+
+    The weights below are solved from the target shares. For
+    ``x_i = a f + b e_i`` with independent unit-variance terms the pairwise
+    correlation is ``a^2 / (a^2 + b^2)`` and the leading correlation eigenvalue
+    is ``1 + (N - 1) rho``, so a share ``s`` requires ``rho = (N s - 1)/(N - 1)``.
+    Cross-asset uses the registered flow share; within-asset levels use the
+    published 89.06% first-level-component share.
+    """
     from xid.sim.g2 import load_g2_contract
 
     contract = load_g2_contract(root)
     assets = contract.n_assets
     levels = contract.n_levels
     bins = contract.bins_per_date
+
+    def mix(share: float, count: int) -> tuple[float, float]:
+        rho = (count * share - 1.0) / (count - 1.0)
+        return float(np.sqrt(rho)), float(np.sqrt(1.0 - rho))
+
+    a_cross, b_cross = mix(contract.flow_pc1_share, assets)
+    a_level, b_level = mix(WITHIN_ASSET_LEVEL_SHARE, levels)
+
     rng = np.random.default_rng(FIXTURE_SEED)
     common = rng.normal(size=(bins, 1))
-    level_flows = 0.6 * common[:, :, None] + rng.normal(size=(bins, assets, levels)) * 0.4
+    asset_factor = a_cross * common + b_cross * rng.normal(size=(bins, assets))
+    level_flows = a_level * asset_factor[:, :, None] + b_level * rng.normal(
+        size=(bins, assets, levels)
+    )
     best = level_flows[:, :, contract.paper_reconstruction.best_level_index]
     returns = 0.3 * best + 0.5 * common + rng.normal(size=(bins, assets)) * 0.2
     return (

@@ -1,0 +1,142 @@
+{
+  "failing_region_threshold": 39,
+  "fold_solve_failures": 243,
+  "grid_size": 40,
+  "max_selected_index": 39,
+  "mean_selected_index": 9.728155,
+  "min_selected_index": 1,
+  "outer_refit_failures": 0,
+  "per_cell": [
+    {
+      "block": 0,
+      "fold_solve_failures": 32,
+      "max_selected_index": 39,
+      "outer_refit_failures": 0,
+      "responses_skipped": 20,
+      "specification": "CI_1"
+    },
+    {
+      "block": 0,
+      "fold_solve_failures": 26,
+      "max_selected_index": 17,
+      "outer_refit_failures": 0,
+      "responses_skipped": 20,
+      "specification": "CI_CC"
+    },
+    {
+      "block": 0,
+      "fold_solve_failures": 31,
+      "max_selected_index": 19,
+      "outer_refit_failures": 0,
+      "responses_skipped": 20,
+      "specification": "CI_I"
+    },
+    {
+      "block": 4,
+      "fold_solve_failures": 18,
+      "max_selected_index": 17,
+      "outer_refit_failures": 0,
+      "responses_skipped": 13,
+      "specification": "CI_1"
+    },
+    {
+      "block": 4,
+      "fold_solve_failures": 20,
+      "max_selected_index": 7,
+      "outer_refit_failures": 0,
+      "responses_skipped": 15,
+      "specification": "CI_CC"
+    },
+    {
+      "block": 4,
+      "fold_solve_failures": 16,
+      "max_selected_index": 18,
+      "outer_refit_failures": 0,
+      "responses_skipped": 14,
+      "specification": "CI_I"
+    },
+    {
+      "block": 9,
+      "fold_solve_failures": 35,
+      "max_selected_index": 17,
+      "outer_refit_failures": 0,
+      "responses_skipped": 24,
+      "specification": "CI_1"
+    },
+    {
+      "block": 9,
+      "fold_solve_failures": 33,
+      "max_selected_index": 7,
+      "outer_refit_failures": 0,
+      "responses_skipped": 23,
+      "specification": "CI_CC"
+    },
+    {
+      "block": 9,
+      "fold_solve_failures": 32,
+      "max_selected_index": 14,
+      "outer_refit_failures": 0,
+      "responses_skipped": 18,
+      "specification": "CI_I"
+    }
+  ],
+  "responses_skipped_for_fold_failure": 167,
+  "sampled_scope": {
+    "blocks": [
+      0,
+      4,
+      9
+    ],
+    "cells_evaluated": 103,
+    "responses": 30,
+    "specifications": [
+      "CI_1",
+      "CI_I",
+      "CI_CC"
+    ]
+  },
+  "scope": "deterministic measurement on a synthetic panel at test seed 1729; not a market claim",
+  "selected_index_counts": [
+    0,
+    4,
+    0,
+    4,
+    8,
+    7,
+    3,
+    7,
+    6,
+    16,
+    9,
+    9,
+    7,
+    7,
+    4,
+    1,
+    0,
+    6,
+    1,
+    1,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "selections_in_failing_region": 1
+}

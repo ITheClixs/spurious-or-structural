@@ -204,3 +204,77 @@ already-failing cost projection, or the outer refit is permitted to warm-start,
 which changes the registered estimator and needs an amendment, or the ratio grid
 is truncated above the failing region, which is also an amendment. None of the
 three is an implementation choice, and none is made here.
+
+---
+
+# Addendum 2 — the registered LASSO path does not reliably converge
+
+Recorded 2026-08-13 from a measurement over 270 sampled cells: blocks 0, 4, 9,
+the three penalised specifications, all thirty responses, on a synthetic panel
+calibrated to the registered commonality.
+
+## The fixture matters, and the first attempt got it wrong
+
+An initial run used arbitrary mixing weights and produced a cross-asset PC1
+share of `0.6885` and an integrated-flow share of `0.9582`, against a registered
+flow share of `0.2827`. That panel was effectively rank-one and 87% of its cells
+failed. **That number was a fixture artifact and is not reported as a finding.**
+
+The panel was rebuilt by solving the mixing weights from the target shares:
+for `x_i = a f + b e_i`, pairwise correlation is `a^2/(a^2+b^2)` and the leading
+correlation eigenvalue is `1 + (N-1) rho`, so share `s` needs
+`rho = (N s - 1)/(N - 1)`. Cross-asset uses the registered flow share;
+within-asset levels use the published 89.06% first-level component. The
+rebuilt panel measures `0.2600` best-level and `0.2786` integrated against the
+registered `0.2827`.
+
+## What the calibrated panel shows
+
+| Quantity | Value |
+| --- | ---: |
+| Cells sampled | 270 |
+| Usable selections | **103** |
+| Responses lost to a nonconverged fold solve | **167 (62%)** |
+| Fold-solve failures | 243 |
+| Selected-index range | 1 to 39 |
+| Mean selected index | 9.73 |
+| Selections in the failing region (index 39) | **1** |
+| Outer-refit failures from zero | **0** |
+
+Two conclusions, and they point in different directions.
+
+**The from-zero outer refit is not the problem.** Zero outer refits failed, and
+the single selection at index 39 refitted from zero without incident. The
+earlier memo's claim that the mandated from-zero refit fails at the smallest
+sealed ratio was measured on one response of the uncalibrated fixture and does
+not generalise. That claim is withdrawn.
+
+**The fold cross-validation is the problem.** 62% of responses lose at least one
+warm-started fold solve to the 10,000-sweep cap, and under the A031 fail-closed
+rule a response that cannot complete its cross-validation cannot produce a
+coefficient. Recalibrating the panel moved this from 87% to 62%; it did not
+remove it.
+
+## Why this is structural rather than another fixture artifact
+
+The registered geometry gives each fold 24 training bins against 30 penalised
+columns. `p > n` is inherent to the design: 30-bin blocks with 6-bin validation
+folds and 30 assets. The sample correlation matrix is singular by construction,
+and the sealed tolerances of `1e-10` on the coefficient update and `1e-9` on the
+KKT violation are tighter than coordinate descent reaches on a singular design
+within the sealed 10,000-sweep cap. Observed failures sit close to the
+threshold — a representative one had a maximum update of `1.93e-10` against a
+`1e-10` bound — so this is asymptotic convergence against an over-tight stop,
+not divergence.
+
+## Scope and what is not claimed
+
+This is one synthetic panel at one seed. The 62% figure is not a precise
+population rate and should not be quoted as one. What the measurement supports
+is narrower and sufficient: **the registered tolerance, sweep cap, and fold
+geometry are not mutually consistent**, and a material fraction of responses
+cannot complete cross-validation as specified. The mechanism — `p > n` with a
+`1e-10` stop — is a property of the registered design rather than of this
+fixture.
+
+No registered seed, rehearsal, or market data was accessed.
