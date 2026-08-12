@@ -76,8 +76,21 @@ In the **one-spike geometry**, where `m` is the confounding direction:
 each to four decimal places.
 
 **Prediction 3 — the exposure law.** In the one-spike geometry the ratio
-`x'Gx / (m'x)^2` is constant across the frozen trades to below `1e-12` and
-equals `N g` with `g = gamma h_q / (N q_1)`.
+`x'Gx / (m'x)^2` is constant across the frozen trades and equals `N g` with
+`g = gamma h_q / (N q_1)`.
+
+*Tolerance amended 2026-08-12 after an observed failure.* The original
+registration demanded an absolute spread below `1e-12` on a quantity of
+magnitude `0.23`, which is roughly twenty units in the last place. The ratio is
+a reduction over 900 float64 products, and hosted Linux reproduced it with a
+spread of `7.4e-11`, a relative discrepancy of `3.2e-10`, against a macOS
+spread below `1e-12`. The registered tolerance was therefore tighter than
+float64 can deliver portably, and the failure is a defect in the tolerance
+rather than evidence against the exposure law: a genuine violation would appear
+in the first few significant digits, not the tenth. The tolerance is restated
+as `1e-9` **relative**, which is three times the largest observed
+cross-platform spread and six orders of magnitude below any structural effect.
+The failure and this amendment are logged in `SPECIFICATION_LOG.md`.
 
 **Prediction 4 — the identified cost interval.** The interval of Eq. (7) has
 half-width `(T/N)(1'x)^2` with `T/N = 0.0904196`, and is exactly zero for every

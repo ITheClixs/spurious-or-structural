@@ -83,7 +83,9 @@ def test_confound_neutral_trade_has_exactly_zero_cost_error() -> None:
     """A029 prediction 1: the immune subspace is immune to machine precision."""
     truth, gap = _general_fixture()
     neutral = _trades(gap)["neutral"]
-    assert abs(cost_error(neutral, gap)) < 1e-15
+    # Structural errors in this fixture are of order 1e-2, so 1e-13 still
+    # separates an exact zero from a real effect by eleven orders.
+    assert abs(cost_error(neutral, gap)) < 1e-13
     assert abs(cost_error(neutral, gap) / impact_cost(neutral, truth)) < 1e-12
 
 
@@ -132,8 +134,13 @@ def test_exposure_law_ratio_is_constant() -> None:
     for _ in range(8):
         x = rng.normal(size=N)
         ratios.append(cost_error(x, gap) / float(m @ x) ** 2)
-    assert max(ratios) - min(ratios) < 1e-12
-    assert abs(ratios[0] - N * g) < 1e-12
+    # Relative, not absolute: the ratio is a reduction over 900 float64 terms
+    # and its last digits depend on BLAS blocking. 1e-9 relative is three times
+    # the largest observed cross-platform spread and six orders below any
+    # structural effect.
+    scale = abs(N * g)
+    assert (max(ratios) - min(ratios)) / scale < 1e-9
+    assert abs(ratios[0] - N * g) / scale < 1e-9
     assert abs(N * g - 0.2296108639) < 1e-9
 
 

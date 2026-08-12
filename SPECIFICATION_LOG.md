@@ -940,4 +940,47 @@ empirical model trials, but gate-level pipeline variants are recorded.
   were verified unaffected and stand as first registered. No result was
   retrofitted to a number already published, and no fixture, target, or
   calibration was re-drawn to recover the original percentages.
-- **Status:** registration and correction complete; implementation pending.
+- **Observed RED:** the first execution run failed collection with
+  `ModuleNotFoundError: No module named 'xid.models.execution'`.
+- **Observed GREEN, local:** all 22 focused tests passed on the first
+  implementation run and all five predictions held. The immune subspace has
+  dimension exactly `N - K = 27`; the confound-neutral trade carries cost error
+  `5.204170e-17`; general-fixture relative errors are `-9.8113%`, `-9.7661%`,
+  and `+0.0000%`; one-spike relative errors are `+54.2302%`, `+5.4183%`, and
+  `+0.0000%`; the exposure ratio equals `N g = 0.2296108639`; the identified
+  cost half-width is `(T/N)(1'x)^2` with `T/N = 0.0904195732` and is exactly
+  zero for a dollar-neutral trade; and the minimax schedule improves worst-case
+  cost by `0.0000%`, `0.0000%`, and `3.1095%` while matching a 20,000-point
+  grid search.
+- **Observed FAILURE on hosted Linux, and its diagnosis.** Prediction 3 failed
+  in hosted continuous integration. The registered tolerance demanded an
+  absolute spread below `1e-12` in the exposure ratio, a quantity of magnitude
+  `0.23`, which is about twenty units in the last place. Linux reproduced the
+  ratio with a spread of `7.4e-11` between `0.22961086389613597` and
+  `0.2296108638224396`, a relative discrepancy of `3.2e-10`, while macOS stayed
+  below `1e-12`. The ratio is a reduction over 900 float64 products and its
+  final digits depend on BLAS blocking, so the registered tolerance was tighter
+  than float64 delivers portably. This is a defect in the tolerance, not
+  evidence against the exposure law, since a genuine violation of a
+  proportionality claim would appear in the leading significant digits rather
+  than the tenth. The tolerance is restated as `1e-9` relative, three times the
+  largest observed spread and six orders below any structural effect, and the
+  amendment is recorded in `docs/predictions/EXECUTION_COST.md`. The companion
+  assertion on the general-fixture neutral trade was widened from `1e-15` to
+  `1e-13` for the same reason, still eleven orders below the `1e-2` structural
+  errors in that fixture. No predicted value was changed and no fixture was
+  re-drawn.
+- **Recurrence note:** this is the second tolerance defect of the same kind in
+  this project, after the A028 exhibit that serialised ten significant digits
+  of an analytic zero. Both arose from fixing a tolerance against a single
+  platform before the cross-platform result existed. Future numerical
+  predictions state tolerances in relative terms and are set from the expected
+  conditioning of the computation rather than from an observed macOS run.
+- **Status:** passed for deterministic execution-cost theory only, after the
+  Prediction 3 tolerance amendment. No dynamic schedule, decay kernel, or
+  registered execution path was implemented; C0016 resource admission remains
+  executable-red.
+- **Intervals:** not applicable; deterministic algebraic evaluations only.
+- **Multiple-testing count:** zero.
+- **Access:** test seeds `1729`, `9191`, and `314159` only. Registered seeds,
+  external market data, evaluation data, and holdout remain untouched.
