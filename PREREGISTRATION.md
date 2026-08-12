@@ -1924,3 +1924,54 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A030 — Finite-sample null distribution for the low-rank departure statistic
+
+- **Registered:** 2026-08-12, after the derivation in
+  `docs/derivations/PSI_NULL_DISTRIBUTION.md` and its exploratory pilot, and
+  before any bootstrap implementation, confirmatory run, exhibit, or manuscript
+  section existed.
+- **Reason:** the strongest unresolved objection in
+  `docs/redteam/THEORY_EXTENSION.md` is that `psi_K` had no sampling
+  distribution, so "materially nonzero" was never operationalised and the
+  statistic was descriptive rather than inferential. Without a null
+  distribution the diagnostic cannot be applied to data by anyone, which makes
+  the paper's central practical instrument unusable.
+- **Pilot disclosure:** the size and power tables of Section 4 of the
+  derivation are **exploratory pilot results**, run at test seeds `1729` and
+  `9191` before this registration. They are disclosed as pilot evidence and are
+  explicitly not confirmatory. The confirmatory run uses a fresh sampling seed
+  `314159` against the predictions frozen here.
+- **Research vector:** under `H0` the estimate is a noisy observation of a
+  point in the diagonal-plus-rank-`K` manifold, whose dimension is
+  `N + K(2N - K)`, so `psi_K` is `O_p(T^{-1/2})`. A parametric plug-in
+  bootstrap that refits the null projection and redraws the estimation error
+  from the ordinary-least-squares sampling law supplies the critical value, at
+  `B = 199` and `alpha = 0.05`.
+- **Factor-count rule fixed before use:** the eigenvalue-ratio criterion of Ahn
+  and Horenstein applied to the off-diagonal part of the estimate, maximised
+  over `1 <= k <= 10`. It is not re-selected after observing a rejection.
+- **Disclosed negative result:** a degrees-of-freedom variance inflation of
+  `sqrt(N^2 / (N^2 - dim D_K))` is registered as **not adopted**. The pilot
+  shows it drives realised size to exactly zero at every sample size, removing
+  all power, because the plug-in bias is in the centre of the null distribution
+  rather than its scale. It is reported rather than omitted.
+- **Predictions:** the five numbered predictions of Section 5 of the derivation
+  are frozen verbatim and restated in `docs/predictions/PSI_NULL.md`. They
+  concern realised Monte Carlo rejection rates, so the named interval method is
+  the binomial Monte Carlo standard error at `M = 150`, approximately `0.018`.
+- **Scope withheld:** no dependent or block bootstrap, no heteroskedastic or
+  serially correlated sampling model, no registered resource, validation, or
+  research stream, no market data, no change to any sealed G2 digest, and no
+  claim that the test is valid at small samples.
+- **Failure rule:** if the confirmatory size at `T = 5000` falls outside two
+  and a half Monte Carlo standard errors of nominal, the test is reported as
+  size-distorted at every sample size examined and `psi_K` reverts to a
+  descriptive statistic in the manuscript. A failing prediction is diagnosed
+  and logged, never repaired after the fact and then quietly accepted.
+- **Usage bound:** the manuscript must state the minimum sample size at which
+  the test is usable rather than implying general validity.
+- **Inference effect:** none on G2, which remains open and executable-red.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.
