@@ -83,7 +83,7 @@ Spurious or Structural? Low-Rank Confounding and Partial Identification of Cross
 Mehmet Demir Güven
 ```
 
-**Abstract.** Paste the manuscript abstract as plain text. It is **1,590
+**Abstract.** Paste the manuscript abstract as plain text. It is **1,809
 characters**, within arXiv's 1,920-character limit. Inline math in `$...$` is
 accepted; no custom macros survive, so `\rank` must be written out as `rank`
 in the metadata field.
@@ -123,7 +123,7 @@ https://github.com/ITheClixs/spurious-or-structural
 Record the assigned identifier in `README.md` and `STATE.md`, and update the
 citation block in both. Replace the "no arXiv identifier exists yet" note.
 
-Version 0.2 is a pre-results preprint. A version 1.0 replacement is expected
+Version 0.3 is a pre-results preprint. A version 1.0 replacement is expected
 once the registered premise test closes and the empirical gates open; that
 replacement, not this one, is the paper the G8 gate governs.
 
