@@ -2146,3 +2146,39 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A035 — Identified linear and quadratic functionals before implementation
+
+- **Registered:** 2026-08-16, after the derivation in
+  `docs/derivations/IDENTIFIED_FUNCTIONALS.md` and before any module existed.
+- **Reason:** the partial-identification result was entrywise, and its one
+  economic consequence was stated for a single geometry. Both are instances of
+  a general fact about which functionals the confounding term can move.
+- **Research vector:** with `W = Sigma_qq^{-1} Delta_f`, the functional
+  `a' Lambda b` is point identified if and only if `W' b = 0`, and
+  `x' Lambda x` if and only if `W' x = 0`. The condition constrains the flow
+  argument only; orthogonalising the response argument buys nothing. In the
+  one-spike geometry `col(W) = span(m)`, so the published dollar-neutral
+  corollary is exactly this theorem's instance and holds for no other reason.
+- **Width:** for admissible loadings in a Frobenius ball of radius `R`, the
+  identified interval for `x' Lambda x` has width `2 R ||x|| ||W' x||`,
+  attained at `Gamma* = R (x w')/||x w'||_F` with `w = W' x`.
+- **Disclosed error in the first attempt:** the width was initially conjectured
+  proportional to `||W' x||` alone. Observed ratios of `3.44, 4.28, 2.58, 5.28`
+  falsified that before it was written down; the trade norm enters as well. A
+  random search over 20,000 directions also undershot the supremum by about a
+  factor of two, so sampling the constraint set is recorded as an inadequate
+  substitute for the attaining point.
+- **Predictions:** the five numbered predictions of Section 4 are frozen
+  verbatim. Deterministic checks; no interval method applies and the
+  multiple-testing count is zero.
+- **Scope withheld:** `B = 0` and `Sigma_f = I_K` only; the admissible set is
+  idealised as a Frobenius ball, so the width is an upper bound on the true
+  positive-semidefiniteness-constrained width; no sampling theory; no market
+  data; no registered stream.
+- **Failure rule:** if prediction 2 fails, so that orthogonalising the response
+  argument also identifies the functional, Theorem A's asymmetry is withdrawn
+  and re-derived rather than restated.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.

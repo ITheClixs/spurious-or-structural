@@ -1069,3 +1069,35 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Multiple-testing count:** zero.
 - **Access:** test seed `1729` only. Registered seeds, market data, evaluation
   data, and holdout remain untouched.
+
+## A035 — identified linear and quadratic functionals
+
+- **Registered before implementation:** `docs/derivations/IDENTIFIED_FUNCTIONALS.md`
+  and the A035 block of `PREREGISTRATION.md` were written and committed before
+  `src/xid/models/functionals.py` existed.
+- **Result:** with `W = Sigma_qq^{-1} Delta_f`, the linear functional
+  `a' Lambda b` is point identified over the identified set if and only if
+  `W' b = 0`, and the execution cost `x' Lambda x` if and only if `W' x = 0`.
+  The condition binds the flow argument alone: orthogonalising the response
+  argument leaves the spread at `7.40` against `6.65` for a free pair, while
+  orthogonalising the flow argument collapses it to `3.0e-15`.
+- **Reach of the published corollary:** in the one-spike geometry
+  `col(W) = span(m)` to `|cos| = 1.000000000000`, so the dollar-neutral cost
+  result the manuscript already reports is exactly this theorem's instance.
+  It generalises to `W' x = 0`; it does not generalise to any other geometry
+  by accident.
+- **Width:** `width{x' Lambda x} = 2 R ||x|| ||W' x||` for admissible loadings
+  in a Frobenius ball of radius `R`, attained at `Gamma* = R (x w')/||x w'||_F`.
+  Verified against the maximiser to `1e-10` relative at four trade scales.
+- **Disclosed error:** the width was first conjectured proportional to
+  `||W' x||` alone. Ratios of `3.44, 4.28, 2.58, 5.28` falsified it before it
+  reached the derivation, and a 20,000-direction random search undershot the
+  supremum by roughly half. Both are recorded in the derivation as evidence
+  that sampling an admissible set is not a substitute for its attaining point.
+- **Status:** all five registered predictions hold. Deterministic; test seed
+  `1729` only.
+- **Intervals:** none apply; these are population statements about an
+  identified set with no sampling variation.
+- **Multiple-testing count:** zero.
+- **Access:** no registered seed, market data, evaluation data, or holdout was
+  touched.
