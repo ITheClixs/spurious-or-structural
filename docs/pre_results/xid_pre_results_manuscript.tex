@@ -124,13 +124,14 @@ at published one-minute commonality statistics the sharp identified interval
 for the off-diagonal runs from $-0.078$ to $0.103$ around an observed $0.012$,
 so it is not identified even in sign. The same rank structure makes the
 consequence tractable. The execution-cost error is a rank-$K$ quadratic form,
-so it vanishes on at least $N-K$ trade directions: an equal-weight index basket
-is mispriced by $54\%$ of its true cost while a dollar-neutral basket is
-mispriced by exactly nothing, and a dollar-neutral trade has a point-identified
+so it vanishes on an immune subspace of dimension at least $N-K$ while almost
+every other trade is mispriced: an equal-weight index basket is mispriced by
+$54\%$ of its true cost while a dollar-neutral basket is mispriced by exactly
+nothing, and a dollar-neutral trade has a point-identified
 execution cost even though the matrix behind it does not. Finally the
 restriction is refutable. We give a scale-free departure statistic whose
-rejection supports genuine cross-impact, with a bootstrap null that controls
-size above roughly $5N^2$ observations and is reported as invalid below. We
+rejection falsifies the maintained pure-confounding null, with a bootstrap
+null whose size we report rather than assume. We
 verify the theory in a preregistered known-truth experiment with $N=30$, $K=3$,
 $T=10^{7}$, and register, without reporting, a falsification protocol for the
 empirical stage.
@@ -223,7 +224,7 @@ Low rank is a testable restriction, not just a caution.
 Definition~\ref{def:psi} introduces $\psi_K$, the relative Frobenius distance
 of an estimated coefficient matrix from the diagonal-plus-rank-$K$ set. Its
 population value is zero under pure confounding, so a materially nonzero value
-is evidence \emph{for} genuine structural cross-impact. This inverts the
+rejects that maintained null under the stated factor budget. This inverts the
 conventional reading, under which a large off-diagonal coefficient is itself
 taken as the evidence. Under our results, off-diagonal magnitude is
 uninformative and only departure from the low-rank set carries content.
@@ -616,9 +617,12 @@ Immediate from Corollary~\ref{cor:set}: the minimand attains zero at $D=\Lambda$
 and $R=G$.
 \end{proof}
 
-\paragraph{Direction of the test.} A materially nonzero $\psi_K$ is evidence
-\emph{against} pure confounding and therefore \emph{for} genuine structural
-cross-impact. This is the reverse of the conventional reading, under which a
+\paragraph{Direction of the test.} A materially nonzero $\psi_K$ rejects the
+maintained pure-confounding null under the stated factor budget. That null
+bundles diagonal $\Lambda$, $B=0$, exactly $K$ latent factors, the
+zero-cross-covariance restrictions, linearity, and stationarity; rejection
+falsifies the conjunction, and genuine structural cross-impact is one
+explanation for it rather than the only one. This is the reverse of the conventional reading, under which a
 large off-diagonal coefficient is itself the evidence. Under our results
 off-diagonal magnitude carries no such information; only departure from
 $\mathcal D_K$ does.
@@ -630,8 +634,12 @@ optimal $R$ is the rank-$K$ truncated singular value decomposition of
 $\widehat A-D$. Each half-step is the exact Frobenius minimiser over its block,
 so the objective is nonincreasing and bounded below. The limit is a stationary
 point rather than a certified global minimum, so the computed $\psi_K$ is an
-\emph{upper bound} on the true distance and the test is conservative toward
-failing to reject $H_0$. The alternating projection itself is standard
+\emph{upper bound} on the true distance. That does \emph{not} make the test
+conservative: rejection occurs for large values, so an upward-biased statistic
+pushes toward more rejection, not less. The optimization error has an a priori
+ambiguous effect on rejection probability, and numerical and inferential
+validity must therefore be established separately. The alternating projection
+itself is standard
 \cite{ChandrasekaranEtAl2011}; the contribution here is the economic
 restriction it tests.
 
@@ -706,16 +714,33 @@ identically on a subspace of trade space of dimension at least
 $N-K-\rank(B)$.
 \end{theorem}
 
-\begin{corollary}[Most trade directions are safe]
+\begin{corollary}[An immune subspace exists, but it has measure zero]
 \label{cor:safe}
-At most $K+\rank(B)$ of the $N$ directions in trade space are mispriced. The
-magnitude of the spurious off-diagonals is irrelevant to this count.
+There exists a linear subspace of trade space, of dimension at least
+$N-K-\rank(B)$, on which the cost error vanishes identically. The magnitude of
+the spurious off-diagonals does not affect that dimension. \emph{However}, the
+set of trades carrying nonzero cost error has full Lebesgue measure whenever
+$\mathrm{sym}(G)\neq0$: immunity is a property a desk must construct
+deliberately, not one a trade acquires by chance.
 \end{corollary}
 
-This is the practical content of the rank bound. A dense, badly contaminated
-cross-impact matrix still misprices only a $K$-dimensional set of trades. In
-our fixture with $N=30$, $K=3$, $B=0$ the immune subspace has dimension
-exactly $27$, and a trade drawn from it has cost error $5.2\times10^{-17}$.
+This is the practical content of the rank bound, and its two halves point in
+opposite directions. On one side, a large immune subspace exists: in our
+fixture with $N=30$, $K=3$, $B=0$ it has dimension exactly $27$, and a trade
+drawn from it has cost error $5.2\times10^{-17}$. On the other, that subspace
+is a null set. Drawing $200{,}000$ trades at random from the fixture,
+\emph{every one} carried nonzero cost error. A desk is not protected by the
+contamination being low rank; it is protected only by deliberately projecting
+its trade onto the immune subspace, which requires knowing that subspace.
+
+Two related objects must not be conflated. Since $x^\top Gx=x^\top
+\mathrm{sym}(G)x$ with $\mathrm{sym}(G)=(G+G^\top)/2$, the economically
+relevant matrix is the symmetric part. Its kernel has dimension at least
+$N-2(K+\rank(B))$ --- in the fixture $\rank(\mathrm{sym}(G))=6$ against
+$\rank(G)=3$ --- while $\ker(G)$, of dimension at least $N-K-\rank(B)$, is
+contained in the immune set for a different reason: $Gx=0$ forces
+$x^\top Gx=0$ directly. The exact immune set is neither kernel but the quadric
+cone $\{x:x^\top\mathrm{sym}(G)x=0\}$, which is not a subspace.
 
 Which $K$ directions are unsafe depends on the geometry. In a fixture with
 generic loadings the equal-weight basket is not special and bears about the

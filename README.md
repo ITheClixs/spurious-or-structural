@@ -40,8 +40,8 @@ a free low-rank object, the structural matrix is set-identified rather than
 point-identified from second moments. In the permutation-invariant one-spike
 geometry the sharp identified interval is available in closed form, and at
 published one-minute commonality statistics it contains zero. The same rank structure makes the consequence tractable: the execution-cost
-error is a rank-$K$ quadratic form, so it vanishes on at least $N-K$ trade
-directions. An equal-weight index basket is mispriced by 54% of its true cost
+error is a rank-$K$ quadratic form, so it vanishes on an immune subspace of
+dimension at least $N-K$ while almost every other trade is mispriced. An equal-weight index basket is mispriced by 54% of its true cost
 while a dollar-neutral basket is mispriced by exactly nothing, and a
 dollar-neutral trade has a point-identified execution cost even though the
 matrix behind it does not. Finally the restriction is refutable: a scale-free
@@ -175,9 +175,12 @@ $$
 $$
 
 Its population value is zero under pure confounding, so a materially nonzero
-$\psi_K$ is evidence **for** genuine structural cross-impact. This inverts
-the conventional reading: off-diagonal magnitude carries no information, only
-departure from $\mathcal{D}_K$ does.
+$\psi_K$ **rejects the maintained pure-confounding null** under the stated
+factor budget. That null bundles diagonal $\Lambda$, $B=0$, exactly $K$
+factors, the covariance restrictions, linearity, and stationarity — rejection
+falsifies the conjunction, and genuine cross-impact is one explanation among
+several. This still inverts the conventional reading: off-diagonal magnitude
+carries no information, only departure from $\mathcal{D}_K$ does.
 
 Two caveats are stated up front. $\psi_K=0$ does not prove diagonality — the
 test refutes, it does not confirm. And $\psi_K$ depends on the assumed factor
@@ -202,10 +205,16 @@ $C(x,M)=x^\top M x$ to execute trade $x$.
 ### Theorem 6 — The cost error is low rank
 
 $C(x,A)-C(x,\Lambda)=x^\top G x$, so by Theorem 2 the error vanishes on a
-subspace of dimension at least $N-K-\mathrm{rank}(B)$. **At most
-$K$ of the $N$ trade directions are mispriced**, however large the spurious
-entries. In the fixture the immune subspace has dimension **27** and a trade
-drawn from it has cost error $5.2\times10^{-17}$.
+subspace of dimension at least $N-K-\mathrm{rank}(B)$. In the fixture that
+immune subspace has dimension **27**, and a trade drawn from it has cost error
+$5.2\times10^{-17}$.
+
+**The immune set has measure zero.** Of 200,000 randomly drawn trades, *every
+one* carried nonzero cost error. Low rank does not mean most trades are safe;
+it means a desk can *construct* safety if it knows the subspace. Since
+$x^\top Gx = x^\top\mathrm{sym}(G)x$, the economically relevant object is the
+symmetric part, whose rank is $2K$ generically, and the exact immune set is a
+quadric cone rather than a subspace.
 
 In the one-spike geometry the error is exactly $g(\mathbf 1^\top x)^2$:
 
