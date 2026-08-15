@@ -2073,3 +2073,39 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A033 — Minimum confounding dimension before implementation
+
+- **Registered:** 2026-08-16, after the derivation in `docs/derivations/K_MIN.md`
+  and before any `K_min` module existed.
+- **Reason:** committing to a factor budget before looking at the data inverts
+  the natural question. Asking instead how many latent dimensions would be
+  needed to rationalise the observed matrix without structural cross-impact is
+  better posed, and falsification of pure confounding reduces to comparing that
+  number against the factor budget the order flow supports.
+- **Research vector:** `K_min(A) = min over diagonal D of rank(A - D)`.
+  Proposition 10 gives the certified lower bound
+  `K_min >= max over disjoint (I,J) of rank(A_{I,J})`, computable by singular
+  value decomposition with no nuisance parameter and no nonconvex solve.
+  Falsification needs exactly this direction, so the unreliable completion that
+  would bound `K_min` from above is off the critical path.
+- **Disclosed limitation, registered in advance:** the exact-rank bound
+  **saturates at the block dimension under a perturbation of `1e-6`** and is
+  therefore unusable on sample data as stated. The singular spectrum
+  nevertheless separates structure from noise at every level tested, with the
+  noise singular values scaling linearly in the perturbation, so the quantity is
+  estimable in principle with a cut calibrated to the sampling distribution.
+  That calibration is not attempted and no `K_min` point estimate is claimed.
+- **Predictions:** the five numbered predictions of Section 4 of the derivation
+  are frozen verbatim. Deterministic checks at test seed `1729`; no interval
+  method applies and the multiple-testing count is zero.
+- **Scope withheld:** no inference, no upper bound on `K_min`, no factor-count
+  estimator, no comparison against a flow-factor count, no market data, no
+  registered stream, and no change to any sealed digest.
+- **Failure rule:** if prediction 1 fails, so that the bound misses the true
+  rank in population, Proposition 10 is re-derived rather than the tolerance
+  loosened. If prediction 3 fails, the saturation claim is withdrawn and the
+  exact-rank statistic is re-examined for usability.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.
