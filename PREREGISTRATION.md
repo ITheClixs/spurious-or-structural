@@ -2109,3 +2109,40 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A034 — Two-proxy identification before implementation
+
+- **Registered:** 2026-08-16, after the derivation in
+  `docs/derivations/MULTI_PROXY_IDENTIFICATION.md` and before any proxy module
+  existed.
+- **Reason:** the project's results were negative or partial throughout. A
+  paper that says what cannot be learned is materially stronger if it also says
+  what additional information would make it learnable.
+- **Research vector:** with two proxies whose measurement errors are
+  uncorrelated with each other and with the structural shocks,
+  `Cov(h1,h2)` identifies `Sigma_f`, `Cov(q,h1) Sigma_f^{-1}` identifies
+  `Delta`, and
+  `Lambda = [Sigma_rq - Sigma_rh Delta'][Sigma_qq - Delta Sigma_f Delta']^{-1}`
+  identifies a **general** structural matrix, not merely a diagonal one. The
+  inverted bracket is `Sigma_v`, so identification requires idiosyncratic flow
+  variation.
+- **Verification requirement discharged before registration:** every dimension,
+  transpose, and covariance convention in the three equations was checked
+  against exact population moments, recovering `Lambda` to `1.79e-15`.
+- **Disclosed fragility:** the independence assumption is a cliff. At
+  proxy-error correlation `0.1` the error is already `86%` of its value at
+  perfect correlation. Two proxies sharing any preprocessing step or any
+  overlapping data will not deliver the result, and the registration records
+  this rather than presenting the theorem as robust.
+- **Predictions:** the six numbered predictions of Section 6 of the derivation
+  are frozen verbatim. Deterministic algebraic checks; no interval method
+  applies and the multiple-testing count is zero.
+- **Scope withheld:** `B = 0` only; population moments only; no sampling
+  theory; no claim that two suitable proxies exist in any market; unit proxy
+  loadings; no registered stream, market data, or holdout.
+- **Failure rule:** if prediction 3 fails, the formula does not enter the
+  manuscript at all. If prediction 6 fails, the fragility claim is withdrawn
+  and the sensitivity re-examined rather than softened.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.
