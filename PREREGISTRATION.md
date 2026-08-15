@@ -2032,3 +2032,44 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A032 — Cross-block rank restrictions before implementation
+
+- **Registered:** 2026-08-16, after the derivation in
+  `docs/derivations/CROSS_BLOCK_RANK.md` and before any cross-block module,
+  tetrad statistic, or manuscript section existed.
+- **Reason:** the `psi_K` statistic solves a nonconvex problem whose value
+  depends on its starting point and must estimate a diagonal nuisance it does
+  not care about. Choosing row and column index sets that are disjoint removes
+  the diagonal from the submatrix entirely, turning the restriction into an
+  exact rank bound testable with one singular value decomposition.
+- **Research vector:** for disjoint `I` and `J`, `A_{I,J} = G_{I,J}` and hence
+  `rank(A_{I,J}) <= K` under diagonal structural impact with `B = 0` and at
+  most `K` latent factors. Every `(K+1)`-minor of such a block vanishes; at
+  `K = 1` this gives tetrads `A_ij A_kl - A_il A_kj = 0`.
+- **Predictions:** the five numbered predictions of Section 5 of the derivation
+  are frozen verbatim. They are deterministic algebraic checks at test seed
+  `1729`; no interval method applies and the multiple-testing count is zero.
+- **Disclosed negative result:** recovering the diagonal by alternating
+  projection is registered as **not reliable**. Started from the observed
+  matrix it recovers the structural diagonal to `4.2e-16`; started from twenty
+  random diagonals at scale `5.0` its solutions spread by `24.66`. Direct
+  local-identification testing shows the diagonal is nonetheless identified in
+  every configuration tested, so the failure is algorithmic. Any estimator
+  built on the completion inherits a defect the identification does not have,
+  and this is recorded rather than omitted.
+- **Scope withheld:** no sampling distribution for `sigma_{K+1}`, no factor-count
+  selection rule, no claim of a global converse, no registered stream, no market
+  data, and no change to any sealed digest or to the frozen G1 result.
+- **Failure rule:** if prediction 4 fails, so that overlapping index sets
+  satisfy the restriction as readily as disjoint ones, the disjointness
+  hypothesis is vacuous and the theorem is re-derived rather than declared
+  satisfied. A failing prediction is diagnosed and logged, never repaired after
+  the fact.
+- **Claim discipline:** the restriction may be described as rejecting the
+  maintained pure-confounding null under a stated factor budget. It may not be
+  described as proving genuine structural cross-impact.
+- **Inference effect:** none on G2, which remains open and executable-red.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.
