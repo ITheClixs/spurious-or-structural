@@ -1206,3 +1206,38 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Multiple-testing count:** zero.
 - **Access:** no registered seed, market data, evaluation data, or holdout was
   touched.
+
+## A039 — dependence-robust inference for the cross-block restriction
+
+- **Registered before implementation:** `docs/derivations/CROSS_BLOCK_INFERENCE.md`
+  and the A039 block of `PREREGISTRATION.md` preceded
+  `src/xid/models/cross_block_inference.py` and `src/xid/crossblock_study.py`.
+- **Construction:** per-date sufficient statistics reduce any date weighting to
+  a weighted sum of small matrices, the bootstrap is recentred on the rank-`K`
+  truncation of the observed block so the resampled distribution is a null
+  distribution, and whole dates are resampled so within-day dependence of
+  arbitrary form is preserved without being modelled.
+- **Headline finding:** the procedure implied by treating bins as independent
+  observations rejects a true null in **every replication**, `1.000` at both
+  the 5% and 10% levels. Any cross-impact rank test that resamples
+  high-frequency observations independently manufactures rejections out of
+  serial correlation alone. The date-cluster scheme holds its level at `0.040`
+  and `0.080`.
+- **Power, reported with its limits:** at `D = 50` the rejection rate runs
+  `0.040, 0.227, 0.873, 1.000, 1.000` across `cross` in
+  `{0, 0.05, 0.10, 0.20, 0.40}`; at `D = 200` it runs
+  `0.053, 0.920, 1.000, 1.000, 1.000`. A non-rejection on a short panel is
+  close to uninformative, so `D` must be reported beside every `p`-value.
+- **Provenance:** both tables were regenerated from the shipped implementation
+  and agree with the exploratory run to the last digit reported. The four
+  registered predictions execute as tests behind `XID_RUN_SLOW_INFERENCE=1`.
+- **Reporting rule registered:** applications must report the whole map
+  `K -> p_K` over a prespecified range with `D`, `B`, index sets, and replicate
+  count. No `K` is selected here.
+- **Status:** all five registered predictions hold, verified against the module
+  rather than the exploratory script.
+- **Intervals:** rejection rates are Monte Carlo proportions over 150–200
+  replications; registered acceptance bands are intervals for that reason.
+- **Multiple-testing count:** zero.
+- **Access:** simulated data only. No registered seed, market data, evaluation
+  data, or holdout was touched.

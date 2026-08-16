@@ -2300,3 +2300,39 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A039 — Dependence-robust inference for the cross-block restriction
+
+- **Registered:** 2026-08-16, after `docs/derivations/CROSS_BLOCK_INFERENCE.md`
+  and before any module existed.
+- **Reason:** Theorem 9 fixes `sigma_{K+1}(A_{I,J})` at zero in population.
+  Estimated, it is positive almost surely, so the theorem is not yet a test.
+  The binding difficulty is that high-frequency panels have `N T` observations
+  and nothing like `N T` independent ones.
+- **Research vector:** accumulate per-date sufficient statistics, impose the
+  null by recentring the bootstrap on the rank-`K` truncation of the observed
+  block, and resample whole dates. Compare against the procedure implied by
+  treating bins as independent.
+- **Predictions:** the five numbered predictions of Section 5 are frozen
+  verbatim, including the interval `[0.01, 0.09]` for date-cluster size at the
+  5% level and the requirement that the independent-bin scheme exceed `0.5`.
+  Monte Carlo seed `4242`, panel seeds `9000 + r`.
+- **Interval method:** rejection rates are Monte Carlo proportions over 150 to
+  200 replications; the registered acceptance bands are stated as intervals
+  rather than point targets for that reason. Bootstrap `p`-values use 299
+  replicates.
+- **Multiple-testing count:** zero. No `K` is selected; Section 4 registers the
+  requirement to report the whole map `K -> p_K` over a prespecified range,
+  with `D`, `B`, index sets, and replicate count.
+- **Scope withheld:** one dependence structure only, AR(1) within dates with
+  independent dates, which is a caricature of a real panel and is the
+  assumption the date-cluster scheme rests on. No asymptotic consistency proof
+  for the bootstrap under this recentring. Simulated data only; no market data
+  and no claim about any real market. One alternative family, dense
+  off-diagonal perturbations.
+- **Failure rule:** if date-cluster size falls outside the registered band, the
+  procedure is reported as not adopted rather than retuned until it passes —
+  the same disposition recorded for the `psi_K` plug-in bootstrap.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.

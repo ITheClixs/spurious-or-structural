@@ -911,6 +911,87 @@ $\epsilon=0.20$. All $784$ tetrads vanish at $K=1$ (largest
 $1.7\times10^{-18}$) and reach $5.9\times10^{-2}$ on a $K=3$ matrix, so the
 restriction discriminates the factor count rather than holding vacuously.
 
+\subsection{Testing it on dependent data}
+\label{sec:xbinference}
+
+Theorem~\ref{thm:crossblock} fixes $\sigma_{K+1}(A_{I,J})$ at zero in
+population. Estimated, it is positive almost surely, so the theorem is not yet
+a test. Two choices make one.
+
+First, the bootstrap must impose the null. The null constrains a singular value
+rather than a parameter, so we recentre on the rank-$K$ truncation $A^{(K)}$ of
+the observed block: a replicate perturbs $A^{(K)}$ by
+$\Delta^\ast=A(w^\ast)_{I,J}-A(\mathbf1)_{I,J}$ and returns
+$\sigma_{K+1}(A^{(K)}+\Delta^\ast)$, transplanting the estimated sampling
+variation onto a block that satisfies the restriction exactly.
+
+Second, and more consequentially, the resampling unit must be the trading date.
+Accumulating per-date sufficient statistics $S^d_{rq}=\sum_tr_tq_t^\top$ and
+$S^d_{qq}=\sum_tq_tq_t^\top$ lets any date weighting be evaluated as
+$A(w)=[\sum_dw_dS^d_{rq}][\sum_dw_dS^d_{qq}]^{-1}$, so resampling whole days
+preserves within-day dependence of arbitrary form without modelling it.
+
+The alternative --- treating bins as independent observations --- is not a
+lesser choice but an invalid one.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Rejection rate under a \emph{true} null. Simulated panels, $N=20$,
+$K=2$, $D=50$ dates of $B=100$ bins, AR(1) persistence $0.6$ within dates; 299
+bootstrap replicates, 200 replications.}
+\label{tab:xbsize}
+\begin{tabular}{lcc}
+\toprule
+resampling scheme & at $5\%$ & at $10\%$ \\
+\midrule
+date-cluster & $0.040$ & $0.080$ \\
+independent-bin & $1.000$ & $1.000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The independent-bin bootstrap rejects a true null in \emph{every} replication.
+That is worth stating without hedging: any cross-impact rank test which
+resamples high-frequency observations independently manufactures rejections out
+of serial correlation alone. The date-cluster scheme holds its nominal level.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Power of the date-cluster test at the $5\%$ level, 150 replications.
+The alternative adds a dense off-diagonal perturbation with largest entry
+\emph{cross} to own-impact terms in $[0.2,0.4]$.}
+\label{tab:xbpower}
+\begin{tabular}{lccccc}
+\toprule
+dates $D$ & $0$ & $0.05$ & $0.10$ & $0.20$ & $0.40$ \\
+\midrule
+$50$ & $0.040$ & $0.227$ & $0.873$ & $1.000$ & $1.000$ \\
+$200$ & $0.053$ & $0.920$ & $1.000$ & $1.000$ & $1.000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Power is real but not free. At fifty dates the test needs cross-impact near a
+quarter of own-impact before it rejects reliably; at two hundred it detects a
+fifth of that. \emph{A non-rejection on a short panel is close to
+uninformative}, and we require $D$ to be reported beside any $p$-value rather
+than the $p$-value alone.
+
+Because the restriction is stated for a given factor budget and that budget is
+not observable, applications must report the entire map $K\mapsto p_K$ over a
+prespecified range, together with $D$, $B$, the index sets, and the replicate
+count. Choosing $K$ to obtain a preferred outcome and reporting only that value
+is the practice this design exists to prevent.
+
+We claim no asymptotic theory: consistency of this bootstrap for
+$\sigma_{K+1}$ under the stated recentring is not established, and the evidence
+is the simulated size in Table~\ref{tab:xbsize} at one design. Dates are
+assumed independent of one another, which is the assumption the scheme rests
+on, and the data are simulated --- no market data enters anywhere in this
+paper.
+
 \subsection{Is the restriction a characterisation?}
 \label{sec:converse}
 
