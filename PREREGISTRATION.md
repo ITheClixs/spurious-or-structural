@@ -2182,3 +2182,42 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A036 — Generic sharpness of the confounding-gap rank bound
+
+- **Registered:** 2026-08-16, after the derivation in
+  `docs/derivations/GENERIC_GAP_RANK.md` and before any module existed.
+- **Reason:** the manuscript calls `rank(G) <= K + rank(B)` "generically
+  attained" without proof. A bound that is never tight would make the low-rank
+  contamination story vacuous, so the inequality must become an equality with
+  stated conditions and a characterised exceptional set.
+- **Research vector:** the gap factors as `G = L R` with
+  `L = [Gamma | Sigma_uu B_R']` and `R = [C_1 ; B_L' M' Sigma_qq^{-1}]`, inner
+  dimension `K + rank(B)`. When `K + rank(B) <= N`, positive definiteness of
+  `Sigma_f`, `Sigma_uu`, `Sigma_vv`, full rank of `Gamma` and of
+  `B Gamma + Delta_f`, and `col(Gamma) ∩ Sigma_uu col(B') = {0}` make both
+  factors full rank, and Sylvester's rank inequality forces
+  `rank(G) = K + rank(B)`.
+- **Capped case:** for `K + rank(B) > N` the generic value is `N`, established
+  by a genericity argument with numerical witnesses rather than a closed-form
+  proof. This limitation is registered here and stated wherever the result is
+  used.
+- **Economic content of the exceptional set:** condition (2) fails when a
+  priced-risk direction is aligned with a feedback direction transported by
+  `Sigma_uu`. The two confounding channels then overlap and the gap carries
+  strictly less rank than the budget allows.
+- **Predictions:** the five numbered predictions of Section 5 are frozen
+  verbatim, including the exact per-row ranks of the Section 3 and Section 4
+  tables. Deterministic; no interval method applies; multiple-testing count
+  zero.
+- **Scope withheld:** population only; no sampling theory, since estimated gaps
+  have full rank almost surely. Genericity is with respect to Lebesgue measure
+  on the primitives and makes no claim about real markets, which may well sit
+  in the exceptional set. The result bears on sharpness of Theorem 2 only, not
+  on identification of `Lambda` and not on the diagonal restriction.
+- **Failure rule:** if any configuration in the Section 3 table returns a rank
+  other than `min(N, K + rank(B))` in any draw, Theorem 10 is withdrawn rather
+  than have its hypotheses widened after the fact.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.

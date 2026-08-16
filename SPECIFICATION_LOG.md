@@ -1101,3 +1101,36 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Multiple-testing count:** zero.
 - **Access:** no registered seed, market data, evaluation data, or holdout was
   touched.
+
+## A036 — generic sharpness of the confounding-gap rank bound
+
+- **Registered before implementation:** `docs/derivations/GENERIC_GAP_RANK.md`
+  and the A036 block of `PREREGISTRATION.md` were written before
+  `src/xid/models/gap_rank.py` existed.
+- **Result:** the gap factors as `G = L R` with inner dimension
+  `K + rank(B)`. When `K + rank(B) <= N` and the stated regularity conditions
+  hold, both factors have full rank and Sylvester's rank inequality forces
+  `rank(G) = K + rank(B)` exactly. The manuscript's "generically attained" is
+  now a theorem rather than an assertion.
+- **Observed:** `rank(G) = min(N, K + rank(B))` in all forty draws of each of
+  ten configurations, with no draw disagreeing in any cell. The factorisation
+  matched `confounding_gap` to `1.3e-14`.
+- **Exceptional set:** every hypothesis was violated in turn and each violation
+  lowered the rank by exactly the predicted amount. The economically
+  interesting one is `col(Gamma) ∩ Sigma_uu col(B') = {0}`: when a priced-risk
+  direction aligns with a feedback direction transported by `Sigma_uu`, the two
+  confounding channels overlap and the data count them once, not twice.
+- **Consequence for the theory's content:** when `K + rank(B) >= N` the gap is
+  generically of full rank and carries no low-rank restriction at all. Every
+  testable implication of this paper therefore requires a factor-plus-feedback
+  budget strictly below the cross-section size, and that condition is now
+  stated rather than assumed.
+- **Limitation carried forward:** the capped case `K + rank(B) > N` rests on
+  genericity plus numerical witnesses, not a closed-form proof. Labelled as
+  such in the derivation and wherever the result is used.
+- **Status:** all five registered predictions hold. Deterministic; seeds
+  `1000..1039` and `2000..2029` only.
+- **Intervals:** none apply; population ranks with no sampling variation.
+- **Multiple-testing count:** zero.
+- **Access:** no registered seed, market data, evaluation data, or holdout was
+  touched.
