@@ -1134,3 +1134,37 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Multiple-testing count:** zero.
 - **Access:** no registered seed, market data, evaluation data, or holdout was
   touched.
+
+## A037 — execution regret under a confounded impact matrix
+
+- **Registered before implementation:** `docs/derivations/EXECUTION_REGRET.md`
+  and the A037 block of `PREREGISTRATION.md` preceded
+  `src/xid/models/regret.py`.
+- **Result:** for `min x' A_s x` subject to one linear constraint, the loss
+  from acting on the confounded matrix obeys the exact identity
+  `Regret = delta' Lambda_s delta` with `delta = x_A - x_L`, verified to
+  `1.1e-17`. Regret is therefore the true cost of the error in the *trade*,
+  never negative, and never the cost of the error in the matrix.
+- **The practically important consequence:** a first-order error in the impact
+  matrix produces only a second-order loss in execution,
+  `Regret = eps^2 (Pi G_s x_L)' Lambda_s^{-1} (Pi G_s x_L) + O(eps^3)`.
+  Observed ratios `Regret/eps^2` rise monotonically to the predicted
+  `0.003388738`, and successive halvings divide regret by `3.91, 3.95, 3.98`.
+  At `eps = 0.4` the regret is `0.87%` of the optimal cost; at `eps = 0.05` it
+  is `0.015%`.
+- **Zero-regret condition:** `Pi G_s x_L = 0`. Any gap proportional to
+  `Lambda_s` qualifies, since the argmin is scale invariant. This is the
+  decision-side analogue of the A035 identified-functional condition.
+- **Disclosed correction, pre-commit:** registered prediction 5 compared the
+  rescaling gaps against a generic gap "of the same Frobenius norm". That is
+  ill-posed — such a gap drives the believed matrix indefinite, smallest
+  eigenvalue `-0.537`, so no trade exists to compare. The comparison was moved
+  inside the admissible region at `eps = 0.05` and the correction recorded in
+  both the derivation and the preregistration rather than silently applied. A
+  test now pins the ill-posedness itself.
+- **Status:** all five registered predictions hold as corrected.
+  Deterministic; seed `1729` only.
+- **Intervals:** none apply; population quantities with no sampling variation.
+- **Multiple-testing count:** zero.
+- **Access:** no registered seed, market data, evaluation data, or holdout was
+  touched.

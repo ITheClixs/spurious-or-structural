@@ -2221,3 +2221,43 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A037 — Execution regret under a confounded impact matrix
+
+- **Registered:** 2026-08-16, after `docs/derivations/EXECUTION_REGRET.md` and
+  before any module existed.
+- **Reason:** the paper says the impact matrix is partially identified and that
+  costs inherit intervals. It does not answer what a desk would ask, which is
+  what optimising against the confounded matrix actually costs.
+- **Research vector:** for `min x' A_s x` subject to `c' x = 1`, regret against
+  the true `Lambda_s` obeys the exact identity `Regret = delta' Lambda_s delta`
+  with `delta = x_A - x_L`, and is therefore non-negative. Expanding
+  `A_s = Lambda_s + eps G_s` gives
+  `Regret = eps^2 (Pi G_s x_L)' Lambda_s^{-1} (Pi G_s x_L) + O(eps^3)` with
+  `Pi = I - c c' Lambda_s^{-1}/(c' Lambda_s^{-1} c)`. A first-order error in
+  the matrix costs only a second-order loss in execution.
+- **Zero-regret condition:** `Pi G_s x_L = 0`, equivalently
+  `G_s x_L in span(c)`. Any `G_s proportional to Lambda_s` qualifies, since the
+  argmin is scale invariant.
+- **Predictions:** the five numbered predictions of Section 4 are frozen
+  verbatim, including the leading constant `0.003388738` at seed `1729` and the
+  `2%` tolerance at `eps = 0.00625`. Deterministic; no interval method applies;
+  multiple-testing count zero.
+- **Disclosed correction, pre-commit:** prediction 5 first compared the
+  rescaling gaps against "a generic gap of the same Frobenius norm". That is
+  ill-posed — a generic perturbation of size `|alpha| ||Lambda_s||_F` drives the
+  believed matrix indefinite, smallest eigenvalue `-0.537`, so no trade exists
+  to compare. Rescalings are exempt only because they preserve positive
+  definiteness, which is the very reason they are special. The generic
+  comparison is fixed at `eps = 0.05`, inside the admissible region; the
+  substantive claim is unchanged. Recorded in the derivation as well.
+- **Scope withheld:** one linear constraint only; `Lambda_s` positive definite;
+  static, frictionless, single period, no risk term and no alpha; the
+  second-order statement is local and the constant may be large. At
+  `eps = 0.4` the observed ratio already departs from the limit by `4%`.
+- **Failure rule:** if the identity of prediction 1 fails at any grid point, or
+  if the halving ratios do not approach four, Theorems D and E are withdrawn
+  rather than restated with weakened tolerances.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.
