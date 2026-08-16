@@ -75,6 +75,9 @@
 \newcommand{\plim}{\operatorname{plim}}
 \newcommand{\tr}{\operatorname{tr}}
 \newcommand{\rank}{\operatorname{rank}}
+\newcommand{\col}{\operatorname{col}}
+\newcommand{\sym}{\operatorname{sym}}
+\newcommand{\spann}{\operatorname{span}}
 \newcommand{\diag}{\operatorname{diag}}
 
 \input{generated/fig_bounds}
@@ -110,29 +113,36 @@ of Cross-Asset Price Impact\par}
 \vspace{4pt}
 \normalsize
 Cross-asset return-on-flow coefficients are routinely read as entries of a
-structural price-impact matrix. We show that reading is generically
-unidentified, characterise exactly how, and quantify what the failure costs. In
-a simultaneous $N$-asset system with $K$ latent factors and same-bin feedback
-$B$, the gap between the population regression coefficient and the structural
-impact matrix has rank at most $K+\rank(B)$. When the structural matrix is
-diagonal and feedback is absent, the entire estimated cross-impact matrix is
-confined to the diagonal-plus-rank-$K$ set, yet its off-diagonal entries can be
-as large as genuine own-impact: a strictly diagonal truth induces spurious
-cross terms of $0.221$ against own terms spanning $0.206$ to $0.395$. The
-structural matrix is therefore set-identified rather than point-identified, and
-at published one-minute commonality statistics the sharp identified interval
-for the off-diagonal runs from $-0.078$ to $0.103$ around an observed $0.012$,
-so it is not identified even in sign. The same rank structure makes the
-consequence tractable. The execution-cost error is a rank-$K$ quadratic form,
-so it vanishes on an immune subspace of dimension at least $N-K$ while almost
-every other trade is mispriced: an equal-weight index basket is mispriced by
-$54\%$ of its true cost while a dollar-neutral basket is mispriced by exactly
-nothing, and a dollar-neutral trade has a point-identified
-execution cost even though the matrix behind it does not. Finally the
-restriction is refutable. We give a scale-free departure statistic whose
-rejection falsifies the maintained pure-confounding null, with a bootstrap
-null whose size we report rather than assume. We
-verify the theory in a preregistered known-truth experiment with $N=30$, $K=3$,
+structural price-impact matrix. That reading is generically unidentified. We
+treat cross-impact as an identification problem and carry it through four
+stages: what fails, what survives, what can be refuted, and what would restore
+it. In a simultaneous $N$-asset system with $K$ latent factors and same-bin
+feedback $B$, the gap between the population regression coefficient and the
+structural matrix has rank at most $K+\rank(B)$, and we prove the bound is
+attained --- exactly, away from an explicit exceptional set, with the corollary
+that the theory has no testable content once $K+\rank(B)$ reaches $N$. A
+strictly diagonal truth induces spurious cross terms of $0.221$ against own
+terms spanning $0.206$ to $0.395$, and at published one-minute commonality
+statistics the sharp identified interval for the off-diagonal runs from
+$-0.078$ to $0.103$ around an observed $0.012$: not identified even in sign.
+What survives is characterised completely. With
+$W=\Sigma_{qq}^{-1}\Delta_f$, the functional $a^\top\Lambda b$ is point
+identified if and only if $W^\top b=0$ and the cost $x^\top\Lambda x$ if and
+only if $W^\top x=0$ --- a condition on the trade, not on the matrix, and one
+that binds the flow argument alone. Parameter identification and decision
+identification are different objects, and the second is more forgiving than the
+first: a trader optimising against the confounded matrix under a linear
+constraint suffers regret that is exactly the true cost of the trade error and
+is \emph{second order} in the confounding, $0.015\%$ of optimal cost at a gap
+that leaves entries badly wrong. The pure-confounding null is refutable without
+estimating any nuisance: disjoint cross-blocks of the coefficient matrix
+satisfy $\rank(A_{I,J})\le K$ exactly, giving tetrad restrictions on four
+observed entries at $K=1$ and a certified lower bound on the minimum
+confounding dimension $K_{\min}(A)$, whose comparison with an independently
+estimated flow-factor count is the sharp empirical test. Finally, identification
+is restorable: one noisy factor proxy does not identify $\Lambda$, but two
+conditionally independent proxies point identify it in closed form. We verify
+the theory in a preregistered known-truth experiment with $N=30$, $K=3$,
 $T=10^{7}$, and register, without reporting, a falsification protocol for the
 empirical stage.
 \end{minipage}
@@ -445,6 +455,89 @@ estimate \emph{along} the confounding directions rather than removing them. It
 identifies $\Lambda$ only in the degenerate case $R_f=0$.
 \end{remark}
 
+\subsection{The bound is attained, and when it is empty}
+\label{sec:sharpness}
+
+A bound that is never tight would make Theorem~\ref{thm:rank} vacuous. It is
+tight, and the exceptional set has an economic reading.
+
+Factor $B=B_LB_R$ with $B_L\in\mathbb R^{N\times b}$, $B_R\in\mathbb
+R^{b\times N}$ of full rank $b=\rank(B)$. Writing $M=(I-B\Lambda)^{-1}$ and
+$P=M(B\Gamma+\Delta_f)$, the gap of Theorem~\ref{thm:rank} factors as
+\begin{equation}
+G=LR,\qquad
+L=\begin{bmatrix}\Gamma & \Sigma_{uu}B_R^\top\end{bmatrix},\qquad
+R=\begin{bmatrix}\Sigma_fP^\top\Sigma_{qq}^{-1}\\ B_L^\top
+M^\top\Sigma_{qq}^{-1}\end{bmatrix},
+\label{eq:gapfactor}
+\end{equation}
+a product through exactly $K+\rank(B)$ inner columns.
+
+\begin{theorem}[Generic rank of the confounding gap]
+\label{thm:generic}
+Let $\Sigma_{uu}$, $\Sigma_{vv}$, and $\Sigma_f$ be positive definite, let
+$\rank(\Gamma)=K$ and $\rank(B\Gamma+\Delta_f)=K$, let $K+\rank(B)\le N$, and
+let
+\begin{equation}
+\col(\Gamma)\cap\Sigma_{uu}\col(B^\top)=\{0\}.
+\label{eq:nooverlap}
+\end{equation}
+Then $\rank(G)=K+\rank(B)$.
+\end{theorem}
+
+\begin{proof}
+Both factors in \eqref{eq:gapfactor} have full rank $K+\rank(B)$ under the
+stated conditions, and their inner dimension is exactly $K+\rank(B)$;
+Sylvester's rank inequality then forces $\rank(LR)\ge K+\rank(B)$, while
+\eqref{eq:gapfactor} forces $\le$. Appendix~\ref{app:generic} gives the detail.
+\end{proof}
+
+Across ten configurations at forty independent draws each, the observed rank
+was a single value in every cell and equalled $\min\{N,K+\rank(B)\}$ throughout;
+\eqref{eq:gapfactor} reproduced the gap to $1.3\times10^{-14}$. Violating each
+hypothesis in turn lowers the rank by exactly the predicted amount
+(Table~\ref{tab:exceptional}).
+
+\begin{table}[t]
+\centering
+\small
+\caption{Each hypothesis of Theorem~\ref{thm:generic} is load-bearing.
+$N=20$, $K=3$, $\rank(B)=4$, generic target $7$; thirty draws per row, all
+agreeing.}
+\label{tab:exceptional}
+\begin{tabular}{lcc}
+\toprule
+Violated hypothesis & $\rank(G)$ & drop \\
+\midrule
+none (generic draw) & 7 & 0 \\
+$\Gamma=0$ & 4 & 3 \\
+$\rank(\Gamma)=K-1$ & 6 & 1 \\
+one column of $\Gamma$ in $\Sigma_{uu}\col(B^\top)$ & 6 & 1 \\
+$\Sigma_f$ singular & 6 & 1 \\
+$B=0$ and $\Delta_f=0$ & 0 & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Condition~\eqref{eq:nooverlap} is not technical bookkeeping. It fails when a
+priced-risk direction aligns with a feedback direction transported by
+$\Sigma_{uu}$: the two confounding channels then overlap, and the data count
+them once rather than twice.
+
+\begin{corollary}[The theory has content only below the cross-section size]
+\label{cor:empty}
+When $K+\rank(B)\ge N$ the gap is generically of full rank and $\mathcal D_K$
+imposes no restriction whatever. Every testable implication in this paper
+therefore presumes a factor-plus-feedback budget strictly below $N$, and any
+application must report the budget it assumes.
+\end{corollary}
+
+For $K+\rank(B)>N$ the generic value is $N$. We establish that by genericity
+with numerical witnesses rather than proof, and label it as such: each
+condition is the non-vanishing of a polynomial in the primitives, so a single
+draw at which it is nonzero shows the exceptional set is a proper subvariety,
+hence Lebesgue null.
+
 \section{Partial Identification}
 \label{sec:partial}
 
@@ -582,6 +675,80 @@ isotropic-residual conventions, not a market estimate.}
 \label{fig:bounds}
 \end{figure}
 
+\subsection{Which functionals survive}
+\label{sec:functionals}
+
+Proposition~\ref{prop:sharp} bounds individual entries. The question a user of
+the matrix actually faces is different: not \emph{which entries} are pinned
+down, but \emph{which numbers computed from the matrix} are. The answer is
+clean, and it depends on one thing only.
+
+\begin{theorem}[Identified linear functionals]
+\label{thm:linfun}
+For $a,b\in\mathbb R^N$ with $a\ne0$, the functional $a^\top\Lambda b$ takes
+the same value at every $\Lambda\in\mathcal I(A)$ if and only if
+$W^\top b=0$.
+\end{theorem}
+
+\begin{proof}
+By \eqref{eq:lamAW}, $a^\top\Lambda b=a^\top Ab-(a^\top\Gamma)(W^\top b)$. The
+first term is observable; as $\Gamma$ ranges over an open set and $a\ne0$, the
+vector $a^\top\Gamma$ ranges over a neighbourhood in $\mathbb R^K$, so the
+second term is constant exactly when $W^\top b=0$.
+\end{proof}
+
+The condition constrains $b$, the \emph{flow} argument, and says nothing about
+$a$. Choosing a response direction orthogonal to the confounding subspace buys
+nothing: at our fixture the spread of $a^\top\Lambda b$ across the identified
+set is $6.65$ for a free pair and $7.40$ when $a$ is orthogonalised, but
+$3.0\times10^{-15}$ when $b$ is.
+
+\begin{theorem}[Identified quadratic costs]
+\label{thm:quadfun}
+For $x\ne0$, the execution cost $x^\top\Lambda x$ is point identified over
+$\mathcal I(A)$ if and only if $W^\top x=0$.
+\end{theorem}
+
+Theorem~\ref{thm:quadfun} is Theorem~\ref{thm:linfun} at $a=b=x$; the measured
+spread is $13.4$ for a free trade and $3.6\times10^{-15}$ for a
+confounding-orthogonal one. It subsumes
+Corollary~\ref{cor:pointid}: in the permutation-invariant one-spike geometry
+$\Delta_f=h_q m$ and $\Sigma_{qq}m=q_1m$, so $W=(h_q/q_1)m$ and
+$\col(W)=\spann(m)$ --- verified to $\lvert\cos\rvert=1.000000000000$. Dollar
+neutrality is therefore not a special virtue of dollar-neutral trades. It is
+what $W^\top x=0$ happens to reduce to in that one geometry, and it generalises
+to no other.
+
+\begin{theorem}[Width of the identified cost interval]
+\label{thm:width}
+If the admissible loadings satisfy $\lVert\Gamma\rVert_F\le R$, then
+\begin{equation}
+\operatorname{width}\{x^\top\Lambda x:\Lambda\in\mathcal I(A)\}
+=2R\,\lVert x\rVert\,\lVert W^\top x\rVert,
+\label{eq:width}
+\end{equation}
+attained at $\Gamma^\star=R\,xw^\top/\lVert xw^\top\rVert_F$ with $w=W^\top x$.
+\end{theorem}
+
+\begin{proof}
+$x^\top\Gamma W^\top x=\langle\Gamma,xw^\top\rangle_F$, and the supremum of a
+linear functional over a Frobenius ball of radius $R$ is
+$R\lVert xw^\top\rVert_F=R\lVert x\rVert\lVert w\rVert$, attained at
+$\Gamma^\star$; the infimum is its negative.
+\end{proof}
+
+Both the trade's size and its reach into $\col(W)$ enter \eqref{eq:width}, and
+the ball is an idealisation of the true positive-semidefiniteness constraint,
+so \eqref{eq:width} is an upper bound on the true width, tight when the binding
+constraint is spherical.
+
+The economic content of this subsection is a distinction the literature does
+not draw. \emph{Parameter identification and decision identification are
+different objects.} A desk can hold a completely unidentified impact matrix and
+still know exactly what a particular execution will cost, provided that
+execution's flow exposure avoids $\col(W)$. Section~\ref{sec:regret} shows the
+gap between the two is wider still once the trade is chosen optimally.
+
 \section{A Refutable Restriction}
 \label{sec:diagnostic}
 
@@ -697,6 +864,91 @@ the factor count is understated and decays when it is overstated, with an
 elbow at the true value $K=3$. Deterministic evaluations at test seed $1729$.}
 \label{fig:diagnostic}
 \end{figure}
+
+\subsection{Exact restrictions with no nuisance diagonal}
+\label{sec:crossblock}
+
+The statistic $\psi_K$ has two defects. It minimises over a diagonal and a
+rank-$K$ matrix jointly --- a biconvex, nonconvex problem whose alternating
+projection converges to a stationary point that depends on where it started ---
+and it must estimate a diagonal nobody wants to know. Both disappear under one
+observation.
+
+\begin{theorem}[Cross-block rank]
+\label{thm:crossblock}
+Let $A=D+R$ with $D$ diagonal and $\rank(R)\le K$, as
+Corollary~\ref{cor:set} implies under the maintained null. Then for every pair
+of \emph{disjoint} index sets $I\cap J=\varnothing$,
+\begin{equation}
+A_{I,J}=R_{I,J}\quad\text{and therefore}\quad\rank(A_{I,J})\le K,
+\label{eq:crossblock}
+\end{equation}
+so every $(K+1)\times(K+1)$ minor of $A_{I,J}$ vanishes.
+\end{theorem}
+
+\begin{proof}
+For $i\in I$ and $j\in J$, disjointness gives $i\ne j$, so
+$A_{ij}=D_{ij}+R_{ij}=R_{ij}$. A submatrix cannot exceed the rank of its
+parent, and vanishing of all $(K+1)$-minors is the determinantal
+characterisation of that bound.
+\end{proof}
+
+\begin{corollary}[Tetrads at one factor]
+\label{cor:tetrad}
+If $K=1$ then $A_{ij}A_{k\ell}-A_{i\ell}A_{kj}=0$ for distinct $i,k\in I$ and
+distinct $j,\ell\in J$.
+\end{corollary}
+
+These are restrictions on four observed coefficients containing no diagonal and
+no unknown parameter of any kind. Testing \eqref{eq:crossblock} needs one
+singular value decomposition of an $\lvert I\rvert\times\lvert J\rvert$ block:
+no nuisance, no starting point, no convergence criterion. At $N=30$, $K=3$,
+with $I=\{0,\dots,9\}$ and $J=\{15,\dots,24\}$, the block reproduces $R_{I,J}$
+to machine zero and $\sigma_4(A_{I,J})=4.2\times10^{-17}$; under a dense
+off-diagonal perturbation of Frobenius size $\epsilon$ it responds immediately,
+reaching $1.27\times10^{-3}$ at $\epsilon=0.01$ and $2.53\times10^{-2}$ at
+$\epsilon=0.20$. All $784$ tetrads vanish at $K=1$ (largest
+$1.7\times10^{-18}$) and reach $5.9\times10^{-2}$ on a $K=3$ matrix, so the
+restriction discriminates the factor count rather than holding vacuously.
+
+\subsection{How much confounding would it take?}
+\label{sec:kmin}
+
+Theorem~\ref{thm:crossblock} answers ``given $K$, is the matrix consistent with
+pure confounding?'' The more informative question runs the other way. Define
+\begin{equation}
+K_{\min}(A)=\min_{D\ \text{diagonal}}\rank(A-D),
+\label{eq:kmin}
+\end{equation}
+the smallest latent dimension that could rationalise the observed coefficient
+matrix with no structural cross-impact at all. Every disjoint cross-block
+certifies a lower bound, since $\rank(A_{I,J})\le K_{\min}(A)$ by
+Theorem~\ref{thm:crossblock} applied in reverse.
+
+The decisive empirical comparison is then between $K_{\min}(A)$, read off the
+coefficient matrix, and the number of factors $K_{\text{flow}}$ estimated
+independently from the order-flow covariance. If
+$K_{\min}(A)>K_{\text{flow}}$ with statistical confidence, pure factor
+confounding cannot account for the observed cross-impact --- and the statement
+is a comparison of two dimensions rather than a single opaque distance.
+
+We report the map $K\mapsto p_K$ over a prespecified range wherever this is
+taken to data, and never a chosen factor count. Inference for
+$\sigma_{K+1}(\widehat A_{I,J})$ under intraday dependence is a separate
+registered design; under sampling that singular value is positive even when the
+null holds.
+
+\begin{remark}[A negative result we are obliged to record]
+\label{rem:completion}
+Recovering the diagonal by alternating projection is \emph{not} reliable.
+Started from the observed matrix it recovers $\diag(G)$ to
+$4.4\times10^{-16}$; started from twenty random diagonals at scale $5.0$ the
+solutions spread by $24.66$, with maximum error $15.37$. The same procedure
+fails at $N=5,6,7$ with $K=3$ while succeeding for $N\ge8$, yet a direct test
+shows the diagonal is locally identified at those very configurations. Those
+failures are algorithmic, not identification failures --- which is precisely
+the argument for \eqref{eq:crossblock}, since it needs no completion at all.
+\end{remark}
 
 \section{What It Costs to Be Wrong}
 \label{sec:cost}
@@ -964,6 +1216,165 @@ dense off-diagonal perturbation at $T=5000$. Monte Carlo standard errors
 $0.018$ and $0.022$.}
 \label{fig:psistudy}
 \end{figure}
+
+\section{What Non-Identification Costs a Trader}
+\label{sec:regret}
+
+Sections~\ref{sec:functionals} and \ref{sec:robust} price a \emph{given} trade
+under an unidentified matrix. A desk does not trade a given schedule; it
+chooses one. The relevant question is what it loses by optimising against the
+confounded matrix, and the answer is more forgiving than the identification
+results alone suggest.
+
+Let $\Lambda_s=\sym(\Lambda)$ be positive definite --- only the symmetric part
+enters, since $x^\top Mx=x^\top\sym(M)x$ --- and let $A_s=\Lambda_s+G_s$ be its
+confounded counterpart. A trader completing a position described by one linear
+constraint $c^\top x=1$ solves
+$x(M)=M^{-1}c/(c^\top M^{-1}c)$ and pays the true cost. Write
+\begin{equation}
+\mathrm{Regret}=x(A_s)^\top\Lambda_sx(A_s)-x(\Lambda_s)^\top\Lambda_s
+x(\Lambda_s).
+\label{eq:regretdef}
+\end{equation}
+
+\begin{theorem}[Regret is the cost of the trade error]
+\label{thm:regret}
+With $\delta=x(A_s)-x(\Lambda_s)$,
+$\mathrm{Regret}=\delta^\top\Lambda_s\delta\ge0$.
+\end{theorem}
+
+\begin{proof}
+Both trades satisfy the constraint, so $c^\top\delta=0$. The objective is
+quadratic and $x(\Lambda_s)$ minimises it on the affine set, so its gradient
+$2\Lambda_sx(\Lambda_s)$ annihilates every feasible direction, giving
+$\delta^\top\Lambda_sx(\Lambda_s)=0$. Expanding \eqref{eq:regretdef} and
+cancelling the cross term leaves the claim.
+\end{proof}
+
+Regret is thus the true cost of the error in the \emph{trade}, never the error
+in the matrix. That distinction has teeth.
+
+\begin{theorem}[The damage is second order]
+\label{thm:secondorder}
+Write $A_s=\Lambda_s+\epsilon G_s$ and set
+$\Pi=I-cc^\top\Lambda_s^{-1}/(c^\top\Lambda_s^{-1}c)$. Then
+$\delta=-\epsilon\Lambda_s^{-1}\Pi G_sx(\Lambda_s)+O(\epsilon^2)$ and
+\begin{equation}
+\mathrm{Regret}=\epsilon^2\,(\Pi G_sx_L)^\top\Lambda_s^{-1}(\Pi G_sx_L)
++O(\epsilon^3),\qquad x_L=x(\Lambda_s).
+\label{eq:secondorder}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The first-order condition is $A_sx=\mu c$ with $c^\top x=1$. Perturbing,
+$\Lambda_s\delta+\epsilon G_sx_L=(\mathrm d\mu)c+O(\epsilon^2)$, so
+$\delta=\Lambda_s^{-1}((\mathrm d\mu)c-\epsilon G_sx_L)$; imposing
+$c^\top\delta=0$ fixes $\mathrm d\mu$ and yields the stated form. Substituting
+into Theorem~\ref{thm:regret} gives \eqref{eq:secondorder}.
+\end{proof}
+
+\emph{A first-order error in the impact matrix produces only a second-order
+loss in execution.} At $N=20$ with $\lVert G_s\rVert_F=1$, halving $\epsilon$
+divides the regret by $3.91$, $3.95$, $3.98$ --- approaching the factor of four
+\eqref{eq:secondorder} requires --- and the ratio
+$\mathrm{Regret}/\epsilon^2$ rises monotonically to the predicted
+$0.003388738$. At $\epsilon=0.4$ the trader forgoes $0.87\%$ of optimal cost;
+at $\epsilon=0.05$, $0.015\%$. Theorem~\ref{thm:regret} holds to
+$1.1\times10^{-17}$ across the grid.
+
+\begin{corollary}[Gaps the trader never feels]
+\label{cor:freegap}
+$\mathrm{Regret}=0$ if and only if $\Pi G_sx_L=0$, that is
+$G_sx_L\in\spann(c)$. In particular any $G_s\propto\Lambda_s$ costs nothing,
+the argmin being scale invariant.
+\end{corollary}
+
+This is the decision-side counterpart of Theorem~\ref{thm:quadfun}. There, a
+trade whose flow exposure avoids $\col(W)$ has a point-identified cost. Here, a
+confounding gap that moves the optimal trade only along the constraint
+direction costs nothing at all, whatever it does to the matrix entries.
+
+We claim no more than the setting allows: one linear constraint, positive
+definite $\Lambda_s$, static and frictionless, no risk term and no alpha, and a
+\emph{local} second-order statement whose constant may be large --- at
+$\epsilon=0.4$ the observed ratio already departs from its limit by $4\%$.
+Identification is not restored. The trader still cannot learn $\Lambda$; the
+result says only that this particular decision is insensitive to what cannot
+be learned.
+
+\section{Restoring Identification}
+\label{sec:restore}
+
+Everything so far is negative or partial: what cannot be learned, what survives
+anyway, what a failure of the null would refute. A useful identification paper
+should also say what \emph{would} suffice. Here it takes exactly one more
+observable.
+
+Fix $B=0$ and the model $r=\Lambda q+\Gamma f+u$, $q=\Delta f+v$. Suppose we
+observe two noisy measurements of the same latent factor,
+\begin{equation}
+h^{(1)}=f+\varepsilon_1,\qquad h^{(2)}=f+\varepsilon_2,
+\label{eq:proxies}
+\end{equation}
+with $\varepsilon_1,\varepsilon_2$ mean zero, uncorrelated with each other and
+with $f$, $u$, and $v$. Neither proxy alone identifies $\Lambda$: by
+Remark~\ref{rem:control}, controlling for one noisy proxy merely relocates the
+estimate within the identified set. Two do.
+
+\begin{theorem}[Two-proxy identification]
+\label{thm:twoproxy}
+Under \eqref{eq:proxies}, if $\Sigma_f$ is nonsingular and
+$\Sigma_{vv}=\Sigma_{qq}-\Delta\Sigma_f\Delta^\top$ is nonsingular, then
+\begin{align}
+\Sigma_f&=\operatorname{Cov}(h^{(1)},h^{(2)}), \label{eq:sigf}\\
+\Delta&=\operatorname{Cov}(q,h^{(1)})\,\Sigma_f^{-1}, \label{eq:delta}\\
+\Lambda&=\bigl[\Sigma_{rq}-\Sigma_{rh}\Delta^\top\bigr]
+\bigl[\Sigma_{qq}-\Delta\Sigma_f\Delta^\top\bigr]^{-1},
+\label{eq:twoproxy}
+\end{align}
+with $\Sigma_{rh}=\operatorname{Cov}(r,h^{(1)})$. All three right-hand sides
+are functions of observable second moments, so $\Lambda$ is point identified.
+\end{theorem}
+
+\begin{proof}
+Independence of the measurement errors gives
+$\operatorname{Cov}(h^{(1)},h^{(2)})=\Sigma_f$, which is \eqref{eq:sigf}. Then
+$\operatorname{Cov}(q,h^{(1)})=\operatorname{Cov}(\Delta f+v,f)=\Delta\Sigma_f$
+yields \eqref{eq:delta}. Since $\varepsilon_1$ is uncorrelated with $r$'s
+disturbances, $\Sigma_{rh}=\operatorname{Cov}(r,f)=\Lambda\Delta\Sigma_f
++\Gamma\Sigma_f$, while
+$\Sigma_{rq}=\Lambda\Sigma_{qq}+\Gamma\Sigma_f\Delta^\top$. Substituting
+$\Gamma\Sigma_f=\Sigma_{rh}-\Lambda\Delta\Sigma_f$ into the second and
+collecting terms gives
+$\Sigma_{rq}-\Sigma_{rh}\Delta^\top=\Lambda(\Sigma_{qq}
+-\Delta\Sigma_f\Delta^\top)$, which inverts to \eqref{eq:twoproxy}.
+\end{proof}
+
+The economic reading is direct. \emph{One noisy proxy for the common factor
+does not identify structural cross-impact; two conditionally independent
+proxies do.} The second proxy is not extra precision --- it is the instrument
+that separates the factor from its measurement error, and with the factor
+separated the confounding channel $\Gamma$ drops out of \eqref{eq:twoproxy}
+entirely.
+
+Two invertibility conditions carry real content rather than technical
+convenience. If $\Sigma_f$ is singular, some factor has no variance and its
+loading is unidentified. If $\Sigma_{vv}$ is singular, order flow is driven
+purely by the common factors, there is no idiosyncratic flow variation left to
+trace impact with, and no amount of proxy quality repairs it. Our
+implementation refuses both, judging the second against the scale of
+$\Sigma_{qq}$ rather than against the residual's own scale, since a numerically
+zero residual has full rank relative to itself.
+
+What Theorem~\ref{thm:twoproxy} does not do is tell an empiricist where to find
+two conditionally independent proxies. Candidates --- order flow from disjoint
+venues, non-overlapping trader cohorts, alternating time slices --- all
+plausibly share microstructure noise, and the conditional independence in
+\eqref{eq:proxies} is an assumption on that noise, not a consequence of
+disjointness. It is testable in the overidentified case $K<\dim h$, and we
+regard establishing it in real data as the substantive empirical hurdle rather
+than a formality.
 
 \section{Known-Truth Verification}
 \label{sec:verify}
@@ -1284,6 +1695,28 @@ that is $t^2q_1q_0/(q_1-q_0)\le r_1-q_1a_1^2$, which is Eq.~\eqref{eq:T}.
 Since $\Lambda_{\mathrm{off}}=A_{\mathrm{off}}-t/N$, Eq.~\eqref{eq:sharp}
 follows.
 \hfill$\square$
+
+\section{Proof of Theorem \ref{thm:generic}}
+\label{app:generic}
+
+Write $b=\rank(B)$. The matrix $M^\top\Sigma_{qq}^{-1}$ is invertible, so the
+second block of $R$ in \eqref{eq:gapfactor}, namely
+$B_L^\top M^\top\Sigma_{qq}^{-1}$, has full row rank $b$. Positive definiteness
+of $\Sigma_f$ together with $\rank(P)=\rank(M(B\Gamma+\Delta_f))=K$ makes
+$\Sigma_fP^\top\Sigma_{qq}^{-1}$ of full row rank $K$. Under
+\eqref{eq:nooverlap} the two blocks have independent row spaces, since a
+nontrivial relation among them would exhibit a nonzero vector of the
+intersection; hence $\rank(R)=K+b$.
+
+For $L$: $\rank(\Gamma)=K$ by hypothesis, and $\Sigma_{uu}B_R^\top$ has rank
+$b$ because $\Sigma_{uu}$ is invertible and $B_R$ has full row rank.
+Condition~\eqref{eq:nooverlap} says their column spaces meet only at the
+origin, so $\rank(L)=K+b$.
+
+Both factors therefore have rank $K+b$, and the inner dimension of the product
+is exactly $K+b$. Sylvester's rank inequality gives
+$\rank(LR)\ge\rank(L)+\rank(R)-(K+b)=K+b$, while \eqref{eq:gapfactor} bounds
+$\rank(LR)\le K+b$. \qed
 
 \section{Equivalent Primitive Forms}
 
