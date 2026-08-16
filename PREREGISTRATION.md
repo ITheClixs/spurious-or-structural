@@ -2261,3 +2261,42 @@ outcomes.
 - **Access statement:** no A022 rehearsal, registered resource seed
   `2026071529`, validation seed `2026071521`, research seed `2026071522`,
   empirical data, evaluation data, or holdout was accessed.
+
+## A038 — Converse to the cross-block rank restriction
+
+- **Registered:** 2026-08-16, after `docs/derivations/CROSS_BLOCK_CONVERSE.md`
+  and before any module existed.
+- **Reason:** Theorem 9 is a one-way implication. Whether the cross-block rank
+  bounds *characterise* the diagonal-plus-low-rank model, rather than merely
+  following from it, decides how much a non-rejection is worth.
+- **Research vector:** three results. (i) The restriction is non-vacuous if and
+  only if `K(2N-K) < N^2-N`, equivalently `K < N - sqrt(N)`. (ii) At `K = 1`
+  with `N >= 4` and three nonzero anchor entries, vanishing disjoint tetrads
+  imply `A_ij = x_i y_j` off the diagonal, so `D_ii = x_i y_i` gives
+  `rank(A - D) <= 1` — a constructive global converse. (iii) For general `K`,
+  the tangent space of the cross-block minor variety at a generic
+  diagonal-plus-rank-`K` point has dimension exactly `K(2N-K)`, matching the
+  off-diagonals of rank-`K` matrices, so the converse holds locally.
+- **Explicitly left open:** for `K >= 2`, whether some `A` satisfies every
+  disjoint cross-block bound while admitting no rank-`K` diagonal completion.
+  Tangent-space equality at generic points does not exclude other irreducible
+  components. Neither proved nor refuted here.
+- **Relation to the Frisch problem:** the symmetric analogue has known
+  non-identified configurations above the Ledermann bound. That governs a
+  different count — symmetric covariance, not an asymmetric coefficient matrix
+  — and is not imported. Condition (1) is the count that applies.
+- **Predictions:** the five numbered predictions of Section 5 are frozen
+  verbatim, including every entry of the Section 1 and Section 3 tables.
+  Deterministic; seeds `7` and `11`; no interval method applies;
+  multiple-testing count zero.
+- **Scope withheld:** population only, no sampling theory; tangent ranks are
+  numerical, computed by finite differences at `h = 1e-6` read at relative
+  threshold `1e-6`; Theorem 11 needs three specific nonzero anchors and says
+  nothing about sparse off-diagonal support.
+- **Failure rule:** if any Section 3 configuration returns a tangent dimension
+  other than `K(2N-K)`, Corollary 11.1 is withdrawn rather than restated with a
+  loosened threshold. If a counterexample to the global converse is found, it
+  is reported as the headline result of this registration.
+- **Access statement:** no A022 rehearsal, registered resource seed
+  `2026071529`, validation seed `2026071521`, research seed `2026071522`,
+  empirical data, evaluation data, or holdout was accessed.

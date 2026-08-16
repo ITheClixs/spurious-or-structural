@@ -911,6 +911,83 @@ $\epsilon=0.20$. All $784$ tetrads vanish at $K=1$ (largest
 $1.7\times10^{-18}$) and reach $5.9\times10^{-2}$ on a $K=3$ matrix, so the
 restriction discriminates the factor count rather than holding vacuously.
 
+\subsection{Is the restriction a characterisation?}
+\label{sec:converse}
+
+Theorem~\ref{thm:crossblock} runs one way. Whether its converse holds decides
+what a \emph{non}-rejection buys: rejection needs only the forward implication,
+but reading non-rejection as evidence \emph{for} pure confounding needs the
+other direction. We settle two thirds of the question and are explicit about
+the third.
+
+First, when the restriction constrains anything at all. Off-diagonals of
+rank-$K$ matrices occupy $K(2N-K)$ dimensions inside the $N^2-N$ dimensional
+space of off-diagonal patterns.
+
+\begin{proposition}[Content boundary]
+\label{prop:content}
+The disjoint cross-block restriction is non-vacuous if and only if
+\begin{equation}
+K(2N-K)<N^2-N,\qquad\text{equivalently}\qquad K<N-\sqrt N.
+\label{eq:content}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$K(2N-K)<N(N-1)$ rearranges to $(N-K)^2>N$, and $K<N$ gives $N-K>\sqrt N$.
+\end{proof}
+
+Proposition~\ref{prop:content} sits beside Corollary~\ref{cor:empty} as a
+second budget constraint. Corollary~\ref{cor:empty} says the \emph{gap} carries
+no low-rank structure once $K+\rank(B)\ge N$; \eqref{eq:content} says the
+\emph{test} has nothing to detect once $K\ge N-\sqrt N$. At $N=30$ these bind
+at $K=30$ and $K=25$, so the registered geometry clears both comfortably.
+
+\begin{theorem}[Global converse at one factor]
+\label{thm:converse1}
+Let $N\ge4$, let every disjoint tetrad of $A$ vanish, and let the anchors
+$A_{01}$, $A_{12}$, $A_{20}$ be nonzero. Then $A_{ij}=x_iy_j$ for all $i\ne j$,
+and $D_{ii}=x_iy_i$ gives $\rank(A-D)\le1$.
+\end{theorem}
+
+\begin{proof}
+Put $x_i=A_{i1}$ for $i\ne1$ and $y_j=A_{0j}/A_{01}$ for $j\ne0$. For $i\ne1$,
+$j\ne0$, $i\ne j$ the tetrad on $I=\{i,0\}$, $J=\{j,1\}$ --- disjoint under
+exactly those conditions --- gives $A_{ij}A_{01}=A_{i1}A_{0j}$, that is
+$A_{ij}=x_iy_j$. The remaining two families follow from a third index, which
+exists because $N\ge4$: $x_1=A_{12}/y_2$ and $y_0=A_{20}/x_2$. Replacing the
+diagonal of $A$ by that of $xy^\top$ leaves $xy^\top$.
+\end{proof}
+
+Reconstructing $x,y$ from off-diagonal entries alone recovers the completion to
+$4.4\times10^{-16}$ with $\rank(A-D^\star)=1$ at every $N\in\{4,5,6,8,12\}$. At
+$N=3$ no four distinct indices exist, the tetrad family is empty, and the
+restriction is silent --- the hypothesis $N\ge4$ is not decorative.
+
+For $K\ge2$ we have no global proof, but the local question is decisive.
+Let $S_1$ be the off-diagonals of rank-$K$ matrices and $S_2$ the variety cut
+out by all minimal disjoint cross-block $(K+1)$-minors, so
+$S_1\subseteq S_2$ by Theorem~\ref{thm:crossblock}. Differentiating the minors
+at a generic $D+UV^\top$ gives $\dim T S_2=K(2N-K)=\dim S_1$ in every
+configuration we computed, across $K=1,2,3$ and $N=5,\dots,9$.
+
+\begin{corollary}[Local converse]
+\label{cor:localconverse}
+Near a generic diagonal-plus-rank-$K$ matrix, satisfying every disjoint
+cross-block rank bound is equivalent to being completable to rank $K$.
+\end{corollary}
+
+We state the residual gap rather than paper over it. Tangent-space equality at
+generic points of $S_1$ does not exclude other irreducible components of $S_2$
+lying elsewhere, so the following is open: for $K\ge2$, is there an $A$ whose
+disjoint cross-blocks all have rank at most $K$ while no diagonal completion
+reaches rank $K$? We have neither proved there is none nor found one. The
+symmetric analogue is the classical Frisch problem, where non-identified
+configurations are known above the Ledermann bound; that governs a different
+count --- symmetric covariance rather than an asymmetric coefficient matrix ---
+and we do not import it. Practically the gap is narrow: rejection uses only
+Theorem~\ref{thm:crossblock}, so refutation is unaffected either way.
+
 \subsection{How much confounding would it take?}
 \label{sec:kmin}
 

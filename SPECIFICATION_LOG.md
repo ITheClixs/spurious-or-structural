@@ -1168,3 +1168,41 @@ empirical model trials, but gate-level pipeline variants are recorded.
 - **Multiple-testing count:** zero.
 - **Access:** no registered seed, market data, evaluation data, or holdout was
   touched.
+
+## A038 — converse to the cross-block rank restriction
+
+- **Registered before implementation:** `docs/derivations/CROSS_BLOCK_CONVERSE.md`
+  and the A038 block of `PREREGISTRATION.md` preceded
+  `src/xid/models/cross_block_converse.py`.
+- **Result (i), content boundary:** the restriction is non-vacuous if and only
+  if `K(2N-K) < N^2-N`, which reduces exactly to `K < N - sqrt(N)`. This is a
+  second budget constraint beside Corollary 10.1: the gap loses its low-rank
+  structure at `K + rank(B) >= N`, and the test loses its power to detect
+  anything at `K >= N - sqrt(N)`. At `N = 30` these bind at `K = 30` and
+  `K = 25`.
+- **Result (ii), global converse at `K = 1`:** with `N >= 4` and three nonzero
+  anchors, vanishing disjoint tetrads force `A_ij = x_i y_j` off the diagonal,
+  giving an explicit rank-one completion. Recovered from off-diagonal entries
+  alone to `4.4e-16`, with `rank(A - D*) = 1` at every `N` tested. At `N = 3`
+  the tetrad family is empty, so the `N >= 4` hypothesis is load-bearing.
+- **Result (iii), local converse for general `K`:** the tangent space of the
+  cross-block minor variety at a generic diagonal-plus-rank-`K` point has
+  dimension exactly `K(2N-K)`, matching the off-diagonals of rank-`K` matrices,
+  in all nine configurations across `K = 1, 2, 3`. The restriction is therefore
+  a local characterisation, not merely a necessary condition.
+- **Left open, and reported as open:** for `K >= 2`, whether some `A` satisfies
+  every disjoint cross-block bound while admitting no rank-`K` diagonal
+  completion. Tangent-space equality at generic points of the model does not
+  exclude other irreducible components. Neither proved nor refuted. The
+  practical consequence is narrow, since rejection uses only the forward
+  implication of Theorem 9; it is non-rejection whose reading would tighten.
+- **Not imported:** the Ledermann bound governs the symmetric Frisch problem,
+  a different count from the asymmetric coefficient matrix here. Condition (1)
+  is the count that applies and is derived rather than borrowed.
+- **Status:** all five registered predictions hold. Deterministic; seeds `7`
+  and `11` only. Tangent ranks are numerical, from finite differences at
+  `h = 1e-6` read at relative threshold `1e-6`, and are labelled as such.
+- **Intervals:** none apply; population statements with no sampling variation.
+- **Multiple-testing count:** zero.
+- **Access:** no registered seed, market data, evaluation data, or holdout was
+  touched.
